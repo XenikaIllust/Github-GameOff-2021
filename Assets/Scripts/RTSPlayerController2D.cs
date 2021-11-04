@@ -4,7 +4,7 @@ using UnityEngine;
 public class RTSPlayerController2D : MonoBehaviour
 {
     public float speed = 1f;
-    
+
     private Camera _camera;
     private Transform _transform;
     private float _zPosition;
@@ -20,13 +20,15 @@ public class RTSPlayerController2D : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
+            _transform.DOKill();
+            
             Vector3 point = CursorWorldPosition();
             _transform.DOMove(point, TrueSpeed(point));
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            _transform.DOPause();
+            _transform.DOKill();
         }
     }
 
