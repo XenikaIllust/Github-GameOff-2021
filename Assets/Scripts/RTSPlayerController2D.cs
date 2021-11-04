@@ -4,10 +4,12 @@ using UnityEngine;
 public class RTSPlayerController2D : MonoBehaviour
 {
     public float speed = 1f;
+    public float autoClickInterval = 0.1f;
 
     private Camera _camera;
     private Transform _transform;
     private float _zPosition;
+    private float _autoClickTimer;
 
     private void Awake()
     {
@@ -18,18 +20,41 @@ public class RTSPlayerController2D : MonoBehaviour
 
     private void Update()
     {
+        // Right click
         if (Input.GetMouseButtonDown(1))
         {
-            _transform.DOKill();
-            
-            Vector3 point = CursorWorldPosition();
-            _transform.DOMove(point, TrueSpeed(point));
+            Move();
+        }
+
+        // Hold to auto-repeat right click
+        if (Input.GetMouseButton(1))
+        {
+            _autoClickTimer += Time.deltaTime;
+
+            if (_autoClickTimer >= autoClickInterval)
+            {
+                _autoClickTimer = float.Epsilon;
+                Move();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            _transform.DOKill();
+            Stop();
         }
+    }
+
+    private void Move()
+    {
+        _transform.DOKill();
+
+        Vector3 point = CursorWorldPosition();
+        _transform.DOMove(point, TrueSpeed(point));
+    }
+
+    private void Stop()
+    {
+        _transform.DOKill();
     }
 
     private Vector3 CursorWorldPosition()
