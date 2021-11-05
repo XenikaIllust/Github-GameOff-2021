@@ -18,7 +18,7 @@ public class PlayerCharacterController : CharacterController
         // Right click
         if (Input.GetMouseButtonDown(1))
         {
-            Move(CursorWorldPosition());
+            TurnAndMove(CursorWorldPosition());
         }
         else if (Input.GetMouseButton(1))
         {
@@ -28,7 +28,7 @@ public class PlayerCharacterController : CharacterController
             if (_autoClickTimer >= autoClickInterval)
             {
                 _autoClickTimer = float.Epsilon;
-                Move(CursorWorldPosition());
+                TurnAndMove(CursorWorldPosition());
             }
         }
         else if (Input.GetMouseButtonUp(1))

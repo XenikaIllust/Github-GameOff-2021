@@ -3,28 +3,51 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    public float speed = 1f;
+    public float movementSpeed = 1f;
+    public float turnRate = 1f;
 
     protected Transform CharacterTransform;
+    private GameObject _compass;
 
     protected virtual void Awake()
     {
         CharacterTransform = transform;
+
+        _compass = new GameObject("CharacterControllerCompass")
+        {
+            transform =
+            {
+                parent = CharacterTransform
+            }
+        };
     }
 
-    protected void Move(Vector3 destination)
+    public void Stop()
     {
         CharacterTransform.DOKill();
-        CharacterTransform.DOMove(destination, TrueSpeed(destination)).SetEase(Ease.Linear);
+        _compass.transform.DOKill();
     }
 
-    protected void Stop()
+    public void Move(Vector3 destination)
     {
-        CharacterTransform.DOKill();
+        Stop();
+        CharacterTransform.DOMove(destination, movementSpeed).SetSpeedBased().SetEase(Ease.Linear);
     }
 
-    private float TrueSpeed(Vector3 destination)
+    public void TurnAndMove(Vector3 destination)
     {
-        return Vector3.Distance(CharacterTransform.position, destination) / speed;
+        Stop();
+
+        _compass.transform
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToDestination(destination)),
+                turnRate * 360)
+            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
+    }
+
+    private float AngleToDestination(Vector3 destination)
+    {
+        Vector2 angle = destination - CharacterTransform.position;
+
+        return Mathf.Atan2(angle.y, angle.x) * 180 / Mathf.PI;
     }
 }
