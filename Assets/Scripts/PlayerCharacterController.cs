@@ -1,21 +1,16 @@
-using DG.Tweening;
 using UnityEngine;
 
-public class RTSPlayerController2D : MonoBehaviour
+public class PlayerCharacterController : CharacterController
 {
-    public float speed = 1f;
     public float autoClickInterval = 0.1f;
 
     private Camera _camera;
-    private Transform _transform;
-    private float _zPosition;
     private float _autoClickTimer;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _camera = Camera.main;
-        _transform = transform;
-        _zPosition = _transform.position.z;
     }
 
     private void Update()
@@ -47,27 +42,11 @@ public class RTSPlayerController2D : MonoBehaviour
         }
     }
 
-    private void Move(Vector3 destination)
-    {
-        _transform.DOKill();
-        _transform.DOMove(destination, TrueSpeed(destination)).SetEase(Ease.Linear);
-    }
-
-    private void Stop()
-    {
-        _transform.DOKill();
-    }
-
     private Vector3 CursorWorldPosition()
     {
         Vector2 screenPosition = Input.mousePosition;
         Vector3 worldPosition = _camera.ScreenToWorldPoint(screenPosition);
 
-        return new Vector3(worldPosition.x, worldPosition.y, _zPosition);
-    }
-
-    private float TrueSpeed(Vector3 destination)
-    {
-        return Vector3.Distance(_transform.position, destination) / speed;
+        return new Vector3(worldPosition.x, worldPosition.y, CharacterTransform.position.z);
     }
 }
