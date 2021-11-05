@@ -23,19 +23,22 @@ public class RTSPlayerController2D : MonoBehaviour
         // Right click
         if (Input.GetMouseButtonDown(1))
         {
-            Move();
+            Move(CursorWorldPosition());
         }
-
-        // Hold to auto-repeat right click
-        if (Input.GetMouseButton(1))
+        else if (Input.GetMouseButton(1))
         {
+            // Auto-repeat click when held
             _autoClickTimer += Time.deltaTime;
 
             if (_autoClickTimer >= autoClickInterval)
             {
                 _autoClickTimer = float.Epsilon;
-                Move();
+                Move(CursorWorldPosition());
             }
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            _autoClickTimer = float.Epsilon;
         }
 
         if (Input.GetKeyDown(KeyCode.S))
@@ -44,12 +47,10 @@ public class RTSPlayerController2D : MonoBehaviour
         }
     }
 
-    private void Move()
+    private void Move(Vector3 destination)
     {
         _transform.DOKill();
-
-        Vector3 point = CursorWorldPosition();
-        _transform.DOMove(point, TrueSpeed(point));
+        _transform.DOMove(destination, TrueSpeed(destination)).SetEase(Ease.Linear);
     }
 
     private void Stop()
@@ -65,8 +66,8 @@ public class RTSPlayerController2D : MonoBehaviour
         return new Vector3(worldPosition.x, worldPosition.y, _zPosition);
     }
 
-    private float TrueSpeed(Vector3 newVector3)
+    private float TrueSpeed(Vector3 destination)
     {
-        return Vector3.Distance(_transform.position, newVector3) / speed;
+        return Vector3.Distance(_transform.position, destination) / speed;
     }
 }
