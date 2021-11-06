@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
@@ -38,6 +40,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+>>>>>>> d5be70729f40a3b53fc6292da24daa8d26a93d84
 
 # Created by https://www.toptal.com/developers/gitignore/api/unity,csharp,visualstudiocode,jetbrains
 # Edit at https://www.toptal.com/developers/gitignore?templates=unity,csharp,visualstudiocode,jetbrains
@@ -252,7 +255,11 @@ PublishScripts/
 *.nuget.targets
 
 # Nuget personal access tokens and Credentials
+<<<<<<< HEAD
+nuget.config
+=======
 # nuget.config
+>>>>>>> d5be70729f40a3b53fc6292da24daa8d26a93d84
 
 # Microsoft Azure Build Output
 csx/
@@ -609,7 +616,10 @@ sysinfo.txt
 .history
 .ionide
 
+<<<<<<< HEAD
+=======
 # Support for Project snippet scope
 !.vscode/*.code-snippets
 
+>>>>>>> d5be70729f40a3b53fc6292da24daa8d26a93d84
 # End of https://www.toptal.com/developers/gitignore/api/unity,csharp,visualstudiocode,jetbrains
