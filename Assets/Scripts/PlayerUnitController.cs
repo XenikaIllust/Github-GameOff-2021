@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerCharacterController : CharacterController
+public class PlayerUnitController : UnitController
 {
     public float autoClickInterval = 0.1f;
 

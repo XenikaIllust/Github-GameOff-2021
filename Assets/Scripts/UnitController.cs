@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour
+public class UnitController : MonoBehaviour
 {
     public float movementSpeed = 1f;
     public float turnRate = 1f;
