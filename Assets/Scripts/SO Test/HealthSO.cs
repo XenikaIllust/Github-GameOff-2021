@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Scriptable object type that manages the active components of a health mechanic.
+/// As in, current health, taking damage, and recovering
+/// </summary>
 [CreateAssetMenu(fileName = "NewHealthSO", menuName = "Test SO Data/Health SO", order = 1)]
 public class HealthSO : ScriptableObject
 {

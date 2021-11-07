@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// --------------
+///   Damageable
+/// --------------
+/// 
+/// A component for tracking health and damage.
+/// Attach this script to whatever object you want to take damage.
+/// </summary>
 public class Damageable : MonoBehaviour
 {
     [SerializeField] private HealthConfigSO healthConfigSO;

@@ -17,7 +17,7 @@ namespace StateMachine
     /// If you'd like to use a state machine in a class, add the following using directives:
     /// 
     /// using StateMachine;
-    /// using StateMachine.[NameOfMachineToUse];
+    /// using StateMachine.[NameOfMachineToUse]; // If applicable
     /// 
     /// At some point during your script, either at Awake or Start, you'll need to instantiate the state machine
     /// in order to get it to run. The state you provide in the constructor is what state the machine will run first.
@@ -25,7 +25,7 @@ namespace StateMachine
     /// 
     /// playerStateMachine = new StateMachine<PlayerBaseState>(this, new IdleState());
     /// 
-    /// This will automatically start the processing coroutine and, in the case of the above example, start the player
+    /// This will automatically start the processing coroutine and, in the case of the above example, start our player
     /// in the Idle state.
     /// 
     /// To change the state of a state machine, you must instantiate a new state type of the state you'd like to enter.
@@ -33,6 +33,10 @@ namespace StateMachine
     /// 
     /// playerStateMachine.SetNextState(new Jump());
     /// playerStateMachine.SetNextState(new Attack(target, damage);
+    /// 
+    /// To be notified of state changes, you'll need to subscribe to the StateHasChanged delegate.
+    /// StateHasChanged's method signature is a void that takes in a BaseState, and the event fires any time SetNextState
+    /// is called.
     /// 
     /// HOW TO CREATE A NEW STATE MACHINE:
     /// --------------------------------------------
@@ -46,7 +50,7 @@ namespace StateMachine
     /// 
     /// CONSTRUCTOR - The class constructors act as an entry point, naturally, for all states. The default state
     /// constructor takes no parameters, but derived states can define a list of parameters in order to pass along additional
-    /// information to a given state.
+    /// information.
     /// 
     /// PROCESS_STATE - The main function that handles a state's code. This is a coroutine, so be sure to structure your code accordingly.
     /// The coroutine takes in two parameters; subject, which is the object this particular state machine belongs to (ex. the player, an enemy),
@@ -55,7 +59,23 @@ namespace StateMachine
     /// 
     /// next_state_callback(new StateToTransitionTo());
     /// 
-    /// END_OF_STATE_CLEANUP - Automatically called when a state transition happens.
+    /// When working with the subject parameter, you'll need to cast it to whatever type it is in order to use its values. This is due
+    /// to the fact that subject is passed as a MonoBehaviour. So for example, if we were building a state machine for an object of type
+    /// PlayerScript and were building a healing state, we'd need to do the following:
+    /// 
+    /// public override void ProcessState(MonoBehaviour subject, Action<BaseState> next_state_callback)
+    /// {
+    ///     var player = subject as PlayerScript;
+    ///     
+    ///     if (player != null)
+    ///     {
+    ///         player.health += 1;
+    ///         yield return null;
+    ///     }
+    /// }
+    /// 
+    /// END_OF_STATE_CLEANUP - Automatically called when a state transition happens. If your state subscribes to any delegates, this
+    /// is the place where you'd unsubscribe.
     /// 
     /// KNOWN ISSUES
     /// --------------------
@@ -64,9 +84,15 @@ namespace StateMachine
     /// in your game. I'll try to list them and their workarounds below.
     /// 
     /// 1. If two state transitions happen in a single update cycle, the state machine will break completely. This can be avoided by
-    /// putting a yield return null statement at the beginning of your ProcessState coroutine.
+    /// putting a yield return null statement at the beginning of your ProcessState coroutine. For whatever reason the state machine
+    /// needs at least a single frame delay inbetween states in order to function properly.
     /// 
-    /// 2. Make sure the state coroutines don't end! This can cause some weird things to happen.
+    /// 2. Make sure the state coroutines don't end! This can potentially cause some issues. If you need a state to
+    /// just sit and wait for something, consider adding a while(true) loop (just make sure there's a yield return null in there though).
+    /// 
+    /// 3. A state machine's coroutines run on the MonoBehaviour that they're attached to, so if you call StopAllCoroutines(), then
+    /// this will also break the currently running state machine. If this happens, it's possible to restart the state machine by
+    /// reinstantiating it.
     /// 
     /// </summary>
     public class StateMachine<T> where T : BaseState

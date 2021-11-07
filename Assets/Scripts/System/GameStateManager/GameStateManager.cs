@@ -5,6 +5,13 @@ using UnityEngine.SceneManagement;
 using StateMachine;
 using StateMachine.GameStateManager;
 
+/// <summary>
+/// ------------------------
+///    Game State Manager
+/// ------------------------
+/// 
+/// Handles code relating to game flow and scene management.
+/// </summary>
 public class GameStateManager : MonoBehaviour
 {
     [SerializeField] private List<string> scenes;
@@ -39,28 +46,48 @@ public class GameStateManager : MonoBehaviour
         instance.WakeUp();
     }
 
+    /// <summary>
+    /// This is called in order to initialize our singleton instance.
+    /// </summary>
     public void WakeUp() { }
 
+    /// <summary>
+    /// Hooks our events into the EventManager so we can be notified later.
+    /// </summary>
     private void Initialize()
     {
         if (EventManager.instance != null)
         {
             EventManager.StartListening("ChangeScene", ChangeSceneEvent);
 
-            // Initialize everything relating to the state machine
-            state = new StateMachine<GameStateManagerBaseState>(this, new GameStateManagerBaseState());
-            state.SubscribeStateHasChanged(StateMachine_StateHasChanged);
-
-            state.SetNextState(new MenuState());
-            StateMachine_StateHasChanged(new MenuState());
+            InitializeStateMachine();         
         }
     }
 
-    private void StateMachine_StateHasChanged(BaseState new_state)
+    /// <summary>
+    /// Performs initialization actions on the state machine.
+    /// </summary>
+    private void InitializeStateMachine()
     {
-        EventManager.RaiseEvent("GameStateChanged", new_state.ToString());
+        state = new StateMachine<GameStateManagerBaseState>(this, new MenuState());
+
+        state.SubscribeStateHasChanged(StateMachine_StateHasChanged);
+        StateMachine_StateHasChanged(new MenuState());
     }
 
+    /// <summary>
+    /// Callback function for when the state machine changes state.
+    /// </summary>
+    /// <param name="new_state">The state being transitioned to.</param>
+    private void StateMachine_StateHasChanged(BaseState new_state)
+    {
+        EventManager.RaiseEvent("GameStateChanged", new_state);
+    }
+
+    /// <summary>
+    /// Callback function for when we want to change the current scene.
+    /// </summary>
+    /// <param name="o">Should be the name of the next scene.</param>
     private void ChangeSceneEvent(object o)
     {
         string nextSceneName = o as string;

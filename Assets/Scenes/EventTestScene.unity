@@ -579,7 +579,6 @@ GameObject:
   - component: {fileID: 1557516500}
   - component: {fileID: 1557516499}
   - component: {fileID: 1557516503}
-  - component: {fileID: 1557516504}
   - component: {fileID: 1557516505}
   m_Layer: 0
   m_Name: Capsule
@@ -679,20 +678,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthConfigSO: {fileID: 11400000, guid: a1055cbd9bc0fca4486e705103f0ba5c, type: 2}
---- !u!114 &1557516504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1557516498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fcb21e3580f04f4aa17a842b387fff4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  move_direction: {x: 1, y: 0, z: 0}
-  velocity: 2
 --- !u!54 &1557516505
 Rigidbody:
   m_ObjectHideFlags: 0
