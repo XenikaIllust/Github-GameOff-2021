@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AIAgent : Agent
+public class SwarmerAIAgent : Agent
 {
     private void OnEnable()
     {
