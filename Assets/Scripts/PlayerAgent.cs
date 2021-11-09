@@ -1,19 +1,15 @@
 using UnityEngine;
-using UnityEngine.AI;
 
-public class NavMeshAgentController : MonoBehaviour
+public class PlayerAgent : Agent
 {
     public float autoClickInterval = 0.1f;
-
-    private NavMeshAgent _agent;
+    
     private Camera _camera;
     private float _autoClickTimer;
 
-    private void Awake()
+    protected override void Awake()
     {
-        _agent = GetComponent<NavMeshAgent>();
-        _agent.updateRotation = false;
-        _agent.updateUpAxis = false;
+        base.Awake();
         _camera = Camera.main;
     }
 
@@ -22,7 +18,7 @@ public class NavMeshAgentController : MonoBehaviour
         // Right click
         if (Input.GetMouseButtonDown(1))
         {
-            _agent.SetDestination(CursorWorldPosition());
+            agent.SetDestination(CursorWorldPosition());
         }
         else if (Input.GetMouseButton(1))
         {
@@ -32,7 +28,7 @@ public class NavMeshAgentController : MonoBehaviour
             if (_autoClickTimer >= autoClickInterval)
             {
                 _autoClickTimer = float.Epsilon;
-                _agent.SetDestination(CursorWorldPosition());
+                agent.SetDestination(CursorWorldPosition());
             }
         }
         else if (Input.GetMouseButtonUp(1))
@@ -42,7 +38,7 @@ public class NavMeshAgentController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            _agent.SetDestination(transform.position);
+            agent.SetDestination(transform.position);
         }
     }
 
