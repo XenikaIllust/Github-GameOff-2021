@@ -1,15 +1,19 @@
+using UnityEngine;
+
 public class AIAgent : Agent
 {
-    private PlayerAgent _player;
-
-    protected override void Awake()
+    private void OnEnable()
     {
-        base.Awake();
-        _player = FindObjectOfType<PlayerAgent>();
+        EventManager.StartListening("OnPlayerPositionChanged", OnPlayerPositionChanged);
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        agent.SetDestination(_player.transform.position);
+        EventManager.StopListening("OnPlayerPositionChanged", OnPlayerPositionChanged);
+    }
+
+    private void OnPlayerPositionChanged(object newPosition)
+    {
+        agent.SetDestination((Vector3)newPosition);
     }
 }

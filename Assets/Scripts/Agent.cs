@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class Agent : MonoBehaviour
 {
-    public NavMeshAgent agent;
+    [HideInInspector] public NavMeshAgent agent;
 
     protected virtual void Awake()
     {

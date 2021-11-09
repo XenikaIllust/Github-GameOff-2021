@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class PlayerAgent : Agent
 {
-    public float autoClickInterval = 0.1f;
-    
-    private Camera _camera;
+    [Header("Input")] public float autoClickInterval = 0.1f;
     private float _autoClickTimer;
+    [Header("Misc.")] public float positionUpdateInterval = 0.1f;
+    private float _positionUpdateTimer;
+    private Camera _camera;
 
     protected override void Awake()
     {
@@ -13,12 +14,41 @@ public class PlayerAgent : Agent
         _camera = Camera.main;
     }
 
+    private void OnEnable()
+    {
+        EventManager.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        EventManager.StartListening("OnStopOrderIssued", OnStopOrderIssued);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        EventManager.StopListening("OnStopOrderIssued", OnStopOrderIssued);
+    }
+
     private void Update()
     {
-        // Right click
+        UpdatePosition();
+        PlayerInput();
+    }
+
+    private void UpdatePosition()
+    {
+        _positionUpdateTimer += Time.deltaTime;
+
+        if (_positionUpdateTimer >= positionUpdateInterval)
+        {
+            _positionUpdateTimer = float.Epsilon;
+            EventManager.RaiseEvent("OnPlayerPositionChanged", transform.position);
+        }
+    }
+
+    private void PlayerInput()
+    {
+        // Right mouse button
         if (Input.GetMouseButtonDown(1))
         {
-            agent.SetDestination(CursorWorldPosition());
+            EventManager.RaiseEvent("OnMoveOrderIssued", CursorWorldPosition());
         }
         else if (Input.GetMouseButton(1))
         {
@@ -28,7 +58,7 @@ public class PlayerAgent : Agent
             if (_autoClickTimer >= autoClickInterval)
             {
                 _autoClickTimer = float.Epsilon;
-                agent.SetDestination(CursorWorldPosition());
+                EventManager.RaiseEvent("OnMoveOrderIssued", CursorWorldPosition());
             }
         }
         else if (Input.GetMouseButtonUp(1))
@@ -36,9 +66,10 @@ public class PlayerAgent : Agent
             _autoClickTimer = float.Epsilon;
         }
 
+        // 'S' key
         if (Input.GetKeyDown(KeyCode.S))
         {
-            agent.SetDestination(transform.position);
+            EventManager.RaiseEvent("OnStopOrderIssued", null);
         }
     }
 
@@ -48,5 +79,15 @@ public class PlayerAgent : Agent
         Vector3 worldPosition = _camera.ScreenToWorldPoint(screenPosition);
 
         return new Vector3(worldPosition.x, worldPosition.y, transform.position.z);
+    }
+
+    private void OnMoveOrderIssued(object destination)
+    {
+        agent.SetDestination((Vector3)destination);
+    }
+
+    private void OnStopOrderIssued(object arg0)
+    {
+        agent.SetDestination(transform.position);
     }
 }
