@@ -16,6 +16,8 @@ public class Unit : MonoBehaviour
     EventProcessor unitEventHandler;
 
     [HideInInspector] public NavMeshAgent agent;
+    [Header("Misc.")] public float positionUpdateInterval = 0.1f;
+    private float _positionUpdateTimer;
 
     private void Awake()
     {
@@ -26,16 +28,20 @@ public class Unit : MonoBehaviour
         agent.updateUpAxis = false;
     }
 
+    private void Update() {
+        UpdatePosition();
+    }
+
     private void OnEnable()
     {
         unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
-        EventManager.StartListening("OnStopOrderIssued", OnStopOrderIssued);
+        unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
     }
 
     private void OnDisable()
     {
-        EventManager.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
-        EventManager.StopListening("OnStopOrderIssued", OnStopOrderIssued);
+        unitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        unitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
     }
 
     private void OnMoveOrderIssued(object destination)
@@ -46,5 +52,16 @@ public class Unit : MonoBehaviour
     private void OnStopOrderIssued(object arg0)
     {
         agent.SetDestination(transform.position);
+    }
+
+    private void UpdatePosition()
+    {
+        _positionUpdateTimer += Time.deltaTime;
+
+        if (_positionUpdateTimer >= positionUpdateInterval)
+        {
+            _positionUpdateTimer = float.Epsilon;
+            EventManager.RaiseEvent("OnPlayerPositionChanged", transform.position);
+        }
     }
 }

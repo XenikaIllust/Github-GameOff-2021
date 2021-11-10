@@ -4,8 +4,7 @@ public class PlayerAgent : Agent
 {
     [Header("Input")] public float autoClickInterval = 0.1f;
     private float _autoClickTimer;
-    [Header("Misc.")] public float positionUpdateInterval = 0.1f;
-    private float _positionUpdateTimer;
+
     private Camera _camera;
 
     protected override void Awake()
@@ -16,20 +15,20 @@ public class PlayerAgent : Agent
 
     private void Update()
     {
-        UpdatePosition();
+        // UpdatePosition();
         PlayerInput();
     }
 
-    private void UpdatePosition()
-    {
-        _positionUpdateTimer += Time.deltaTime;
+    // private void UpdatePosition()
+    // {
+    //     _positionUpdateTimer += Time.deltaTime;
 
-        if (_positionUpdateTimer >= positionUpdateInterval)
-        {
-            _positionUpdateTimer = float.Epsilon;
-            unitEventHandler.RaiseEvent("OnPlayerPositionChanged", transform.position);
-        }
-    }
+    //     if (_positionUpdateTimer >= positionUpdateInterval)
+    //     {
+    //         _positionUpdateTimer = float.Epsilon;
+    //         unitEventHandler.RaiseEvent("OnPlayerPositionChanged", transform.position);
+    //     }
+    // }
 
     private void PlayerInput()
     {
