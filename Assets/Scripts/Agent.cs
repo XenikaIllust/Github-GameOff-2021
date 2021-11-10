@@ -1,14 +1,10 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Agent : MonoBehaviour
 {
-    [HideInInspector] public NavMeshAgent agent;
+    protected EventProcessor unitEventHandler;
 
-    protected virtual void Awake()
-    {
-        agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
+    protected virtual void Awake() {
+        unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler; 
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// --------
@@ -12,12 +13,60 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     // Event processor for handling internal messages
-    private EventProcessor unitEvents;
-    public EventProcessor UnitEvents => unitEvents;
+    EventProcessor unitEventHandler;
+
+    [HideInInspector] public bool isPlayer;
+    [HideInInspector] public NavMeshAgent agent;
+    [Header("Misc.")] public float positionUpdateInterval = 0.1f;
+    private float _positionUpdateTimer;
 
     private void Awake()
     {
-        // Initialize EventProcessor so we can start sending and receiving events
-        unitEvents = new EventProcessor();
+        unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
+
+        isPlayer = GetComponent<PlayerAgent>() != null;
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+    }
+
+    private void Update()
+    {
+        UpdatePosition();
+    }
+
+    private void Start()
+    {
+        unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
+    }
+
+    private void OnDisable()
+    {
+        unitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        unitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
+    }
+
+    private void OnMoveOrderIssued(object destination)
+    {
+        agent.SetDestination((Vector3)destination);
+    }
+
+    private void OnStopOrderIssued(object arg0)
+    {
+        agent.SetDestination(transform.position);
+    }
+
+    private void UpdatePosition()
+    {
+        if (!isPlayer) return;
+
+        _positionUpdateTimer += Time.deltaTime;
+
+        if (_positionUpdateTimer >= positionUpdateInterval)
+        {
+            _positionUpdateTimer = float.Epsilon;
+            EventManager.RaiseEvent("OnPlayerPositionChanged", transform.position);
+        }
     }
 }

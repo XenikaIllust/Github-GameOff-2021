@@ -6,7 +6,7 @@ using UnityEngine;
 /// Scriptable object type that manages the active components of a health mechanic.
 /// As in, current health, taking damage, and recovering
 /// </summary>
-[CreateAssetMenu(fileName = "NewHealthSO", menuName = "Test SO Data/Health SO", order = 1)]
+[CreateAssetMenu(fileName = "NewHealthSO", menuName = "Scriptable Objects/Health/Health SO", order = 1)]
 public class HealthSO : ScriptableObject
 {
     [SerializeField] private int maxHealth;
