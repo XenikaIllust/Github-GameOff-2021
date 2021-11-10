@@ -15,20 +15,8 @@ public class PlayerAgent : Agent
 
     private void Update()
     {
-        // UpdatePosition();
         PlayerInput();
     }
-
-    // private void UpdatePosition()
-    // {
-    //     _positionUpdateTimer += Time.deltaTime;
-
-    //     if (_positionUpdateTimer >= positionUpdateInterval)
-    //     {
-    //         _positionUpdateTimer = float.Epsilon;
-    //         unitEventHandler.RaiseEvent("OnPlayerPositionChanged", transform.position);
-    //     }
-    // }
 
     private void PlayerInput()
     {
