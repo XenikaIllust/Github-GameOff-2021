@@ -20,6 +20,8 @@ public class Unit : MonoBehaviour
     [Header("Misc.")] public float positionUpdateInterval = 0.1f;
     private float _positionUpdateTimer;
 
+    // List<Ability> abilities;
+
     private void Awake()
     {
         unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
