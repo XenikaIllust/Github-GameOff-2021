@@ -41,11 +41,11 @@ public class SwarmerAIAgent : Agent
 
     private void ChasePlayer()
     {
-        agent.SetDestination(_playerPosition);
+        unitEventHandler.RaiseEvent("MoveOrderIssued", _playerPosition);
     }
 
     private void Stop()
     {
-        agent.SetDestination(transform.position);
+        unitEventHandler.RaiseEvent("MoveOrderIssued", transform.position);
     }
 }
