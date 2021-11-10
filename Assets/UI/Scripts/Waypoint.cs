@@ -42,7 +42,7 @@ public class Waypoint : MonoBehaviour
     {
         Vector2 targetPosition = Camera.main.WorldToScreenPoint(target.position);
 
-        return targetPosition.x <= radius || targetPosition.x >= Screen.width-radius || targetPosition.y <= radius || targetPosition.y >= Screen.height-radius;
+        return targetPosition.x <= 0 || targetPosition.x >= Screen.width || targetPosition.y <= 0 || targetPosition.y >= Screen.height;
     }
 
     // If objective is on screen, hide the waypoint.
