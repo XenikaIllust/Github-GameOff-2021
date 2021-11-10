@@ -15,6 +15,7 @@ public class Unit : MonoBehaviour
     // Event processor for handling internal messages
     EventProcessor unitEventHandler;
 
+    [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
     [Header("Misc.")] public float positionUpdateInterval = 0.1f;
     private float _positionUpdateTimer;
@@ -23,12 +24,14 @@ public class Unit : MonoBehaviour
     {
         unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
 
+        isPlayer = GetComponent<PlayerAgent>() != null;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
     }
 
-    private void Update() {
+    private void Update()
+    {
         UpdatePosition();
     }
 
@@ -56,6 +59,8 @@ public class Unit : MonoBehaviour
 
     private void UpdatePosition()
     {
+        if (!isPlayer) return;
+
         _positionUpdateTimer += Time.deltaTime;
 
         if (_positionUpdateTimer >= positionUpdateInterval)
