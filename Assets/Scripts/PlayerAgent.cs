@@ -14,18 +14,6 @@ public class PlayerAgent : Agent
         _camera = Camera.main;
     }
 
-    private void OnEnable()
-    {
-        EventManager.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
-        EventManager.StartListening("OnStopOrderIssued", OnStopOrderIssued);
-    }
-
-    private void OnDisable()
-    {
-        EventManager.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
-        EventManager.StopListening("OnStopOrderIssued", OnStopOrderIssued);
-    }
-
     private void Update()
     {
         UpdatePosition();
@@ -39,7 +27,7 @@ public class PlayerAgent : Agent
         if (_positionUpdateTimer >= positionUpdateInterval)
         {
             _positionUpdateTimer = float.Epsilon;
-            EventManager.RaiseEvent("OnPlayerPositionChanged", transform.position);
+            unitEventHandler.RaiseEvent("OnPlayerPositionChanged", transform.position);
         }
     }
 
@@ -48,7 +36,7 @@ public class PlayerAgent : Agent
         // Right mouse button
         if (Input.GetMouseButtonDown(1))
         {
-            EventManager.RaiseEvent("OnMoveOrderIssued", CursorWorldPosition());
+            unitEventHandler.RaiseEvent("OnMoveOrderIssued", CursorWorldPosition());
         }
         else if (Input.GetMouseButton(1))
         {
@@ -58,7 +46,7 @@ public class PlayerAgent : Agent
             if (_autoClickTimer >= autoClickInterval)
             {
                 _autoClickTimer = float.Epsilon;
-                EventManager.RaiseEvent("OnMoveOrderIssued", CursorWorldPosition());
+                unitEventHandler.RaiseEvent("OnMoveOrderIssued", CursorWorldPosition());
             }
         }
         else if (Input.GetMouseButtonUp(1))
@@ -69,7 +57,7 @@ public class PlayerAgent : Agent
         // 'S' key
         if (Input.GetKeyDown(KeyCode.S))
         {
-            EventManager.RaiseEvent("OnStopOrderIssued", null);
+            unitEventHandler.RaiseEvent("OnStopOrderIssued", null);
         }
     }
 
@@ -79,15 +67,5 @@ public class PlayerAgent : Agent
         Vector3 worldPosition = _camera.ScreenToWorldPoint(screenPosition);
 
         return new Vector3(worldPosition.x, worldPosition.y, transform.position.z);
-    }
-
-    private void OnMoveOrderIssued(object destination)
-    {
-        agent.SetDestination((Vector3)destination);
-    }
-
-    private void OnStopOrderIssued(object arg0)
-    {
-        agent.SetDestination(transform.position);
     }
 }
