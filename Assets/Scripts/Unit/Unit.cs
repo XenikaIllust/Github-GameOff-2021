@@ -22,7 +22,6 @@ public class Unit : MonoBehaviour
     private void Awake()
     {
         unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
-        print(gameObject.name + " " + unitEventHandler);
 
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;

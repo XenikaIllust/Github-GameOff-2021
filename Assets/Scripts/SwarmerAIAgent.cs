@@ -41,11 +41,13 @@ public class SwarmerAIAgent : Agent
 
     private void ChasePlayer()
     {
-        unitEventHandler.RaiseEvent("MoveOrderIssued", _playerPosition);
+        print("ChasePlayer invoked!");
+        unitEventHandler.RaiseEvent("OnMoveOrderIssued", _playerPosition);
     }
 
     private void Stop()
     {
-        unitEventHandler.RaiseEvent("MoveOrderIssued", transform.position);
+        print("Stop invoked!");
+        unitEventHandler.RaiseEvent("OnMoveOrderIssued", transform.position);
     }
 }
