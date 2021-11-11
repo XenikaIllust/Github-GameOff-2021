@@ -13,6 +13,7 @@ public class SniperAIAgent : Agent
     public float aimTime = 5f;
 
     private bool _isAiming;
+    private bool _isShooting; // TODO: delete this line later, only for testing visual
     private Vector3 _playerPosition;
 
     private void OnEnable()
@@ -35,10 +36,12 @@ public class SniperAIAgent : Agent
     {
         if (_isAiming)
         {
+            if (_isShooting) return; // TODO: delete this line later, only for testing visual
             Turn();
         }
         else
         {
+            if (_isShooting) return; // TODO: delete this line later, only for testing visual
             float distanceFromPlayer = Vector3.Distance(transform.position, _playerPosition);
 
             // Calculate utility value
@@ -89,6 +92,7 @@ public class SniperAIAgent : Agent
         compass.transform.DOKill();
         compass.transform.DOScaleX(100f, float.Epsilon).SetEase(Ease.Linear);
 
+        _isShooting = true; // TODO: delete this line later, only for testing visual
         Invoke(nameof(ResetAim), 0.5f);
     }
 
@@ -97,6 +101,7 @@ public class SniperAIAgent : Agent
         compass.SetActive(false);
         compass.transform.DOScaleX(5f, float.Epsilon);
 
+        _isShooting = false; // TODO: delete this line later, only for testing visual
         _isAiming = false;
     }
 
