@@ -17,5 +17,6 @@ public class DisappearAction : GameAction
         DisappearActionData disappearActionData = (DisappearActionData) param;
 
         // become invisible
+        disappearActionData.unitToDisappear.GetComponent<SpriteRenderer>().enabled = false;
     }
 }

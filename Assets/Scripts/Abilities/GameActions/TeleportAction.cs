@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public struct TeleportActionData {
     public Unit unitToTeleport;
@@ -17,12 +18,17 @@ public class TeleportAction : GameAction
 {
     public override void Invoke(object param)
     {
+        Debug.Log(param);
         TeleportActionData teleportActionData = (TeleportActionData) param;
 
         // change position
         Unit unitToTeleport = teleportActionData.unitToTeleport;
         Vector2 teleportPos = teleportActionData.teleportPos;
 
-        unitToTeleport.transform.position = new Vector3(teleportPos.x, teleportPos.y, unitToTeleport.transform.position.z);
+        NavMeshAgent navMeshAgent = unitToTeleport.GetComponent<NavMeshAgent>();
+
+        Vector3 targetPosition = new Vector3(teleportPos.x, teleportPos.y, unitToTeleport.transform.position.z);
+        unitToTeleport.transform.position = targetPosition;
+        navMeshAgent.Warp(targetPosition);
     }
 } 

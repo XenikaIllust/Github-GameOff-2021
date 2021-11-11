@@ -20,7 +20,7 @@ public class Unit : MonoBehaviour
     [Header("Misc.")] public float positionUpdateInterval = 0.1f;
     private float _positionUpdateTimer;
 
-    List<Ability> abilities;
+    [SerializeField] List<Ability> abilities;
 
     private void Awake()
     {
@@ -32,17 +32,30 @@ public class Unit : MonoBehaviour
         agent.updateUpAxis = false;
     }
 
-    private void Update()
-    {
-        UpdatePosition();
-    }
-
     private void Start()
     {
         unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
         unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
+    }
 
-        ExecuteAbility(abilities[0]); // testing
+    private void Update()
+    {
+        UpdatePosition();
+
+        if(Input.GetKeyUp(KeyCode.Q)) {
+            List<List<object>> param = new List<List<object>>();
+
+            List<object> outcome1Param = new List<object>(); 
+            outcome1Param.Add( new DisappearActionData(this) ); // construct data struct for disappear gameAction
+            param.Add(outcome1Param);
+
+            List<object> outcome2Param = new List<object>();
+            outcome2Param.Add( new TeleportActionData(this, new Vector2(2,2)) );
+            outcome2Param.Add( new ReappearActionData(this) ); // construct data struct for reappear gameAction
+            param.Add(outcome2Param);
+
+            ExecuteAbility(abilities[0], param); // testing first skill, "Blink"
+        }
     }
 
     private void OnDisable()
@@ -74,8 +87,9 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void ExecuteAbility(Ability ability, object param) {
-        foreach(Outcome outcome in ability.Outcomes) {
+    public void ExecuteAbility(Ability ability, List<List<object>> outcomeParameters) {
+        for(int i = 0; i < ability.Outcomes.Length; i++) {
+            Outcome outcome = ability.Outcomes[i];
             float executionTime;
             if(outcome.Trigger.IsNormalizedTime) {
                 executionTime = outcome.Trigger.ExecutionTime * ability.Duration;
@@ -84,16 +98,18 @@ public class Unit : MonoBehaviour
                 executionTime = outcome.Trigger.ExecutionTime;
             }
 
-            StartCoroutine(ExecuteOutcome(outcome, executionTime));
+            StartCoroutine(ExecuteOutcome(outcome, executionTime, outcomeParameters[i]));
         }
     }
 
-    IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute) {
+    IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, object param) {
+        List<object> outcomeParams = (List<object>) param;
+
         yield return new WaitForSeconds(timeToExecute);
 
-        foreach(GameAction gameAction in outcome.Effects) {
-            // gameAction.Invoke(param);
-            print(gameAction.name + " invoked!");
+        for(int i = 0; i < outcome.Effects.Length; i++) {
+            GameAction gameAction = outcome.Effects[i];
+            gameAction.Invoke(outcomeParams[i]);
         }
     }
 }

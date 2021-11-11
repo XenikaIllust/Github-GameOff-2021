@@ -17,6 +17,7 @@ public class ReappearAction : GameAction
     {
         ReappearActionData reappearActionData = (ReappearActionData) param;
 
-        // become invisible
+        // become visible
+        reappearActionData.unitToReappear.GetComponent<SpriteRenderer>().enabled = true;
     }
 }   

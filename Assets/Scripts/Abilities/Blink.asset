@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: Blink
   m_EditorClassIdentifier: 
-  Duration: 0.5
+  Duration: 2
   Cooldown: 5
   Outcomes:
   - Id: Disappear
@@ -23,10 +23,11 @@ MonoBehaviour:
       Type: 0
       TargetFilter: {fileID: 0}
       PreviousOutcomeId: 
-    Effects: []
+    Effects:
+    - {fileID: 11400000, guid: 2d72a3468b1000249b7e0a5ae82f98bc, type: 2}
   - Id: Reappear and Teleport
     Trigger:
-      ExecutionTime: 0.5
+      ExecutionTime: 1
       IsNormalizedTime: 1
     Targeting:
       Type: 0
@@ -34,3 +35,4 @@ MonoBehaviour:
       PreviousOutcomeId: 
     Effects:
     - {fileID: 11400000, guid: 1e92247e4d8679a4a93e1da975cb1f48, type: 2}
+    - {fileID: 11400000, guid: 5fbaac34ccd01a54d8c39db1b3b267ce, type: 2}
