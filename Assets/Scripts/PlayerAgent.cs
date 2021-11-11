@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAgent : Agent
@@ -6,6 +9,8 @@ public class PlayerAgent : Agent
     private float _autoClickTimer;
 
     private Camera _camera;
+
+	private enum AbilityType {TargetPoint, TargetUnit, TargetArea, NoTarget};
 
     protected override void Awake()
     {
@@ -55,4 +60,31 @@ public class PlayerAgent : Agent
 
         return new Vector3(worldPosition.x, worldPosition.y, transform.position.z);
     }
+
+	// PLACEHOLDER CODE FOR TESTING AbilityInputType.cs
+	private Func<bool> targetInput;
+	IEnumerator ProcessTargetInput(AbilityType abilityType)
+	{
+		if (abilityType == AbilityType.TargetPoint)
+		{
+			yield return new WaitUntil(() => Input.GetMouseButton(0)); // Wait until the player presses the Left Click
+			targetInput = AbilityInputType.PointTargetInput;
+		}
+		else if (abilityType == AbilityType.TargetUnit)
+		{
+			yield return new WaitUntil(() => Input.GetMouseButton(0)); // Wait until the player presses the Left Click
+			targetInput = AbilityInputType.UnitTargetInput;
+		}
+		else if (abilityType == AbilityType.TargetArea)
+		{
+			yield return new WaitUntil(() => Input.GetMouseButton(0)); // Wait until the player presses the Left Click
+			targetInput = AbilityInputType.AOETargetInput;
+		}
+		else if (abilityType == AbilityType.NoTarget)
+		{
+			targetInput = AbilityInputType.NoTargetInput;
+		}
+		yield return new WaitUntil(() => targetInput());
+	}
+
 }
