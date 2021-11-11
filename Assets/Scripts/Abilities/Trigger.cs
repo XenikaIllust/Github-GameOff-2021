@@ -5,6 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class Trigger
 {
-  public float ExecutionTime;
-  public bool IsNormalizedTime;
+    public float ExecutionTime;
+    public bool IsNormalizedTime;
 }

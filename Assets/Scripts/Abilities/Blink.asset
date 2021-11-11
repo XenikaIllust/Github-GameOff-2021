@@ -15,19 +15,19 @@ MonoBehaviour:
   Duration: 0.5
   Cooldown: 5
   Outcomes:
-  - Id: 
+  - Id: Disappear
     Trigger:
       ExecutionTime: 0
-      IsNormalizedTime: 0
+      IsNormalizedTime: 1
     Targeting:
       Type: 0
       TargetFilter: {fileID: 0}
       PreviousOutcomeId: 
     Effects: []
-  - Id: 
+  - Id: Reappear and Teleport
     Trigger:
-      ExecutionTime: 0
-      IsNormalizedTime: 0
+      ExecutionTime: 0.5
+      IsNormalizedTime: 1
     Targeting:
       Type: 0
       TargetFilter: {fileID: 0}
