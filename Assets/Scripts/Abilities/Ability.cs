@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ability : MonoBehaviour
+[CreateAssetMenu(fileName = "Ability", menuName = "Scriptable Objects/Ability/Ability SO")]
+public class Ability : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public float Duration;
+    public float Cooldown;
+    public Outcome[] Outcomes;
 }
