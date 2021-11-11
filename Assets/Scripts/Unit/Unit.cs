@@ -20,7 +20,7 @@ public class Unit : MonoBehaviour
     [Header("Misc.")] public float positionUpdateInterval = 0.1f;
     private float _positionUpdateTimer;
 
-    // List<Ability> abilities;
+    List<Ability> abilities;
 
     private void Awake()
     {
@@ -41,6 +41,8 @@ public class Unit : MonoBehaviour
     {
         unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
         unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
+
+        ExecuteAbility(abilities[0]); // testing
     }
 
     private void OnDisable()
@@ -69,6 +71,29 @@ public class Unit : MonoBehaviour
         {
             _positionUpdateTimer = float.Epsilon;
             EventManager.RaiseEvent("OnPlayerPositionChanged", transform.position);
+        }
+    }
+
+    public void ExecuteAbility(Ability ability, object param) {
+        foreach(Outcome outcome in ability.Outcomes) {
+            float executionTime;
+            if(outcome.Trigger.IsNormalizedTime) {
+                executionTime = outcome.Trigger.ExecutionTime * ability.Duration;
+            }
+            else {
+                executionTime = outcome.Trigger.ExecutionTime;
+            }
+
+            StartCoroutine(ExecuteOutcome(outcome, executionTime));
+        }
+    }
+
+    IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute) {
+        yield return new WaitForSeconds(timeToExecute);
+
+        foreach(GameAction gameAction in outcome.Effects) {
+            // gameAction.Invoke(param);
+            print(gameAction.name + " invoked!");
         }
     }
 }
