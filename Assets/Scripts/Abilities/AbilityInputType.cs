@@ -2,9 +2,13 @@ using UnityEngine;
 
 static class AbilityInputType
 {
+	// static private Texture2D cursorTexture = null;
+	// static private Texture2D AreaTexture = null;
+
 	public static bool PointTargetInput()
 	{
-		// (TODO) Change cursor to selection cursor
+		// Change cursor to selection cursor
+		// Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
 
 		// (TODO) Check if the target is valid (is above terrain for example)
 		
@@ -16,7 +20,8 @@ static class AbilityInputType
 		object targetCoordinates = targetPoint;
 		EventManager.RaiseEvent("OnAbilityInputSet", targetCoordinates);
 
-		// (TODO) Change cursor back to default
+		// Change cursor back to default
+		// Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
 		Debug.Log("Skill Shot at " + targetPoint);
 		return true;
@@ -25,28 +30,44 @@ static class AbilityInputType
 	public static bool UnitTargetInput()
 	{
 		// (TODO) Change cursor to selection cursor
+		// Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
 
 		// (TODO) Get target and check that it's not null
+		Vector2 screenPosition = Input.mousePosition;
+		Unit selectedTarget = new Unit();
 
-		// (TODO) Send Unit target as event param
+		// Send Unit target as event param
+		object target = selectedTarget;
+		EventManager.RaiseEvent("OnAbilityInputSet", target);
 
-		// (TODO) Change cursor back to default
-		Debug.Log("UnitTargetInput");
+		// Change cursor back to default
+		// Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+
+		Debug.Log(selectedTarget + " was selected.");
 		return true;
 	}
 
 	public static bool AOETargetInput(/*float radius*/)
 	{
-		// (TODO) Change cursor to selection cursor
+		float radius = 1.0f; // PLACEHOLDER UNTIL I FIND A BETTER SOLUTION
 
-		// (TODO) Check if you are above valid terrain
+		// Change cursor to selection cursor
+		// Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
 
-		// (TODO) Calculate mouse position
+		// (TODO) Check if the target is valid (is above terrain for example)
 
-		// (TODO) Send Vector3 centerCoordinates as event param
+		// Calculate mouse position
+		Vector2 screenPosition = Input.mousePosition;
+		Vector3 centerPoint = Camera.main.ScreenToWorldPoint(screenPosition);
 
-		// (TODO) Change cursor back to default
-		Debug.Log("AOETargetInput");
+		// Send Vector3 centerCoordinates as event param
+		object centerCoordinates = centerPoint;
+		EventManager.RaiseEvent("OnAbilityInputSet", centerCoordinates);
+
+		// Change cursor back to default
+		// Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+
+		Debug.Log("AOE fired at " + centerPoint + " with a radius of " + radius);
 		return true;
 	}
 
