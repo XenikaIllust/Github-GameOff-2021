@@ -88,6 +88,7 @@ public class Unit : MonoBehaviour
 
     private void Stop(object arg0)
     {
+        _pseudoObject.transform.DOKill();
         agent.SetDestination(transform.position);
     }
 
@@ -106,6 +107,8 @@ public class Unit : MonoBehaviour
 
     public void TurnAndMove(object targetPoint)
     {
+        Stop(null);
+
         _pseudoObject.transform
             .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToDestination((Vector3)targetPoint)),
                 turnRate * 360)
