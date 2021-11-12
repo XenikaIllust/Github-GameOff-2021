@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,18 +17,15 @@ public class Unit : MonoBehaviour
     // Internal event handler
     EventProcessor unitEventHandler;
 
+    [Header("Stats")]
+    public float movementSpeed = 3.5f;
+    public float turnRate = 5f;
+    
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
-    [Header("Misc.")] public float positionUpdateInterval = 0.1f;
+    [Header("Misc.")] public float updateInterval = 0.1f;
     private float _positionUpdateTimer;
-
-    Vector2 direction = Vector2.zero;
-
-    float pseudoYRotation = 0f;
-    public float PseudoYRotation {
-        get { return pseudoYRotation; }
-        set { pseudoYRotation = value; }
-    }
+    private GameObject _pseudoObject;
 
     [SerializeField] List<Ability> abilities;
 
@@ -39,14 +37,28 @@ public class Unit : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+        agent.speed = movementSpeed;
+        agent.acceleration = float.MaxValue;
+        agent.angularSpeed = float.MaxValue;
+        agent.autoBraking = true;
+        
+        _pseudoObject = new GameObject("PseudoObject")
+        {
+            transform =
+            {
+                parent = transform
+            }
+        };
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        unitEventHandler.StartListening("OnMoveOrderIssued", Move);
+        unitEventHandler.StartListening("OnMoveOrderIssued", TurnAndDoSomething);
         unitEventHandler.StartListening("OnStopOrderIssued", Stop);
 
         EventManager.StartListening("OnAbilityInputSet", AbilityInputHandler); // temporary for testing
+        
+        
     }
 
     private void Update()
@@ -71,7 +83,7 @@ public class Unit : MonoBehaviour
 
     private void OnDisable()
     {
-        unitEventHandler.StopListening("OnMoveOrderIssued", Move);
+        unitEventHandler.StopListening("OnMoveOrderIssued", TurnAndDoSomething);
         unitEventHandler.StopListening("OnStopOrderIssued", Stop);
     }
 
@@ -87,56 +99,30 @@ public class Unit : MonoBehaviour
 
     private void UpdatePosition()
     {
-        UpdatePseudoRotation();
-
         if (!isPlayer) return;
 
         _positionUpdateTimer += Time.deltaTime;
 
-        if (_positionUpdateTimer >= positionUpdateInterval)
+        if (_positionUpdateTimer >= updateInterval)
         {
             _positionUpdateTimer = float.Epsilon;
             EventManager.RaiseEvent("OnPlayerPositionChanged", transform.position);
         }
     }
 
-    private void UpdatePseudoRotation() 
+    public void TurnAndDoSomething(object targetPoint)
     {
-        RotateToFacePoint((Vector2) agent.steeringTarget);
+        _pseudoObject.transform
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToDestination((Vector3)targetPoint)), 
+                turnRate * 360)
+            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(targetPoint));
     }
+    
+    private float AngleToDestination(Vector3 destination)
+    {
+        Vector2 angle = destination - transform.position;
 
-    public void RotateToFacePoint(Vector2 targetPoint) {
-        float xDiff = targetPoint.x - transform.position.x;
-        float yDiff = targetPoint.y - transform.position.y;
-
-        // if the unit has stopped moving, the calculation for bearing will break because xDiff and yDiff becomes 0.
-        // return before it breaks pseudoYRotation
-        if(Mathf.Round(xDiff * 100) / 100 == 0 && Mathf.Round(yDiff * 100) / 100 == 0) 
-        { 
-            return; 
-        }
-
-        // we take the absolute differences, just to assume they are in the 1st quadrant. We will deal with signage later.
-        float absXDiff = Mathf.Abs(xDiff);
-        float absYDiff = Mathf.Abs(yDiff);
-
-        // we are calculating the tangent with respect to the y axis. This is so that rotation convention follows compass bearing.
-        float angle = Mathf.Atan( absXDiff / absYDiff ) * Mathf.Rad2Deg;
-
-        // now we need to consider the 4 quadrants (+x +y, +x -y, -x -y, -x +y), going clockwise.
-        // i know it could have been written in a more shorthand way but I explicitly wanted to show the logic
-        if(xDiff >= Mathf.Epsilon && yDiff >= Mathf.Epsilon) {
-            pseudoYRotation = angle;
-        }
-        else if(xDiff >= Mathf.Epsilon && yDiff < Mathf.Epsilon) {
-            pseudoYRotation = 180 - angle;
-        }
-        else if(xDiff < Mathf.Epsilon && yDiff < Mathf.Epsilon) {
-            pseudoYRotation = 180 + angle;
-        }
-        else {
-            pseudoYRotation = 360 - angle;
-        }
+        return Mathf.Atan2(angle.y, angle.x) * 180 / Mathf.PI;
     }
 
     public IEnumerator ExecuteAbility(Ability ability, List<List<object>> outcomeParameters) 
