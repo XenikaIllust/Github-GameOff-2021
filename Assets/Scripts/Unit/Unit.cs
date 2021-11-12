@@ -52,6 +52,12 @@ public class Unit : MonoBehaviour
         EventManager.StartListening("OnAbilityInputSet", AbilityInputHandler); // temporary for testing
     }
 
+    private void OnDisable()
+    {
+        _unitEventHandler.StopListening("OnMoveOrderIssued", TurnAndMove);
+        _unitEventHandler.StopListening("OnStopOrderIssued", Stop);
+    }
+
     private void Update()
     {
         UpdatePosition();
@@ -75,10 +81,10 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void Stop(object @null)
     {
-        _unitEventHandler.StopListening("OnMoveOrderIssued", TurnAndMove);
-        _unitEventHandler.StopListening("OnStopOrderIssued", Stop);
+        _pseudoObject.transform.DOKill();
+        agent.SetDestination(transform.position);
     }
 
     private void Move(object destination)
@@ -86,10 +92,14 @@ public class Unit : MonoBehaviour
         agent.SetDestination((Vector3)destination);
     }
 
-    private void Stop(object arg0)
+    public void TurnAndMove(object destination)
     {
-        _pseudoObject.transform.DOKill();
-        agent.SetDestination(transform.position);
+        Stop(null);
+
+        _pseudoObject.transform
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToDestination((Vector3)destination)),
+                turnRate * 360)
+            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
     }
 
     private void UpdatePosition()
@@ -103,16 +113,6 @@ public class Unit : MonoBehaviour
             _positionUpdateTimer = float.Epsilon;
             EventManager.RaiseEvent("OnPlayerPositionChanged", transform.position);
         }
-    }
-
-    public void TurnAndMove(object targetPoint)
-    {
-        Stop(null);
-
-        _pseudoObject.transform
-            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToDestination((Vector3)targetPoint)),
-                turnRate * 360)
-            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(targetPoint));
     }
 
     private float AngleToDestination(Vector3 destination)
