@@ -45,6 +45,8 @@ public class Unit : MonoBehaviour
     {
         unitEventHandler.StartListening("OnMoveOrderIssued", Move);
         unitEventHandler.StartListening("OnStopOrderIssued", Stop);
+
+        EventManager.StartListening("OnAbilityInputSet", AbilityInputHandler); // temporary for testing
     }
 
     private void Update()
@@ -137,9 +139,13 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void ExecuteAbility(Ability ability, List<List<object>> outcomeParameters) 
+    public IEnumerator ExecuteAbility(Ability ability, List<List<object>> outcomeParameters) 
     {
         Stop(null);
+        PlayerAgent playerAgent = GetComponent<PlayerAgent>();
+
+        yield return StartCoroutine(playerAgent.ProcessTargetInput(ability.InputType));
+
         for(int i = 0; i < ability.Outcomes.Length; i++) 
         {
             Outcome outcome = ability.Outcomes[i];
@@ -155,6 +161,21 @@ public class Unit : MonoBehaviour
 
             StartCoroutine(ExecuteOutcome(outcome, executionTime, outcome.Duration, outcomeParameters[i]));
         }
+    }
+
+    List<List<object>> outcomeParameters = new List<List<object>>();
+    void AbilityInputHandler(object param) {
+        outcomeParameters.Clear();
+        Vector3 pointTarget = (Vector3) param;
+
+        List<object> outcome1Param = new List<object>(); 
+        outcome1Param.Add( new DisappearActionData(this) ); // construct data struct for disappear gameAction
+        outcomeParameters.Add(outcome1Param);
+
+        List<object> outcome2Param = new List<object>();
+        outcome2Param.Add( new TeleportActionData(this, (Vector2) pointTarget) );
+        outcome2Param.Add( new ReappearActionData(this) ); // construct data struct for reappear gameAction
+        outcomeParameters.Add(outcome2Param);
     }
 
     IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, float duration, object param) 
@@ -187,19 +208,7 @@ public class Unit : MonoBehaviour
     }
 
     void TestBlink() {
-        List<List<object>> param = new List<List<object>>();
-
-        List<object> outcome1Param = new List<object>(); 
-        outcome1Param.Add( new DisappearActionData(this) ); // construct data struct for disappear gameAction
-        param.Add(outcome1Param);
-
-        List<object> outcome2Param = new List<object>();
-        outcome2Param.Add( new TeleportActionData(this, new Vector2(2,2)) );
-        outcome2Param.Add( new ReappearActionData(this) ); // construct data struct for reappear gameAction
-        param.Add(outcome2Param);
-
-        
-        ExecuteAbility(abilities[0], param); // testing first skill, "Blink"
+        StartCoroutine(ExecuteAbility(abilities[0], outcomeParameters)); // testing first skill, "Blink"
     }
 
     void TestSnipe() {
@@ -210,6 +219,6 @@ public class Unit : MonoBehaviour
         outcome1Param.Add( new RotateToFaceUnitData(this, dummySwarmer.transform.position) ); // construct data struct for disappear gameAction
         param.Add(outcome1Param);
 
-        ExecuteAbility(abilities[1], param); // testing second skill, "Snipe"
+        StartCoroutine(ExecuteAbility(abilities[1], param)); // testing second skill, "Snipe"
     }
 }

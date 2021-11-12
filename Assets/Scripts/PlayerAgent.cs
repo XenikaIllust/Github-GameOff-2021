@@ -10,6 +10,8 @@ public class PlayerAgent : Agent
 
     private Camera _camera;
 
+    bool defaultControlsEnabled = true;
+
     protected override void Awake()
     {
         base.Awake();
@@ -18,7 +20,9 @@ public class PlayerAgent : Agent
 
     private void Update()
     {
-        PlayerInput();
+        if(defaultControlsEnabled) {
+            PlayerInput();
+        }
     }
 
     private void PlayerInput()
@@ -60,9 +64,11 @@ public class PlayerAgent : Agent
     }
 
 	// PLACEHOLDER CODE FOR TESTING AbilityInputType.cs
-	private Func<bool> targetInput;
+	public Func<bool> targetInput;
 	public IEnumerator ProcessTargetInput(AbilityType abilityType)
 	{
+        defaultControlsEnabled = false;
+
 		if (abilityType == AbilityType.TargetPoint)
 		{
 			yield return new WaitUntil(() => Input.GetMouseButton(0)); // Wait until the player presses the Left Click
@@ -82,6 +88,8 @@ public class PlayerAgent : Agent
 		{
 			targetInput = AbilityInputType.NoTargetInput;
 		}
-		yield return new WaitUntil(() => targetInput());
+		yield return new WaitUntil((() => targetInput() || Input.GetKeyUp(KeyCode.Escape)));
+
+        defaultControlsEnabled = true;
 	}
 }
