@@ -10,7 +10,7 @@ public class PlayerAgent : Agent
 
     private Camera _camera;
 
-	private enum AbilityType {TargetPoint, TargetUnit, TargetArea, NoTarget};
+	public enum AbilityType {TargetPoint, TargetUnit, TargetArea, NoTarget};
 
     protected override void Awake()
     {
@@ -63,7 +63,7 @@ public class PlayerAgent : Agent
 
 	// PLACEHOLDER CODE FOR TESTING AbilityInputType.cs
 	private Func<bool> targetInput;
-	IEnumerator ProcessTargetInput(AbilityType abilityType)
+	public IEnumerator ProcessTargetInput(AbilityType abilityType)
 	{
 		if (abilityType == AbilityType.TargetPoint)
 		{
@@ -86,5 +86,4 @@ public class PlayerAgent : Agent
 		}
 		yield return new WaitUntil(() => targetInput());
 	}
-
 }

@@ -19,5 +19,7 @@ public class ReappearAction : GameAction
 
         // become visible
         reappearActionData.unitToReappear.GetComponent<SpriteRenderer>().enabled = true;
+
+        // disallow phasing through enemy units
     }
 }   
