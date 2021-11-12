@@ -9,13 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bfc2c9785adfa54c95b8f221a6b9e31, type: 3}
-  m_Name: New Target Filter
+  m_Script: {fileID: 11500000, guid: 2d5756d8f38647d4d898d7e51b67f06b, type: 3}
+  m_Name: Modify Turnspeed
   m_EditorClassIdentifier: 
-  Relationship: 1
-  IncludeSelf: 0
-  SelectionFilters:
-  - Type: 0
-    Range: 5
-    Offset: {x: 0, y: 0, z: 0}
-    Count: 0
+  modifierType: 0

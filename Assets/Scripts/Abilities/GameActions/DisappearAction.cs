@@ -18,5 +18,7 @@ public class DisappearAction : GameAction
 
         // become invisible
         disappearActionData.unitToDisappear.GetComponent<SpriteRenderer>().enabled = false;
+
+        // allow phasing through enemy units
     }
 }

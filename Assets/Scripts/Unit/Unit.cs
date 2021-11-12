@@ -12,13 +12,15 @@ using UnityEngine.AI;
 /// </summary>
 public class Unit : MonoBehaviour
 {
-    // Event processor for handling internal messages
+    // Internal event handler
     EventProcessor unitEventHandler;
 
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
     [Header("Misc.")] public float positionUpdateInterval = 0.1f;
     private float _positionUpdateTimer;
+
+    float pseudoYRotation = 0;
 
     [SerializeField] List<Ability> abilities;
 
@@ -42,19 +44,19 @@ public class Unit : MonoBehaviour
     {
         UpdatePosition();
 
-        if(Input.GetKeyUp(KeyCode.Q)) {
-            List<List<object>> param = new List<List<object>>();
+        if(this.gameObject.name == "Character") {
+            if(Input.GetKeyUp(KeyCode.Q)) {
+                TestBlink();
+            }
+            else if(Input.GetKeyUp(KeyCode.W)) {
+                TestSnipe();
+            }
+            else if(Input.GetKeyUp(KeyCode.E)) {
 
-            List<object> outcome1Param = new List<object>(); 
-            outcome1Param.Add( new DisappearActionData(this) ); // construct data struct for disappear gameAction
-            param.Add(outcome1Param);
+            }
+            else if(Input.GetKeyUp(KeyCode.R)) {
 
-            List<object> outcome2Param = new List<object>();
-            outcome2Param.Add( new TeleportActionData(this, new Vector2(2,2)) );
-            outcome2Param.Add( new ReappearActionData(this) ); // construct data struct for reappear gameAction
-            param.Add(outcome2Param);
-
-            ExecuteAbility(abilities[0], param); // testing first skill, "Blink"
+            }
         }
     }
 
@@ -87,29 +89,77 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void ExecuteAbility(Ability ability, List<List<object>> outcomeParameters) {
-        for(int i = 0; i < ability.Outcomes.Length; i++) {
+    public void ExecuteAbility(Ability ability, List<List<object>> outcomeParameters) 
+    {
+        for(int i = 0; i < ability.Outcomes.Length; i++) 
+        {
             Outcome outcome = ability.Outcomes[i];
             float executionTime;
-            if(outcome.Trigger.IsNormalizedTime) {
+            if(outcome.Trigger.IsNormalizedTime) 
+            {
                 executionTime = outcome.Trigger.ExecutionTime * ability.Duration;
             }
-            else {
+            else 
+            {
                 executionTime = outcome.Trigger.ExecutionTime;
             }
 
-            StartCoroutine(ExecuteOutcome(outcome, executionTime, outcomeParameters[i]));
+            StartCoroutine(ExecuteOutcome(outcome, executionTime, outcome.Duration, outcomeParameters[i]));
         }
     }
 
-    IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, object param) {
+    IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, float duration, object param) 
+    {
         List<object> outcomeParams = (List<object>) param;
 
         yield return new WaitForSeconds(timeToExecute);
 
         for(int i = 0; i < outcome.Effects.Length; i++) {
             GameAction gameAction = outcome.Effects[i];
-            gameAction.Invoke(outcomeParams[i]);
+
+            if(gameAction.gameActionBehaviour == GameActionBehaviour.ConstantUpdate) {
+                StartCoroutine(ExecuteConstantUpdateGameAction(gameAction, outcomeParams[i], duration));
+            }
+            else {
+                gameAction.Invoke(outcomeParams[i]);
+            }
         }
+    }
+
+    IEnumerator ExecuteConstantUpdateGameAction(GameAction gameAction, object param, float duration) {
+        float timeElapsed = 0;
+
+        while(timeElapsed < duration) {
+            timeElapsed += Time.deltaTime;
+            gameAction.Invoke(param);
+        }
+
+        yield return null;
+    }
+
+    void TestBlink() {
+        List<List<object>> param = new List<List<object>>();
+
+        List<object> outcome1Param = new List<object>(); 
+        outcome1Param.Add( new DisappearActionData(this) ); // construct data struct for disappear gameAction
+        param.Add(outcome1Param);
+
+        List<object> outcome2Param = new List<object>();
+        outcome2Param.Add( new TeleportActionData(this, new Vector2(2,2)) );
+        outcome2Param.Add( new ReappearActionData(this) ); // construct data struct for reappear gameAction
+        param.Add(outcome2Param);
+
+        ExecuteAbility(abilities[0], param); // testing first skill, "Blink"
+    }
+
+    void TestSnipe() {
+        List<List<object>> param = new List<List<object>>();
+
+        SwarmerAIAgent dummySwarmer = FindObjectOfType<SwarmerAIAgent>();
+        List<object> outcome1Param = new List<object>(); 
+        outcome1Param.Add( new RotateToFaceUnitData(this, dummySwarmer.transform.position) ); // construct data struct for disappear gameAction
+        param.Add(outcome1Param);
+
+        ExecuteAbility(abilities[1], param); // testing second skill, "Snipe"
     }
 }
