@@ -19,7 +19,7 @@ public class RotateToFaceUnitAction : GameAction
     public override void Invoke(object param)
     {
         RotateToFaceUnitData data = (RotateToFaceUnitData) param;
-        data.unitToRotate.transform.LookAt(data.pointToFace);
+        data.unitToRotate.RotateToFacePoint(data.pointToFace);
         Debug.Log("RotateToFacePoint is being executed!");
     }
 } 

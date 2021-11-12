@@ -10,8 +10,6 @@ public class PlayerAgent : Agent
 
     private Camera _camera;
 
-	public enum AbilityType {TargetPoint, TargetUnit, TargetArea, NoTarget};
-
     protected override void Awake()
     {
         base.Awake();

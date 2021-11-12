@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +22,12 @@ public class Unit : MonoBehaviour
     private float _positionUpdateTimer;
 
     Vector2 direction = Vector2.zero;
+
     float pseudoYRotation = 0f;
+    public float PseudoYRotation {
+        get { return pseudoYRotation; }
+        set { pseudoYRotation = value; }
+    }
 
     [SerializeField] List<Ability> abilities;
 
@@ -94,8 +100,12 @@ public class Unit : MonoBehaviour
 
     private void UpdatePseudoRotation() 
     {
-        float xDiff = agent.steeringTarget.x - transform.position.x;
-        float yDiff = agent.steeringTarget.y - transform.position.y;
+        RotateToFacePoint((Vector2) agent.steeringTarget);
+    }
+
+    public void RotateToFacePoint(Vector2 targetPoint) {
+        float xDiff = targetPoint.x - transform.position.x;
+        float yDiff = targetPoint.y - transform.position.y;
 
         // if the unit has stopped moving, the calculation for bearing will break because xDiff and yDiff becomes 0.
         // return before it breaks pseudoYRotation
@@ -125,14 +135,11 @@ public class Unit : MonoBehaviour
         else {
             pseudoYRotation = 360 - angle;
         }
-
-        Debug.Log("transform.position: " + transform.position);
-        Debug.Log("agent.steeringTarget: " + agent.steeringTarget);
-        Debug.Log("pseudoYRotation: " + pseudoYRotation);
     }
 
     public void ExecuteAbility(Ability ability, List<List<object>> outcomeParameters) 
     {
+        Stop(null);
         for(int i = 0; i < ability.Outcomes.Length; i++) 
         {
             Outcome outcome = ability.Outcomes[i];
@@ -172,11 +179,11 @@ public class Unit : MonoBehaviour
         float timeElapsed = 0;
 
         while(timeElapsed < duration) {
+            print(timeElapsed);
             timeElapsed += Time.deltaTime;
             gameAction.Invoke(param);
+            yield return null;
         }
-
-        yield return null;
     }
 
     void TestBlink() {
@@ -191,6 +198,7 @@ public class Unit : MonoBehaviour
         outcome2Param.Add( new ReappearActionData(this) ); // construct data struct for reappear gameAction
         param.Add(outcome2Param);
 
+        
         ExecuteAbility(abilities[0], param); // testing first skill, "Blink"
     }
 
