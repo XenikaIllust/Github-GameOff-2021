@@ -1,6 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,66 +13,78 @@ using UnityEngine.AI;
 /// </summary>
 public class Unit : MonoBehaviour
 {
-    // Internal event handler
-    EventProcessor unitEventHandler;
-
+    private EventProcessor _unitEventHandler; // Internal event handler
+    [Header("Stats")] public float movementSpeed = 3.5f;
+    public float turnRate = 5f;
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
-    [Header("Misc.")] public float positionUpdateInterval = 0.1f;
+    [Header("Misc.")] public float updateInterval = 0.1f;
     private float _positionUpdateTimer;
-
-    Vector2 direction = Vector2.zero;
-
-    float pseudoYRotation = 0f;
-    public float PseudoYRotation {
-        get { return pseudoYRotation; }
-        set { pseudoYRotation = value; }
-    }
-
-    [SerializeField] List<Ability> abilities;
+    private GameObject _pseudoObject;
+    [Header("Abilities")] [SerializeField] private List<Ability> abilities;
 
     private void Awake()
     {
-        unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
-
+        _unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
         isPlayer = GetComponent<PlayerAgent>() != null;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+        agent.speed = movementSpeed;
+        agent.acceleration = float.MaxValue;
+        agent.angularSpeed = float.MaxValue;
+        agent.autoBraking = true;
+
+        _pseudoObject = new GameObject("PseudoObject")
+        {
+            transform =
+            {
+                parent = transform
+            }
+        };
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        unitEventHandler.StartListening("OnMoveOrderIssued", Move);
-        unitEventHandler.StartListening("OnStopOrderIssued", Stop);
+        _unitEventHandler.StartListening("OnMoveOrderIssued", TurnAndMove);
+        _unitEventHandler.StartListening("OnStopOrderIssued", Stop);
 
         EventManager.StartListening("OnAbilityInputSet", AbilityInputHandler); // temporary for testing
+    }
+
+    private void OnDisable()
+    {
+        _unitEventHandler.StopListening("OnMoveOrderIssued", TurnAndMove);
+        _unitEventHandler.StopListening("OnStopOrderIssued", Stop);
     }
 
     private void Update()
     {
         UpdatePosition();
 
-        if(this.gameObject.name == "Character") {
-            if(Input.GetKeyUp(KeyCode.Q)) {
+        if (gameObject.name == "Character")
+        {
+            if (Input.GetKeyUp(KeyCode.Q))
+            {
                 TestBlink();
             }
-            else if(Input.GetKeyUp(KeyCode.W)) {
+            else if (Input.GetKeyUp(KeyCode.W))
+            {
                 TestSnipe();
             }
-            else if(Input.GetKeyUp(KeyCode.E)) {
-
+            else if (Input.GetKeyUp(KeyCode.E))
+            {
             }
-            else if(Input.GetKeyUp(KeyCode.R)) {
-
+            else if (Input.GetKeyUp(KeyCode.R))
+            {
             }
         }
     }
 
-    private void OnDisable()
+    private void Stop(object @null)
     {
-        unitEventHandler.StopListening("OnMoveOrderIssued", Move);
-        unitEventHandler.StopListening("OnStopOrderIssued", Stop);
+        _pseudoObject.transform.DOKill();
+        agent.SetDestination(transform.position);
     }
 
     private void Move(object destination)
@@ -80,81 +92,52 @@ public class Unit : MonoBehaviour
         agent.SetDestination((Vector3)destination);
     }
 
-    private void Stop(object arg0)
+    public void TurnAndMove(object destination)
     {
-        agent.SetDestination(transform.position);
+        Stop(null);
+
+        _pseudoObject.transform
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToDestination((Vector3)destination)),
+                turnRate * 360)
+            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
     }
 
     private void UpdatePosition()
     {
-        UpdatePseudoRotation();
-
         if (!isPlayer) return;
 
         _positionUpdateTimer += Time.deltaTime;
 
-        if (_positionUpdateTimer >= positionUpdateInterval)
+        if (_positionUpdateTimer >= updateInterval)
         {
             _positionUpdateTimer = float.Epsilon;
             EventManager.RaiseEvent("OnPlayerPositionChanged", transform.position);
         }
     }
 
-    private void UpdatePseudoRotation() 
+    private float AngleToDestination(Vector3 destination)
     {
-        RotateToFacePoint((Vector2) agent.steeringTarget);
+        Vector2 angle = destination - transform.position;
+
+        return Mathf.Atan2(angle.y, angle.x) * 180 / Mathf.PI;
     }
 
-    public void RotateToFacePoint(Vector2 targetPoint) {
-        float xDiff = targetPoint.x - transform.position.x;
-        float yDiff = targetPoint.y - transform.position.y;
-
-        // if the unit has stopped moving, the calculation for bearing will break because xDiff and yDiff becomes 0.
-        // return before it breaks pseudoYRotation
-        if(Mathf.Round(xDiff * 100) / 100 == 0 && Mathf.Round(yDiff * 100) / 100 == 0) 
-        { 
-            return; 
-        }
-
-        // we take the absolute differences, just to assume they are in the 1st quadrant. We will deal with signage later.
-        float absXDiff = Mathf.Abs(xDiff);
-        float absYDiff = Mathf.Abs(yDiff);
-
-        // we are calculating the tangent with respect to the y axis. This is so that rotation convention follows compass bearing.
-        float angle = Mathf.Atan( absXDiff / absYDiff ) * Mathf.Rad2Deg;
-
-        // now we need to consider the 4 quadrants (+x +y, +x -y, -x -y, -x +y), going clockwise.
-        // i know it could have been written in a more shorthand way but I explicitly wanted to show the logic
-        if(xDiff >= Mathf.Epsilon && yDiff >= Mathf.Epsilon) {
-            pseudoYRotation = angle;
-        }
-        else if(xDiff >= Mathf.Epsilon && yDiff < Mathf.Epsilon) {
-            pseudoYRotation = 180 - angle;
-        }
-        else if(xDiff < Mathf.Epsilon && yDiff < Mathf.Epsilon) {
-            pseudoYRotation = 180 + angle;
-        }
-        else {
-            pseudoYRotation = 360 - angle;
-        }
-    }
-
-    public IEnumerator ExecuteAbility(Ability ability, List<List<object>> outcomeParameters) 
+    public IEnumerator ExecuteAbility(Ability ability, List<List<object>> outcomeParameters)
     {
         Stop(null);
         PlayerAgent playerAgent = GetComponent<PlayerAgent>();
 
         yield return StartCoroutine(playerAgent.ProcessTargetInput(ability.InputType));
 
-        for(int i = 0; i < ability.Outcomes.Length; i++) 
+        for (int i = 0; i < ability.Outcomes.Length; i++)
         {
             Outcome outcome = ability.Outcomes[i];
             float executionTime;
-            if(outcome.Trigger.IsNormalizedTime) 
+            if (outcome.Trigger.IsNormalizedTime)
             {
                 executionTime = outcome.Trigger.ExecutionTime * ability.Duration;
             }
-            else 
+            else
             {
                 executionTime = outcome.Trigger.ExecutionTime;
             }
@@ -165,11 +148,11 @@ public class Unit : MonoBehaviour
 
     List<List<object>> outcomeParameters = new List<List<object>>();
     void AbilityInputHandler(object param) {
-        
     }
 
-    IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, float duration, object param) 
+    IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, float duration, object param)
     {
+
         // List<object> outcomeParams = (List<object>) param;
 
         // yield return new WaitForSeconds(timeToExecute);
@@ -201,16 +184,19 @@ public class Unit : MonoBehaviour
         yield return null;
     }
 
-    void TestBlink() {
+    void TestBlink()
+    {
         StartCoroutine(ExecuteAbility(abilities[0], outcomeParameters)); // testing first skill, "Blink"
     }
 
-    void TestSnipe() {
+    void TestSnipe()
+    {
         List<List<object>> param = new List<List<object>>();
 
         SwarmerAIAgent dummySwarmer = FindObjectOfType<SwarmerAIAgent>();
-        List<object> outcome1Param = new List<object>(); 
-        outcome1Param.Add( new RotateToFaceUnitData(this, dummySwarmer.transform.position) ); // construct data struct for disappear gameAction
+        List<object> outcome1Param = new List<object>();
+        outcome1Param.Add(new RotateToFaceUnitData(this,
+            dummySwarmer.transform.position)); // construct data struct for disappear gameAction
         param.Add(outcome1Param);
 
         StartCoroutine(ExecuteAbility(abilities[1], param)); // testing second skill, "Snipe"
