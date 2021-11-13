@@ -10,7 +10,7 @@ public class ReappearAction : GameAction
         Unit unitToReappear = (Unit) targets[0];
 
         // become visible
-        unitToReappear.GetComponent<SpriteRenderer>().enabled = true;
+        unitToReappear.GetComponentInChildren<SpriteRenderer>().enabled = true;
 
         // disallow phasing through enemy units
     }

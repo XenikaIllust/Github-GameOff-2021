@@ -52,7 +52,8 @@ public class TargetFilter
 			// use raycast to get units in lineLength
 		}
 		else if(Type == TargetFilterType.AOEFilter) {
-			// use OverlapSphere to get units in areaOfEffectRadius
+			// use OverlapCollider to get units in areaOfEffectRadius
+			
 		}
 		else if(Type == TargetFilterType.TargetsOfPreviousEffect) {
 			// get targets from previous effect in EffectTargets[id] and add them into targets

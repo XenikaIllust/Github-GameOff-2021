@@ -10,7 +10,7 @@ public class DisappearAction : GameAction
         Unit unitToDisappear = (Unit) targets[0];
 
         // become invisible
-        unitToDisappear.GetComponent<SpriteRenderer>().enabled = false;
+        unitToDisappear.GetComponentInChildren<SpriteRenderer>().enabled = false;
 
         // allow phasing through enemy units
     }
