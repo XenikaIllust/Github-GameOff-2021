@@ -11,6 +11,7 @@ public class TargetFilter
 
 	public enum TargetFilterType {
 		SelfFilter,
+		UnitFilter,
 		LineFilter,
 		AOEFilter,
 		TargetsOfPreviousEffect,
@@ -37,11 +38,15 @@ public class TargetFilter
 
 	public TargetRelationship Relationship;
 
-	public List<object> DetermineTargetUnits() {
+	public List<object> DetermineTargetUnits(Unit self, Dictionary<string, object> InputTargets, Dictionary<string, List<object>> EffectTargets) {
         List<object> targets = new List<object>();
 
 		if(Type == TargetFilterType.SelfFilter) {
 			// add self into targets
+			targets.Add(self);
+		}
+		else if(Type == TargetFilterType.UnitFilter) {
+			targets.Add(InputTargets["Target Unit"]);
 		}
 		else if(Type == TargetFilterType.LineFilter) {
 			// use raycast to get units in lineLength
@@ -51,6 +56,9 @@ public class TargetFilter
 		}
 		else if(Type == TargetFilterType.TargetsOfPreviousEffect) {
 			// get targets from previous effect in EffectTargets[id] and add them into targets
+			foreach(object o in EffectTargets[IdOfPreviousEffect]) {
+				targets.Add(o);
+			}
 		}
 
         return targets;

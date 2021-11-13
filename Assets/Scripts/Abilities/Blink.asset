@@ -30,3 +30,25 @@ MonoBehaviour:
         IdOfPreviousEffect: 
         Relationship: 0
       GameAction: {fileID: 11400000, guid: 2d72a3468b1000249b7e0a5ae82f98bc, type: 2}
+  - Id: Teleport and Reappear
+    Duration: 0
+    Trigger:
+      ExecutionTime: 1
+      IsNormalizedTime: 1
+    Effects:
+    - Id: Teleport
+      TargetFilter:
+        Type: 4
+        lineLength: 0
+        areaOfEffectRadius: 0
+        IdOfPreviousEffect: Disappear
+        Relationship: 0
+      GameAction: {fileID: 11400000, guid: 1e92247e4d8679a4a93e1da975cb1f48, type: 2}
+    - Id: Reappear
+      TargetFilter:
+        Type: 4
+        lineLength: 0
+        areaOfEffectRadius: 0
+        IdOfPreviousEffect: Disappear
+        Relationship: 0
+      GameAction: {fileID: 11400000, guid: 5fbaac34ccd01a54d8c39db1b3b267ce, type: 2}

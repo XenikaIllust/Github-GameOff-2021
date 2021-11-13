@@ -12,8 +12,8 @@ public struct InflictDamageData {
 
 public class InflictDamageAction : GameAction
 {
-    public override void Invoke(List<object> targets)
-    {
+    // public override void Invoke(Dictionary<string, object> inputTargets, List<object> targets)
+    // {
         
-    }
+    // }
 }

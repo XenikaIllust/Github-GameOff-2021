@@ -2,24 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct ReappearActionData {
-    public Unit unitToReappear;
-
-    public ReappearActionData(Unit u) {
-        unitToReappear = u;
-    }
-}
-
 [CreateAssetMenu(menuName = "Definitions/Game Action/Reappear")]
 public class ReappearAction : GameAction
 {
-    public override void Invoke(List<object> targets)
+    public override void Invoke(Dictionary<string, object> inputTargets, List<object> targets)
     {
-        // ReappearActionData reappearActionData = (ReappearActionData) param;
+        Unit unitToReappear = (Unit) targets[0];
 
-        // // become visible
-        // reappearActionData.unitToReappear.GetComponent<SpriteRenderer>().enabled = true;
+        // become visible
+        unitToReappear.GetComponent<SpriteRenderer>().enabled = true;
 
-        // // disallow phasing through enemy units
+        // disallow phasing through enemy units
     }
 }   

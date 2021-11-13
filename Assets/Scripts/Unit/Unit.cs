@@ -122,12 +122,23 @@ public class Unit : MonoBehaviour
         return Mathf.Atan2(angle.y, angle.x) * 180 / Mathf.PI;
     }
 
-    public IEnumerator ExecuteAbility(Ability ability, List<List<object>> outcomeParameters)
+    // members used for ability execution
+    AbilityType currentAbilityType;
+    Dictionary<string, object> InputTargets = new Dictionary<string, object>();
+    Dictionary<string, List<object>> EffectTargets = new Dictionary<string, List<object>>();
+
+    public IEnumerator ExecuteAbility(Ability ability)
     {
         Stop(null);
+
+        currentAbilityType = ability.InputType;
+        InputTargets.Clear();
+        EffectTargets.Clear();
+
         PlayerAgent playerAgent = GetComponent<PlayerAgent>();
 
-        yield return StartCoroutine(playerAgent.ProcessTargetInput(ability.InputType));
+        Debug.Log("Waiting for ability input");
+        yield return StartCoroutine(playerAgent.ProcessTargetInput(currentAbilityType));
 
         for (int i = 0; i < ability.Outcomes.Length; i++)
         {
@@ -142,31 +153,33 @@ public class Unit : MonoBehaviour
                 executionTime = outcome.Trigger.ExecutionTime;
             }
 
-            StartCoroutine(ExecuteOutcome(outcome, executionTime, outcome.Duration, outcomeParameters[i]));
+            StartCoroutine(ExecuteOutcome(outcome, executionTime, outcome.Duration));
         }
     }
 
-    List<List<object>> outcomeParameters = new List<List<object>>();
     void AbilityInputHandler(object param) {
+        if (currentAbilityType == AbilityType.TargetPoint)
+		{
+			InputTargets["Target Point"] = (Vector3) param;
+		}
+        else if (currentAbilityType == AbilityType.TargetUnit)
+		{
+			InputTargets["Target Unit"] = (Vector3) param;
+		}
+		else if (currentAbilityType == AbilityType.TargetArea)
+		{
+			InputTargets["Target Center"] = (Vector3) param;
+		}
     }
 
-    IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, float duration, object param)
+    IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, float duration)
     {
+        yield return new WaitForSeconds(timeToExecute);
 
-        // List<object> outcomeParams = (List<object>) param;
-
-        // yield return new WaitForSeconds(timeToExecute);
-
-        // for(int i = 0; i < outcome.Effects.Length; i++) {
-        //     GameAction gameAction = outcome.Effects[i];
-
-        //     if(gameAction.gameActionBehaviour == GameActionBehaviour.ConstantUpdate) {
-        //         StartCoroutine(ExecuteConstantUpdateGameAction(gameAction, outcomeParams[i], duration));
-        //     }
-        //     else {
-        //         gameAction.Invoke(outcomeParams[i]);
-        //     }
-        // }
+        for(int i = 0; i < outcome.Effects.Length; i++) {
+            Effect effect = outcome.Effects[i];
+            effect.ExecuteEffect(this, InputTargets, EffectTargets);
+        }
 
         yield return null;
     }
@@ -186,7 +199,7 @@ public class Unit : MonoBehaviour
 
     void TestBlink()
     {
-        StartCoroutine(ExecuteAbility(abilities[0], outcomeParameters)); // testing first skill, "Blink"
+        StartCoroutine( ExecuteAbility(abilities[0]) ); // testing first skill, "Blink"
     }
 
     void TestSnipe()
@@ -199,6 +212,6 @@ public class Unit : MonoBehaviour
             dummySwarmer.transform.position)); // construct data struct for disappear gameAction
         param.Add(outcome1Param);
 
-        StartCoroutine(ExecuteAbility(abilities[1], param)); // testing second skill, "Snipe"
+        StartCoroutine( ExecuteAbility(abilities[1]) ); // testing second skill, "Snipe"
     }
 }
