@@ -8,7 +8,7 @@ public class AudioManager : MonoBehaviour
 	[SerializeField]
 	private Sound[] sounds;
 
-	private void Awake () {
+	private void Awake() {
 		// Only one AudioManager should be present at all times
 		if (instance == null) instance = this;
 		else Destroy(gameObject);
@@ -19,6 +19,8 @@ public class AudioManager : MonoBehaviour
 		foreach (Sound sound in sounds) {
 			sound.Source = gameObject.AddComponent<AudioSource>();
 			sound.Source.clip = sound.audioClip;
+			sound.Source.outputAudioMixerGroup = sound.audioMixerGroup;
+
 			sound.Source.mute = sound.mute;
 			sound.Source.bypassEffects = sound.bypassEffects;
 			sound.Source.bypassListenerEffects = sound.bypassListenerEffects;
@@ -35,11 +37,21 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
-	public void Play (string name) {
-		Sound sound = Array.Find(sounds, Sound => Sound.name == name);
+	private void OnEnable()
+	{
+		EventManager.StartListening("OnPlaySound", Play);
+	}
+
+	private void OnDisable()
+	{
+		EventManager.StopListening("OnPlaySound", Play);
+	}
+
+	public void Play(object name) {
+		Sound sound = Array.Find(sounds, Sound => Sound.name == (string)name);
 		if (sound != null)
 			sound.Source.Play();
 		else
-			Debug.Log("Sound named " + name + " doesn't exist.");
+			Debug.Log("Sound named " + (string)name + " doesn't exist.");
 	}
 }
