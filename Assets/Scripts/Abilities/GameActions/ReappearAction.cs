@@ -13,13 +13,13 @@ public struct ReappearActionData {
 [CreateAssetMenu(menuName = "Definitions/Game Action/Reappear")]
 public class ReappearAction : GameAction
 {
-    public override void Invoke(object param)
+    public override void Invoke(List<object> targets)
     {
-        ReappearActionData reappearActionData = (ReappearActionData) param;
+        // ReappearActionData reappearActionData = (ReappearActionData) param;
 
-        // become visible
-        reappearActionData.unitToReappear.GetComponent<SpriteRenderer>().enabled = true;
+        // // become visible
+        // reappearActionData.unitToReappear.GetComponent<SpriteRenderer>().enabled = true;
 
-        // disallow phasing through enemy units
+        // // disallow phasing through enemy units
     }
 }   

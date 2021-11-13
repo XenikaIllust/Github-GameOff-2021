@@ -16,19 +16,18 @@ public struct TeleportActionData {
 [CreateAssetMenu(menuName = "Definitions/Game Action/Teleport")]
 public class TeleportAction : GameAction
 {
-    public override void Invoke(object param)
+    public override void Invoke(List<object> targets)
     {
-        Debug.Log(param);
-        TeleportActionData teleportActionData = (TeleportActionData) param;
+        // TeleportActionData teleportActionData = (TeleportActionData) param;
 
-        // change position
-        Unit unitToTeleport = teleportActionData.unitToTeleport;
-        Vector2 teleportPos = teleportActionData.teleportPos;
+        // // change position
+        // Unit unitToTeleport = teleportActionData.unitToTeleport;
+        // Vector2 teleportPos = teleportActionData.teleportPos;
 
-        NavMeshAgent navMeshAgent = unitToTeleport.GetComponent<NavMeshAgent>();
+        // NavMeshAgent navMeshAgent = unitToTeleport.GetComponent<NavMeshAgent>();
 
-        Vector3 targetPosition = new Vector3(teleportPos.x, teleportPos.y, unitToTeleport.transform.position.z);
-        unitToTeleport.transform.position = targetPosition;
-        navMeshAgent.Warp(targetPosition);
+        // Vector3 targetPosition = new Vector3(teleportPos.x, teleportPos.y, unitToTeleport.transform.position.z);
+        // unitToTeleport.transform.position = targetPosition;
+        // navMeshAgent.Warp(targetPosition);
     }
 } 

@@ -8,6 +8,5 @@ public class Outcome
     public string Id;
     public float Duration;
     public Trigger Trigger;
-    public Targeting Targeting;
-    public GameAction[] Effects;
+    public Effect[] Effects;
 }

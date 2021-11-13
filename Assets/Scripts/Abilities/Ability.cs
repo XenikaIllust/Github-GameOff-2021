@@ -12,4 +12,6 @@ public class Ability : ScriptableObject
     public float Duration;
     public float Cooldown;
     public Outcome[] Outcomes;
+
+    Dictionary<string, List<object>> EffectTargets = new Dictionary<string, List<object>>();
 }
