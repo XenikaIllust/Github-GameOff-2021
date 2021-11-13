@@ -12,8 +12,8 @@ public struct InflictDamageData {
 
 public class InflictDamageAction : GameAction
 {
-    public override void Invoke(object param)
+    public override void Invoke(List<object> targets)
     {
-        InflictDamageData inflictDamageData = (InflictDamageData) param;
+        
     }
 }

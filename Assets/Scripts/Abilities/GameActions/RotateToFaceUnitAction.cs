@@ -16,10 +16,10 @@ public struct RotateToFaceUnitData {
 [CreateAssetMenu(menuName = "Definitions/Game Action/RotateToFaceUnit")]
 public class RotateToFaceUnitAction : GameAction
 {
-    public override void Invoke(object param)
-    {
-        RotateToFaceUnitData data = (RotateToFaceUnitData) param;
-        data.unitToRotate.RotateToFacePoint(data.pointToFace);
-        Debug.Log("RotateToFacePoint is being executed!");
-    }
+    // public override void Invoke(List<object> requiredInput, List<object> targets)
+    // {
+    //     // RotateToFaceUnitData data = (RotateToFaceUnitData) param;
+    //     // data.unitToRotate.RotateToFacePoint(data.pointToFace);
+    //     // Debug.Log("RotateToFacePoint is being executed!");
+    // }
 } 

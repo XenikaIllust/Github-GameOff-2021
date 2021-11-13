@@ -165,46 +165,40 @@ public class Unit : MonoBehaviour
 
     List<List<object>> outcomeParameters = new List<List<object>>();
     void AbilityInputHandler(object param) {
-        outcomeParameters.Clear();
-        Vector3 pointTarget = (Vector3) param;
-
-        List<object> outcome1Param = new List<object>(); 
-        outcome1Param.Add( new DisappearActionData(this) ); // construct data struct for disappear gameAction
-        outcomeParameters.Add(outcome1Param);
-
-        List<object> outcome2Param = new List<object>();
-        outcome2Param.Add( new TeleportActionData(this, (Vector2) pointTarget) );
-        outcome2Param.Add( new ReappearActionData(this) ); // construct data struct for reappear gameAction
-        outcomeParameters.Add(outcome2Param);
+        
     }
 
     IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, float duration, object param) 
     {
-        List<object> outcomeParams = (List<object>) param;
+        // List<object> outcomeParams = (List<object>) param;
 
-        yield return new WaitForSeconds(timeToExecute);
+        // yield return new WaitForSeconds(timeToExecute);
 
-        for(int i = 0; i < outcome.Effects.Length; i++) {
-            GameAction gameAction = outcome.Effects[i];
+        // for(int i = 0; i < outcome.Effects.Length; i++) {
+        //     GameAction gameAction = outcome.Effects[i];
 
-            if(gameAction.gameActionBehaviour == GameActionBehaviour.ConstantUpdate) {
-                StartCoroutine(ExecuteConstantUpdateGameAction(gameAction, outcomeParams[i], duration));
-            }
-            else {
-                gameAction.Invoke(outcomeParams[i]);
-            }
-        }
+        //     if(gameAction.gameActionBehaviour == GameActionBehaviour.ConstantUpdate) {
+        //         StartCoroutine(ExecuteConstantUpdateGameAction(gameAction, outcomeParams[i], duration));
+        //     }
+        //     else {
+        //         gameAction.Invoke(outcomeParams[i]);
+        //     }
+        // }
+
+        yield return null;
     }
 
     IEnumerator ExecuteConstantUpdateGameAction(GameAction gameAction, object param, float duration) {
-        float timeElapsed = 0;
+        // float timeElapsed = 0;
 
-        while(timeElapsed < duration) {
-            print(timeElapsed);
-            timeElapsed += Time.deltaTime;
-            gameAction.Invoke(param);
-            yield return null;
-        }
+        // while(timeElapsed < duration) {
+        //     print(timeElapsed);
+        //     timeElapsed += Time.deltaTime;
+        //     gameAction.Invoke(param);
+        //     yield return null;
+        // }
+
+        yield return null;
     }
 
     void TestBlink() {
