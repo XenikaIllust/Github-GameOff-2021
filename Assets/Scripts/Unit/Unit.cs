@@ -145,7 +145,7 @@ public class Unit : MonoBehaviour
 
         if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.castRange)
         {
-            ExecuteAbility(ability);
+            TurnAndExecuteAbility(ability);
         }
         else
         {
@@ -164,7 +164,17 @@ public class Unit : MonoBehaviour
         }
         
         _pendingCast = null;
-        ExecuteAbility(ability);
+        TurnAndExecuteAbility(ability);
+    }
+
+    private void TurnAndExecuteAbility(Ability ability)
+    {
+        Stop(null);
+
+        _pseudoObject.transform
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToDestination(_castTargetPosition)),
+                turnRate * 360)
+            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => ExecuteAbility(ability));
     }
 
     private void ExecuteAbility(Ability ability)
