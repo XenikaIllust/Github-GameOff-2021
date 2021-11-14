@@ -76,7 +76,7 @@ public class SwarmerAIAgent : Agent
         if (Vector3.Distance(_playerGameObject.transform.position, transform.position) <= attackBufferRange)
         {
             EventManager.RaiseEvent("OnPlayerAttacked", attackDamage);
-            Debug.Log($"Player received {attackDamage} damage");
+            // Debug.Log($"Player received {attackDamage} damage");
         }
     }
 

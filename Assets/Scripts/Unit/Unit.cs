@@ -130,7 +130,7 @@ public class Unit : MonoBehaviour
     public IEnumerator ExecuteAbility(Ability ability)
     {
         Stop(null);
-
+        
         currentAbilityType = ability.InputType;
         InputTargets.Clear();
         EffectTargets.Clear();

@@ -53,7 +53,23 @@ public class TargetFilter
 		}
 		else if(Type == TargetFilterType.AOEFilter) {
 			// use OverlapCollider to get units in areaOfEffectRadius
+			GameObject AOECalculator = new GameObject("AOECalculator", typeof(PolygonCollider2D));
+			AOECalculator.transform.position = (Vector3) InputTargets["Target Center"];
+
+			PolygonCollider2D polyCollider = AOECalculator.GetComponent<PolygonCollider2D>();
+			polyCollider.points = MathUtils.GenerateIsometricCirclePoints(areaOfEffectRadius);
+			polyCollider.transform.position = (Vector3) InputTargets["Target Center"];
+
+			List<Collider2D> results = new List<Collider2D>();
+			ContactFilter2D contactFilter = new ContactFilter2D();
 			
+			Physics2D.OverlapCollider(polyCollider, contactFilter.NoFilter(), results);
+			foreach(Collider2D collider in results) {
+				Unit unit = collider.GetComponentInParent<Unit>();
+				targets.Add(unit);
+			}
+
+			GameObject.Destroy(AOECalculator);
 		}
 		else if(Type == TargetFilterType.TargetsOfPreviousEffect) {
 			// get targets from previous effect in EffectTargets[id] and add them into targets
