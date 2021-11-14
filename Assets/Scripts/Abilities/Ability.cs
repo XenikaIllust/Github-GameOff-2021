@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +10,7 @@ public class Ability : ScriptableObject
     public Sprite abilitySprite;
 
     public AbilityType InputType;
+    public float castRange;
     public float Duration;
     public float Cooldown;
     public Outcome[] Outcomes;
