@@ -48,16 +48,32 @@ public class Unit : MonoBehaviour
 
     private void OnEnable()
     {
-        _unitEventHandler.StartListening("OnMoveOrderIssued", TurnAndMove);
-        _unitEventHandler.StartListening("OnStopOrderIssued", Stop);
+        _unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
+        _unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
 
-        EventManager.StartListening("OnAbilityInputSet", AbilityInputHandler); // temporary for testing
+
+        EventManager.StartListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
     }
 
     private void OnDisable()
     {
-        _unitEventHandler.StopListening("OnMoveOrderIssued", TurnAndMove);
-        _unitEventHandler.StopListening("OnStopOrderIssued", Stop);
+        _unitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
+        _unitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
+    }
+
+    private void OnStopOrderIssued(object @null)
+    {
+        Stop();
+    }
+
+    private void OnMoveOrderIssued(object destination)
+    {
+        TurnAndMove((Vector3)destination);
+    }
+
+    private void OnAbilityInputSet(object target)
+    {
+        AbilityInputHandler((Vector3)target);
     }
 
     private void Update()
@@ -96,26 +112,26 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void Stop(object @null)
+    private void Stop()
     {
         if (_pendingCast != null) StopCoroutine(_pendingCast);
         _pseudoObject.transform.DOKill();
         agent.SetDestination(transform.position);
     }
 
-    public void TurnAndMove(object destination)
+    private void TurnAndMove(Vector3 destination)
     {
-        Stop(null);
+        Stop();
 
         _pseudoObject.transform
-            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget((Vector3)destination)),
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(destination)),
                 turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
     }
 
-    private void Move(object destination)
+    private void Move(Vector3 destination)
     {
-        agent.SetDestination((Vector3)destination);
+        agent.SetDestination(destination);
     }
 
     private float AngleToTarget(Vector3 target)
@@ -130,9 +146,9 @@ public class Unit : MonoBehaviour
     private readonly Dictionary<string, object> _inputTargets = new Dictionary<string, object>();
     private readonly Dictionary<string, List<object>> _effectTargets = new Dictionary<string, List<object>>();
 
-    public IEnumerator CastAbility(Ability ability)
+    private IEnumerator CastAbility(Ability ability)
     {
-        Stop(null);
+        Stop();
 
         _currentAbilityType = ability.InputType;
         _inputTargets.Clear();
@@ -150,26 +166,27 @@ public class Unit : MonoBehaviour
         else
         {
             TurnAndMove(_castTargetPosition);
+
             _pendingCast = PendingCast(ability);
             StartCoroutine(_pendingCast);
         }
     }
 
-    private void AbilityInputHandler(object param)
+    private void AbilityInputHandler(Vector3 target)
     {
-        _castTargetPosition = (Vector3)param;
+        _castTargetPosition = target;
 
         if (_currentAbilityType == AbilityType.TargetPoint)
         {
-            _inputTargets["Target Point"] = (Vector3)param;
+            _inputTargets["Target Point"] = _castTargetPosition;
         }
         else if (_currentAbilityType == AbilityType.TargetUnit)
         {
-            _inputTargets["Target Unit"] = (Vector3)param;
+            _inputTargets["Target Unit"] = _castTargetPosition;
         }
         else if (_currentAbilityType == AbilityType.TargetArea)
         {
-            _inputTargets["Target Center"] = (Vector3)param;
+            _inputTargets["Target Center"] = _castTargetPosition;
         }
     }
 
@@ -187,7 +204,7 @@ public class Unit : MonoBehaviour
 
     private void TurnAndExecuteAbility(Ability ability)
     {
-        Stop(null);
+        Stop();
 
         _pseudoObject.transform
             .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(_castTargetPosition)),
