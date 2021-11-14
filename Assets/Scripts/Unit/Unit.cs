@@ -22,6 +22,8 @@ public class Unit : MonoBehaviour
     private float _positionUpdateTimer;
     private GameObject _pseudoObject;
     [Header("Abilities")] [SerializeField] private List<Ability> abilities;
+    private Vector3 _castTargetPosition;
+    private IEnumerator _pendingCast;
 
     private void Awake()
     {
@@ -83,6 +85,7 @@ public class Unit : MonoBehaviour
 
     private void Stop(object @null)
     {
+        if (_pendingCast != null) StopCoroutine(_pendingCast);
         _pseudoObject.transform.DOKill();
         agent.SetDestination(transform.position);
     }
@@ -127,7 +130,7 @@ public class Unit : MonoBehaviour
     Dictionary<string, object> InputTargets = new Dictionary<string, object>();
     Dictionary<string, List<object>> EffectTargets = new Dictionary<string, List<object>>();
 
-    public IEnumerator ExecuteAbility(Ability ability)
+    public IEnumerator CastAbility(Ability ability)
     {
         Stop(null);
         
@@ -140,6 +143,32 @@ public class Unit : MonoBehaviour
         Debug.Log("Waiting for ability input");
         yield return StartCoroutine(playerAgent.ProcessTargetInput(currentAbilityType));
 
+        if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.castRange)
+        {
+            ExecuteAbility(ability);
+        }
+        else
+        {
+            TurnAndMove(_castTargetPosition);
+            _pendingCast = PendingCast(ability);
+            StartCoroutine(_pendingCast);
+        }
+    }
+
+    private IEnumerator PendingCast(Ability ability)
+    {
+        while (Vector3.Distance(transform.position, _castTargetPosition) >= ability.castRange)
+        {
+            yield return new WaitForFixedUpdate();
+            agent.SetDestination(_castTargetPosition);
+        }
+        
+        _pendingCast = null;
+        ExecuteAbility(ability);
+    }
+
+    private void ExecuteAbility(Ability ability)
+    {
         for (int i = 0; i < ability.Outcomes.Length; i++)
         {
             Outcome outcome = ability.Outcomes[i];
@@ -157,7 +186,10 @@ public class Unit : MonoBehaviour
         }
     }
 
-    void AbilityInputHandler(object param) {
+    private void AbilityInputHandler(object param)
+    {
+        _castTargetPosition = (Vector3)param;
+        
         if (currentAbilityType == AbilityType.TargetPoint)
 		{
 			InputTargets["Target Point"] = (Vector3) param;
@@ -199,7 +231,7 @@ public class Unit : MonoBehaviour
 
     void TestBlink()
     {
-        StartCoroutine( ExecuteAbility(abilities[0]) ); // testing first skill, "Blink"
+        StartCoroutine( CastAbility(abilities[0]) ); // testing first skill, "Blink"
     }
 
     void TestSnipe()
@@ -212,6 +244,6 @@ public class Unit : MonoBehaviour
             dummySwarmer.transform.position)); // construct data struct for disappear gameAction
         param.Add(outcome1Param);
 
-        StartCoroutine( ExecuteAbility(abilities[1]) ); // testing second skill, "Snipe"
+        StartCoroutine( CastAbility(abilities[1]) ); // testing second skill, "Snipe"
     }
 }
