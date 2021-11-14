@@ -83,28 +83,6 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void Stop(object @null)
-    {
-        if (_pendingCast != null) StopCoroutine(_pendingCast);
-        _pseudoObject.transform.DOKill();
-        agent.SetDestination(transform.position);
-    }
-
-    private void Move(object destination)
-    {
-        agent.SetDestination((Vector3)destination);
-    }
-
-    public void TurnAndMove(object destination)
-    {
-        Stop(null);
-
-        _pseudoObject.transform
-            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToDestination((Vector3)destination)),
-                turnRate * 360)
-            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
-    }
-
     private void UpdatePosition()
     {
         if (!isPlayer) return;
@@ -118,30 +96,52 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private float AngleToDestination(Vector3 destination)
+    private void Stop(object @null)
     {
-        Vector2 angle = destination - transform.position;
+        if (_pendingCast != null) StopCoroutine(_pendingCast);
+        _pseudoObject.transform.DOKill();
+        agent.SetDestination(transform.position);
+    }
+
+    public void TurnAndMove(object destination)
+    {
+        Stop(null);
+
+        _pseudoObject.transform
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget((Vector3)destination)),
+                turnRate * 360)
+            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
+    }
+
+    private void Move(object destination)
+    {
+        agent.SetDestination((Vector3)destination);
+    }
+
+    private float AngleToTarget(Vector3 target)
+    {
+        Vector2 angle = target - transform.position;
 
         return Mathf.Atan2(angle.y, angle.x) * 180 / Mathf.PI;
     }
 
     // members used for ability execution
-    AbilityType currentAbilityType;
-    Dictionary<string, object> InputTargets = new Dictionary<string, object>();
-    Dictionary<string, List<object>> EffectTargets = new Dictionary<string, List<object>>();
+    private AbilityType _currentAbilityType;
+    private readonly Dictionary<string, object> _inputTargets = new Dictionary<string, object>();
+    private readonly Dictionary<string, List<object>> _effectTargets = new Dictionary<string, List<object>>();
 
     public IEnumerator CastAbility(Ability ability)
     {
         Stop(null);
-        
-        currentAbilityType = ability.InputType;
-        InputTargets.Clear();
-        EffectTargets.Clear();
+
+        _currentAbilityType = ability.InputType;
+        _inputTargets.Clear();
+        _effectTargets.Clear();
 
         PlayerAgent playerAgent = GetComponent<PlayerAgent>();
 
         Debug.Log("Waiting for ability input");
-        yield return StartCoroutine(playerAgent.ProcessTargetInput(currentAbilityType));
+        yield return StartCoroutine(playerAgent.ProcessTargetInput(_currentAbilityType));
 
         if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.castRange)
         {
@@ -155,6 +155,24 @@ public class Unit : MonoBehaviour
         }
     }
 
+    private void AbilityInputHandler(object param)
+    {
+        _castTargetPosition = (Vector3)param;
+
+        if (_currentAbilityType == AbilityType.TargetPoint)
+        {
+            _inputTargets["Target Point"] = (Vector3)param;
+        }
+        else if (_currentAbilityType == AbilityType.TargetUnit)
+        {
+            _inputTargets["Target Unit"] = (Vector3)param;
+        }
+        else if (_currentAbilityType == AbilityType.TargetArea)
+        {
+            _inputTargets["Target Center"] = (Vector3)param;
+        }
+    }
+
     private IEnumerator PendingCast(Ability ability)
     {
         while (Vector3.Distance(transform.position, _castTargetPosition) >= ability.castRange)
@@ -162,7 +180,7 @@ public class Unit : MonoBehaviour
             yield return new WaitForFixedUpdate();
             agent.SetDestination(_castTargetPosition);
         }
-        
+
         _pendingCast = null;
         TurnAndExecuteAbility(ability);
     }
@@ -172,16 +190,15 @@ public class Unit : MonoBehaviour
         Stop(null);
 
         _pseudoObject.transform
-            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToDestination(_castTargetPosition)),
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(_castTargetPosition)),
                 turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => ExecuteAbility(ability));
     }
 
     private void ExecuteAbility(Ability ability)
     {
-        for (int i = 0; i < ability.Outcomes.Length; i++)
+        foreach (var outcome in ability.Outcomes)
         {
-            Outcome outcome = ability.Outcomes[i];
             float executionTime;
             if (outcome.Trigger.IsNormalizedTime)
             {
@@ -196,37 +213,20 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void AbilityInputHandler(object param)
-    {
-        _castTargetPosition = (Vector3)param;
-        
-        if (currentAbilityType == AbilityType.TargetPoint)
-		{
-			InputTargets["Target Point"] = (Vector3) param;
-		}
-        else if (currentAbilityType == AbilityType.TargetUnit)
-		{
-			InputTargets["Target Unit"] = (Vector3) param;
-		}
-		else if (currentAbilityType == AbilityType.TargetArea)
-		{
-			InputTargets["Target Center"] = (Vector3) param;
-		}
-    }
-
-    IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, float duration)
+    private IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, float duration)
     {
         yield return new WaitForSeconds(timeToExecute);
 
-        for(int i = 0; i < outcome.Effects.Length; i++) {
-            Effect effect = outcome.Effects[i];
-            effect.ExecuteEffect(this, InputTargets, EffectTargets);
+        foreach (var effect in outcome.Effects)
+        {
+            effect.ExecuteEffect(this, _inputTargets, _effectTargets);
         }
 
         yield return null;
     }
 
-    IEnumerator ExecuteConstantUpdateGameAction(GameAction gameAction, object param, float duration) {
+    private IEnumerator ExecuteConstantUpdateGameAction(GameAction gameAction, object param, float duration)
+    {
         // float timeElapsed = 0;
 
         // while(timeElapsed < duration) {
@@ -239,12 +239,12 @@ public class Unit : MonoBehaviour
         yield return null;
     }
 
-    void TestBlink()
+    private void TestBlink()
     {
-        StartCoroutine( CastAbility(abilities[0]) ); // testing first skill, "Blink"
+        StartCoroutine(CastAbility(abilities[0])); // testing first skill, "Blink"
     }
 
-    void TestSnipe()
+    private void TestSnipe()
     {
         List<List<object>> param = new List<List<object>>();
 
@@ -254,6 +254,6 @@ public class Unit : MonoBehaviour
             dummySwarmer.transform.position)); // construct data struct for disappear gameAction
         param.Add(outcome1Param);
 
-        StartCoroutine( CastAbility(abilities[1]) ); // testing second skill, "Snipe"
+        StartCoroutine(CastAbility(abilities[1])); // testing second skill, "Snipe"
     }
 }
