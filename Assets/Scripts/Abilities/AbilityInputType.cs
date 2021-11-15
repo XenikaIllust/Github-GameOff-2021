@@ -30,18 +30,20 @@ static class AbilityInputType
 	public static bool UnitTargetInput(/* string[] tags */)
 	{
 		string[] tags = { "Enemy" }; // PLACEHOLDER UNTIL A BETTER SOLUTION IS FOUND
+		LayerMask enemyMask = LayerMask.GetMask("Enemy");
 
 		// (TODO) Change cursor to selection cursor
 		// Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
 
 		// Get target and check that it's valid
-		RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+		RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), direction: Vector2.zero, distance: Mathf.Infinity, layerMask: enemyMask);
 		if (hit.collider != null) 
 		{
 			Transform selection = hit.transform;
 			if (tags.Contains(selection.tag)) // Check if its the target we want.
 			{
 				Unit selectedUnit = hit.collider.GetComponent<Unit>();
+				Debug.Log(selection.gameObject.name);
 				// Send Unit target as event param
 				object target = selectedUnit;
 				EventManager.RaiseEvent("OnAbilityInputSet", target);

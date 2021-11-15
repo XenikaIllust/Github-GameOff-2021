@@ -65,30 +65,40 @@ public class PlayerAgent : Agent
 
 	// PLACEHOLDER CODE FOR TESTING AbilityInputType.cs
 	public Func<bool> targetInput;
+    bool targetInputCompleted = false;
 	public IEnumerator ProcessTargetInput(AbilityType abilityType)
 	{
+        Debug.Log("ProcessTargetInput is executed!");
         defaultControlsEnabled = false;
+
+        targetInput = null;
 
 		if (abilityType == AbilityType.TargetPoint)
 		{
-			yield return new WaitUntil(() => Input.GetMouseButton(0)); // Wait until the player presses the Left Click
+			yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
 			targetInput = AbilityInputType.PointTargetInput;
 		}
 		else if (abilityType == AbilityType.TargetUnit)
 		{
-			yield return new WaitUntil(() => Input.GetMouseButton(0)); // Wait until the player presses the Left Click
+			yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
 			targetInput = AbilityInputType.UnitTargetInput;
 		}
 		else if (abilityType == AbilityType.TargetArea)
 		{
-			yield return new WaitUntil(() => Input.GetMouseButton(0)); // Wait until the player presses the Left Click
+			yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
 			targetInput = AbilityInputType.AOETargetInput;
 		}
 		else if (abilityType == AbilityType.NoTarget)
 		{
 			targetInput = AbilityInputType.NoTargetInput;
 		}
-		yield return new WaitUntil((() => targetInput() || Input.GetKeyUp(KeyCode.Escape)));
+        else {
+            targetInput = null;
+        }
+
+        targetInputCompleted = targetInput();
+		// yield return new WaitUntil(() => targetInputCompleted == true);
+        targetInputCompleted = false;
 
         defaultControlsEnabled = true;
 	}

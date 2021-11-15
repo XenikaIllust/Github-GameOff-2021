@@ -21,7 +21,7 @@ public class Unit : MonoBehaviour
     [Header("Misc.")] public float updateInterval = 0.1f;
     private float _positionUpdateTimer;
     private GameObject _pseudoObject;
-    [Header("Abilities")] [SerializeField] private List<Ability> abilities;
+    [Header("Abilities")] [SerializeField] private Ability[] abilities = new Ability[4];
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
 
@@ -51,14 +51,18 @@ public class Unit : MonoBehaviour
         _unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
         _unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
 
-
-        EventManager.StartListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
+        if(GetComponent<PlayerAgent>()) // temporary solution, may want to revise if the AI will use the same input
+        {   
+            EventManager.StartListening("OnAbilityInputSet", OnAbilityInputSet);
+        }
     }
 
     private void OnDisable()
     {
         _unitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
         _unitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
+
+        EventManager.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
     }
 
     private void OnStopOrderIssued(object @null)
@@ -73,28 +77,48 @@ public class Unit : MonoBehaviour
 
     private void OnAbilityInputSet(object target)
     {
-        AbilityInputHandler((Vector3)target);
+        print("OnAbilityInputSet executed!: current Ability Type: " + _currentAbilityType);
+        if (_currentAbilityType == AbilityType.TargetPoint)
+        {
+            _castTargetPosition = (Vector3) target;
+            _allTargets["Target Point"] = _castTargetPosition;
+        }
+        else if (_currentAbilityType == AbilityType.TargetUnit)
+        {
+            Unit targetUnit = (Unit) target;
+            _castTargetPosition = targetUnit.transform.position;
+            _allTargets["Target Unit"] = target;
+            _allTargets["Target Unit Position"] = targetUnit.transform.position;
+        }
+        else if (_currentAbilityType == AbilityType.TargetArea)
+        {
+            _castTargetPosition = (Vector3) target;
+            _allTargets["Target Center"] = _castTargetPosition;
+        }
     }
 
     private void Update()
     {
         UpdatePosition();
 
+        // input testing code
         if (gameObject.name == "Character")
         {
             if (Input.GetKeyUp(KeyCode.Q))
             {
-                TestBlink();
+                TestQ();
             }
             else if (Input.GetKeyUp(KeyCode.W))
             {
-                TestSnipe();
+                TestW();
             }
             else if (Input.GetKeyUp(KeyCode.E))
             {
+                TestE();
             }
             else if (Input.GetKeyUp(KeyCode.R))
             {
+                TestR();
             }
         }
     }
@@ -176,20 +200,7 @@ public class Unit : MonoBehaviour
 
     private void AbilityInputHandler(Vector3 target)
     {
-        _castTargetPosition = target;
-
-        if (_currentAbilityType == AbilityType.TargetPoint)
-        {
-            _allTargets["Target Point"] = _castTargetPosition;
-        }
-        else if (_currentAbilityType == AbilityType.TargetUnit)
-        {
-            _allTargets["Target Unit"] = _castTargetPosition;
-        }
-        else if (_currentAbilityType == AbilityType.TargetArea)
-        {
-            _allTargets["Target Center"] = _castTargetPosition;
-        }
+        
     }
 
     private IEnumerator PendingCast(Ability ability)
@@ -258,21 +269,23 @@ public class Unit : MonoBehaviour
         yield return null;
     }
 
-    private void TestBlink()
+    private void TestQ()
     {
-        StartCoroutine(CastAbility(abilities[0])); // testing first skill, "Blink"
+        StartCoroutine(CastAbility(abilities[0]));
     }
 
-    private void TestSnipe()
+    private void TestW()
     {
-        List<List<object>> param = new List<List<object>>();
+        StartCoroutine(CastAbility(abilities[1]));
+    }
 
-        SwarmerAIAgent dummySwarmer = FindObjectOfType<SwarmerAIAgent>();
-        List<object> outcome1Param = new List<object>();
-        outcome1Param.Add(new RotateToFaceUnitData(this,
-            dummySwarmer.transform.position)); // construct data struct for disappear GameActionBlock
-        param.Add(outcome1Param);
+    private void TestE()
+    {
+        StartCoroutine(CastAbility(abilities[2]));
+    }
 
-        StartCoroutine(CastAbility(abilities[1])); // testing second skill, "Snipe"
+    private void TestR()
+    {
+        StartCoroutine(CastAbility(abilities[3]));
     }
 }
