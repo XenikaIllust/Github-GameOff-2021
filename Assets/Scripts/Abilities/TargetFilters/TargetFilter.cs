@@ -40,7 +40,7 @@ public class TargetFilter
 
 	public TargetRelationship Relationship;
 
-	public List<object> DetermineTargetUnits(Dictionary<string, float> AbilityStats, Dictionary<string, object> AllTargets) {
+	public List<object> DetermineTargetUnits(SerializableDictionary<string, float> AbilityStats, Dictionary<string, object> AllTargets) {
         List<object> targets = new List<object>();
 
 		if(Type == TargetFilterType.SelfFilter) {

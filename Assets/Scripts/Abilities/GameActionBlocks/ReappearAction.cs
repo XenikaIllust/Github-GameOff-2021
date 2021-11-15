@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Definitions/Game Action/Reappear")]
 public class ReappearAction : GameActionBlock
 {
-    public override void Invoke(Dictionary<string, float> abilityStats, List<object> currentFilteredTargets, Dictionary<string, object> otherTargets)
+    public override void Invoke(SerializableDictionary<string, float> abilityStats, List<object> currentFilteredTargets, Dictionary<string, object> otherTargets)
     {
         Unit unitToReappear = (Unit) currentFilteredTargets[0];
 

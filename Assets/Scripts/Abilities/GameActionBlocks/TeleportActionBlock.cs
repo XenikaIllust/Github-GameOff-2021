@@ -6,7 +6,7 @@ using UnityEngine.AI;
 [CreateAssetMenu(menuName = "Definitions/Game Action/Teleport")]
 public class TeleportActionBlock : GameActionBlock
 {
-    public override void Invoke(Dictionary<string, float> abilityStats, List<object> currentFilteredTargets, Dictionary<string, object> otherTargets)
+    public override void Invoke(SerializableDictionary<string, float> abilityStats, List<object> currentFilteredTargets, Dictionary<string, object> otherTargets)
     {
         // change position
         Unit unitToTeleport = (Unit) currentFilteredTargets[0];

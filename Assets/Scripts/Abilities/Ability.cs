@@ -8,10 +8,9 @@ public enum AbilityType {TargetPoint, TargetUnit, TargetArea, NoTarget};
 public class Ability : ScriptableObject
 {
     public Sprite abilitySprite;
-
     public AbilityType InputType;
     public float Duration;
     public float Cooldown;
+    public AbilityStatsDict AbilityStats;
     public Outcome[] Outcomes;
-    public Dictionary<string, float> AbilityStats = new Dictionary<string, float>();
 }
