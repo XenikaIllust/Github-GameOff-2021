@@ -12,8 +12,8 @@ public class Effect
     List<object> requiredInput;
     List<object> currentFilteredTargets; 
 
-    public void ExecuteEffect(Unit self, Dictionary<string, float> AbilityStats, Dictionary<string, object> AllTargets) {
-        currentFilteredTargets = TargetFilter.DetermineTargetUnits(self, AbilityStats, AllTargets);
+    public void ExecuteEffect(Dictionary<string, float> AbilityStats, Dictionary<string, object> AllTargets) {
+        currentFilteredTargets = TargetFilter.DetermineTargetUnits(AbilityStats, AllTargets);
         GameAction.GameActionBlock.Invoke(AbilityStats, currentFilteredTargets, AllTargets);
         AllTargets[Id] = currentFilteredTargets;
     }

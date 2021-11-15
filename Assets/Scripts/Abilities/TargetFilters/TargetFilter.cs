@@ -40,12 +40,12 @@ public class TargetFilter
 
 	public TargetRelationship Relationship;
 
-	public List<object> DetermineTargetUnits(Unit self, Dictionary<string, float> AbilityStats, Dictionary<string, object> AllTargets) {
+	public List<object> DetermineTargetUnits(Dictionary<string, float> AbilityStats, Dictionary<string, object> AllTargets) {
         List<object> targets = new List<object>();
 
 		if(Type == TargetFilterType.SelfFilter) {
 			// add self into targets
-			targets.Add(self);
+			targets.Add(AllTargets["Executing Unit"]);
 		}
 		else if(Type == TargetFilterType.UnitFilter) {
 			targets.Add(AllTargets["Target Unit"]);

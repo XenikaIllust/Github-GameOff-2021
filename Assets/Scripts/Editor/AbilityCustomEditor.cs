@@ -7,29 +7,36 @@ using UnityEditor;
 public class AbilityCustomEditor : Editor {
     public override void OnInspectorGUI()
     {
+        EditorGUI.BeginChangeCheck();
+
         Ability ability = (Ability) target;
         Dictionary<string, float> abilityStats = ability.AbilityStats;
 
-        if(!abilityStats.ContainsKey("Maximum Cast Distance")) {
-            abilityStats.Add("Maximum Cast Distance", 0);
+        AbilityStatsSerializableDictionary abilityStatsSerializable = new AbilityStatsSerializableDictionary();
+
+        if(!abilityStatsSerializable.keys.Contains("Cast Range")) {
+            abilityStatsSerializable.keys.Add("Cast Range");
+            abilityStatsSerializable.values.Add(0);
         }
-        if(!abilityStats.ContainsKey("AOE Radius")) {
-            abilityStats.Add("AOE Radius", 0);
+        if(!abilityStatsSerializable.keys.Contains("Cast Range")) {
+            abilityStatsSerializable.keys.Add("AOE Radius");
+            abilityStatsSerializable.values.Add(0);
         }
         
         if(ability.InputType == AbilityType.TargetPoint) {
-            abilityStats["Maximum Cast Distance"] = EditorGUILayout.FloatField("Maximum Cast Distance", abilityStats["Maximum Cast Distance"]);
+            abilityStats["Cast Range"] = EditorGUILayout.FloatField("Cast Range", abilityStats["Cast Range"]);
         }
         else if(ability.InputType == AbilityType.TargetUnit) {
-            abilityStats["Maximum Cast Distance"] = EditorGUILayout.FloatField("Maximum Cast Distance", abilityStats["Maximum Cast Distance"]);
+            abilityStats["Cast Range"] = EditorGUILayout.FloatField("Cast Range", abilityStats["Cast Range"]);
         }
         else if(ability.InputType == AbilityType.TargetArea) {
-            abilityStats["Maximum Cast Distance"] = EditorGUILayout.FloatField("Maximum Cast Distance", abilityStats["Maximum Cast Distance"]);
+            abilityStats["Cast Range"] = EditorGUILayout.FloatField("Cast Range", abilityStats["Cast Range"]);
             abilityStats["AOE Radius"] = EditorGUILayout.FloatField("AOE Radius", abilityStats["AOE Radius"]);
         }
 
-        base.OnInspectorGUI();
-
         serializedObject.ApplyModifiedProperties();
+        EditorGUI.EndChangeCheck();
+
+        base.OnInspectorGUI();
     }
 }

@@ -8,6 +8,7 @@ public class DisappearAction : GameActionBlock
     public override void Invoke(Dictionary<string, float> abilityStats, List<object> currentFilteredTargets, Dictionary<string, object> otherTargets) 
     {
         Unit unitToDisappear = (Unit) currentFilteredTargets[0];
+        Debug.Log(unitToDisappear.gameObject.name);
 
         // become invisible
         unitToDisappear.GetComponentInChildren<SpriteRenderer>().enabled = false;
