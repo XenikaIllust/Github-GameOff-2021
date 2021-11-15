@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Definitions/Game Action/Spawn VFX")]
-public class SpawnVFXAction : GameAction
+public class SpawnVFXAction : GameActionBlock
 {
 	public GameObject Prefab;
 	public Vector3 Rotation;

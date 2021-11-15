@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: AstralStep
   m_EditorClassIdentifier: 
+  abilitySprite: {fileID: 0}
   InputType: 0
   Duration: 1.5
   Cooldown: 0
@@ -25,38 +26,62 @@ MonoBehaviour:
     - Id: Disappear
       TargetFilter:
         Type: 0
-        lineLength: 0
-        areaOfEffectRadius: 0
-        IdOfPreviousEffect: 
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetPointId: 
+        PreviousEffectId: 
         Relationship: 0
       GameAction: {fileID: 11400000, guid: 2d72a3468b1000249b7e0a5ae82f98bc, type: 2}
-  - Id: Teleport, Reappear and Damage
+  - Id: Damage, Teleport and Reappear
     Duration: 0
     Trigger:
-      ExecutionTime: 0.25
+      ExecutionTime: 0.5
       IsNormalizedTime: 0
     Effects:
+    - Id: Damage
+      TargetFilter:
+        Type: 2
+        InitialPointId: Unit Position
+        FinalPointId: Target Point
+        AOERadiusId: 
+        TargetPointId: 
+        PreviousEffectId: 
+        Relationship: 0
+      GameAction: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
     - Id: Teleport
       TargetFilter:
         Type: 4
-        lineLength: 0
-        areaOfEffectRadius: 0
-        IdOfPreviousEffect: Disappear
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetPointId: 
+        PreviousEffectId: Disappear
         Relationship: 0
       GameAction: {fileID: 11400000, guid: 1e92247e4d8679a4a93e1da975cb1f48, type: 2}
     - Id: Reappear
       TargetFilter:
         Type: 4
-        lineLength: 0
-        areaOfEffectRadius: 0
-        IdOfPreviousEffect: Disappear
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetPointId: 
+        PreviousEffectId: Disappear
         Relationship: 0
       GameAction: {fileID: 11400000, guid: 5fbaac34ccd01a54d8c39db1b3b267ce, type: 2}
-    - Id: Damage
+  - Id: Delayed Damage
+    Duration: 0
+    Trigger:
+      ExecutionTime: 1.5
+      IsNormalizedTime: 0
+    Effects:
+    - Id: Damage2
       TargetFilter:
-        Type: 2
-        lineLength: 0
-        areaOfEffectRadius: 0
-        IdOfPreviousEffect: 
+        Type: 4
+        InitialPointId: Unit Position
+        FinalPointId: Target Point
+        AOERadiusId: 
+        TargetPointId: 
+        PreviousEffectId: Damage
         Relationship: 0
       GameAction: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}

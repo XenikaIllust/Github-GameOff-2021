@@ -10,11 +10,11 @@ public class Effect
     public GameAction GameAction;
 
     List<object> requiredInput;
-    List<object> targets; 
+    List<object> currentFilteredTargets; 
 
-    public void ExecuteEffect(Unit self, Dictionary<string, object> InputTargets, Dictionary<string, List<object>> EffectTargets) {
-        targets = TargetFilter.DetermineTargetUnits(self, InputTargets, EffectTargets);
-        GameAction.Invoke(InputTargets, targets);
-        EffectTargets[Id] = targets;
+    public void ExecuteEffect(Unit self, Dictionary<string, float> AbilityStats, Dictionary<string, object> AllTargets) {
+        currentFilteredTargets = TargetFilter.DetermineTargetUnits(self, AbilityStats, AllTargets);
+        GameAction.GameActionBlock.Invoke(AbilityStats, currentFilteredTargets, AllTargets);
+        AllTargets[Id] = currentFilteredTargets;
     }
 }

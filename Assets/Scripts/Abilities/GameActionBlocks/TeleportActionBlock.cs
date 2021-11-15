@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [CreateAssetMenu(menuName = "Definitions/Game Action/Teleport")]
-public class TeleportAction : GameAction
+public class TeleportActionBlock : GameActionBlock
 {
-    public override void Invoke(Dictionary<string, object> inputTargets, List<object> targets)
+    public override void Invoke(Dictionary<string, float> abilityStats, List<object> currentFilteredTargets, Dictionary<string, object> otherTargets)
     {
         // change position
-        Unit unitToTeleport = (Unit) targets[0];
-        Vector2 teleportPos = (Vector3) inputTargets["Target Point"];
+        Unit unitToTeleport = (Unit) currentFilteredTargets[0];
+        Vector2 teleportPos = (Vector3) otherTargets["Target Point"];
 
         NavMeshAgent navMeshAgent = unitToTeleport.GetComponent<NavMeshAgent>();
 

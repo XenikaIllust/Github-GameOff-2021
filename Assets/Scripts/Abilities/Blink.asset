@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: Blink
   m_EditorClassIdentifier: 
+  abilitySprite: {fileID: 0}
   InputType: 0
   Duration: 0.25
   Cooldown: 5
@@ -25,11 +26,15 @@ MonoBehaviour:
     - Id: Disappear
       TargetFilter:
         Type: 0
-        lineLength: 0
-        areaOfEffectRadius: 0
-        IdOfPreviousEffect: 
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetPointId: 
+        PreviousEffectId: 
         Relationship: 0
-      GameAction: {fileID: 11400000, guid: 2d72a3468b1000249b7e0a5ae82f98bc, type: 2}
+      GameAction:
+        GameActionBlock: {fileID: 0}
+        StatId: 
   - Id: Teleport and Reappear
     Duration: 0
     Trigger:
@@ -39,16 +44,24 @@ MonoBehaviour:
     - Id: Teleport
       TargetFilter:
         Type: 4
-        lineLength: 0
-        areaOfEffectRadius: 0
-        IdOfPreviousEffect: Disappear
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetPointId: 
+        PreviousEffectId: Disappear
         Relationship: 0
-      GameAction: {fileID: 11400000, guid: 1e92247e4d8679a4a93e1da975cb1f48, type: 2}
+      GameAction:
+        GameActionBlock: {fileID: 0}
+        StatId: 
     - Id: Reappear
       TargetFilter:
         Type: 4
-        lineLength: 0
-        areaOfEffectRadius: 0
-        IdOfPreviousEffect: Disappear
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetPointId: 
+        PreviousEffectId: Disappear
         Relationship: 0
-      GameAction: {fileID: 11400000, guid: 5fbaac34ccd01a54d8c39db1b3b267ce, type: 2}
+      GameAction:
+        GameActionBlock: {fileID: 0}
+        StatId: 

@@ -10,5 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a0b45e9a93b14694dbdb392c6a49c3d6, type: 3}
-  m_Name: Inflict Damage
+  m_Name: InflictDamageBlock
   m_EditorClassIdentifier: 
+  Damage: 20

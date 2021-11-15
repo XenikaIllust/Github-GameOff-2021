@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Definitions/Game Action/Disappear")]
-public class DisappearAction : GameAction
+public class DisappearAction : GameActionBlock
 {
-    public override void Invoke(Dictionary<string, object> inputTargets, List<object> targets) 
+    public override void Invoke(Dictionary<string, float> abilityStats, List<object> currentFilteredTargets, Dictionary<string, object> otherTargets) 
     {
-        Unit unitToDisappear = (Unit) targets[0];
+        Unit unitToDisappear = (Unit) currentFilteredTargets[0];
 
         // become invisible
         unitToDisappear.GetComponentInChildren<SpriteRenderer>().enabled = false;

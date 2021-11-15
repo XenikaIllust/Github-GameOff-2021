@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: AOEDamageTest
   m_EditorClassIdentifier: 
+  abilitySprite: {fileID: 0}
   InputType: 2
   Duration: 0
   Cooldown: 0
@@ -25,8 +26,12 @@ MonoBehaviour:
     - Id: Damage
       TargetFilter:
         Type: 3
-        lineLength: 0
-        areaOfEffectRadius: 3
-        IdOfPreviousEffect: 
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: AOE Radius
+        TargetPointId: Target Point
+        PreviousEffectId: 
         Relationship: 0
-      GameAction: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
+        StatId: Damage Stat 1

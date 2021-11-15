@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Definitions/Game Action/Reappear")]
-public class ReappearAction : GameAction
+public class ReappearAction : GameActionBlock
 {
-    public override void Invoke(Dictionary<string, object> inputTargets, List<object> targets)
+    public override void Invoke(Dictionary<string, float> abilityStats, List<object> currentFilteredTargets, Dictionary<string, object> otherTargets)
     {
-        Unit unitToReappear = (Unit) targets[0];
+        Unit unitToReappear = (Unit) currentFilteredTargets[0];
 
         // become visible
         unitToReappear.GetComponentInChildren<SpriteRenderer>().enabled = true;

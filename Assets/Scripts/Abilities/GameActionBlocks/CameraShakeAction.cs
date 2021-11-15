@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Definitions/Game Action/Camera Shake")]
-public class CameraShakeAction : GameAction
+public class CameraShakeAction : GameActionBlock
 {
 	public enum ShakeType
 	{

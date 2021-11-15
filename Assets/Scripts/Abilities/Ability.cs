@@ -14,5 +14,5 @@ public class Ability : ScriptableObject
     public float Duration;
     public float Cooldown;
     public Outcome[] Outcomes;
-    public Dictionary<string, object> AbilityStats;
+    public Dictionary<string, float> AbilityStats = new Dictionary<string, float>();
 }

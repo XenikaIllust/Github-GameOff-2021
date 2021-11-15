@@ -2,14 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class TargetFilter
-{
-	// Target filters work by taking a set of potential targets and then by applying
-	// a series of filters in turn to narrow down your targets until you're left
-	// with who you want to target.
-
-	public enum TargetFilterType {
+public enum TargetFilterType {
 		SelfFilter,
 		UnitFilter,
 		LineFilter,
@@ -17,6 +10,13 @@ public class TargetFilter
 		TargetsOfPreviousEffect,
 		NoFilter
 	}
+
+[System.Serializable]
+public class TargetFilter
+{
+	// Target filters work by taking a set of potential targets and then by applying
+	// a series of filters in turn to narrow down your targets until you're left
+	// with who you want to target.
 
 	public enum TargetRelationship
 	{
@@ -28,17 +28,19 @@ public class TargetFilter
 	public TargetFilterType Type;
 
 	[Tooltip("Only fill in this field for Line TargetFilter")]
-	public float lineLength;
+	public string InitialPointId;
+	public string FinalPointId;
 
 	[Tooltip("Only fill in this field for AOE TargetFilter")]
-	public float areaOfEffectRadius;
+	public string AOERadiusId;
+	public string TargetPointId;
 
 	[Tooltip("Only fill in this field for TargetOfPreviousEffect TargetFilter")]
-	public string IdOfPreviousEffect;
+	public string PreviousEffectId;
 
 	public TargetRelationship Relationship;
 
-	public List<object> DetermineTargetUnits(Unit self, Dictionary<string, object> InputTargets, Dictionary<string, List<object>> EffectTargets) {
+	public List<object> DetermineTargetUnits(Unit self, Dictionary<string, float> AbilityStats, Dictionary<string, object> AllTargets) {
         List<object> targets = new List<object>();
 
 		if(Type == TargetFilterType.SelfFilter) {
@@ -46,7 +48,7 @@ public class TargetFilter
 			targets.Add(self);
 		}
 		else if(Type == TargetFilterType.UnitFilter) {
-			targets.Add(InputTargets["Target Unit"]);
+			targets.Add(AllTargets["Target Unit"]);
 		}
 		else if(Type == TargetFilterType.LineFilter) {
 			// use raycast to get units in lineLength
@@ -54,15 +56,17 @@ public class TargetFilter
 		else if(Type == TargetFilterType.AOEFilter) {
 			// use OverlapCollider to get units in areaOfEffectRadius
 			GameObject AOECalculator = new GameObject("AOECalculator", typeof(PolygonCollider2D));
-			AOECalculator.transform.position = (Vector3) InputTargets["Target Center"];
+			AOECalculator.transform.position = (Vector3) AllTargets["Target Center"];
 
+			// firstly, construct an ellipse shaped collider with specified radius
 			PolygonCollider2D polyCollider = AOECalculator.GetComponent<PolygonCollider2D>();
-			polyCollider.points = MathUtils.GenerateIsometricCirclePoints(areaOfEffectRadius);
-			polyCollider.transform.position = (Vector3) InputTargets["Target Center"];
+			polyCollider.points = MathUtils.GenerateIsometricCirclePoints(AbilityStats[AOERadiusId]);
+			polyCollider.transform.position = (Vector3) AllTargets["Target Center"];
 
+			// second, use the ellipse collider and check overlaps with existing hitbox colliders
+			// return the targets
 			List<Collider2D> results = new List<Collider2D>();
 			ContactFilter2D contactFilter = new ContactFilter2D();
-			
 			Physics2D.OverlapCollider(polyCollider, contactFilter.NoFilter(), results);
 			foreach(Collider2D collider in results) {
 				Unit unit = collider.GetComponentInParent<Unit>();
@@ -73,7 +77,7 @@ public class TargetFilter
 		}
 		else if(Type == TargetFilterType.TargetsOfPreviousEffect) {
 			// get targets from previous effect in EffectTargets[id] and add them into targets
-			foreach(object o in EffectTargets[IdOfPreviousEffect]) {
+			foreach(object o in (List<object>) AllTargets[PreviousEffectId]) {
 				targets.Add(o);
 			}
 		}

@@ -13,7 +13,7 @@ public struct RotateToFaceUnitData
 }
 
 [CreateAssetMenu(menuName = "Definitions/Game Action/RotateToFaceUnit")]
-public class RotateToFaceUnitAction : GameAction
+public class RotateToFaceUnitAction : GameActionBlock
 {
     // public override void Invoke(object param)
     // {

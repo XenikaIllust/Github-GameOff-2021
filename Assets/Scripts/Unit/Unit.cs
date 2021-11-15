@@ -123,22 +123,24 @@ public class Unit : MonoBehaviour
     }
 
     // members used for ability execution
-    AbilityType currentAbilityType;
-    Dictionary<string, object> InputTargets = new Dictionary<string, object>();
-    Dictionary<string, List<object>> EffectTargets = new Dictionary<string, List<object>>();
+    Ability currentAbility = null;
+    Dictionary<string, object> AllTargets = new Dictionary<string, object>();
 
     public IEnumerator ExecuteAbility(Ability ability)
     {
         Stop(null);
-        
-        currentAbilityType = ability.InputType;
-        InputTargets.Clear();
-        EffectTargets.Clear();
+
+        currentAbility = ability;
+        AllTargets.Clear();
+        AllTargets["Executing Unit"] = this;
+        AllTargets["Executing Unit Position"] = this;
 
         PlayerAgent playerAgent = GetComponent<PlayerAgent>();
 
         Debug.Log("Waiting for ability input");
-        yield return StartCoroutine(playerAgent.ProcessTargetInput(currentAbilityType));
+        yield return StartCoroutine(playerAgent.ProcessTargetInput(currentAbility.InputType));
+        yield return new WaitUntil(() => inputProcessingComplete);
+        inputProcessingComplete = false;
 
         for (int i = 0; i < ability.Outcomes.Length; i++)
         {
@@ -157,19 +159,22 @@ public class Unit : MonoBehaviour
         }
     }
 
+    bool inputProcessingComplete = false;
     void AbilityInputHandler(object param) {
-        if (currentAbilityType == AbilityType.TargetPoint)
+        if (currentAbility.InputType == AbilityType.TargetPoint)
 		{
-			InputTargets["Target Point"] = (Vector3) param;
+			AllTargets["Target Point"] = (Vector3) param;
 		}
-        else if (currentAbilityType == AbilityType.TargetUnit)
+        else if (currentAbility.InputType == AbilityType.TargetUnit)
 		{
-			InputTargets["Target Unit"] = (Vector3) param;
+			AllTargets["Target Unit"] = (Vector3) param;
 		}
-		else if (currentAbilityType == AbilityType.TargetArea)
+		else if (currentAbility.InputType == AbilityType.TargetArea)
 		{
-			InputTargets["Target Center"] = (Vector3) param;
+			AllTargets["Target Center"] = (Vector3) param;
 		}
+
+        inputProcessingComplete = true;
     }
 
     IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, float duration)
@@ -178,19 +183,19 @@ public class Unit : MonoBehaviour
 
         for(int i = 0; i < outcome.Effects.Length; i++) {
             Effect effect = outcome.Effects[i];
-            effect.ExecuteEffect(this, InputTargets, EffectTargets);
+            effect.ExecuteEffect(this, currentAbility.AbilityStats, AllTargets);
         }
 
         yield return null;
     }
 
-    IEnumerator ExecuteConstantUpdateGameAction(GameAction gameAction, object param, float duration) {
+    IEnumerator ExecuteConstantUpdateGameActionBlock(GameActionBlock GameActionBlock, object param, float duration) {
         // float timeElapsed = 0;
 
         // while(timeElapsed < duration) {
         //     print(timeElapsed);
         //     timeElapsed += Time.deltaTime;
-        //     gameAction.Invoke(param);
+        //     GameActionBlock.Invoke(param);
         //     yield return null;
         // }
 
@@ -209,7 +214,7 @@ public class Unit : MonoBehaviour
         SwarmerAIAgent dummySwarmer = FindObjectOfType<SwarmerAIAgent>();
         List<object> outcome1Param = new List<object>();
         outcome1Param.Add(new RotateToFaceUnitData(this,
-            dummySwarmer.transform.position)); // construct data struct for disappear gameAction
+            dummySwarmer.transform.position)); // construct data struct for disappear GameActionBlock
         param.Add(outcome1Param);
 
         StartCoroutine( ExecuteAbility(abilities[1]) ); // testing second skill, "Snipe"
