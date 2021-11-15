@@ -22,6 +22,8 @@ public class Unit : MonoBehaviour
     private float _positionUpdateTimer;
     private GameObject _pseudoObject;
     [Header("Abilities")] [SerializeField] private List<Ability> abilities;
+    private Vector3 _castTargetPosition;
+    private IEnumerator _pendingCast;
 
     private void Awake()
     {
@@ -46,16 +48,32 @@ public class Unit : MonoBehaviour
 
     private void OnEnable()
     {
-        _unitEventHandler.StartListening("OnMoveOrderIssued", TurnAndMove);
-        _unitEventHandler.StartListening("OnStopOrderIssued", Stop);
+        _unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
+        _unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
 
-        EventManager.StartListening("OnAbilityInputSet", AbilityInputHandler); // temporary for testing
+
+        EventManager.StartListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
     }
 
     private void OnDisable()
     {
-        _unitEventHandler.StopListening("OnMoveOrderIssued", TurnAndMove);
-        _unitEventHandler.StopListening("OnStopOrderIssued", Stop);
+        _unitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
+        _unitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
+    }
+
+    private void OnStopOrderIssued(object @null)
+    {
+        Stop();
+    }
+
+    private void OnMoveOrderIssued(object destination)
+    {
+        TurnAndMove((Vector3)destination);
+    }
+
+    private void OnAbilityInputSet(object target)
+    {
+        AbilityInputHandler((Vector3)target);
     }
 
     private void Update()
@@ -81,27 +99,6 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void Stop(object @null)
-    {
-        _pseudoObject.transform.DOKill();
-        agent.SetDestination(transform.position);
-    }
-
-    private void Move(object destination)
-    {
-        agent.SetDestination((Vector3)destination);
-    }
-
-    public void TurnAndMove(object destination)
-    {
-        Stop(null);
-
-        _pseudoObject.transform
-            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToDestination((Vector3)destination)),
-                turnRate * 360)
-            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
-    }
-
     private void UpdatePosition()
     {
         if (!isPlayer) return;
@@ -115,23 +112,110 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private float AngleToDestination(Vector3 destination)
+    private void Stop()
     {
-        Vector2 angle = destination - transform.position;
+        if (_pendingCast != null) StopCoroutine(_pendingCast);
+        _pseudoObject.transform.DOKill();
+        agent.SetDestination(transform.position);
+    }
+
+    private void TurnAndMove(Vector3 destination)
+    {
+        Stop();
+
+        _pseudoObject.transform
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(destination)),
+                turnRate * 360)
+            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
+    }
+
+    private void Move(Vector3 destination)
+    {
+        agent.SetDestination(destination);
+    }
+
+    private float AngleToTarget(Vector3 target)
+    {
+        Vector2 angle = target - transform.position;
 
         return Mathf.Atan2(angle.y, angle.x) * 180 / Mathf.PI;
     }
 
-    public IEnumerator ExecuteAbility(Ability ability, List<List<object>> outcomeParameters)
+    // members used for ability execution
+    private AbilityType _currentAbilityType;
+    private readonly Dictionary<string, object> _inputTargets = new Dictionary<string, object>();
+    private readonly Dictionary<string, List<object>> _effectTargets = new Dictionary<string, List<object>>();
+
+    private IEnumerator CastAbility(Ability ability)
     {
-        Stop(null);
+        Stop();
+
+        _currentAbilityType = ability.InputType;
+        _inputTargets.Clear();
+        _effectTargets.Clear();
+
         PlayerAgent playerAgent = GetComponent<PlayerAgent>();
 
-        yield return StartCoroutine(playerAgent.ProcessTargetInput(ability.InputType));
+        Debug.Log("Waiting for ability input");
+        yield return StartCoroutine(playerAgent.ProcessTargetInput(_currentAbilityType));
 
-        for (int i = 0; i < ability.Outcomes.Length; i++)
+        if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.castRange)
         {
-            Outcome outcome = ability.Outcomes[i];
+            TurnAndExecuteAbility(ability);
+        }
+        else
+        {
+            TurnAndMove(_castTargetPosition);
+
+            _pendingCast = PendingCast(ability);
+            StartCoroutine(_pendingCast);
+        }
+    }
+
+    private void AbilityInputHandler(Vector3 target)
+    {
+        _castTargetPosition = target;
+
+        if (_currentAbilityType == AbilityType.TargetPoint)
+        {
+            _inputTargets["Target Point"] = _castTargetPosition;
+        }
+        else if (_currentAbilityType == AbilityType.TargetUnit)
+        {
+            _inputTargets["Target Unit"] = _castTargetPosition;
+        }
+        else if (_currentAbilityType == AbilityType.TargetArea)
+        {
+            _inputTargets["Target Center"] = _castTargetPosition;
+        }
+    }
+
+    private IEnumerator PendingCast(Ability ability)
+    {
+        while (Vector3.Distance(transform.position, _castTargetPosition) >= ability.castRange)
+        {
+            yield return new WaitForFixedUpdate();
+            agent.SetDestination(_castTargetPosition);
+        }
+
+        _pendingCast = null;
+        TurnAndExecuteAbility(ability);
+    }
+
+    private void TurnAndExecuteAbility(Ability ability)
+    {
+        Stop();
+
+        _pseudoObject.transform
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(_castTargetPosition)),
+                turnRate * 360)
+            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => ExecuteAbility(ability));
+    }
+
+    private void ExecuteAbility(Ability ability)
+    {
+        foreach (var outcome in ability.Outcomes)
+        {
             float executionTime;
             if (outcome.Trigger.IsNormalizedTime)
             {
@@ -142,36 +226,24 @@ public class Unit : MonoBehaviour
                 executionTime = outcome.Trigger.ExecutionTime;
             }
 
-            StartCoroutine(ExecuteOutcome(outcome, executionTime, outcome.Duration, outcomeParameters[i]));
+            StartCoroutine(ExecuteOutcome(outcome, executionTime, outcome.Duration));
         }
     }
 
-    List<List<object>> outcomeParameters = new List<List<object>>();
-    void AbilityInputHandler(object param) {
-    }
-
-    IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, float duration, object param)
+    private IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, float duration)
     {
+        yield return new WaitForSeconds(timeToExecute);
 
-        // List<object> outcomeParams = (List<object>) param;
-
-        // yield return new WaitForSeconds(timeToExecute);
-
-        // for(int i = 0; i < outcome.Effects.Length; i++) {
-        //     GameAction gameAction = outcome.Effects[i];
-
-        //     if(gameAction.gameActionBehaviour == GameActionBehaviour.ConstantUpdate) {
-        //         StartCoroutine(ExecuteConstantUpdateGameAction(gameAction, outcomeParams[i], duration));
-        //     }
-        //     else {
-        //         gameAction.Invoke(outcomeParams[i]);
-        //     }
-        // }
+        foreach (var effect in outcome.Effects)
+        {
+            effect.ExecuteEffect(this, _inputTargets, _effectTargets);
+        }
 
         yield return null;
     }
 
-    IEnumerator ExecuteConstantUpdateGameAction(GameAction gameAction, object param, float duration) {
+    private IEnumerator ExecuteConstantUpdateGameAction(GameAction gameAction, object param, float duration)
+    {
         // float timeElapsed = 0;
 
         // while(timeElapsed < duration) {
@@ -184,12 +256,12 @@ public class Unit : MonoBehaviour
         yield return null;
     }
 
-    void TestBlink()
+    private void TestBlink()
     {
-        StartCoroutine(ExecuteAbility(abilities[0], outcomeParameters)); // testing first skill, "Blink"
+        StartCoroutine(CastAbility(abilities[0])); // testing first skill, "Blink"
     }
 
-    void TestSnipe()
+    private void TestSnipe()
     {
         List<List<object>> param = new List<List<object>>();
 
@@ -199,6 +271,6 @@ public class Unit : MonoBehaviour
             dummySwarmer.transform.position)); // construct data struct for disappear gameAction
         param.Add(outcome1Param);
 
-        StartCoroutine(ExecuteAbility(abilities[1], param)); // testing second skill, "Snipe"
+        StartCoroutine(CastAbility(abilities[1])); // testing second skill, "Snipe"
     }
 }

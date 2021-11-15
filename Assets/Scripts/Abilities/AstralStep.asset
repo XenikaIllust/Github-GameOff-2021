@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
-  m_Name: Blink
+  m_Name: AstralStep
   m_EditorClassIdentifier: 
   InputType: 0
-  Duration: 0.25
-  Cooldown: 5
+  Duration: 1.5
+  Cooldown: 0
   Outcomes:
   - Id: Disappear
     Duration: 0
     Trigger:
       ExecutionTime: 0
-      IsNormalizedTime: 1
+      IsNormalizedTime: 0
     Effects:
     - Id: Disappear
       TargetFilter:
@@ -30,11 +30,11 @@ MonoBehaviour:
         IdOfPreviousEffect: 
         Relationship: 0
       GameAction: {fileID: 11400000, guid: 2d72a3468b1000249b7e0a5ae82f98bc, type: 2}
-  - Id: Teleport and Reappear
+  - Id: Teleport, Reappear and Damage
     Duration: 0
     Trigger:
-      ExecutionTime: 1
-      IsNormalizedTime: 1
+      ExecutionTime: 0.25
+      IsNormalizedTime: 0
     Effects:
     - Id: Teleport
       TargetFilter:
@@ -52,3 +52,11 @@ MonoBehaviour:
         IdOfPreviousEffect: Disappear
         Relationship: 0
       GameAction: {fileID: 11400000, guid: 5fbaac34ccd01a54d8c39db1b3b267ce, type: 2}
+    - Id: Damage
+      TargetFilter:
+        Type: 2
+        lineLength: 0
+        areaOfEffectRadius: 0
+        IdOfPreviousEffect: 
+        Relationship: 0
+      GameAction: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}

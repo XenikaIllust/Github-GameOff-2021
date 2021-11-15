@@ -7,7 +7,7 @@ public class Sound
 	public string name;
 
 	public AudioClip audioClip;
-	public AudioMixer audioMixer;
+	public AudioMixerGroup audioMixerGroup;
 
 	public bool mute;
 	public bool bypassEffects;
@@ -19,9 +19,9 @@ public class Sound
 	[Range(0, 256)]
 	public int priority;
 	[Range(0.0f,1.0f)]
-	public float volume;
+	public float volume = 1.0f;
 	[Range(0.1f, 3.0f)]
-	public float pitch;
+	public float pitch = 1.0f;
 	[Range(-1.0f, 1.0f)]
 	public float stereoPan;
 	[Range(0.0f, 1.0f)]

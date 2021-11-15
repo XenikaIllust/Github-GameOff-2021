@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &8647627708446575992
 Transform:
@@ -43,4 +43,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f47ad415aee87bd549f456a19a955250, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: SniperFired
+    audioClip: {fileID: 8300000, guid: 24942b1d9cf90134f842d991facaee66, type: 3}
+    audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 0
+    loop: 0
+    priority: 128
+    volume: 0.6
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}
+  - name: SniperLoading
+    audioClip: {fileID: 8300000, guid: 96105552ddc3c72e187c7321c3a9fa10, type: 3}
+    audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 0
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}
+  - name: SniperTargeting
+    audioClip: {fileID: 8300000, guid: 92d8c7c8fa2d5ef8d93064323b3054e5, type: 3}
+    audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 0
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}

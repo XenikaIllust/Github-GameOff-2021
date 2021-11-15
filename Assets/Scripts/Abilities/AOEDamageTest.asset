@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
+  m_Name: AOEDamageTest
+  m_EditorClassIdentifier: 
+  InputType: 2
+  Duration: 0
+  Cooldown: 0
+  Outcomes:
+  - Id: Damage
+    Duration: 0
+    Trigger:
+      ExecutionTime: 0
+      IsNormalizedTime: 0
+    Effects:
+    - Id: Damage
+      TargetFilter:
+        Type: 3
+        lineLength: 0
+        areaOfEffectRadius: 3
+        IdOfPreviousEffect: 
+        Relationship: 0
+      GameAction: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}

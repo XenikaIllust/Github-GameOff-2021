@@ -11,6 +11,7 @@ public class TargetFilter
 
 	public enum TargetFilterType {
 		SelfFilter,
+		UnitFilter,
 		LineFilter,
 		AOEFilter,
 		TargetsOfPreviousEffect,
@@ -37,20 +38,44 @@ public class TargetFilter
 
 	public TargetRelationship Relationship;
 
-	public List<object> DetermineTargetUnits() {
+	public List<object> DetermineTargetUnits(Unit self, Dictionary<string, object> InputTargets, Dictionary<string, List<object>> EffectTargets) {
         List<object> targets = new List<object>();
 
 		if(Type == TargetFilterType.SelfFilter) {
 			// add self into targets
+			targets.Add(self);
+		}
+		else if(Type == TargetFilterType.UnitFilter) {
+			targets.Add(InputTargets["Target Unit"]);
 		}
 		else if(Type == TargetFilterType.LineFilter) {
 			// use raycast to get units in lineLength
 		}
 		else if(Type == TargetFilterType.AOEFilter) {
-			// use OverlapSphere to get units in areaOfEffectRadius
+			// use OverlapCollider to get units in areaOfEffectRadius
+			GameObject AOECalculator = new GameObject("AOECalculator", typeof(PolygonCollider2D));
+			AOECalculator.transform.position = (Vector3) InputTargets["Target Center"];
+
+			PolygonCollider2D polyCollider = AOECalculator.GetComponent<PolygonCollider2D>();
+			polyCollider.points = MathUtils.GenerateIsometricCirclePoints(areaOfEffectRadius);
+			polyCollider.transform.position = (Vector3) InputTargets["Target Center"];
+
+			List<Collider2D> results = new List<Collider2D>();
+			ContactFilter2D contactFilter = new ContactFilter2D();
+			
+			Physics2D.OverlapCollider(polyCollider, contactFilter.NoFilter(), results);
+			foreach(Collider2D collider in results) {
+				Unit unit = collider.GetComponentInParent<Unit>();
+				targets.Add(unit);
+			}
+
+			GameObject.Destroy(AOECalculator);
 		}
 		else if(Type == TargetFilterType.TargetsOfPreviousEffect) {
 			// get targets from previous effect in EffectTargets[id] and add them into targets
+			foreach(object o in EffectTargets[IdOfPreviousEffect]) {
+				targets.Add(o);
+			}
 		}
 
         return targets;
