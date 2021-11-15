@@ -232,7 +232,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private IEnumerator ExecuteOutcome(Outcome outcome, SerializableDictionary<string, float> abilityStats, float timeToExecute, float duration)
+    private IEnumerator ExecuteOutcome(Outcome outcome, AbilityStatsDict abilityStats, float timeToExecute, float duration)
     {
         yield return new WaitForSeconds(timeToExecute);
 

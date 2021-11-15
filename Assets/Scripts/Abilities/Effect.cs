@@ -12,9 +12,11 @@ public class Effect
     List<object> requiredInput;
     List<object> currentFilteredTargets; 
 
-    public void ExecuteEffect(SerializableDictionary<string, float> AbilityStats, Dictionary<string, object> AllTargets) {
+    public void ExecuteEffect(AbilityStatsDict AbilityStats, Dictionary<string, object> AllTargets) {
         currentFilteredTargets = TargetFilter.DetermineTargetUnits(AbilityStats, AllTargets);
-        GameAction.GameActionBlock.Invoke(AbilityStats, currentFilteredTargets, AllTargets);
+
+        GameAction.Invoke(AbilityStats, currentFilteredTargets, AllTargets);
+
         AllTargets[Id] = currentFilteredTargets;
     }
 }

@@ -14894,6 +14894,6 @@ PrefabInstance:
     - target: {fileID: 3449367993870842364, guid: 4bfa16a7aa78c8e469a7911dcf57e7b8, type: 3}
       propertyPath: abilities.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: fe0e51747d0b6c142a6056463e3314ae, type: 2}
+      objectReference: {fileID: 11400000, guid: 276f7e7509eb54c4fbc29e9213421a07, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bfa16a7aa78c8e469a7911dcf57e7b8, type: 3}

@@ -5,12 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public class InflictDamageAction : GameActionBlock
 {
-    public override void Invoke(SerializableDictionary<string, float> abilityStats, List<object> currentFilteredTargets, Dictionary<string, object> otherTargets)
+    public override void Invoke(float abilityStat, List<object> currentFilteredTargets, Dictionary<string, object> otherTargets)
     {
         //hardcoded damage, change it later
         foreach(object target in currentFilteredTargets) {
             Unit targetUnit = (Unit) target;
-            Debug.Log(targetUnit.gameObject + " damaged for" + "10" + "damage!");
+            float damageStat = abilityStat;
+            Debug.Log(targetUnit.gameObject + " damaged for " + damageStat + " damage!");
         }
     }
 }
