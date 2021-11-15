@@ -116,7 +116,6 @@ public class SniperAIAgent : Agent
 
     private void Stop()
     {
-        print(unitEventHandler);
         unitEventHandler.RaiseEvent("OnMoveOrderIssued", transform.position);
     }
 

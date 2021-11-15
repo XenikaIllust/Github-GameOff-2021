@@ -65,7 +65,6 @@ public class PlayerAgent : Agent
 
 	// PLACEHOLDER CODE FOR TESTING AbilityInputType.cs
 	public Func<bool> targetInput;
-    bool targetInputCompleted = false;
 	public IEnumerator ProcessTargetInput(AbilityType abilityType)
 	{
         Debug.Log("ProcessTargetInput is executed!");
@@ -96,9 +95,7 @@ public class PlayerAgent : Agent
             targetInput = null;
         }
 
-        targetInputCompleted = targetInput();
-		// yield return new WaitUntil(() => targetInputCompleted == true);
-        targetInputCompleted = false;
+		yield return new WaitUntil(() => targetInput());
 
         defaultControlsEnabled = true;
 	}
