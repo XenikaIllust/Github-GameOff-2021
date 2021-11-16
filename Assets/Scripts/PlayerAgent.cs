@@ -89,6 +89,8 @@ public class PlayerAgent : Agent
 		}
 		else if (abilityType == AbilityType.TargetArea)
 		{
+			float radius = 3.0f; // PLACEHOLDER
+			AOECircle.transform.localScale = new Vector3(radius * 1.7f, radius * 1.7f, 1.0f);
 			AOECircle.enabled = true;
 			Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto); // Change cursor to selection cursor
 			yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
