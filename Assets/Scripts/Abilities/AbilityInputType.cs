@@ -26,9 +26,6 @@ static class AbilityInputType
 		string[] tags = { "Enemy" }; // PLACEHOLDER UNTIL A BETTER SOLUTION IS FOUND
 		LayerMask enemyMask = LayerMask.GetMask("Enemy");
 
-		// (TODO) Change cursor to selection cursor
-		// Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
-
 		// Get target and check that it's valid
 		RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), direction: Vector2.zero, distance: Mathf.Infinity, layerMask: enemyMask);
 		if (hit.collider != null) 
@@ -57,9 +54,6 @@ static class AbilityInputType
 	public static bool AOETargetInput(/*float radius*/)
 	{
 		float radius = 1.0f; // PLACEHOLDER UNTIL A BETTER SOLUTION IS FOUND
-
-		// (TODO) Change cursor to selection cursor
-		// Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
 
 		// (TODO) Check if the target is valid (is above terrain for example)
 
