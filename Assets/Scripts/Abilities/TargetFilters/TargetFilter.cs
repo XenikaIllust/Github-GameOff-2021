@@ -33,7 +33,7 @@ public class TargetFilter
 
 	[Tooltip("Only fill in this field for AOE TargetFilter")]
 	public string AOERadiusId;
-	public string TargetPointId;
+	public string TargetCenterId;
 
 	[Tooltip("Only fill in this field for TargetOfPreviousEffect TargetFilter")]
 	public string PreviousEffectId;
@@ -52,16 +52,28 @@ public class TargetFilter
 		}
 		else if(Type == TargetFilterType.LineFilter) {
 			// use raycast to get units in lineLength
+			LayerMask layerMask = LayerMask.GetMask("Enemy");
+			Vector2 originPoint = (Vector3) AllTargets[InitialPointId];
+			Vector2 finalPoint = (Vector3) AllTargets[FinalPointId];
+			Vector2 direction = finalPoint - originPoint;
+			float distance = direction.magnitude;
+
+			RaycastHit2D[] hits = Physics2D.RaycastAll(originPoint, direction, distance: distance, layerMask: layerMask);
+		
+			foreach(RaycastHit2D hit in hits) {
+				Unit targetUnit = hit.collider.GetComponentInParent<Unit>();
+				targets.Add(targetUnit);
+			}
 		}
 		else if(Type == TargetFilterType.AOEFilter) {
 			// use OverlapCollider to get units in areaOfEffectRadius
 			GameObject AOECalculator = new GameObject("AOECalculator", typeof(PolygonCollider2D));
-			AOECalculator.transform.position = (Vector3) AllTargets["Target Center"];
+			AOECalculator.transform.position = (Vector3) AllTargets[TargetCenterId];
 
 			// firstly, construct an ellipse shaped collider with specified radius
 			PolygonCollider2D polyCollider = AOECalculator.GetComponent<PolygonCollider2D>();
 			polyCollider.points = MathUtils.GenerateIsometricCirclePoints(AbilityStats[AOERadiusId]);
-			polyCollider.transform.position = (Vector3) AllTargets["Target Center"];
+			polyCollider.transform.position = (Vector3) AllTargets[TargetCenterId];
 
 			// second, use the ellipse collider and check overlaps with existing hitbox colliders
 			// return the targets

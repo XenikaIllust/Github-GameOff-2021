@@ -33,7 +33,7 @@ public class TargetFilterCustomPropertyDrawer : PropertyDrawer
             EditorGUI.PropertyField( AOERect, property.FindPropertyRelative("AOERadiusId") );
 
             var targetPointRect = new Rect( position.x, position.y + 56, position.width, 16 );
-            EditorGUI.PropertyField( targetPointRect, property.FindPropertyRelative("TargetPointId") );
+            EditorGUI.PropertyField( targetPointRect, property.FindPropertyRelative("TargetCenterId") );
         }
         else if(type == 4) { // TargetsOfPreviousEffect
             var PreviousEffectRect = new Rect( position.x, position.y + 38, position.width, 16 );

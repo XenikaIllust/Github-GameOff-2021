@@ -198,11 +198,6 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void AbilityInputHandler(Vector3 target)
-    {
-        
-    }
-
     private IEnumerator PendingCast(Ability ability)
     {
         while (Vector3.Distance(transform.position, _castTargetPosition) >= ability.AbilityStats["Cast Range"])
