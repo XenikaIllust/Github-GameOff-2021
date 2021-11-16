@@ -12,6 +12,8 @@ public class PlayerAgent : Agent
 
     bool defaultControlsEnabled = true;
 
+	[SerializeField] private SpriteRenderer AOECircle;
+
     protected override void Awake()
     {
         base.Awake();
@@ -23,6 +25,7 @@ public class PlayerAgent : Agent
         if(defaultControlsEnabled) {
             PlayerInput();
         }
+		AOECircleFollowCursor();
     }
 
     private void PlayerInput()
@@ -63,7 +66,7 @@ public class PlayerAgent : Agent
         return new Vector3(worldPosition.x, worldPosition.y, transform.position.z);
     }
 
-	// Responsible for aiming abillities, coupled with AbilityInputType.cs
+	// Responsible for aiming abilities, coupled with AbilityInputType.cs
 	public Func<bool> targetInput;
 	public IEnumerator ProcessTargetInput(AbilityType abilityType)
 	{
@@ -86,9 +89,13 @@ public class PlayerAgent : Agent
 		}
 		else if (abilityType == AbilityType.TargetArea)
 		{
+			float radius = 3.0f; // PLACEHOLDER
+			AOECircle.transform.localScale = new Vector3(radius * 1.7f, radius * 1.7f, 1.0f);
+			AOECircle.enabled = true;
 			Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto); // Change cursor to selection cursor
 			yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
 			targetInput = AbilityInputType.AOETargetInput;
+			AOECircle.enabled = false;
 		}
 		else if (abilityType == AbilityType.NoTarget)
 		{
@@ -98,5 +105,13 @@ public class PlayerAgent : Agent
 		yield return new WaitUntil(() => targetInput());
 
         defaultControlsEnabled = true;
+	}
+
+	private void AOECircleFollowCursor()
+	{
+		AOECircle.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,
+												   Camera.main.ScreenToWorldPoint(Input.mousePosition).y,
+												   0.0f
+												  );
 	}
 }

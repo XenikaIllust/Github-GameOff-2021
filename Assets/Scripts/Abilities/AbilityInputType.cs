@@ -53,8 +53,6 @@ static class AbilityInputType
 
 	public static bool AOETargetInput(/*float radius*/)
 	{
-		float radius = 1.0f; // PLACEHOLDER UNTIL A BETTER SOLUTION IS FOUND
-
 		// (TODO) Check if the target is valid (is above terrain for example)
 
 		// Calculate mouse position
@@ -67,7 +65,7 @@ static class AbilityInputType
 		// Change cursor back to default
 		Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
-		Debug.Log("AOE fired at " + centerPoint + " with a radius of " + radius);
+		Debug.Log("AOE fired at " + centerPoint);
 		return true;
 	}
 
