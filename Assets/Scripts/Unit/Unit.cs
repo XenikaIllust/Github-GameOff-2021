@@ -79,7 +79,6 @@ public class Unit : MonoBehaviour
 
     private void OnAbilityInputSet(object target)
     {
-        print("OnAbilityInputSet executed!: current Ability Type: " + _currentAbilityType);
         AbilityInput(target);
     }
 
@@ -194,7 +193,6 @@ public class Unit : MonoBehaviour
 
         PlayerAgent playerAgent = GetComponent<PlayerAgent>();
 
-        Debug.Log("Waiting for ability input");
         yield return StartCoroutine(playerAgent.ProcessTargetInput(_currentAbilityType));
 
         if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.AbilityStats["Cast Range"])

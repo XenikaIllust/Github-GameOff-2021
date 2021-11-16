@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAgent : Agent
@@ -12,7 +11,7 @@ public class PlayerAgent : Agent
 
     bool defaultControlsEnabled = true;
 
-	[SerializeField] private SpriteRenderer AOECircle;
+    [SerializeField] private SpriteRenderer AOECircle;
 
     protected override void Awake()
     {
@@ -22,10 +21,12 @@ public class PlayerAgent : Agent
 
     private void Update()
     {
-        if(defaultControlsEnabled) {
+        if (defaultControlsEnabled)
+        {
             PlayerInput();
         }
-		AOECircleFollowCursor();
+
+        AOECircleFollowCursor();
     }
 
     private void PlayerInput()
@@ -66,53 +67,53 @@ public class PlayerAgent : Agent
         return new Vector3(worldPosition.x, worldPosition.y, transform.position.z);
     }
 
-	// Responsible for aiming abilities, coupled with AbilityInputType.cs
-	public Func<bool> targetInput;
-	public IEnumerator ProcessTargetInput(AbilityType abilityType)
-	{
-        Debug.Log("ProcessTargetInput is executed!");
-		Texture2D cursorTexture = (Texture2D) Resources.Load("AbilityCursor");
-		Vector2 hotSpot = new Vector2(24, 24); // The offset from the top left of the cursor to use as the target point
-		defaultControlsEnabled = false;
+    // Responsible for aiming abilities, coupled with AbilityInputType.cs
+    public Func<bool> targetInput;
+
+    public IEnumerator ProcessTargetInput(AbilityType abilityType)
+    {
+        Texture2D cursorTexture = (Texture2D)Resources.Load("AbilityCursor");
+        Vector2 hotSpot = new Vector2(24, 24); // The offset from the top left of the cursor to use as the target point
+        defaultControlsEnabled = false;
 
         targetInput = null;
-		if (abilityType == AbilityType.TargetPoint)
-		{
-			Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto); // Change cursor to selection cursor
-			yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
-			targetInput = AbilityInputType.PointTargetInput;
-		}
-		else if (abilityType == AbilityType.TargetUnit)
-		{
-			Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto); // Change cursor to selection cursor
-			yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
-			targetInput = AbilityInputType.UnitTargetInput;
-		}
-		else if (abilityType == AbilityType.TargetArea)
-		{
-			float radius = 3.0f; // PLACEHOLDER
-			AOECircle.transform.localScale = new Vector3(radius * 1.7f, radius * 1.7f, 1.0f);
-			AOECircle.enabled = true;
-			Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto); // Change cursor to selection cursor
-			yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
-			targetInput = AbilityInputType.AOETargetInput;
-			AOECircle.enabled = false;
-		}
-		else if (abilityType == AbilityType.NoTarget)
-		{
-			targetInput = AbilityInputType.NoTargetInput;
-		}
+        if (abilityType == AbilityType.TargetPoint)
+        {
+            Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto); // Change cursor to selection cursor
+            yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
+            targetInput = AbilityInputType.PointTargetInput;
+        }
+        else if (abilityType == AbilityType.TargetUnit)
+        {
+            Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto); // Change cursor to selection cursor
+            yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
+            targetInput = AbilityInputType.UnitTargetInput;
+        }
+        else if (abilityType == AbilityType.TargetArea)
+        {
+            float radius = 3.0f; // PLACEHOLDER
+            AOECircle.transform.localScale = new Vector3(radius * 1.7f, radius * 1.7f, 1.0f);
+            AOECircle.enabled = true;
+            Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto); // Change cursor to selection cursor
+            yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
+            targetInput = AbilityInputType.AOETargetInput;
+            AOECircle.enabled = false;
+        }
+        else if (abilityType == AbilityType.NoTarget)
+        {
+            targetInput = AbilityInputType.NoTargetInput;
+        }
 
-		yield return new WaitUntil(() => targetInput());
+        yield return new WaitUntil(() => targetInput());
 
         defaultControlsEnabled = true;
-	}
+    }
 
-	private void AOECircleFollowCursor()
-	{
-		AOECircle.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,
-												   Camera.main.ScreenToWorldPoint(Input.mousePosition).y,
-												   0.0f
-												  );
-	}
+    private void AOECircleFollowCursor()
+    {
+        AOECircle.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,
+            Camera.main.ScreenToWorldPoint(Input.mousePosition).y,
+            0.0f
+        );
+    }
 }
