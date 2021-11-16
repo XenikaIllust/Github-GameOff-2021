@@ -85,7 +85,7 @@ public class Unit : MonoBehaviour
 
     private void OnDied(object @null)
     {
-        Destroy(this);
+        Destroy(gameObject);
     }
 
     private void Update()
