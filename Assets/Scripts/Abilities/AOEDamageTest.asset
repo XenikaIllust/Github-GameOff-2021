@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: AOEDamageTest
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
   abilitySprite: {fileID: 0}
   InputType: 2
   Duration: 0
@@ -21,11 +21,7 @@ MonoBehaviour:
     _HashCodes: a0bf2b7e77c3df52f4dc220c
     _Next: ffffffff00000000ffffffff
     _Count: 3
-<<<<<<< HEAD
     _Version: 129
-=======
-    _Version: 77
->>>>>>> 3ea254844b185258173285041a61d15c3dd87a26
     _FreeList: -1
     _FreeCount: 0
     _Keys:
@@ -33,15 +29,9 @@ MonoBehaviour:
     - AOE Radius
     - Damage Stat 1
     _Values:
-<<<<<<< HEAD
     - 4
     - 3
     - 60
-=======
-    - 3
-    - 3
-    - 40
->>>>>>> 3ea254844b185258173285041a61d15c3dd87a26
   Outcomes:
   - Id: Damage
     Duration: 0
@@ -52,11 +42,11 @@ MonoBehaviour:
     - Id: Damage
       TargetFilter:
         Type: 3
-        InitialPointId: 
-        FinalPointId: 
+        InitialPointId:
+        FinalPointId:
         AOERadiusId: AOE Radius
         TargetCenterId: Target Center
-        PreviousEffectId: 
+        PreviousEffectId:
         Relationship: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}

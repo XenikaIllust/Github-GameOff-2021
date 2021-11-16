@@ -7,8 +7,9 @@ public class SpawnVFXAction : GameActionBlock
 {
 	public GameObject Prefab;
 	public Vector3 Rotation;
-	public Vector3 OffsetFromTarget;
+	public Vector3 Position;
 	public float Scale = 1f;
 	public bool ParentToTarget;
 	public string NamedTransformParent;
+
 }

@@ -574,3 +574,6 @@ public class SerializableDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 
 [Serializable]
 public class AbilityStatsDict : SerializableDictionary<string, float> { }
+
+[Serializable]
+public class VFXDict : SerializableDictionary<string, string> { }

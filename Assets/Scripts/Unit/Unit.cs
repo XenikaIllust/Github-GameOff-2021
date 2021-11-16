@@ -77,7 +77,6 @@ public class Unit : MonoBehaviour
 
     private void OnAbilityInputSet(object target)
     {
-        print("OnAbilityInputSet executed!: current Ability Type: " + _currentAbilityType);
         if (_currentAbilityType == AbilityType.TargetPoint)
         {
             _castTargetPosition = (Vector3) target;
@@ -172,6 +171,8 @@ public class Unit : MonoBehaviour
     private IEnumerator CastAbility(Ability ability)
     {
         Stop();
+
+        Debug.Log("Currently executing ability " + ability.name);
 
         _currentAbilityType = ability.InputType;
         _allTargets.Clear();
