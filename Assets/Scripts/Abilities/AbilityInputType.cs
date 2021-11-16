@@ -3,14 +3,8 @@ using UnityEngine;
 
 static class AbilityInputType
 {
-	// static private Texture2D cursorTexture = null;
-	// static private Texture2D AreaTexture = null;
-
 	public static bool PointTargetInput()
 	{
-		// (TODO) Change cursor to selection cursor
-		// Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
-
 		// (TODO) Check if the target is valid (is above terrain for example)
 		
 		// Calculate mouse position
@@ -21,7 +15,7 @@ static class AbilityInputType
 		EventManager.RaiseEvent("OnAbilityInputSet", targetCoordinates);
 
 		// Change cursor back to default
-		// Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+		Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
 		Debug.Log("Skill Shot at " + targetPoint);
 		return true;
@@ -55,7 +49,7 @@ static class AbilityInputType
 		else Debug.Log("Raycast hit nothing! No valid Unit selected");
 
 		// Change cursor back to default
-		// Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+		Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
 		return true;
 	}
@@ -77,7 +71,7 @@ static class AbilityInputType
 		EventManager.RaiseEvent("OnAbilityInputSet", centerCoordinates);
 
 		// Change cursor back to default
-		// Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+		Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
 		Debug.Log("AOE fired at " + centerPoint + " with a radius of " + radius);
 		return true;

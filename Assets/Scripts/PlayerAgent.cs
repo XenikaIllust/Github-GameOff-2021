@@ -63,27 +63,30 @@ public class PlayerAgent : Agent
         return new Vector3(worldPosition.x, worldPosition.y, transform.position.z);
     }
 
-	// PLACEHOLDER CODE FOR TESTING AbilityInputType.cs
+	// Responsible for aiming abillities, coupled with AbilityInputType.cs
 	public Func<bool> targetInput;
 	public IEnumerator ProcessTargetInput(AbilityType abilityType)
 	{
         Debug.Log("ProcessTargetInput is executed!");
-        defaultControlsEnabled = false;
+		Texture2D cursorTexture = (Texture2D) Resources.Load("AbilityCursor");
+		defaultControlsEnabled = false;
 
         targetInput = null;
-
 		if (abilityType == AbilityType.TargetPoint)
 		{
+			Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto); // Change cursor to selection cursor
 			yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
 			targetInput = AbilityInputType.PointTargetInput;
 		}
 		else if (abilityType == AbilityType.TargetUnit)
 		{
+			Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto); // Change cursor to selection cursor
 			yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
 			targetInput = AbilityInputType.UnitTargetInput;
 		}
 		else if (abilityType == AbilityType.TargetArea)
 		{
+			Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto); // Change cursor to selection cursor
 			yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
 			targetInput = AbilityInputType.AOETargetInput;
 		}
@@ -91,9 +94,6 @@ public class PlayerAgent : Agent
 		{
 			targetInput = AbilityInputType.NoTargetInput;
 		}
-        else {
-            targetInput = null;
-        }
 
 		yield return new WaitUntil(() => targetInput());
 
