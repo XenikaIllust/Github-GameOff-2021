@@ -13,6 +13,13 @@ public class Health : MonoBehaviour
     private void OnEnable()
     {
         _unitEventHandler.StartListening("OnDamageTaken", OnDamageTaken);
+        _unitEventHandler.StartListening("OnHealTaken", OnHealTaken);
+    }
+
+    private void OnDisable()
+    {
+        _unitEventHandler.StopListening("OnDamageTaken", OnDamageTaken);
+        _unitEventHandler.StopListening("OnHealTaken", OnHealTaken);
     }
 
     private void OnDamageTaken(object damageValue)
@@ -22,9 +29,19 @@ public class Health : MonoBehaviour
         UpdateHealthBar();
     }
 
+    private void OnHealTaken(object healValue)
+    {
+        IncreaseHealth((float)healValue);
+    }
+
     private void ReduceHealth(float value)
     {
-        health -= value;
+        if (value > float.Epsilon) health -= value;
+    }
+
+    private void IncreaseHealth(float value)
+    {
+        if (value > float.Epsilon) health += value;
     }
 
     private void CheckDeathCondition()
