@@ -50,7 +50,7 @@ public class Unit : MonoBehaviour
     {
         UnitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
         UnitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
-        UnitEventHandler.StartListening("OnDied",OnDied);
+        UnitEventHandler.StartListening("OnDied", OnDied);
 
         if (GetComponent<PlayerAgent>()) // temporary solution, may want to revise if the AI will use the same input
         {
@@ -80,25 +80,9 @@ public class Unit : MonoBehaviour
     private void OnAbilityInputSet(object target)
     {
         print("OnAbilityInputSet executed!: current Ability Type: " + _currentAbilityType);
-        if (_currentAbilityType == AbilityType.TargetPoint)
-        {
-            _castTargetPosition = (Vector3)target;
-            _allTargets["Target Point"] = _castTargetPosition;
-        }
-        else if (_currentAbilityType == AbilityType.TargetUnit)
-        {
-            Unit targetUnit = (Unit)target;
-            _castTargetPosition = targetUnit.transform.position;
-            _allTargets["Target Unit"] = target;
-            _allTargets["Target Unit Position"] = targetUnit.transform.position;
-        }
-        else if (_currentAbilityType == AbilityType.TargetArea)
-        {
-            _castTargetPosition = (Vector3)target;
-            _allTargets["Target Center"] = _castTargetPosition;
-        }
+        AbilityInput(target);
     }
-    
+
     private void OnDied(object @null)
     {
         Destroy(this);
@@ -175,6 +159,27 @@ public class Unit : MonoBehaviour
     // members used for ability execution
     private AbilityType _currentAbilityType;
     private readonly Dictionary<string, object> _allTargets = new Dictionary<string, object>();
+
+    private void AbilityInput(object target)
+    {
+        if (_currentAbilityType == AbilityType.TargetPoint)
+        {
+            _castTargetPosition = (Vector3)target;
+            _allTargets["Target Point"] = _castTargetPosition;
+        }
+        else if (_currentAbilityType == AbilityType.TargetUnit)
+        {
+            Unit targetUnit = (Unit)target;
+            _castTargetPosition = targetUnit.transform.position;
+            _allTargets["Target Unit"] = target;
+            _allTargets["Target Unit Position"] = targetUnit.transform.position;
+        }
+        else if (_currentAbilityType == AbilityType.TargetArea)
+        {
+            _castTargetPosition = (Vector3)target;
+            _allTargets["Target Center"] = _castTargetPosition;
+        }
+    }
 
     private IEnumerator CastAbility(Ability ability)
     {
