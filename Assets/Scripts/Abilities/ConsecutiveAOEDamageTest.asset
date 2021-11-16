@@ -53,7 +53,7 @@ MonoBehaviour:
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: AOE Radius
-        TargetPointId: Target Point
+        TargetCenterId: Target Center
         PreviousEffectId: 
         Relationship: 0
       GameAction:
@@ -71,7 +71,7 @@ MonoBehaviour:
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: AOE Radius
-        TargetPointId: Target Point
+        TargetCenterId: 
         PreviousEffectId: AOE Damage 1st Round
         Relationship: 0
       GameAction:

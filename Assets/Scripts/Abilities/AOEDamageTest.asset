@@ -16,6 +16,22 @@ MonoBehaviour:
   InputType: 2
   Duration: 0
   Cooldown: 0
+  AbilityStats:
+    _Buckets: 0200000001000000ffffffff
+    _HashCodes: a0bf2b7e77c3df52f4dc220c
+    _Next: ffffffff00000000ffffffff
+    _Count: 3
+    _Version: 129
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Cast Range
+    - AOE Radius
+    - Damage Stat 1
+    _Values:
+    - 4
+    - 3
+    - 60
   Outcomes:
   - Id: Damage
     Duration: 0
@@ -29,7 +45,7 @@ MonoBehaviour:
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: AOE Radius
-        TargetPointId: Target Point
+        TargetCenterId: Target Center
         PreviousEffectId: 
         Relationship: 0
       GameAction:
