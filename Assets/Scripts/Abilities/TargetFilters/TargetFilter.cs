@@ -33,7 +33,7 @@ public class TargetFilter
 
 	[Tooltip("Only fill in this field for AOE TargetFilter")]
 	public string AOERadiusId;
-	public string TargetCenterId;
+	public string TargetCenterId; // IS NOT USED
 
 	[Tooltip("Only fill in this field for TargetOfPreviousEffect TargetFilter")]
 	public string PreviousEffectId;
@@ -68,12 +68,12 @@ public class TargetFilter
 		else if(Type == TargetFilterType.AOEFilter) {
 			// use OverlapCollider to get units in areaOfEffectRadius
 			GameObject AOECalculator = new GameObject("AOECalculator", typeof(PolygonCollider2D));
-			AOECalculator.transform.position = (Vector3) AllTargets[TargetCenterId];
+			AOECalculator.transform.position = (Vector3) AllTargets["Target Center"];
 
 			// firstly, construct an ellipse shaped collider with specified radius
 			PolygonCollider2D polyCollider = AOECalculator.GetComponent<PolygonCollider2D>();
 			polyCollider.points = MathUtils.GenerateIsometricCirclePoints(AbilityStats[AOERadiusId]);
-			polyCollider.transform.position = (Vector3) AllTargets[TargetCenterId];
+			polyCollider.transform.position = (Vector3) AllTargets["Target Center"];
 
 			// second, use the ellipse collider and check overlaps with existing hitbox colliders
 			// return the targets

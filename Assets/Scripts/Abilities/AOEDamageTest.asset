@@ -16,6 +16,22 @@ MonoBehaviour:
   InputType: 2
   Duration: 0
   Cooldown: 0
+  AbilityStats:
+    _Buckets: 0200000001000000ffffffff
+    _HashCodes: a0bf2b7e77c3df52f4dc220c
+    _Next: ffffffff00000000ffffffff
+    _Count: 3
+    _Version: 77
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Cast Range
+    - AOE Radius
+    - Damage Stat 1
+    _Values:
+    - 3
+    - 3
+    - 40
   Outcomes:
   - Id: Damage
     Duration: 0
