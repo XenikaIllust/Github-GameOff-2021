@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3421423008242987640}
   - component: {fileID: 3421423008242987643}
   - component: {fileID: 3196408637868189022}
+  - component: {fileID: 5176852739244242873}
   m_Layer: 0
   m_Name: CharacterIdle 2
   m_TagString: Untagged
@@ -155,9 +156,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81e4df4340dad741af7001e4dcdb145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementSpeed: 3.5
+  turnRate: 5
   isPlayer: 0
   agent: {fileID: 0}
-  positionUpdateInterval: 0.1
+  updateInterval: 0.1
+  abilities:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &3421423008242987643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoClickInterval: 0.1
+  AOECircle: {fileID: 0}
 --- !u!114 &3196408637868189022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +192,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77948c03cdadd4a4e9e9e875e1100baf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _anim: {fileID: 0}
+  _animIdleClip: []
   degreeVariation: 0
+--- !u!114 &5176852739244242873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3421423008242987638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326f49b62bd54634ab3e3e5a72631d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
 --- !u!1 &3421423008527050566
 GameObject:
   m_ObjectHideFlags: 0

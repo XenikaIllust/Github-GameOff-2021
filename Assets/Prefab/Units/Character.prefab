@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 3449367993870842363}
   - component: {fileID: 3449367993870842364}
   - component: {fileID: 3449367993870842367}
+  - component: {fileID: 5552549139427639097}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -193,6 +194,9 @@ MonoBehaviour:
   updateInterval: 0.1
   abilities:
   - {fileID: 11400000, guid: 4fd1dc6bfc980c04a992a4bac83f21e0, type: 2}
+  - {fileID: 11400000, guid: 276f7e7509eb54c4fbc29e9213421a07, type: 2}
+  - {fileID: 11400000, guid: e07134232319e7348a52f7b0d555f1c7, type: 2}
+  - {fileID: 11400000, guid: 6c69752357dc1cf4ab9a73760dc2fead, type: 2}
 --- !u!114 &3449367993870842367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +211,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoClickInterval: 0.1
   AOECircle: {fileID: 8729270565948461378}
+--- !u!114 &5552549139427639097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3449367993870842354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326f49b62bd54634ab3e3e5a72631d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
 --- !u!1 &3449367994159099074
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +316,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3449367994159099074}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
