@@ -50,6 +50,7 @@ public class Unit : MonoBehaviour
     {
         UnitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
         UnitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        UnitEventHandler.StartListening("OnDied",OnDied);
 
         if (GetComponent<PlayerAgent>()) // temporary solution, may want to revise if the AI will use the same input
         {
@@ -61,6 +62,7 @@ public class Unit : MonoBehaviour
     {
         UnitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
         UnitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        UnitEventHandler.StopListening("Ondied", OnDied);
 
         EventManager.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
     }
@@ -95,6 +97,11 @@ public class Unit : MonoBehaviour
             _castTargetPosition = (Vector3)target;
             _allTargets["Target Center"] = _castTargetPosition;
         }
+    }
+    
+    private void OnDied(object @null)
+    {
+        Destroy(this);
     }
 
     private void Update()
