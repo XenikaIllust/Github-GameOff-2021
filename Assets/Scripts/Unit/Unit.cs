@@ -13,7 +13,7 @@ using UnityEngine.AI;
 /// </summary>
 public class Unit : MonoBehaviour
 {
-    private EventProcessor _unitEventHandler; // Internal event handler
+    public EventProcessor UnitEventHandler; // Internal event handler
     [Header("Stats")] public float movementSpeed = 3.5f;
     public float turnRate = 5f;
     [HideInInspector] public bool isPlayer;
@@ -27,7 +27,7 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
-        _unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
+        UnitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
         isPlayer = GetComponent<PlayerAgent>() != null;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -48,19 +48,21 @@ public class Unit : MonoBehaviour
 
     private void OnEnable()
     {
-        _unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
-        _unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        UnitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
+        UnitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        UnitEventHandler.StartListening("OnDied", OnDied);
 
-        if(GetComponent<PlayerAgent>()) // temporary solution, may want to revise if the AI will use the same input
-        {   
+        if (GetComponent<PlayerAgent>()) // temporary solution, may want to revise if the AI will use the same input
+        {
             EventManager.StartListening("OnAbilityInputSet", OnAbilityInputSet);
         }
     }
 
     private void OnDisable()
     {
-        _unitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
-        _unitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        UnitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
+        UnitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        UnitEventHandler.StopListening("Ondied", OnDied);
 
         EventManager.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
     }
@@ -77,23 +79,12 @@ public class Unit : MonoBehaviour
 
     private void OnAbilityInputSet(object target)
     {
-        if (_currentAbilityType == AbilityType.TargetPoint)
-        {
-            _castTargetPosition = (Vector3) target;
-            _allTargets["Target Point"] = _castTargetPosition;
-        }
-        else if (_currentAbilityType == AbilityType.TargetUnit)
-        {
-            Unit targetUnit = (Unit) target;
-            _castTargetPosition = targetUnit.transform.position;
-            _allTargets["Target Unit"] = target;
-            _allTargets["Target Unit Position"] = targetUnit.transform.position;
-        }
-        else if (_currentAbilityType == AbilityType.TargetArea)
-        {
-            _castTargetPosition = (Vector3) target;
-            _allTargets["Target Center"] = _castTargetPosition;
-        }
+        AbilityInput(target);
+    }
+
+    private void OnDied(object @null)
+    {
+        Destroy(gameObject);
     }
 
     private void Update()
@@ -168,6 +159,27 @@ public class Unit : MonoBehaviour
     private AbilityType _currentAbilityType;
     private readonly Dictionary<string, object> _allTargets = new Dictionary<string, object>();
 
+    private void AbilityInput(object target)
+    {
+        if (_currentAbilityType == AbilityType.TargetPoint)
+        {
+            _castTargetPosition = (Vector3)target;
+            _allTargets["Target Point"] = _castTargetPosition;
+        }
+        else if (_currentAbilityType == AbilityType.TargetUnit)
+        {
+            Unit targetUnit = (Unit)target;
+            _castTargetPosition = targetUnit.transform.position;
+            _allTargets["Target Unit"] = target;
+            _allTargets["Target Unit Position"] = targetUnit.transform.position;
+        }
+        else if (_currentAbilityType == AbilityType.TargetArea)
+        {
+            _castTargetPosition = (Vector3)target;
+            _allTargets["Target Center"] = _castTargetPosition;
+        }
+    }
+
     private IEnumerator CastAbility(Ability ability)
     {
         Stop();
@@ -183,7 +195,6 @@ public class Unit : MonoBehaviour
 
         PlayerAgent playerAgent = GetComponent<PlayerAgent>();
 
-        Debug.Log("Waiting for ability input");
         yield return StartCoroutine(playerAgent.ProcessTargetInput(_currentAbilityType));
 
         if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.AbilityStats["Cast Range"])
@@ -239,7 +250,8 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private IEnumerator ExecuteOutcome(Outcome outcome, AbilityStatsDict abilityStats, float timeToExecute, float duration)
+    private IEnumerator ExecuteOutcome(Outcome outcome, AbilityStatsDict abilityStats, float timeToExecute,
+        float duration)
     {
         yield return new WaitForSeconds(timeToExecute);
 

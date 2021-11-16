@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,12 +5,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Definitions/Game Action/Inflict Damage")]
 public class InflictDamageAction : GameActionBlock
 {
-    public override void Invoke(float abilityStat, List<object> currentFilteredTargets, Dictionary<string, object> otherTargets)
+    public override void Invoke(float abilityStat, List<object> currentFilteredTargets,
+        Dictionary<string, object> otherTargets)
     {
-        foreach(object target in currentFilteredTargets) {
-            Unit targetUnit = (Unit) target;
+        //hardcoded damage, change it later
+        foreach (object target in currentFilteredTargets)
+        {
+            Unit targetUnit = (Unit)target;
             float damageStat = abilityStat;
-            Debug.Log(targetUnit.gameObject + " damaged for " + damageStat + " damage!");
+            targetUnit.UnitEventHandler.RaiseEvent("OnDamageTaken", damageStat);
         }
     }
 }

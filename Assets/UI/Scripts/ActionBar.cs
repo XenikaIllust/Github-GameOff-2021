@@ -1,9 +1,7 @@
-
 using UnityEngine;
 
 public class ActionBar : MonoBehaviour
 {
-
     // For testing only...
     void Update()
     {
@@ -21,26 +19,21 @@ public class ActionBar : MonoBehaviour
     // Button event handling...
     public void OnQPress()
     {
-        Debug.Log("Q has been pressed.");
         EventManager.RaiseEvent("QPressed", null);
     }
 
     public void OnWPress()
     {
-        Debug.Log("W has been pressed.");
         EventManager.RaiseEvent("WPressed", null);
     }
 
     public void OnEPress()
     {
-        Debug.Log("E has been pressed.");
         EventManager.RaiseEvent("EPressed", null);
     }
 
     public void OnRPress()
     {
-        Debug.Log("R has been pressed.");
         EventManager.RaiseEvent("RPressed", null);
     }
-
 }
