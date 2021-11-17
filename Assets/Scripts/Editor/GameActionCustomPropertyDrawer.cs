@@ -4,7 +4,7 @@ using UnityEditor;
 [CustomPropertyDrawer( typeof( GameAction ) )]
 public class GameActionCustomPropertyDrawer : PropertyDrawer {
     public override float GetPropertyHeight( SerializedProperty property, GUIContent label ) {
-        return EditorGUIUtility.singleLineHeight * 3 + 6;
+        return EditorGUIUtility.singleLineHeight * 5 + 6;
     }
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -31,6 +31,25 @@ public class GameActionCustomPropertyDrawer : PropertyDrawer {
             EditorGUI.PropertyField( statIdRect, statIdProperty );
 
             totalHeight += EditorGUI.GetPropertyHeight( statIdProperty, GUIContent.none );
+        }
+        else if(gameActionBlockType == typeof(PointVFXActionBlock)) {
+            SerializedProperty vfxNameProperty = property.FindPropertyRelative("VFXName");
+            var vfxNameRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( vfxNameRect, vfxNameProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( vfxNameProperty, GUIContent.none );
+
+            SerializedProperty vfxPointIdProperty = property.FindPropertyRelative("VFXPointId");
+            var vfxPointIdRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( vfxPointIdRect, vfxPointIdProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( vfxPointIdProperty, GUIContent.none );
+        }
+        else if(gameActionBlockType == typeof(LineVFXActionBlock)) {
+            
+        }
+        else if(gameActionBlockType == typeof(UnitVFXActionBlock)) {
+            
         }
 
         EditorGUI.indentLevel--;

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Definitions/Game Action/Disappear")]
 public class DisappearAction : GameActionBlock
 {
-    public override void Invoke(float abilityStat, List<object> currentFilteredTargets, Dictionary<string, object> otherTargets) 
+    public override void Invoke(List<object> currentFilteredTargets, Dictionary<string, object> otherTargets) 
     {
         Unit unitToDisappear = (Unit) currentFilteredTargets[0];
 

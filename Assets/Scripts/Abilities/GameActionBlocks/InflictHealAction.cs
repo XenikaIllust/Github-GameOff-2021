@@ -1,17 +1,18 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
-public class InflictDamageAction : GameActionBlock
+[CreateAssetMenu(menuName = "Definitions/Game Action/Inflict Heal")]
+public class InflictHealAction : GameActionBlock
 {
     public override void Invoke(float abilityStat, List<object> currentFilteredTargets,
         Dictionary<string, object> otherTargets)
     {
-        //hardcoded damage, change it later
         foreach (object target in currentFilteredTargets)
         {
             Unit targetUnit = (Unit)target;
-            float damageStat = abilityStat;
-            targetUnit.UnitEventHandler.RaiseEvent("OnDamageTaken", damageStat);
+            float healStat = abilityStat;
+            targetUnit.UnitEventHandler.RaiseEvent("OnHealTaken", healStat);
         }
     }
 }
