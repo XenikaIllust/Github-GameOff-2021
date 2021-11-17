@@ -12,29 +12,126 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: Blink
   m_EditorClassIdentifier: 
+  abilitySprite: {fileID: 0}
+  InputType: 0
   Duration: 0.25
   Cooldown: 5
+  AbilityStats:
+    _Buckets: ffffffff01000000ffffffff
+    _HashCodes: ffffffffa0bf2b7e00000000
+    _Next: ffffffffffffffff00000000
+    _Count: 2
+    _Version: 433
+    _FreeList: 0
+    _FreeCount: 1
+    _Keys:
+    - 
+    - Cast Range
+    - 
+    _Values:
+    - 0
+    - 5
+    - 0
   Outcomes:
   - Id: Disappear
     Duration: 0
     Trigger:
       ExecutionTime: 0
       IsNormalizedTime: 1
-    Targeting:
-      Type: 0
-      TargetFilter: {fileID: 0}
-      PreviousOutcomeId: 
     Effects:
-    - {fileID: 11400000, guid: 2d72a3468b1000249b7e0a5ae82f98bc, type: 2}
-  - Id: Reappear and Teleport
+    - Id: Disappear
+      TargetFilter:
+        Type: 0
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        Relationship: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 2d72a3468b1000249b7e0a5ae82f98bc, type: 2}
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        SFXName: 
+    - Id: Disappear VFX
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        Relationship: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 37dc24ebe8dbc504cb628f2a5317fa4b, type: 2}
+        StatId: 
+        VFXName: Point_Disappear
+        VFXPointId: Executing Unit Position
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        SFXName: 
+  - Id: Teleport and Reappear
     Duration: 0
     Trigger:
       ExecutionTime: 1
       IsNormalizedTime: 1
-    Targeting:
-      Type: 2
-      TargetFilter: {fileID: 0}
-      PreviousOutcomeId: Disappear
     Effects:
-    - {fileID: 11400000, guid: 1e92247e4d8679a4a93e1da975cb1f48, type: 2}
-    - {fileID: 11400000, guid: 5fbaac34ccd01a54d8c39db1b3b267ce, type: 2}
+    - Id: Teleport
+      TargetFilter:
+        Type: 4
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: Disappear
+        Relationship: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 1e92247e4d8679a4a93e1da975cb1f48, type: 2}
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        SFXName: 
+    - Id: Reappear
+      TargetFilter:
+        Type: 4
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: Disappear
+        Relationship: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 5fbaac34ccd01a54d8c39db1b3b267ce, type: 2}
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        SFXName: 
+    - Id: Teleport SFX
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: Disappear
+        Relationship: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        SFXName: Teleport

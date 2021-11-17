@@ -25,5 +25,4 @@ MonoBehaviour:
       TargetFilter: {fileID: 0}
       PreviousOutcomeId: 
     Effects:
-    - {fileID: 11400000, guid: cad72b560524e3f49aa0ee012bb4d641, type: 2}
     - {fileID: 11400000, guid: 4481c4b03716b01428c07edaaebcd9ab, type: 2}

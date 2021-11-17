@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
+  m_Name: ConsecutiveAOEDamageTest
+  m_EditorClassIdentifier: 
+  abilitySprite: {fileID: 0}
+  InputType: 2
+  Duration: 4
+  Cooldown: 0
+  AbilityStats:
+    _Buckets: ffffffffffffffff03000000ffffffffffffffffffffffff01000000
+    _HashCodes: a0bf2b7e77c3df528580155520f5bc77000000000000000000000000
+    _Next: ffffffffffffffff0000000002000000000000000000000000000000
+    _Count: 4
+    _Version: 158
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Cast Range
+    - AOE Radius
+    - AOE Damage 1
+    - AOE Damage 2
+    - 
+    - 
+    - 
+    _Values:
+    - 4
+    - 4
+    - 50
+    - 40
+    - 0
+    - 0
+    - 0
+  Outcomes:
+  - Id: AOE Damage 1st Round
+    Duration: 0
+    Trigger:
+      ExecutionTime: 0
+      IsNormalizedTime: 0
+    Effects:
+    - Id: AOE Damage 1st Round
+      TargetFilter:
+        Type: 3
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: AOE Radius
+        TargetCenterId: Target Center
+        PreviousEffectId: 
+        Relationship: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
+        StatId: AOE Damage 1
+  - Id: AOE Damage 2nd Round
+    Duration: 0
+    Trigger:
+      ExecutionTime: 0.5
+      IsNormalizedTime: 1
+    Effects:
+    - Id: AOE Damage 2
+      TargetFilter:
+        Type: 4
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: AOE Radius
+        TargetCenterId: 
+        PreviousEffectId: AOE Damage 1st Round
+        Relationship: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
+        StatId: AOE Damage 2

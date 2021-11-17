@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,68 +13,104 @@ using UnityEngine.AI;
 /// </summary>
 public class Unit : MonoBehaviour
 {
-    // Internal event handler
-    EventProcessor unitEventHandler;
-
+    public EventProcessor UnitEventHandler; // Internal event handler
+    [Header("Stats")] public float movementSpeed = 3.5f;
+    public float turnRate = 5f;
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
-    [Header("Misc.")] public float positionUpdateInterval = 0.1f;
+    [Header("Misc.")] public float updateInterval = 0.1f;
     private float _positionUpdateTimer;
-
-    float pseudoYRotation = 0;
-
-    [SerializeField] List<Ability> abilities;
+    private GameObject _pseudoObject;
+    [Header("Abilities")] [SerializeField] private Ability[] abilities = new Ability[4];
+    private Vector3 _castTargetPosition;
+    private IEnumerator _pendingCast;
 
     private void Awake()
     {
-        unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
-
+        UnitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
         isPlayer = GetComponent<PlayerAgent>() != null;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+        agent.speed = movementSpeed;
+        agent.acceleration = float.MaxValue;
+        agent.angularSpeed = float.MaxValue;
+        agent.autoBraking = true;
+
+        _pseudoObject = new GameObject("PseudoObject")
+        {
+            transform =
+            {
+                parent = transform
+            }
+        };
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
-        unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
+        UnitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
+        UnitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        UnitEventHandler.StartListening("OnDied", OnDied);
+
+        if (GetComponent<PlayerAgent>()) // temporary solution, may want to revise if the AI will use the same input
+        {
+            EventManager.StartListening("OnAbilityInputSet", OnAbilityInputSet);
+        }
+    }
+
+    private void OnDisable()
+    {
+        UnitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
+        UnitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        UnitEventHandler.StopListening("Ondied", OnDied);
+
+        EventManager.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
+    }
+
+    private void OnStopOrderIssued(object @null)
+    {
+        Stop();
+    }
+
+    private void OnMoveOrderIssued(object destination)
+    {
+        TurnAndMove((Vector3)destination);
+    }
+
+    private void OnAbilityInputSet(object target)
+    {
+        AbilityInput(target);
+    }
+
+    private void OnDied(object @null)
+    {
+        Destroy(gameObject);
     }
 
     private void Update()
     {
         UpdatePosition();
 
-        if(this.gameObject.name == "Character") {
-            if(Input.GetKeyUp(KeyCode.Q)) {
-                TestBlink();
+        // input testing code
+        if (gameObject.name == "Character")
+        {
+            if (Input.GetKeyUp(KeyCode.Q))
+            {
+                TestQ();
             }
-            else if(Input.GetKeyUp(KeyCode.W)) {
-                TestSnipe();
+            else if (Input.GetKeyUp(KeyCode.W))
+            {
+                TestW();
             }
-            else if(Input.GetKeyUp(KeyCode.E)) {
-
+            else if (Input.GetKeyUp(KeyCode.E))
+            {
+                TestE();
             }
-            else if(Input.GetKeyUp(KeyCode.R)) {
-
+            else if (Input.GetKeyUp(KeyCode.R))
+            {
+                TestR();
             }
         }
-    }
-
-    private void OnDisable()
-    {
-        unitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
-        unitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
-    }
-
-    private void OnMoveOrderIssued(object destination)
-    {
-        agent.SetDestination((Vector3)destination);
-    }
-
-    private void OnStopOrderIssued(object arg0)
-    {
-        agent.SetDestination(transform.position);
     }
 
     private void UpdatePosition()
@@ -82,84 +119,181 @@ public class Unit : MonoBehaviour
 
         _positionUpdateTimer += Time.deltaTime;
 
-        if (_positionUpdateTimer >= positionUpdateInterval)
+        if (_positionUpdateTimer >= updateInterval)
         {
             _positionUpdateTimer = float.Epsilon;
             EventManager.RaiseEvent("OnPlayerPositionChanged", transform.position);
         }
     }
 
-    public void ExecuteAbility(Ability ability, List<List<object>> outcomeParameters) 
+    private void Stop()
     {
-        for(int i = 0; i < ability.Outcomes.Length; i++) 
+        if (_pendingCast != null) StopCoroutine(_pendingCast);
+        _pseudoObject.transform.DOKill();
+        agent.SetDestination(transform.position);
+    }
+
+    private void TurnAndMove(Vector3 destination)
+    {
+        Stop();
+
+        _pseudoObject.transform
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(destination)),
+                turnRate * 360)
+            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
+    }
+
+    private void Move(Vector3 destination)
+    {
+        agent.SetDestination(destination);
+    }
+
+    private float AngleToTarget(Vector3 target)
+    {
+        Vector2 angle = target - transform.position;
+
+        return Mathf.Atan2(angle.y, angle.x) * 180 / Mathf.PI;
+    }
+
+    // members used for ability execution
+    private AbilityType _currentAbilityType;
+    private readonly Dictionary<string, object> _allTargets = new Dictionary<string, object>();
+
+    private void AbilityInput(object target)
+    {
+        if (_currentAbilityType == AbilityType.TargetPoint)
         {
-            Outcome outcome = ability.Outcomes[i];
+            _castTargetPosition = (Vector3)target;
+            _allTargets["Target Point"] = _castTargetPosition;
+        }
+        else if (_currentAbilityType == AbilityType.TargetUnit)
+        {
+            Unit targetUnit = (Unit)target;
+            _castTargetPosition = targetUnit.transform.position;
+            _allTargets["Target Unit"] = target;
+            _allTargets["Target Unit Position"] = targetUnit.transform.position;
+        }
+        else if (_currentAbilityType == AbilityType.TargetArea)
+        {
+            _castTargetPosition = (Vector3)target;
+            _allTargets["Target Center"] = _castTargetPosition;
+        }
+    }
+
+    private IEnumerator CastAbility(Ability ability)
+    {
+        Stop();
+
+        Debug.Log("Currently executing ability " + ability.name);
+
+        _currentAbilityType = ability.InputType;
+        _allTargets.Clear();
+
+        // by default, _allTargets should contain a reference to unit and a reference to unit position separately
+        _allTargets["Executing Unit"] = this;
+        _allTargets["Executing Unit Position"] = transform.position;
+
+        PlayerAgent playerAgent = GetComponent<PlayerAgent>();
+
+        yield return StartCoroutine(playerAgent.ProcessTargetInput(ability));
+
+        if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.AbilityStats["Cast Range"])
+        {
+            TurnAndExecuteAbility(ability);
+        }
+        else
+        {
+            TurnAndMove(_castTargetPosition);
+
+            _pendingCast = PendingCast(ability);
+            StartCoroutine(_pendingCast);
+        }
+    }
+
+    private IEnumerator PendingCast(Ability ability)
+    {
+        while (Vector3.Distance(transform.position, _castTargetPosition) >= ability.AbilityStats["Cast Range"])
+        {
+            yield return new WaitForFixedUpdate();
+            agent.SetDestination(_castTargetPosition);
+        }
+
+        _pendingCast = null;
+        TurnAndExecuteAbility(ability);
+    }
+
+    private void TurnAndExecuteAbility(Ability ability)
+    {
+        Stop();
+
+        _pseudoObject.transform
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(_castTargetPosition)),
+                turnRate * 360)
+            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => ExecuteAbility(ability));
+    }
+
+    private void ExecuteAbility(Ability ability)
+    {
+        foreach (var outcome in ability.Outcomes)
+        {
             float executionTime;
-            if(outcome.Trigger.IsNormalizedTime) 
+            if (outcome.Trigger.IsNormalizedTime)
             {
                 executionTime = outcome.Trigger.ExecutionTime * ability.Duration;
             }
-            else 
+            else
             {
                 executionTime = outcome.Trigger.ExecutionTime;
             }
 
-            StartCoroutine(ExecuteOutcome(outcome, executionTime, outcome.Duration, outcomeParameters[i]));
+            StartCoroutine(ExecuteOutcome(outcome, ability.AbilityStats, executionTime, outcome.Duration));
         }
     }
 
-    IEnumerator ExecuteOutcome(Outcome outcome, float timeToExecute, float duration, object param) 
+    private IEnumerator ExecuteOutcome(Outcome outcome, AbilityStatsDict abilityStats, float timeToExecute,
+        float duration)
     {
-        List<object> outcomeParams = (List<object>) param;
-
         yield return new WaitForSeconds(timeToExecute);
 
-        for(int i = 0; i < outcome.Effects.Length; i++) {
-            GameAction gameAction = outcome.Effects[i];
-
-            if(gameAction.gameActionBehaviour == GameActionBehaviour.ConstantUpdate) {
-                StartCoroutine(ExecuteConstantUpdateGameAction(gameAction, outcomeParams[i], duration));
-            }
-            else {
-                gameAction.Invoke(outcomeParams[i]);
-            }
-        }
-    }
-
-    IEnumerator ExecuteConstantUpdateGameAction(GameAction gameAction, object param, float duration) {
-        float timeElapsed = 0;
-
-        while(timeElapsed < duration) {
-            timeElapsed += Time.deltaTime;
-            gameAction.Invoke(param);
+        foreach (var effect in outcome.Effects)
+        {
+            effect.ExecuteEffect(abilityStats, _allTargets);
         }
 
         yield return null;
     }
 
-    void TestBlink() {
-        List<List<object>> param = new List<List<object>>();
+    private IEnumerator ExecuteConstantUpdateGameAction(GameAction gameAction, object param, float duration)
+    {
+        // float timeElapsed = 0;
 
-        List<object> outcome1Param = new List<object>(); 
-        outcome1Param.Add( new DisappearActionData(this) ); // construct data struct for disappear gameAction
-        param.Add(outcome1Param);
+        // while(timeElapsed < duration) {
+        //     print(timeElapsed);
+        //     timeElapsed += Time.deltaTime;
+        //     GameActionBlock.Invoke(param);
+        //     yield return null;
+        // }
 
-        List<object> outcome2Param = new List<object>();
-        outcome2Param.Add( new TeleportActionData(this, new Vector2(2,2)) );
-        outcome2Param.Add( new ReappearActionData(this) ); // construct data struct for reappear gameAction
-        param.Add(outcome2Param);
-
-        ExecuteAbility(abilities[0], param); // testing first skill, "Blink"
+        yield return null;
     }
 
-    void TestSnipe() {
-        List<List<object>> param = new List<List<object>>();
+    private void TestQ()
+    {
+        StartCoroutine(CastAbility(abilities[0]));
+    }
 
-        SwarmerAIAgent dummySwarmer = FindObjectOfType<SwarmerAIAgent>();
-        List<object> outcome1Param = new List<object>(); 
-        outcome1Param.Add( new RotateToFaceUnitData(this, dummySwarmer.transform.position) ); // construct data struct for disappear gameAction
-        param.Add(outcome1Param);
+    private void TestW()
+    {
+        StartCoroutine(CastAbility(abilities[1]));
+    }
 
-        ExecuteAbility(abilities[1], param); // testing second skill, "Snipe"
+    private void TestE()
+    {
+        StartCoroutine(CastAbility(abilities[2]));
+    }
+
+    private void TestR()
+    {
+        StartCoroutine(CastAbility(abilities[3]));
     }
 }

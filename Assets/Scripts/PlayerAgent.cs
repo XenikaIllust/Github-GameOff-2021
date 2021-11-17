@@ -1,6 +1,6 @@
 using System;
+using System.Linq;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAgent : Agent
@@ -10,7 +10,11 @@ public class PlayerAgent : Agent
 
     private Camera _camera;
 
-	public enum AbilityType {TargetPoint, TargetUnit, TargetArea, NoTarget};
+    bool defaultControlsEnabled = true;
+
+    [SerializeField] private SpriteRenderer AOECircle;
+
+    private bool turnOnHighlight = false;
 
     protected override void Awake()
     {
@@ -20,7 +24,13 @@ public class PlayerAgent : Agent
 
     private void Update()
     {
-        PlayerInput();
+        if (defaultControlsEnabled)
+        {
+            PlayerInput();
+        }
+
+        AOECircleFollowCursor();
+        if (turnOnHighlight) HighlightUnitUnderMouseCursor();
     }
 
     private void PlayerInput()
@@ -61,29 +71,61 @@ public class PlayerAgent : Agent
         return new Vector3(worldPosition.x, worldPosition.y, transform.position.z);
     }
 
-	// PLACEHOLDER CODE FOR TESTING AbilityInputType.cs
-	private Func<bool> targetInput;
-	public IEnumerator ProcessTargetInput(AbilityType abilityType)
-	{
-		if (abilityType == AbilityType.TargetPoint)
-		{
-			yield return new WaitUntil(() => Input.GetMouseButton(0)); // Wait until the player presses the Left Click
-			targetInput = AbilityInputType.PointTargetInput;
-		}
-		else if (abilityType == AbilityType.TargetUnit)
-		{
-			yield return new WaitUntil(() => Input.GetMouseButton(0)); // Wait until the player presses the Left Click
-			targetInput = AbilityInputType.UnitTargetInput;
-		}
-		else if (abilityType == AbilityType.TargetArea)
-		{
-			yield return new WaitUntil(() => Input.GetMouseButton(0)); // Wait until the player presses the Left Click
-			targetInput = AbilityInputType.AOETargetInput;
-		}
-		else if (abilityType == AbilityType.NoTarget)
-		{
-			targetInput = AbilityInputType.NoTargetInput;
-		}
-		yield return new WaitUntil(() => targetInput());
-	}
+    // Responsible for aiming abilities, coupled with AbilityInputType.cs
+    public IEnumerator ProcessTargetInput(Ability ability)
+    {
+        defaultControlsEnabled = false;
+
+        if (ability.InputType == AbilityType.TargetPoint)
+        {
+            yield return StartCoroutine(AbilityInputType.PointTargetInput(ability));
+        }
+        else if (ability.InputType == AbilityType.TargetUnit)
+        {
+            turnOnHighlight = true;
+            yield return StartCoroutine(AbilityInputType.PointTargetInput(ability));
+            turnOnHighlight = false;
+        }
+        else if (ability.InputType == AbilityType.TargetArea)
+        {
+            float radius = ability.AbilityStats["AOE Radius"];
+            AOECircle.transform.localScale = new Vector3(radius * 1.7f, radius * 1.7f, 1.0f);
+            AOECircle.enabled = true;
+            yield return StartCoroutine(AbilityInputType.PointTargetInput(ability));
+            AOECircle.enabled = false;
+        }
+        // else if (ability.InputType == AbilityType.NoTarget) yield return StartCoroutine(AbilityInputType.PointTargetInput(ability));
+
+
+        defaultControlsEnabled = true;
+    }
+
+    private void AOECircleFollowCursor()
+    {
+        AOECircle.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,
+            Camera.main.ScreenToWorldPoint(Input.mousePosition).y,
+            0.0f
+        );
+    }
+
+    private void HighlightUnitUnderMouseCursor()
+    {
+        string[] tags = { "Enemy" };
+        LayerMask enemyMask = LayerMask.GetMask("Enemy");
+
+        // Get target and check that it's valid
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition),
+            direction: Vector2.zero, distance: Mathf.Infinity, layerMask: enemyMask);
+        if (hit.collider != null)
+        {
+            Transform selection = hit.transform;
+            if (tags.Contains(selection.tag)) // Check if its the target we want.
+            {
+                Unit selectedUnit = hit.collider.GetComponent<Unit>();
+                Debug.Log(selection.gameObject.name);
+
+                selectedUnit.GetComponentInChildren<UnitVFXManager>().HighlightOutline();
+            }
+        }
+    }
 }

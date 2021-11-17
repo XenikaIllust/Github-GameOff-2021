@@ -8,15 +8,15 @@ namespace StateMachine.GameStateManager
 {
     public class MenuState : GameStateManagerBaseState
     {
-        private UnityAction<object> enterGameAction;
+        private UnityAction<object> enterGameActionBlock;
         private UnityAction<object> enterPauseMenuAction;
 
         public MenuState() { }
 
         public override IEnumerator ProcessState(MonoBehaviour subject, Action<BaseState> next_state_callback)
         {
-            enterGameAction = new UnityAction<object>((object o) => next_state_callback(new IngameState()));
-            EventManager.StartListening("StartGame", enterGameAction);
+            enterGameActionBlock = new UnityAction<object>((object o) => next_state_callback(new IngameState()));
+            EventManager.StartListening("StartGame", enterGameActionBlock);
 
             enterPauseMenuAction = new UnityAction<object>((object o) => next_state_callback(new PauseState()));
             EventManager.StartListening("PauseGame", enterPauseMenuAction);
@@ -38,7 +38,7 @@ namespace StateMachine.GameStateManager
 
         public override void EndOfStateCleanup()
         {
-            EventManager.StopListening("StartGame", enterGameAction);
+            EventManager.StopListening("StartGame", enterGameActionBlock);
             EventManager.StopListening("PauseGame", enterPauseMenuAction);
         }
     }
