@@ -195,7 +195,7 @@ public class Unit : MonoBehaviour
 
         PlayerAgent playerAgent = GetComponent<PlayerAgent>();
 
-        yield return StartCoroutine(playerAgent.ProcessTargetInput(_currentAbilityType));
+        yield return StartCoroutine(playerAgent.ProcessTargetInput(ability));
 
         if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.AbilityStats["Cast Range"])
         {

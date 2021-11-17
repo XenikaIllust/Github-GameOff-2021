@@ -1,10 +1,15 @@
 using System.Linq;
+using System.Collections;
 using UnityEngine;
 
-static class AbilityInputType
+public class AbilityInputType
 {
-    public static bool PointTargetInput()
+    public static IEnumerator PointTargetInput(Ability ability)
     {
+        ChangeCursor();
+
+        yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until Left Click is pressed
+
         // (TODO) Check if the target is valid (is above terrain for example)
 
         // Calculate mouse position
@@ -14,14 +19,15 @@ static class AbilityInputType
         object targetCoordinates = targetPoint;
         EventManager.RaiseEvent("OnAbilityInputSet", targetCoordinates);
 
-        // Change cursor back to default
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-
-        return true;
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Change cursor back to default
     }
 
-    public static bool UnitTargetInput( /* string[] tags */)
+    public static IEnumerator UnitTargetInput(Ability ability)
     {
+        ChangeCursor();
+
+        yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until Left Click is pressed
+
         string[] tags = { "Enemy" }; // PLACEHOLDER UNTIL A BETTER SOLUTION IS FOUND
         LayerMask enemyMask = LayerMask.GetMask("Enemy");
 
@@ -39,20 +45,21 @@ static class AbilityInputType
                 object target = selectedUnit;
                 EventManager.RaiseEvent("OnAbilityInputSet", target);
 
-                Debug.Log(selectedUnit + " was selected");
+                Debug.Log($"{selectedUnit} was selected");
             }
-            else Debug.Log("Raycast hit " + selection.name + ", but it's not a valid target");
+            else Debug.Log($"Raycast hit {selection.name}, but it's not a valid target");
         }
         else Debug.Log("Raycast hit nothing! No valid Unit selected");
 
-        // Change cursor back to default
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-
-        return true;
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Change cursor back to default
     }
 
-    public static bool AOETargetInput( /*float radius*/)
+    public static IEnumerator AOETargetInput(Ability ability)
     {
+        ChangeCursor();
+
+        yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until Left Click is pressed
+
         // (TODO) Check if the target is valid (is above terrain for example)
 
         // Calculate mouse position
@@ -62,14 +69,15 @@ static class AbilityInputType
         object centerCoordinates = centerPoint;
         EventManager.RaiseEvent("OnAbilityInputSet", centerCoordinates);
 
-        // Change cursor back to default
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-
-        return true;
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Change cursor back to default
     }
 
-    public static bool NoTargetInput()
+    // public static IEnumerator NoTargetInput(Ability ability){yield return null;}
+
+    public static void ChangeCursor()
     {
-        return true;
+        Texture2D cursorTexture = (Texture2D)Resources.Load("AbilityCursor");
+        Vector2 hotSpot = new Vector2(24, 24); // The offset from the top left of the cursor to use as the target point
+        Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto);
     }
 }

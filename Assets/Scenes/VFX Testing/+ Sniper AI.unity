@@ -11100,13 +11100,8 @@ MonoBehaviour:
   - {x: 0.15745187, y: 0.005561676, z: 0}
   - {x: 0.0047359467, y: 0.06776863, z: 0}
   m_ShapePathHash: -1192369071
-<<<<<<< HEAD
   m_Mesh: {fileID: 1757869193}
   m_InstanceId: 91268
-=======
-  m_Mesh: {fileID: 1439498504}
-  m_InstanceId: 32754
->>>>>>> 1c7650328be36b75483c34572a1ce5cdf3dba29a
 --- !u!212 &844370975
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15188,11 +15183,7 @@ PrefabInstance:
     - target: {fileID: 3449367993870842364, guid: 4bfa16a7aa78c8e469a7911dcf57e7b8, type: 3}
       propertyPath: abilities.Array.data[3]
       value: 
-<<<<<<< HEAD
       objectReference: {fileID: 11400000, guid: 6c69752357dc1cf4ab9a73760dc2fead, type: 2}
-=======
-      objectReference: {fileID: 11400000, guid: ec01dffb14fefa790808b0a1df1d728e, type: 2}
->>>>>>> 1c7650328be36b75483c34572a1ce5cdf3dba29a
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bfa16a7aa78c8e469a7911dcf57e7b8, type: 3}
 --- !u!95 &3449367994361031424
