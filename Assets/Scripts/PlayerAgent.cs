@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ public class PlayerAgent : Agent
     bool defaultControlsEnabled = true;
 
     [SerializeField] private SpriteRenderer AOECircle;
+
+    private bool turnOnHighlight = false;
 
     protected override void Awake()
     {
@@ -27,6 +30,7 @@ public class PlayerAgent : Agent
         }
 
         AOECircleFollowCursor();
+        if (turnOnHighlight) HighlightUnitUnderMouseCursor();
     }
 
     private void PlayerInput()
@@ -85,9 +89,11 @@ public class PlayerAgent : Agent
         }
         else if (abilityType == AbilityType.TargetUnit)
         {
+            turnOnHighlight = true;
             Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.Auto); // Change cursor to selection cursor
             yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until the player presses the Left Click
             targetInput = AbilityInputType.UnitTargetInput;
+            turnOnHighlight = false;
         }
         else if (abilityType == AbilityType.TargetArea)
         {
@@ -115,5 +121,26 @@ public class PlayerAgent : Agent
             Camera.main.ScreenToWorldPoint(Input.mousePosition).y,
             0.0f
         );
+    }
+
+    private void HighlightUnitUnderMouseCursor()
+    {
+        string[] tags = { "Enemy" };
+        LayerMask enemyMask = LayerMask.GetMask("Enemy");
+
+        // Get target and check that it's valid
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition),
+            direction: Vector2.zero, distance: Mathf.Infinity, layerMask: enemyMask);
+        if (hit.collider != null)
+        {
+            Transform selection = hit.transform;
+            if (tags.Contains(selection.tag)) // Check if its the target we want.
+            {
+                Unit selectedUnit = hit.collider.GetComponent<Unit>();
+                Debug.Log(selection.gameObject.name);
+
+                selectedUnit.GetComponentInChildren<UnitVFXManager>().HighlightOutline();
+            }
+        }
     }
 }
