@@ -23,6 +23,9 @@ public class GameAction
     // Unit VFX
     public string VFXUnitId;
 
+    // for SFX GameActionBlocks that require inputs
+    public string SFXName;
+
     public void Invoke(AbilityStatsDict AbilityStats, List<object> CurrentFilteredTargets, Dictionary<string, object> AllTargets) {
         if(AbilityStats.ContainsKey(StatId)) { // this GameActionBlock type requires a stat
             GameActionBlock.Invoke(AbilityStats[StatId], CurrentFilteredTargets, AllTargets);

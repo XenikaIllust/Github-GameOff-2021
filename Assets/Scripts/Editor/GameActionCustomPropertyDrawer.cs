@@ -51,6 +51,13 @@ public class GameActionCustomPropertyDrawer : PropertyDrawer {
         else if(gameActionBlockType == typeof(UnitVFXActionBlock)) {
             
         }
+        else if(gameActionBlockType == typeof(SFXActionBlock)) {
+            SerializedProperty sfxNameProperty = property.FindPropertyRelative("SFXName");
+            var sfxNameRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( sfxNameRect, sfxNameProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( sfxNameProperty, GUIContent.none );
+        }
 
         EditorGUI.indentLevel--;
 
