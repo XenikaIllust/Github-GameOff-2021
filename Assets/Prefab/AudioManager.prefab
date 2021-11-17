@@ -92,3 +92,19 @@ MonoBehaviour:
     spatialBlend: 0
     reverbZoneMix: 1
     Source: {fileID: 0}
+  - name: Teleport
+    audioClip: {fileID: 8300000, guid: 044ee15ef7be2bf478b56299a09266b4, type: 3}
+    audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 0
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}
