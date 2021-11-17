@@ -9,7 +9,7 @@ public class SFXActionBlock : GameActionBlock
     protected const string libraryPrefix = "SFX/AbilitySFX/"; // the prefix of the path to the SFX folder, using Resources.Load
 
     public override void Invoke(string[] idParams, List<object> currentFilteredTargets, Dictionary<string, object> otherTargets) {
-        Debug.Log("SFXActionBlock was invoked!");
-        EventManager.RaiseEvent("OnPlaySound", idParams[0] );
+        Debug.Log($"SFXActionBlock was invoked and will now play {idParams[0]}");
+        EventManager.RaiseEvent("OnPlaySound", idParams[0]);
     }
 }
