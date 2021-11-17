@@ -31,15 +31,9 @@ public class TargetFilter
     public string InitialPointId;
     public string FinalPointId;
 
-<<<<<<< HEAD
 	[Tooltip("Only fill in this field for AOE TargetFilter")]
 	public string AOERadiusId;
 	public string TargetCenterId;
-=======
-    [Tooltip("Only fill in this field for AOE TargetFilter")]
-    public string AOERadiusId;
-    public string TargetCenterId; // IS NOT USED
->>>>>>> 1c7650328be36b75483c34572a1ce5cdf3dba29a
 
     [Tooltip("Only fill in this field for TargetOfPreviousEffect TargetFilter")]
     public string PreviousEffectId;
