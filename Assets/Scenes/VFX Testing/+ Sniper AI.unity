@@ -11201,7 +11201,7 @@ PrefabInstance:
     - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
       propertyPath: sounds.Array.data[3].audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 92d8c7c8fa2d5ef8d93064323b3054e5, type: 3}
+      objectReference: {fileID: 8300000, guid: 044ee15ef7be2bf478b56299a09266b4, type: 3}
     - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
       propertyPath: sounds.Array.data[3].reverbZoneMix
       value: 1
