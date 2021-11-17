@@ -34,6 +34,10 @@ public class GameAction
             string[] idParams = new string[] { VFXName, VFXPointId };
             GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);
         }
+        else if(GameActionBlock.GetType() == typeof(SFXActionBlock)) {
+            string[] idParams = new string[] { SFXName };
+            GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);
+        }
         else {  // this GameActionBlock type requires no stat
             GameActionBlock.Invoke(CurrentFilteredTargets, AllTargets);
         }

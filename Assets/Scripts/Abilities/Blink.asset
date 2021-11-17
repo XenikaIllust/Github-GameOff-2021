@@ -56,12 +56,7 @@ MonoBehaviour:
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
-  - Id: Disappear VFX
-    Duration: 0
-    Trigger:
-      ExecutionTime: 0.1
-      IsNormalizedTime: 1
-    Effects:
+        SFXName: 
     - Id: Disappear VFX
       TargetFilter:
         Type: 5
@@ -69,7 +64,7 @@ MonoBehaviour:
         FinalPointId: 
         AOERadiusId: 
         TargetCenterId: 
-        PreviousEffectId: Disappear
+        PreviousEffectId: 
         Relationship: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 37dc24ebe8dbc504cb628f2a5317fa4b, type: 2}
@@ -79,6 +74,7 @@ MonoBehaviour:
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
+        SFXName: 
   - Id: Teleport and Reappear
     Duration: 0
     Trigger:
@@ -102,6 +98,7 @@ MonoBehaviour:
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
+        SFXName: 
     - Id: Reappear
       TargetFilter:
         Type: 4
@@ -119,3 +116,22 @@ MonoBehaviour:
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
+        SFXName: 
+    - Id: Teleport SFX
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: Disappear
+        Relationship: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        SFXName: Teleport
