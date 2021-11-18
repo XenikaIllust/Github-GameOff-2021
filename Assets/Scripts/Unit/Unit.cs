@@ -150,9 +150,9 @@ public class Unit : MonoBehaviour
 
     private float AngleToTarget(Vector3 target)
     {
-        Vector2 angle = target - transform.position;
+        Vector2 vectorToTarget = target - transform.position;
 
-        return Mathf.Atan2(angle.y, angle.x) * 180 / Mathf.PI;
+        return Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
     }
 
     // members used for ability execution
