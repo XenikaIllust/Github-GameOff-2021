@@ -142,7 +142,7 @@ public class TargetFilter
                 float angleToUnit = Mathf.Atan2(vectorToUnit.y, vectorToUnit.x) * Mathf.Rad2Deg;
                 float deltaAngle = Mathf.Abs(angleToTarget - angleToUnit);
 
-                if (deltaAngle <= AbilityStats[ConeAngleId] && unit != (Unit)AllTargets["Executing Unit"])
+                if (deltaAngle <= AbilityStats[ConeAngleId] / 2  && unit != (Unit)AllTargets["Executing Unit"])
                 {
                     targets.Add(unit);
                 }
