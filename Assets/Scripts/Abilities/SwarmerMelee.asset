@@ -17,11 +17,11 @@ MonoBehaviour:
   Duration: 0
   Cooldown: 0
   AbilityStats:
-    _Buckets: 02000000ffffffff0000000003000000ffffffffffffffffffffffff
+    _Buckets: 01000000ffffffff0000000003000000ffffffffffffffffffffffff
     _HashCodes: a0bf2b7ef4dc220cbcd45b150640e609000000000000000000000000
-    _Next: ffffffffffffffff01000000ffffffff000000000000000000000000
+    _Next: ffffffff02000000ffffffffffffffff000000000000000000000000
     _Count: 4
-    _Version: 99
+    _Version: 110
     _FreeList: -1
     _FreeCount: 0
     _Keys:
@@ -34,8 +34,8 @@ MonoBehaviour:
     - 
     _Values:
     - 2
+    - 50
     - 1
-    - 2
     - 90
     - 0
     - 0
