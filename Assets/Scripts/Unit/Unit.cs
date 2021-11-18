@@ -141,6 +141,8 @@ public class Unit : MonoBehaviour
             .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(destination)),
                 turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
+
+        UnitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", _pseudoObject.transform.rotation.eulerAngles.z);
     }
 
     private void Move(Vector3 destination)

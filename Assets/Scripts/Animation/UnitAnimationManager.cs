@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IdleAnimationController : MonoBehaviour
+public class UnitAnimationManager : MonoBehaviour
 {
     EventProcessor unitEventHandler;
     private Animator _anim;
@@ -10,19 +10,20 @@ public class IdleAnimationController : MonoBehaviour
     private AnimationClip OriginalClip ; // hardcode
     private AnimatorOverrideController aoc;
     private Camera _camera;
-    private int degreeVariation;
     private int degreeClipLength;
+    [SerializeField]
+    private int degreeVariation;
 
     private void Awake()
     {
         unitEventHandler = GetComponentInParent<UnitEventManager>().UnitEventHandler;
         degreeClipLength = 36;
         degreeVariation = 10;        
-        _anim = gameObject.GetComponent<Animator>();
+        _anim = GetComponent<Animator>();
         _camera = Camera.main;
         _animIdleClip = new AnimationClip[degreeClipLength];
 
-        loadResources();
+        LoadResources();
 
         OriginalClip = _animIdleClip[0];// hardcode
         aoc = new AnimatorOverrideController(_anim.runtimeAnimatorController);
@@ -30,18 +31,19 @@ public class IdleAnimationController : MonoBehaviour
     }
     private void Start()
     {
-        unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        unitEventHandler.StartListening("OnPseudoObjectRotationChanged", OnMoveOrderIssued);
     }
 
     private void OnMoveOrderIssued(object destination)
     {
         var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-        Debug.Log((Vector3) destination);
-        anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[getDegree((Vector3)(destination)) / 10]));// every clip 10 degree 
+        float rotationAngle = (float) destination;
+        Debug.Log((int) rotationAngle / 10);
+        anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[ (int) rotationAngle / 10 ]) );// every clip 10 degree 
         aoc.ApplyOverrides(anims);
     }
 
-    private int getDegree(Vector3 mousePosition)
+    private int GetFacingAngle(Vector3 mousePosition)
     {
         Vector3 direction = mousePosition - transform.position;
         float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
@@ -51,17 +53,18 @@ public class IdleAnimationController : MonoBehaviour
 
         return (int)anglefixed;
     }
-    private void loadResources()
+
+    private void LoadResources()
     {
         for(int i = 0 ; i < degreeClipLength ; i++) {
-            Debug.Log((AnimationClip)Resources.Load("Animations/Idle animation clip/"+ i * 10 +"_PlayerIdle"));
             _animIdleClip[i] = (AnimationClip)Resources.Load("Animations/Idle animation clip/"+ i * 10 +"_PlayerIdle");
         }
     }
 
     private void Update() {
         var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-        anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[getDegree((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]));
+        Debug.Log(GetFacingAngle( _camera.ScreenToWorldPoint(Input.mousePosition) ));
+        anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[GetFacingAngle((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]));
         aoc.ApplyOverrides(anims);
     }
 }
