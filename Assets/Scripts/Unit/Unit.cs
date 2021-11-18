@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -24,6 +25,7 @@ public class Unit : MonoBehaviour
     [Header("Abilities")] [SerializeField] private Ability[] abilities = new Ability[4];
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
+    private object _aiTarget;
 
     private void Awake()
     {
@@ -51,8 +53,12 @@ public class Unit : MonoBehaviour
         UnitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
         UnitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
         UnitEventHandler.StartListening("OnDied", OnDied);
+        UnitEventHandler.StartListening("On1stAbilityCasted", On1stAbilityCasted);
+        UnitEventHandler.StartListening("On2ndAbilityCasted", On2ndAbilityCasted);
+        UnitEventHandler.StartListening("On3thAbilityCasted", On3rdAbilityCasted);
+        UnitEventHandler.StartListening("On4thAbilityCasted", On4thAbilityCasted);
 
-        if (GetComponent<PlayerAgent>()) // temporary solution, may want to revise if the AI will use the same input
+        if (isPlayer) // temporary solution, may want to revise if the AI will use the same input
         {
             EventManager.StartListening("OnAbilityInputSet", OnAbilityInputSet);
         }
@@ -62,9 +68,16 @@ public class Unit : MonoBehaviour
     {
         UnitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
         UnitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
-        UnitEventHandler.StopListening("Ondied", OnDied);
+        UnitEventHandler.StopListening("OnDied", OnDied);
+        UnitEventHandler.StopListening("On1stAbilityCasted", On1stAbilityCasted);
+        UnitEventHandler.StopListening("On2ndAbilityCasted", On2ndAbilityCasted);
+        UnitEventHandler.StopListening("On3thAbilityCasted", On3rdAbilityCasted);
+        UnitEventHandler.StopListening("On4thAbilityCasted", On4thAbilityCasted);
 
-        EventManager.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
+        if (isPlayer)
+        {
+            EventManager.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
+        }
     }
 
     private void OnStopOrderIssued(object @null)
@@ -75,6 +88,30 @@ public class Unit : MonoBehaviour
     private void OnMoveOrderIssued(object destination)
     {
         TurnAndMove((Vector3)destination);
+    }
+
+    private void On1stAbilityCasted(object target)
+    {
+        StartCoroutine(CastAbility(abilities[0]));
+        if (!isPlayer) _aiTarget = target;
+    }
+
+    private void On2ndAbilityCasted(object target)
+    {
+        StartCoroutine(CastAbility(abilities[1]));
+        if (!isPlayer) _aiTarget = target;
+    }
+
+    private void On3rdAbilityCasted(object target)
+    {
+        StartCoroutine(CastAbility(abilities[2]));
+        if (!isPlayer) _aiTarget = target;
+    }
+
+    private void On4thAbilityCasted(object target)
+    {
+        StartCoroutine(CastAbility(abilities[3]));
+        if (!isPlayer) _aiTarget = target;
     }
 
     private void OnAbilityInputSet(object target)
@@ -92,23 +129,23 @@ public class Unit : MonoBehaviour
         UpdatePosition();
 
         // input testing code
-        if (gameObject.name == "Character")
+        if (isPlayer)
         {
             if (Input.GetKeyUp(KeyCode.Q))
             {
-                TestQ();
+                UnitEventHandler.RaiseEvent("On1stAbilityCasted", null);
             }
             else if (Input.GetKeyUp(KeyCode.W))
             {
-                TestW();
+                UnitEventHandler.RaiseEvent("On2ndAbilityCasted", null);
             }
             else if (Input.GetKeyUp(KeyCode.E))
             {
-                TestE();
+                UnitEventHandler.RaiseEvent("On3rdAbilityCasted", null);
             }
             else if (Input.GetKeyUp(KeyCode.R))
             {
-                TestR();
+                UnitEventHandler.RaiseEvent("On4thAbilityCasted", null);
             }
         }
     }
@@ -152,9 +189,9 @@ public class Unit : MonoBehaviour
 
     private float AngleToTarget(Vector3 target)
     {
-        Vector2 angle = target - transform.position;
+        Vector2 vectorToTarget = target - transform.position;
 
-        return Mathf.Atan2(angle.y, angle.x) * 180 / Mathf.PI;
+        return Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
     }
 
     // members used for ability execution
@@ -195,9 +232,16 @@ public class Unit : MonoBehaviour
         _allTargets["Executing Unit"] = this;
         _allTargets["Executing Unit Position"] = transform.position;
 
-        PlayerAgent playerAgent = GetComponent<PlayerAgent>();
-
-        yield return StartCoroutine(playerAgent.ProcessTargetInput(ability));
+        if (isPlayer)
+        {
+            PlayerAgent playerAgent = GetComponent<PlayerAgent>();
+            yield return StartCoroutine(playerAgent.ProcessTargetInput(ability));
+        }
+        else
+        {
+            // TODO: Somehow auto aim the ability to _aiTarget
+            AbilityInput(_aiTarget);
+        }
 
         if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.AbilityStats["Cast Range"])
         {

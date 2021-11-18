@@ -17,20 +17,28 @@ MonoBehaviour:
   Duration: 0
   Cooldown: 0
   AbilityStats:
-    _Buckets: 0100000000000000ffffffff
-    _HashCodes: a0bf2b7ef4dc220c00000000
-    _Next: ffffffffffffffff00000000
-    _Count: 2
-    _Version: 54
+    _Buckets: 01000000ffffffff0000000003000000ffffffffffffffffffffffff
+    _HashCodes: a0bf2b7ef4dc220cbcd45b150640e609000000000000000000000000
+    _Next: ffffffff02000000ffffffffffffffff000000000000000000000000
+    _Count: 4
+    _Version: 110
     _FreeList: -1
     _FreeCount: 0
     _Keys:
     - Cast Range
     - Damage Stat 1
+    - Cone Range
+    - Cone Angle
+    - 
+    - 
     - 
     _Values:
     - 2
+    - 50
     - 1
+    - 90
+    - 0
+    - 0
     - 0
   Outcomes:
   - Id: Damage
@@ -41,13 +49,21 @@ MonoBehaviour:
     Effects:
     - Id: Damage
       TargetFilter:
-        Type: 1
+        Type: 6
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: 
-        TargetPointId: 
+        TargetCenterId: 
         PreviousEffectId: 
+        ConeRangeId: Cone Range
+        ConeAngleId: Cone Angle
         Relationship: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
         StatId: Damage Stat 1
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        SFXName: 

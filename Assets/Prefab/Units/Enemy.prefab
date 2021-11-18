@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 1905336227}
   - component: {fileID: 1905336226}
   - component: {fileID: 6649632405060821903}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,7 +387,8 @@ MonoBehaviour:
   isPlayer: 0
   agent: {fileID: 0}
   updateInterval: 0.1
-  abilities: []
+  abilities:
+  - {fileID: 11400000, guid: e07134232319e7348a52f7b0d555f1c7, type: 2}
 --- !u!114 &1356358264916591144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,9 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hostileRange: 5
-  attackRange: 0.5
-  attackBufferRange: 1
-  attackDamage: 1
+  attackRange: 1
   attackSpeed: 0.5
 --- !u!114 &-8624061012861718292
 MonoBehaviour:
