@@ -16,6 +16,8 @@ public class PlayerAgent : Agent
 
     private bool turnOnHighlight = false;
 
+    private IEnumerator currentCoroutine = null;
+
     protected override void Awake()
     {
         base.Awake();
@@ -27,6 +29,12 @@ public class PlayerAgent : Agent
         if (defaultControlsEnabled)
         {
             PlayerInput();
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            StopAbilityInput();
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Change cursor back to default
+            defaultControlsEnabled = true;
         }
 
         AOECircleFollowCursor();
@@ -75,15 +83,18 @@ public class PlayerAgent : Agent
     public IEnumerator ProcessTargetInput(Ability ability)
     {
         defaultControlsEnabled = false;
+        StopAbilityInput();
 
         if (ability.InputType == AbilityType.TargetPoint)
         {
-            yield return StartCoroutine(AbilityInputType.PointTargetInput(ability));
+            currentCoroutine = AbilityInputType.PointTargetInput(ability);
+            yield return StartCoroutine(currentCoroutine);
         }
         else if (ability.InputType == AbilityType.TargetUnit)
         {
             turnOnHighlight = true;
-            yield return StartCoroutine(AbilityInputType.UnitTargetInput(ability));
+            currentCoroutine = AbilityInputType.UnitTargetInput(ability);
+            yield return StartCoroutine(currentCoroutine);
             turnOnHighlight = false;
         }
         else if (ability.InputType == AbilityType.TargetArea)
@@ -91,13 +102,23 @@ public class PlayerAgent : Agent
             float radius = ability.AbilityStats["AOE Radius"];
             AOECircle.transform.localScale = new Vector3(radius * 1.7f, radius * 1.7f, 1.0f);
             AOECircle.enabled = true;
-            yield return StartCoroutine(AbilityInputType.AOETargetInput(ability));
+            currentCoroutine = AbilityInputType.AOETargetInput(ability);
+            yield return StartCoroutine(currentCoroutine);
             AOECircle.enabled = false;
         }
         // else if (ability.InputType == AbilityType.NoTarget) yield return StartCoroutine(AbilityInputType.PointTargetInput(ability));
 
-
         defaultControlsEnabled = true;
+    }
+
+    public void StopAbilityInput()
+    {
+        if (currentCoroutine != null)
+        {
+            StopCoroutine(currentCoroutine);
+            turnOnHighlight = false;
+            AOECircle.enabled = false;
+        }
     }
 
     private void AOECircleFollowCursor()

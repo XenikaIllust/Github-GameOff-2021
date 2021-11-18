@@ -74,7 +74,7 @@ public class AbilityInputType
 
     // public static IEnumerator NoTargetInput(Ability ability){yield return null;}
 
-    public static void ChangeCursor()
+    private static void ChangeCursor()
     {
         Texture2D cursorTexture = (Texture2D)Resources.Load("AbilityCursor");
         Vector2 hotSpot = new Vector2(24, 24); // The offset from the top left of the cursor to use as the target point
