@@ -58,12 +58,34 @@ public class UnitAnimationManager : MonoBehaviour
         // anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[ (int) rotationAngle / 10 ]) );// every clip 10 degree 
         // aoc.ApplyOverrides(anims);
 
-        // var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-        // float rotationAngle = (float) destination;
-        // Debug.Log(rotationAngle);
-        // string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
-        // anims.Add(new KeyValuePair<AnimationClip, AnimationClip>( animationLibrary[currentAnimationStatename][0], animationLibrary[currentAnimationStatename][ (int) rotationAngle / 10 ]) );
-        // aoc.ApplyOverrides(anims);
+        var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+        float rotationAngle = (float) destination;
+        Debug.Log("Rotation angle:" + rotationAngle);
+        float azimuthRotation = ConvertStandardToAzimuth(rotationAngle);
+        Debug.Log("Azimuth angle: " + azimuthRotation);
+        string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
+        anims.Add(new KeyValuePair<AnimationClip, AnimationClip>( animationLibrary[currentAnimationStatename][0], animationLibrary[currentAnimationStatename][ (int) azimuthRotation / 10 ]) );
+        aoc.ApplyOverrides(anims);
+    }
+
+    private float ConvertStandardToAzimuth(float originalRotation) 
+    {
+        float azimuthRotation;
+
+        if(originalRotation >= 0 && originalRotation < 90) {
+            azimuthRotation = 90 - originalRotation;
+        }
+        else if(originalRotation >= 90 && originalRotation < 180) {
+            azimuthRotation = 270 + ( 90 - ( originalRotation - 90 ) );
+        }
+        else if(originalRotation >= 180 && originalRotation < 270) {
+            azimuthRotation = 180 + ( 90 - ( originalRotation - 180 ) );
+        }
+        else {
+            azimuthRotation = 90 + ( 270 - (originalRotation - 90) );
+        }
+
+        return azimuthRotation;
     }
 
     private int GetFacingAngle(Vector3 mousePosition)
@@ -107,15 +129,15 @@ public class UnitAnimationManager : MonoBehaviour
         // }
     }
 
-    private void Update() {
-        var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-        // get animation state name
-        // Debug.Log(_anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
-        string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
-        anims.Add(new KeyValuePair<AnimationClip, AnimationClip>( animationLibrary[currentAnimationStatename][0], animationLibrary[currentAnimationStatename][ GetFacingAngle((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]) );
-        // anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[GetFacingAngle((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]));
-        aoc.ApplyOverrides(anims);
-    }
+    // private void Update() {
+    //     var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+    //     // get animation state name
+    //     // Debug.Log(_anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+    //     string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
+    //     anims.Add(new KeyValuePair<AnimationClip, AnimationClip>( animationLibrary[currentAnimationStatename][0], animationLibrary[currentAnimationStatename][ GetFacingAngle((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]) );
+    //     // anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[GetFacingAngle((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]));
+    //     aoc.ApplyOverrides(anims);
+    // }
 
     public void SetMoveAnimation(bool status) {
         _anim.SetBool(isRunningHash, status);

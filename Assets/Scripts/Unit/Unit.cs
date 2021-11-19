@@ -352,17 +352,13 @@ public class Unit : MonoBehaviour
     Vector2 _lastPosition;
     void UpdateAnimationMovement() {
         if(gameObject.name == "MainCharacter") { // very bad hardcoding, remove when finished debugging
-            // Debug.Log("Unit is " + gameObject.name + " " + transform.position);
-            // Debug.Log("Unit speed: " + ((Vector2) transform.position - _lastPosition).magnitude / Time.deltaTime);
-            _speed = Mathf.Lerp(_speed, ((Vector2) transform.position - _lastPosition).magnitude, 0.05f /*adjust this number in order to make interpolation quicker or slower*/);
+            _speed = Mathf.Lerp(_speed, ((Vector2) transform.position - _lastPosition).magnitude, 0.3f /*adjust this number in order to make interpolation quicker or slower*/);
             _lastPosition = (Vector2) transform.position;
 
             if(_speed > 0.005) {
-                Debug.Log("unit speed is > 0");
                 UnitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
             }
             else {
-                Debug.Log("unit speed is 0");
                 UnitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
             }   
         }
