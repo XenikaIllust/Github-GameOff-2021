@@ -45,18 +45,25 @@ public class UnitAnimationManager : MonoBehaviour
     }
     private void Start()
     {
-        // unitEventHandler.StartListening("OnPseudoObjectRotationChanged", OnMoveOrderIssued);
+        unitEventHandler.StartListening("OnPseudoObjectRotationChanged", OnPseudoObjectRotationChanged);
         unitEventHandler.StartListening("OnStartMoveAnimation", delegate { SetMoveAnimation(true); });
         unitEventHandler.StartListening("OnStopMoveAnimation", delegate { SetMoveAnimation(false); });
     }
 
-    private void OnMoveOrderIssued(object destination)
+    private void OnPseudoObjectRotationChanged(object destination)
     {
-        var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-        float rotationAngle = (float) destination;
-        Debug.Log((int) rotationAngle / 10);
-        anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[ (int) rotationAngle / 10 ]) );// every clip 10 degree 
-        aoc.ApplyOverrides(anims);
+        // var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+        // float rotationAngle = (float) destination;
+        // Debug.Log((int) rotationAngle / 10);
+        // anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[ (int) rotationAngle / 10 ]) );// every clip 10 degree 
+        // aoc.ApplyOverrides(anims);
+
+        // var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+        // float rotationAngle = (float) destination;
+        // Debug.Log(rotationAngle);
+        // string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
+        // anims.Add(new KeyValuePair<AnimationClip, AnimationClip>( animationLibrary[currentAnimationStatename][0], animationLibrary[currentAnimationStatename][ (int) rotationAngle / 10 ]) );
+        // aoc.ApplyOverrides(anims);
     }
 
     private int GetFacingAngle(Vector3 mousePosition)
@@ -93,7 +100,6 @@ public class UnitAnimationManager : MonoBehaviour
             }
             
             animationLibrary[animationStateName] = animationClips;
-            break; // run once because i only want to test one
         }
 
         // for(int i = 0 ; i < degreeClipLength ; i++) {
@@ -103,8 +109,8 @@ public class UnitAnimationManager : MonoBehaviour
 
     private void Update() {
         var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-        Debug.Log(GetFacingAngle( _camera.ScreenToWorldPoint(Input.mousePosition) ));
         // get animation state name
+        // Debug.Log(_anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
         string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
         anims.Add(new KeyValuePair<AnimationClip, AnimationClip>( animationLibrary[currentAnimationStatename][0], animationLibrary[currentAnimationStatename][ GetFacingAngle((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]) );
         // anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[GetFacingAngle((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]));

@@ -181,11 +181,14 @@ public class Unit : MonoBehaviour
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
 
         UnitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", _pseudoObject.transform.rotation.eulerAngles.z);
+
     }
 
     private void Move(Vector3 destination)
     {
         agent.SetDestination(destination);
+        UnitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", _pseudoObject.transform.rotation.eulerAngles.z);
+
     }
 
     private float AngleToTarget(Vector3 target)
@@ -346,17 +349,22 @@ public class Unit : MonoBehaviour
 
     // Animation related functionality
     float _speed;
-    Vector3 _lastPosition;
+    Vector2 _lastPosition;
     void UpdateAnimationMovement() {
-        _speed = Mathf.Lerp(_speed, (transform.position - _lastPosition).magnitude, 0.05f /*adjust this number in order to make interpolation quicker or slower*/);
-        _lastPosition = transform.position;
+        if(gameObject.name == "MainCharacter") { // very bad hardcoding, remove when finished debugging
+            // Debug.Log("Unit is " + gameObject.name + " " + transform.position);
+            // Debug.Log("Unit speed: " + ((Vector2) transform.position - _lastPosition).magnitude / Time.deltaTime);
+            _speed = Mathf.Lerp(_speed, ((Vector2) transform.position - _lastPosition).magnitude, 0.05f /*adjust this number in order to make interpolation quicker or slower*/);
+            _lastPosition = (Vector2) transform.position;
 
-        print(_speed);
-        if(agent.velocity.magnitude > Mathf.Epsilon) {
-            UnitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
-        }
-        else {
-            UnitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
+            if(_speed > 0.005) {
+                Debug.Log("unit speed is > 0");
+                UnitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
+            }
+            else {
+                Debug.Log("unit speed is 0");
+                UnitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
+            }   
         }
     }
 }

@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   degreeVariation: 0
+  animationStateNames: []
 --- !u!1 &3449367993870842354
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,7 +328,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ad7df54cc682d1743b2751d051830ae6, type: 3}
-  m_Color: {r: 1, g: 0.42138356, b: 0.42138356, a: 1}
+  m_Color: {r: 0.73404783, g: 1, b: 0.41960788, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
