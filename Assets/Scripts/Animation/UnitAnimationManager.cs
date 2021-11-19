@@ -60,14 +60,13 @@ public class UnitAnimationManager : MonoBehaviour
 
         var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
         float rotationAngle = (float) destination;
-        Debug.Log("Rotation angle:" + rotationAngle);
         float azimuthRotation = ConvertStandardToAzimuth(rotationAngle);
-        Debug.Log("Azimuth angle: " + azimuthRotation);
         string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
         anims.Add(new KeyValuePair<AnimationClip, AnimationClip>( animationLibrary[currentAnimationStatename][0], animationLibrary[currentAnimationStatename][ (int) azimuthRotation / 10 ]) );
         aoc.ApplyOverrides(anims);
     }
 
+    // standard bearing to azimuth is required because the animations are saved in azimuth format
     private float ConvertStandardToAzimuth(float originalRotation) 
     {
         float azimuthRotation;
@@ -105,11 +104,10 @@ public class UnitAnimationManager : MonoBehaviour
         Loads all animations based on properly named folder into animationLibrary dictionary
         This is a long function and should potentially be delegated elsewhere and the result cached
         ---------------------------------------------------------------------------------------------*/
-        string[] animationDirectories = Directory.GetDirectories(Application.dataPath + "/Resources/Animations/" + transform.parent.gameObject.name);
+        // string[] animationDirectories = Directory.GetDirectories(Application.dataPath + "/Resources/Animations/" + transform.parent.gameObject.name);
 
-        foreach(string animationDirectory in animationDirectories) {
-            // this is called animationStateName because it is expected that the folders are named the same name as the animation state
-            string animationStateName = new DirectoryInfo(animationDirectory).Name; 
+        foreach(string animationStateName in animationStateNames) {
+            // it is expected that the folders are named the same name as the animation state specified in the list of UnitAnimationManager
 
             string prefixPath = "Animations/" + transform.parent.gameObject.name;
 
