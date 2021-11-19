@@ -23,6 +23,9 @@ public class UnitAnimationManager : MonoBehaviour
     [Tooltip("All unique animation state names. Ensure that the corresponding folder has the same name.")]
     List<string> animationStateNames = new List<string>();
 
+    // hash variables for animation state changing
+    int isRunningHash;
+
     private void Awake()
     {
         unitEventHandler = GetComponentInParent<UnitEventManager>().UnitEventHandler;
@@ -37,14 +40,14 @@ public class UnitAnimationManager : MonoBehaviour
         OriginalClip = _animIdleClip[0];// hardcode
         aoc = new AnimatorOverrideController(_anim.runtimeAnimatorController);
         _anim.runtimeAnimatorController = aoc;
+
+        isRunningHash = Animator.StringToHash("isRunning");
     }
     private void Start()
     {
         // unitEventHandler.StartListening("OnPseudoObjectRotationChanged", OnMoveOrderIssued);
-
-        foreach(AnimationClip c in _anim.runtimeAnimatorController.animationClips) {
-            Debug.Log(c);
-        }
+        unitEventHandler.StartListening("OnStartMoveAnimation", delegate { SetMoveAnimation(true); });
+        unitEventHandler.StartListening("OnStopMoveAnimation", delegate { SetMoveAnimation(false); });
     }
 
     private void OnMoveOrderIssued(object destination)
@@ -106,5 +109,9 @@ public class UnitAnimationManager : MonoBehaviour
         anims.Add(new KeyValuePair<AnimationClip, AnimationClip>( animationLibrary[currentAnimationStatename][0], animationLibrary[currentAnimationStatename][ GetFacingAngle((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]) );
         // anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[GetFacingAngle((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]));
         aoc.ApplyOverrides(anims);
+    }
+
+    public void SetMoveAnimation(bool status) {
+        _anim.SetBool(isRunningHash, status);
     }
 }

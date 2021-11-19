@@ -127,6 +127,7 @@ public class Unit : MonoBehaviour
     private void Update()
     {
         UpdatePosition();
+        UpdateAnimationMovement();
 
         // input testing code
         if (isPlayer)
@@ -341,5 +342,21 @@ public class Unit : MonoBehaviour
     private void TestR()
     {
         StartCoroutine(CastAbility(abilities[3]));
+    }
+
+    // Animation related functionality
+    float _speed;
+    Vector3 _lastPosition;
+    void UpdateAnimationMovement() {
+        _speed = Mathf.Lerp(_speed, (transform.position - _lastPosition).magnitude, 0.05f /*adjust this number in order to make interpolation quicker or slower*/);
+        _lastPosition = transform.position;
+
+        print(_speed);
+        if(agent.velocity.magnitude > Mathf.Epsilon) {
+            UnitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
+        }
+        else {
+            UnitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
+        }
     }
 }
