@@ -130,7 +130,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   degreeVariation: 0
-  animationStateNames: []
+  animationStateNames:
+  - Idle
+  - Run
 --- !u!1 &3449367993870842354
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,7 +20,6 @@ You can contact me by email at guyquad27@gmail.com or on Reddit at https://www.r
 */
 
 
-#if UNITY_EDITOR
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -75,4 +74,4 @@ public class EllipseCollider2D : MonoBehaviour {
         return points.ToArray();
     }
 }
-#endif
+
