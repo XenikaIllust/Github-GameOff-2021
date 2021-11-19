@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -179,16 +178,14 @@ public class Unit : MonoBehaviour
             .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(destination)),
                 turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
-
-        UnitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", _pseudoObject.transform.rotation.eulerAngles.z);
-
     }
 
     private void Move(Vector3 destination)
     {
+        var eulerAnglesZ = _pseudoObject.transform.rotation.eulerAngles.z;
+        agent.speed = movementSpeed * (1 - Mathf.Abs(Mathf.Sin(eulerAnglesZ * Mathf.Deg2Rad)) / 2);
         agent.SetDestination(destination);
-        UnitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", _pseudoObject.transform.rotation.eulerAngles.z);
-
+        UnitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
     }
 
     private float AngleToTarget(Vector3 target)
@@ -350,17 +347,24 @@ public class Unit : MonoBehaviour
     // Animation related functionality
     float _speed;
     Vector2 _lastPosition;
-    void UpdateAnimationMovement() {
-        if(gameObject.name == "MainCharacter") { // very bad hardcoding, remove when finished debugging
-            _speed = Mathf.Lerp(_speed, ((Vector2) transform.position - _lastPosition).magnitude, 0.3f /*adjust this number in order to make interpolation quicker or slower*/);
-            _lastPosition = (Vector2) transform.position;
 
-            if(_speed > 0.005) {
+    void UpdateAnimationMovement()
+    {
+        if (gameObject.name == "MainCharacter")
+        {
+            // very bad hardcoding, remove when finished debugging
+            _speed = Mathf.Lerp(_speed, ((Vector2)transform.position - _lastPosition).magnitude,
+                0.3f /*adjust this number in order to make interpolation quicker or slower*/);
+            _lastPosition = (Vector2)transform.position;
+
+            if (_speed > 0.005)
+            {
                 UnitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
             }
-            else {
+            else
+            {
                 UnitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
-            }   
+            }
         }
     }
 }
