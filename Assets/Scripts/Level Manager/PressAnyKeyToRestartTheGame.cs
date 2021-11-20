@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PressAnyKeyToRestartTheGame : MonoBehaviour
 {
     private void Update()
     {
-        if (Input.anyKeyDown)
+        if (Keyboard.current.anyKey.wasPressedThisFrame)
         {
             LevelManager.LoadNextScene();
         }
