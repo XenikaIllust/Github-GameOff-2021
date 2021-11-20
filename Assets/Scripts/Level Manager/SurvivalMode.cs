@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class SurviveUntilTime : MonoBehaviour
+public class SurvivalMode : MonoBehaviour
 {
     [SerializeField] private GameObject popUp;
     [SerializeField] private GameObject timerObject;

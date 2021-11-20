@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LevelDestinationPoint : MonoBehaviour
+public class PointToPointMode : MonoBehaviour
 {
     [SerializeField] private GameObject popUp;
     [SerializeField] private float triggerDistance = 1f;
