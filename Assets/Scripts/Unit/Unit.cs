@@ -376,7 +376,6 @@ public class Unit : MonoBehaviour
     {
         if (gameObject.name == "MainCharacter")
         {
-            // very bad hardcoding, remove when finished debugging
             _speed = Mathf.Lerp(_speed, ((Vector2)transform.position - _lastPosition).magnitude,
                 0.3f /*adjust this number in order to make interpolation quicker or slower*/);
             _lastPosition = (Vector2)transform.position;
