@@ -3,13 +3,27 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    private static LevelManager Instance { get; set; }
+
     private void Awake()
     {
-        DontDestroyOnLoad(this);
+        if (Instance == null || Instance == this)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    private void LoadRandomScene()
+    public static void LoadNextScene()
     {
-        SceneManager.LoadScene(Random.Range(0, SceneManager.sceneCountInBuildSettings));
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public static void LoadPreviousScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }
