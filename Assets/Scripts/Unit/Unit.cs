@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// --------
@@ -127,26 +128,49 @@ public class Unit : MonoBehaviour
     {
         UpdatePosition();
         UpdateAnimationMovement();
+    }
 
-        // input testing code
-        if (isPlayer)
+    // 'Q' Key
+    public void OnFirstAbilityPressed(InputAction.CallbackContext context)
+    {
+        if (!isPlayer) return;
+
+        if (context.canceled)
         {
-            if (Input.GetKeyUp(KeyCode.Q))
-            {
-                UnitEventHandler.RaiseEvent("On1stAbilityCasted", null);
-            }
-            else if (Input.GetKeyUp(KeyCode.W))
-            {
-                UnitEventHandler.RaiseEvent("On2ndAbilityCasted", null);
-            }
-            else if (Input.GetKeyUp(KeyCode.E))
-            {
-                UnitEventHandler.RaiseEvent("On3rdAbilityCasted", null);
-            }
-            else if (Input.GetKeyUp(KeyCode.R))
-            {
-                UnitEventHandler.RaiseEvent("On4thAbilityCasted", null);
-            }
+            UnitEventHandler.RaiseEvent("On1stAbilityCasted", null);
+        }
+    }
+
+    // 'W' Key
+    public void OnSecondAbilityPressed(InputAction.CallbackContext context)
+    {
+        if (!isPlayer) return;
+
+        if (context.canceled)
+        {
+            UnitEventHandler.RaiseEvent("On2ndAbilityCasted", null);
+        }
+    }
+
+    // 'E' Key
+    public void OnThirdAbilityPressed(InputAction.CallbackContext context)
+    {
+        if (!isPlayer) return;
+
+        if (context.canceled)
+        {
+            UnitEventHandler.RaiseEvent("On3rdAbilityCasted", null);
+        }
+    }
+
+    // 'R' Key
+    public void OnFourthAbilityPressed(InputAction.CallbackContext context)
+    {
+        if (!isPlayer) return;
+
+        if (context.canceled)
+        {
+            UnitEventHandler.RaiseEvent("On4thAbilityCasted", null);
         }
     }
 

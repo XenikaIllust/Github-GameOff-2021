@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerAgent : Agent
 {
@@ -11,6 +12,8 @@ public class PlayerAgent : Agent
     private Camera _camera;
 
     bool defaultControlsEnabled = true;
+
+    private bool holdingRightClick = false;
 
     [SerializeField] private SpriteRenderer AOECircle;
 
@@ -30,12 +33,6 @@ public class PlayerAgent : Agent
         {
             PlayerInput();
         }
-        else if (Input.GetMouseButtonUp(1))
-        {
-            StopAbilityInput();
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Change cursor back to default
-            defaultControlsEnabled = true;
-        }
 
         AOECircleFollowCursor();
         if (turnOnHighlight) HighlightUnitUnderMouseCursor();
@@ -43,12 +40,7 @@ public class PlayerAgent : Agent
 
     private void PlayerInput()
     {
-        // Right mouse button
-        if (Input.GetMouseButtonDown(1))
-        {
-            unitEventHandler.RaiseEvent("OnMoveOrderIssued", CursorWorldPosition());
-        }
-        else if (Input.GetMouseButton(1))
+        if (holdingRightClick)
         {
             // Auto-repeat click when held
             _autoClickTimer += Time.deltaTime;
@@ -59,13 +51,49 @@ public class PlayerAgent : Agent
                 unitEventHandler.RaiseEvent("OnMoveOrderIssued", CursorWorldPosition());
             }
         }
-        else if (Input.GetMouseButtonUp(1))
+    }
+
+    // Left Click
+    public void OnTargetPressed(InputAction.CallbackContext context)
+    {
+        if (context.canceled)
         {
-            _autoClickTimer = float.Epsilon;
+            AbilityInputType.hasPressedLeftClick = true;
+        }
+    }
+
+    // Right Click
+    public void OnMovePressed(InputAction.CallbackContext context)
+    {
+        if (!defaultControlsEnabled)
+        {
+            StopAbilityInput();
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Change cursor back to default
+            defaultControlsEnabled = true;
+            return;
         }
 
-        // 'S' key
-        if (Input.GetKeyDown(KeyCode.S))
+        if (context.started)
+        {
+            unitEventHandler.RaiseEvent("OnMoveOrderIssued", CursorWorldPosition());
+        }
+
+        if (context.performed)
+        {
+            holdingRightClick = true;
+        }
+
+        if (context.canceled)
+        {
+            holdingRightClick = false;
+            _autoClickTimer = float.Epsilon;
+        }
+    }
+
+    // 'S' Key
+    public void OnStopPressed(InputAction.CallbackContext context)
+    {
+        if (context.started)
         {
             unitEventHandler.RaiseEvent("OnStopOrderIssued", null);
         }
@@ -73,7 +101,7 @@ public class PlayerAgent : Agent
 
     private Vector3 CursorWorldPosition()
     {
-        Vector2 screenPosition = Input.mousePosition;
+        Vector2 screenPosition = Mouse.current.position.ReadValue();
         Vector3 worldPosition = _camera.ScreenToWorldPoint(screenPosition);
 
         return new Vector3(worldPosition.x, worldPosition.y, transform.position.z);
@@ -123,8 +151,8 @@ public class PlayerAgent : Agent
 
     private void AOECircleFollowCursor()
     {
-        AOECircle.transform.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,
-            Camera.main.ScreenToWorldPoint(Input.mousePosition).y,
+        AOECircle.transform.position = new Vector3(CursorWorldPosition().x,
+            CursorWorldPosition().y,
             0.0f
         );
     }
@@ -135,7 +163,7 @@ public class PlayerAgent : Agent
         LayerMask enemyMask = LayerMask.GetMask("Enemy");
 
         // Get target and check that it's valid
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition),
+        RaycastHit2D hit = Physics2D.Raycast(CursorWorldPosition(),
             direction: Vector2.zero, distance: Mathf.Infinity, layerMask: enemyMask);
         if (hit.collider != null)
         {

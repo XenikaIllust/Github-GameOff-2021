@@ -1,19 +1,22 @@
 using System.Linq;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AbilityInputType
 {
+    public static bool hasPressedLeftClick = false;
     public static IEnumerator PointTargetInput(Ability ability)
     {
         ChangeCursor();
 
-        yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until Left Click is pressed
+        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+        hasPressedLeftClick = false;
 
         // (TODO) Check if the target is valid (is above terrain for example)
 
         // Calculate mouse position
-        Vector3 targetPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 targetPoint = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
         // Send Vector3 targetCoordinates as event param
         object targetCoordinates = targetPoint;
@@ -26,13 +29,14 @@ public class AbilityInputType
     {
         ChangeCursor();
 
-        yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until Left Click is pressed
+        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+        hasPressedLeftClick = false;
 
         string[] tags = { "Enemy" }; // PLACEHOLDER UNTIL A BETTER SOLUTION IS FOUND
         LayerMask enemyMask = LayerMask.GetMask("Enemy");
 
         // Get target and check that it's valid
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition),
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()),
             direction: Vector2.zero, distance: Mathf.Infinity, layerMask: enemyMask);
         if (hit.collider != null)
         {
@@ -58,12 +62,13 @@ public class AbilityInputType
     {
         ChangeCursor();
 
-        yield return new WaitUntil(() => Input.GetMouseButtonUp(0)); // Wait until Left Click is pressed
+        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+        hasPressedLeftClick = false;
 
         // (TODO) Check if the target is valid (is above terrain for example)
 
         // Calculate mouse position
-        Vector3 centerPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 centerPoint = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
         // Send Vector3 centerCoordinates as event param
         object centerCoordinates = centerPoint;

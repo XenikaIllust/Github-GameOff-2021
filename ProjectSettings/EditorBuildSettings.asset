@@ -8,4 +8,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level Testing/Level Test.unity
     guid: 7c7d6271c2e3f0e47a4ad5abdd1d4ab0
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 0bbe5b857b21731f287fc6d449a682a1, type: 2}
