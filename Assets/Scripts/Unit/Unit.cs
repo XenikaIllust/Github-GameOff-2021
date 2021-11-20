@@ -92,26 +92,26 @@ public class Unit : MonoBehaviour
 
     private void On1stAbilityCasted(object target)
     {
-        StartCoroutine(CastAbility(abilities[0]));
         if (!isPlayer) _aiTarget = target;
+        StartCoroutine(CastAbility(abilities[0]));
     }
 
     private void On2ndAbilityCasted(object target)
     {
-        StartCoroutine(CastAbility(abilities[1]));
         if (!isPlayer) _aiTarget = target;
+        StartCoroutine(CastAbility(abilities[1]));
     }
 
     private void On3rdAbilityCasted(object target)
     {
-        StartCoroutine(CastAbility(abilities[2]));
         if (!isPlayer) _aiTarget = target;
+        StartCoroutine(CastAbility(abilities[2]));
     }
 
     private void On4thAbilityCasted(object target)
     {
-        StartCoroutine(CastAbility(abilities[3]));
         if (!isPlayer) _aiTarget = target;
+        StartCoroutine(CastAbility(abilities[3]));
     }
 
     private void OnAbilityInputSet(object target)
@@ -257,6 +257,13 @@ public class Unit : MonoBehaviour
         _allTargets["Executing Unit"] = this;
         _allTargets["Executing Unit Position"] = transform.position;
 
+        /*-------------------------------------------------------------------------------
+        Comments from xenika:
+
+        If all Agents implement ProcessTargetInput, then checking if isPlayer is not necessary
+        because they all can execute the line.
+        --------------------------------------------------------------------------------*/
+
         if (isPlayer)
         {
             PlayerAgent playerAgent = GetComponent<PlayerAgent>();
@@ -346,26 +353,6 @@ public class Unit : MonoBehaviour
         // }
 
         yield return null;
-    }
-
-    private void TestQ()
-    {
-        StartCoroutine(CastAbility(abilities[0]));
-    }
-
-    private void TestW()
-    {
-        StartCoroutine(CastAbility(abilities[1]));
-    }
-
-    private void TestE()
-    {
-        StartCoroutine(CastAbility(abilities[2]));
-    }
-
-    private void TestR()
-    {
-        StartCoroutine(CastAbility(abilities[3]));
     }
 
     // Animation related functionality

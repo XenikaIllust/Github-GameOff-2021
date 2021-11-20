@@ -108,7 +108,7 @@ public class PlayerAgent : Agent
     }
 
     // Responsible for aiming abilities, coupled with AbilityInputType.cs
-    public IEnumerator ProcessTargetInput(Ability ability)
+    public override IEnumerator ProcessTargetInput(Ability ability)
     {
         defaultControlsEnabled = false;
         StopAbilityInput();

@@ -15,7 +15,7 @@ MonoBehaviour:
   abilitySprite: {fileID: 0}
   InputType: 1
   Duration: 0
-  Cooldown: 0
+  Cooldown: 0.1
   AbilityStats:
     _Buckets: 01000000ffffffff0000000003000000ffffffffffffffffffffffff
     _HashCodes: a0bf2b7ef4dc220cbcd45b150640e609000000000000000000000000
