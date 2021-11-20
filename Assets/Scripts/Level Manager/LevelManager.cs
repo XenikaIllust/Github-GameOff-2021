@@ -23,13 +23,18 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void LoadGameOverScene()
+    public void LoadStartGameScene()
+    {
+        SceneManager.LoadScene(startGameScene);
+    }
+
+    public void LoadEndGameScene()
     {
         SceneManager.LoadScene(gameOverScene);
     }
 
-    public void LoadLevelScene()
+    public void LoadLevelScene(int index)
     {
-        SceneManager.LoadScene(levelScenes[0]);
+        SceneManager.LoadScene(levelScenes[index - 1]);
     }
 }
