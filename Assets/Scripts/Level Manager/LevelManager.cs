@@ -1,9 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    private static LevelManager Instance { get; set; }
+    public static LevelManager Instance { get; set; }
+
+    [SerializeField] private SceneReference startGameScene;
+    [SerializeField] private SceneReference gameOverScene;
+
+    [SerializeField] private List<SceneReference> levelScenes;
 
     private void Awake()
     {
@@ -17,13 +23,13 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public static void LoadNextScene()
+    public void LoadGameOverScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(gameOverScene);
     }
 
-    public static void LoadPreviousScene()
+    public void LoadLevelScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene(levelScenes[0]);
     }
 }

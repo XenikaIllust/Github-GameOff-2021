@@ -7,7 +7,7 @@ public class PressAnyKeyToStartTheGame : MonoBehaviour
     {
         if (Keyboard.current.anyKey.wasPressedThisFrame)
         {
-            LevelManager.LoadNextScene();
+            LevelManager.Instance.LoadLevelScene();
         }
     }
 }
