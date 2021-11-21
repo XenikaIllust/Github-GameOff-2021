@@ -12,7 +12,7 @@ public class InflictDamageAction : GameActionBlock
         {
             Unit targetUnit = (Unit)target;
             float damageStat = abilityStat;
-            targetUnit.UnitEventHandler.RaiseEvent("OnDamageTaken", damageStat);
+            targetUnit.unitEventHandler.RaiseEvent("OnDamageTaken", damageStat);
         }
     }
 }

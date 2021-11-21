@@ -12,7 +12,7 @@ public class InflictHealAction : GameActionBlock
         {
             Unit targetUnit = (Unit)target;
             float healStat = abilityStat;
-            targetUnit.UnitEventHandler.RaiseEvent("OnHealTaken", healStat);
+            targetUnit.unitEventHandler.RaiseEvent("OnHealTaken", healStat);
         }
     }
 }

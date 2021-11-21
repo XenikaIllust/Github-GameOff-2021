@@ -14,7 +14,7 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class Unit : MonoBehaviour
 {
-    public EventProcessor UnitEventHandler; // Internal event handler
+    public EventProcessor unitEventHandler; // Internal event handler
     [Header("Stats")] public float movementSpeed = 3.5f;
     public float turnRate = 5f;
     [HideInInspector] public bool isPlayer;
@@ -34,7 +34,7 @@ public class Unit : MonoBehaviour
 
     private void Awake()
     {
-        UnitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
+        unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
         isPlayer = GetComponent<PlayerAgent>() != null;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -55,28 +55,28 @@ public class Unit : MonoBehaviour
 
     private void OnEnable()
     {
-        UnitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
-        UnitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
-        UnitEventHandler.StartListening("OnDied", OnDied);
-        UnitEventHandler.StartListening("OnAbility1Casted", OnAbility1Casted);
-        UnitEventHandler.StartListening("OnAbility2Casted", OnAbility2Casted);
-        UnitEventHandler.StartListening("On3thAbilityCasted", OnAbility3Casted);
-        UnitEventHandler.StartListening("OnAbility4Casted", OnAbility4Casted);
+        unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
+        unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        unitEventHandler.StartListening("OnDied", OnDied);
+        unitEventHandler.StartListening("OnAbility1Casted", OnAbility1Casted);
+        unitEventHandler.StartListening("OnAbility2Casted", OnAbility2Casted);
+        unitEventHandler.StartListening("On3thAbilityCasted", OnAbility3Casted);
+        unitEventHandler.StartListening("OnAbility4Casted", OnAbility4Casted);
 
-        UnitEventHandler.StartListening("OnAbilityInputSet", OnAbilityInputSet);
+        unitEventHandler.StartListening("OnAbilityInputSet", OnAbilityInputSet);
     }
 
     private void OnDisable()
     {
-        UnitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
-        UnitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
-        UnitEventHandler.StopListening("OnDied", OnDied);
-        UnitEventHandler.StopListening("OnAbility1Casted", OnAbility1Casted);
-        UnitEventHandler.StopListening("OnAbility2Casted", OnAbility2Casted);
-        UnitEventHandler.StopListening("On3thAbilityCasted", OnAbility3Casted);
-        UnitEventHandler.StopListening("OnAbility4Casted", OnAbility4Casted);
+        unitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
+        unitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        unitEventHandler.StopListening("OnDied", OnDied);
+        unitEventHandler.StopListening("OnAbility1Casted", OnAbility1Casted);
+        unitEventHandler.StopListening("OnAbility2Casted", OnAbility2Casted);
+        unitEventHandler.StopListening("On3thAbilityCasted", OnAbility3Casted);
+        unitEventHandler.StopListening("OnAbility4Casted", OnAbility4Casted);
 
-        UnitEventHandler.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
+        unitEventHandler.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
     }
 
     private void OnStopOrderIssued(object @null)
@@ -136,7 +136,7 @@ public class Unit : MonoBehaviour
 
         if (context.canceled)
         {
-            UnitEventHandler.RaiseEvent("OnAbility1Casted", null);
+            unitEventHandler.RaiseEvent("OnAbility1Casted", null);
         }
     }
 
@@ -147,7 +147,7 @@ public class Unit : MonoBehaviour
 
         if (context.canceled)
         {
-            UnitEventHandler.RaiseEvent("OnAbility2Casted", null);
+            unitEventHandler.RaiseEvent("OnAbility2Casted", null);
         }
     }
 
@@ -158,7 +158,7 @@ public class Unit : MonoBehaviour
 
         if (context.canceled)
         {
-            UnitEventHandler.RaiseEvent("OnAbility3Casted", null);
+            unitEventHandler.RaiseEvent("OnAbility3Casted", null);
         }
     }
 
@@ -169,7 +169,7 @@ public class Unit : MonoBehaviour
 
         if (context.canceled)
         {
-            UnitEventHandler.RaiseEvent("OnAbility4Casted", null);
+            unitEventHandler.RaiseEvent("OnAbility4Casted", null);
         }
     }
 
@@ -208,7 +208,7 @@ public class Unit : MonoBehaviour
         var eulerAnglesZ = _pseudoObject.transform.rotation.eulerAngles.z;
         agent.speed = movementSpeed * (1 - Mathf.Abs(Mathf.Sin(eulerAnglesZ * Mathf.Deg2Rad)) / 2);
         agent.SetDestination(destination);
-        UnitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
+        unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
     }
 
     private float AngleToTarget(Vector3 target)
@@ -231,10 +231,10 @@ public class Unit : MonoBehaviour
         }
         else if (_currentAbilityType == AbilityType.TargetUnit)
         {
-            Unit targetUnit = (Unit)target;
+            var targetUnit = (Unit)target;
             _castTargetPosition = targetUnit.transform.position;
             _allTargets["Target Unit"] = target;
-            _allTargets["Target Unit Position"] = targetUnit.transform.position;
+            _allTargets["Target Unit Position"] = _castTargetPosition;
         }
         else if (_currentAbilityType == AbilityType.TargetArea)
         {
@@ -265,7 +265,7 @@ public class Unit : MonoBehaviour
 
         if (isPlayer)
         {
-            PlayerAgent playerAgent = GetComponent<PlayerAgent>();
+            var playerAgent = GetComponent<PlayerAgent>();
             yield return StartCoroutine(playerAgent.ProcessTargetInput(ability));
         }
         else
@@ -367,11 +367,11 @@ public class Unit : MonoBehaviour
 
             if (_speed > 0.005)
             {
-                UnitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
+                unitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
             }
             else
             {
-                UnitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
+                unitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
             }
         }
     }
