@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +11,8 @@ public class Waypoint : MonoBehaviour
 
     void Awake()
     {
+        if (FindObjectOfType<PointToPointMode>() == null) Destroy(gameObject);
+
         rectTransform = GetComponent<RectTransform>();
 
         radius = rectTransform.rect.height;
@@ -20,7 +21,7 @@ public class Waypoint : MonoBehaviour
     void Update()
     {
         Point2Target();
-        
+
         HideWaypoint();
 
         PlaceWaypointOnScreenEdge();
@@ -42,7 +43,8 @@ public class Waypoint : MonoBehaviour
     {
         Vector2 targetPosition = Camera.main.WorldToScreenPoint(target.position);
 
-        return targetPosition.x <= 0 || targetPosition.x >= Screen.width || targetPosition.y <= 0 || targetPosition.y >= Screen.height;
+        return targetPosition.x <= 0 || targetPosition.x >= Screen.width || targetPosition.y <= 0 ||
+               targetPosition.y >= Screen.height;
     }
 
     // If objective is on screen, hide the waypoint.
@@ -58,9 +60,9 @@ public class Waypoint : MonoBehaviour
     void PlaceWaypointOnScreenEdge()
     {
         Vector2 goalPosition = Camera.main.WorldToScreenPoint(target.position);
-        
-        goalPosition.x = Mathf.Clamp(goalPosition.x, radius, Screen.width-radius);
-        goalPosition.y = Mathf.Clamp(goalPosition.y, radius, Screen.height-radius);
+
+        goalPosition.x = Mathf.Clamp(goalPosition.x, radius, Screen.width - radius);
+        goalPosition.y = Mathf.Clamp(goalPosition.y, radius, Screen.height - radius);
 
         rectTransform.position = goalPosition;
     }
