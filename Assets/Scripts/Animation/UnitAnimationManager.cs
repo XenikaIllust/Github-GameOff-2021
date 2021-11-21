@@ -60,31 +60,11 @@ public class UnitAnimationManager : MonoBehaviour
 
         var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
         float rotationAngle = (float) destination;
-        float azimuthRotation = ConvertStandardToAzimuth(rotationAngle);
+        // standard bearing to azimuth is required because the animations are saved in azimuth format
+        float azimuthRotation = MathUtils.ConvertStandardToAzimuth(rotationAngle);
         string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
         anims.Add(new KeyValuePair<AnimationClip, AnimationClip>( animationLibrary[currentAnimationStatename][0], animationLibrary[currentAnimationStatename][ (int) azimuthRotation / 10 ]) );
         aoc.ApplyOverrides(anims);
-    }
-
-    // standard bearing to azimuth is required because the animations are saved in azimuth format
-    private float ConvertStandardToAzimuth(float originalRotation) 
-    {
-        float azimuthRotation;
-
-        if(originalRotation >= 0 && originalRotation < 90) {
-            azimuthRotation = 90 - originalRotation;
-        }
-        else if(originalRotation >= 90 && originalRotation < 180) {
-            azimuthRotation = 270 + ( 90 - ( originalRotation - 90 ) );
-        }
-        else if(originalRotation >= 180 && originalRotation < 270) {
-            azimuthRotation = 180 + ( 90 - ( originalRotation - 180 ) );
-        }
-        else {
-            azimuthRotation = 90 + ( 270 - (originalRotation - 90) );
-        }
-
-        return azimuthRotation;
     }
 
     private int GetFacingAngle(Vector3 mousePosition)

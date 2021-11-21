@@ -22,10 +22,14 @@ public class Unit : MonoBehaviour
     [Header("Misc.")] public float updateInterval = 0.1f;
     private float _positionUpdateTimer;
     private GameObject _pseudoObject;
-    [Header("Abilities")] [SerializeField] private Ability[] abilities = new Ability[4];
+    [Header("Abilities")] [SerializeField] public Ability[] abilities = new Ability[4];
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
     private object _aiTarget;
+
+    public GameObject PseudoObject {
+        get { return _pseudoObject; }
+    }
 
     private void Awake()
     {
