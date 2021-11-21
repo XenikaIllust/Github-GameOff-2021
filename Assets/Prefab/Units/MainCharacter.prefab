@@ -53,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4e9d1ea407d5b524eb2ce8a758e95738, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -117,6 +117,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightMaterial: {fileID: 2100000, guid: f7a6b3ae97751c044bf9c5ec73cd7299, type: 2}
+  dissloveMaterial: {fileID: 2100000, guid: 3304a6e97b4038a4f98a6120b73d119c, type: 2}
+  damageMaterial: {fileID: 2100000, guid: efefa8a53f6c72a418f5cbc97e5aee56, type: 2}
+  dissolveAmount: 0
+  someoneDead: 0
 --- !u!114 &1148598235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,7 +441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 326f49b62bd54634ab3e3e5a72631d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1000
+  health: 500
 --- !u!1 &3449367994159099074
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,7 +457,7 @@ GameObject:
   - component: {fileID: 533216501}
   m_Layer: 0
   m_Name: Marker
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

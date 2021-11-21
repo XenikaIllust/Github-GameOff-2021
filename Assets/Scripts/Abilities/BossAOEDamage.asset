@@ -17,15 +17,15 @@ MonoBehaviour:
   Duration: 1
   Cooldown: 5
   AbilityStats:
-    _Buckets: ffffffff01000000ffffffff
-    _HashCodes: 77c3df52dae6b97000000000
-    _Next: ffffffff0000000000000000
-    _Count: 2
-    _Version: 65
-    _FreeList: -1
-    _FreeCount: 0
+    _Buckets: ffffffff00000000ffffffff
+    _HashCodes: a0bf2b7edae6b970ffffffff
+    _Next: 01000000ffffffffffffffff
+    _Count: 3
+    _Version: 129
+    _FreeList: 2
+    _FreeCount: 1
     _Keys:
-    - AOE Radius
+    - Cast Range
     - AOE Damage
     - 
     _Values:
@@ -70,7 +70,7 @@ MonoBehaviour:
         Type: 3
         InitialPointId: 
         FinalPointId: 
-        AOERadiusId: AOE Radius
+        AOERadiusId: Cast Range
         TargetCenterId: Executing Unit Action
         PreviousEffectId: 
         ConeRangeId: 

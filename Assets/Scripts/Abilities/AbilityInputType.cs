@@ -10,8 +10,8 @@ public class AbilityInputType
     {
         ChangeCursor();
 
-        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
         hasPressedLeftClick = false;
+        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
 
         // (TODO) Check if the target is valid (is above terrain for example)
 
@@ -29,8 +29,8 @@ public class AbilityInputType
     {
         ChangeCursor();
 
-        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
         hasPressedLeftClick = false;
+        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
 
         string[] tags = { "Enemy" }; // PLACEHOLDER UNTIL A BETTER SOLUTION IS FOUND
         LayerMask enemyMask = LayerMask.GetMask("Enemy");
@@ -62,8 +62,8 @@ public class AbilityInputType
     {
         ChangeCursor();
 
-        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
         hasPressedLeftClick = false;
+        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
 
         // (TODO) Check if the target is valid (is above terrain for example)
 

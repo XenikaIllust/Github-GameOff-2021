@@ -58,7 +58,10 @@ public class CastAbility : Action
 
     public override TaskStatus OnUpdate()
     {
-        unitEventHandler.RaiseEvent("On1stAbilityCasted", null);
+        string castEventName = "OnAbility" + (abilityIndex + 1).ToString() + "Casted";
+        Debug.Log(castEventName);
+        unitEventHandler.RaiseEvent(castEventName, self.transform.position);
+        unitEventHandler.RaiseEvent("OnAbilityInputSet", self.transform.position);
         Debug.Log(abilityIndex + " ability casted!");
         StartCoroutine(StartAbilityInUseTimer(self.abilities[abilityIndex].Duration));
         StartCoroutine(StartCooldown(self.abilities[abilityIndex].Cooldown));
