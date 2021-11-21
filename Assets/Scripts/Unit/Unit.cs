@@ -119,7 +119,7 @@ public class Unit : MonoBehaviour
 
     private void OnDied(object @null)
     {
-        Destroy(gameObject);
+        Destroy(gameObject,1f);// edit by rin , wanna to have 1s for unit dead vfx animation
     }
 
     private void Update()

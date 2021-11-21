@@ -4,10 +4,12 @@ public class Health : MonoBehaviour
 {
     private EventProcessor _unitEventHandler;
     public float health = 100f;
+    private float maxHealth;
 
     private void Awake()
     {
         _unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
+        maxHealth = health;
     }
 
     private void OnEnable()
@@ -55,6 +57,7 @@ public class Health : MonoBehaviour
 
     private void UpdateHealthBar()
     {
+        _unitEventHandler.RaiseEvent("OnUpdateHealth", (maxHealth - health) / maxHealth);
         Debug.Log($"{gameObject.name} health: {health}");
     }
 }
