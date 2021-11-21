@@ -46,6 +46,8 @@ public class TargetFilter
 
     public string ConeAngleId;
 
+    public string ConeTargetId;
+
     public TargetRelationship Relationship;
 
     public List<object> DetermineTargetUnits(SerializableDictionary<string, float> AbilityStats,
@@ -115,7 +117,7 @@ public class TargetFilter
         else if (Type == TargetFilterType.ConeFilter)
         {
             Vector3 executingUnitPosition = (Vector3)AllTargets["Executing Unit Position"];
-            Vector3 targetCenter = (Vector3)AllTargets[TargetCenterId];
+            Vector3 targetCenter = (Vector3)AllTargets[ConeTargetId];
 
             // use OverlapCollider to get units in areaOfEffectRadius
             GameObject AOECalculator = new GameObject("AOECalculator", typeof(PolygonCollider2D));
@@ -142,7 +144,7 @@ public class TargetFilter
                 float angleToUnit = Mathf.Atan2(vectorToUnit.y, vectorToUnit.x) * Mathf.Rad2Deg;
                 float deltaAngle = Mathf.Abs(angleToTarget - angleToUnit);
 
-                if (deltaAngle <= AbilityStats[ConeAngleId] / 2  && unit != (Unit)AllTargets["Executing Unit"])
+                if (deltaAngle <= AbilityStats[ConeAngleId] / 2 && unit != (Unit)AllTargets["Executing Unit"])
                 {
                     targets.Add(unit);
                 }

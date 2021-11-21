@@ -27,7 +27,8 @@ public class Unit : MonoBehaviour
     private IEnumerator _pendingCast;
     private object _aiTarget;
 
-    public GameObject PseudoObject {
+    public GameObject PseudoObject
+    {
         get { return _pseudoObject; }
     }
 
@@ -119,7 +120,7 @@ public class Unit : MonoBehaviour
 
     private void OnDied(object @null)
     {
-        Destroy(gameObject,1f);// edit by rin , wanna to have 1s for unit dead vfx animation
+        Destroy(gameObject, 1f); // edit by rin , wanna to have 1s for unit dead vfx animation
     }
 
     private void Update()
@@ -269,7 +270,6 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            // TODO: Somehow auto aim the ability to _aiTarget
             AbilityInput(_aiTarget);
         }
 

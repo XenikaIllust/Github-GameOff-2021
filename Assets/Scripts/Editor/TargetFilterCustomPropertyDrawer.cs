@@ -53,6 +53,9 @@ public class TargetFilterCustomPropertyDrawer : PropertyDrawer
 
             var coneAngle = new Rect(position.x, position.y + 56, position.width, 16);
             EditorGUI.PropertyField(coneAngle, property.FindPropertyRelative("ConeAngleId"));
+
+            var coneTarget = new Rect(position.x, position.y + 74, position.width, 16);
+            EditorGUI.PropertyField(coneTarget, property.FindPropertyRelative("ConeTargetId"));
         }
 
         EditorGUI.indentLevel--;
