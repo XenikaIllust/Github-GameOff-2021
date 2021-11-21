@@ -57,15 +57,12 @@ public class Unit : MonoBehaviour
         UnitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
         UnitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
         UnitEventHandler.StartListening("OnDied", OnDied);
-        UnitEventHandler.StartListening("On1stAbilityCasted", On1stAbilityCasted);
-        UnitEventHandler.StartListening("On2ndAbilityCasted", On2ndAbilityCasted);
-        UnitEventHandler.StartListening("On3thAbilityCasted", On3rdAbilityCasted);
-        UnitEventHandler.StartListening("On4thAbilityCasted", On4thAbilityCasted);
+        UnitEventHandler.StartListening("OnAbility1Casted", OnAbility1Casted);
+        UnitEventHandler.StartListening("OnAbility2Casted", OnAbility2Casted);
+        UnitEventHandler.StartListening("On3thAbilityCasted", OnAbility3Casted);
+        UnitEventHandler.StartListening("OnAbility4Casted", OnAbility4Casted);
 
-        if (isPlayer) // temporary solution, may want to revise if the AI will use the same input
-        {
-            UnitEventHandler.StartListening("OnAbilityInputSet", OnAbilityInputSet);
-        }
+        UnitEventHandler.StartListening("OnAbilityInputSet", OnAbilityInputSet);
     }
 
     private void OnDisable()
@@ -73,15 +70,12 @@ public class Unit : MonoBehaviour
         UnitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
         UnitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
         UnitEventHandler.StopListening("OnDied", OnDied);
-        UnitEventHandler.StopListening("On1stAbilityCasted", On1stAbilityCasted);
-        UnitEventHandler.StopListening("On2ndAbilityCasted", On2ndAbilityCasted);
-        UnitEventHandler.StopListening("On3thAbilityCasted", On3rdAbilityCasted);
-        UnitEventHandler.StopListening("On4thAbilityCasted", On4thAbilityCasted);
+        UnitEventHandler.StopListening("OnAbility1Casted", OnAbility1Casted);
+        UnitEventHandler.StopListening("OnAbility2Casted", OnAbility2Casted);
+        UnitEventHandler.StopListening("On3thAbilityCasted", OnAbility3Casted);
+        UnitEventHandler.StopListening("OnAbility4Casted", OnAbility4Casted);
 
-        if (isPlayer)
-        {
-            EventManager.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
-        }
+        UnitEventHandler.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
     }
 
     private void OnStopOrderIssued(object @null)
@@ -94,25 +88,25 @@ public class Unit : MonoBehaviour
         TurnAndMove((Vector3)destination);
     }
 
-    private void On1stAbilityCasted(object target)
+    private void OnAbility1Casted(object target)
     {
         if (!isPlayer) _aiTarget = target;
         StartCoroutine(CastAbility(abilities[0]));
     }
 
-    private void On2ndAbilityCasted(object target)
+    private void OnAbility2Casted(object target)
     {
         if (!isPlayer) _aiTarget = target;
         StartCoroutine(CastAbility(abilities[1]));
     }
 
-    private void On3rdAbilityCasted(object target)
+    private void OnAbility3Casted(object target)
     {
         if (!isPlayer) _aiTarget = target;
         StartCoroutine(CastAbility(abilities[2]));
     }
 
-    private void On4thAbilityCasted(object target)
+    private void OnAbility4Casted(object target)
     {
         if (!isPlayer) _aiTarget = target;
         StartCoroutine(CastAbility(abilities[3]));
@@ -141,7 +135,7 @@ public class Unit : MonoBehaviour
 
         if (context.canceled)
         {
-            UnitEventHandler.RaiseEvent("On1stAbilityCasted", null);
+            UnitEventHandler.RaiseEvent("OnAbility1Casted", null);
         }
     }
 
@@ -152,7 +146,7 @@ public class Unit : MonoBehaviour
 
         if (context.canceled)
         {
-            UnitEventHandler.RaiseEvent("On2ndAbilityCasted", null);
+            UnitEventHandler.RaiseEvent("OnAbility2Casted", null);
         }
     }
 
@@ -163,7 +157,7 @@ public class Unit : MonoBehaviour
 
         if (context.canceled)
         {
-            UnitEventHandler.RaiseEvent("On3rdAbilityCasted", null);
+            UnitEventHandler.RaiseEvent("OnAbility3Casted", null);
         }
     }
 
@@ -174,7 +168,7 @@ public class Unit : MonoBehaviour
 
         if (context.canceled)
         {
-            UnitEventHandler.RaiseEvent("On4thAbilityCasted", null);
+            UnitEventHandler.RaiseEvent("OnAbility4Casted", null);
         }
     }
 

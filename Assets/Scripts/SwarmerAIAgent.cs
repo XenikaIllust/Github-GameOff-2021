@@ -72,7 +72,7 @@ public class SwarmerAIAgent : Agent
         Comments from xenika:
 
         Here you should check if _1stAbilityOnCooldown is true. If yes, return; if no, proceed.
-        Then you should raise "On1stAbilityCasted" event. Get the ability's cooldown value and 
+        Then you should raise "OnAbility1Casted" event. Get the ability's cooldown value and 
         StartCoroutine(CooldownTimer(abilityCooldown)) to sync with the actual ability's
         cooldown.
         -----------------------------------------------------------------------------------------------*/
@@ -87,7 +87,7 @@ public class SwarmerAIAgent : Agent
     {
         _isBusy = false;
 
-        unitEventHandler.RaiseEvent("On1stAbilityCasted", _playerPosition);
+        unitEventHandler.RaiseEvent("OnAbility1Casted", _playerPosition);
     }
 
     private void ChasePlayer()
