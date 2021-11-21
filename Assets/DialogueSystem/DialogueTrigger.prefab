@@ -103,11 +103,11 @@ MonoBehaviour:
   allowBarksDuringConversations: 0
   skipBarkIfNoValidEntries: 0
   cacheBarkLines: 0
-  conversation: New Conversation 1
+  conversation: Test Conversation
   conversationConversant: {fileID: 1501473646413478624}
   conversationActor: {fileID: 0}
   startConversationEntryID: -1
-  exclusive: 0
+  exclusive: 1
   replace: 0
   skipIfNoValidEntries: 0
   stopConversationOnTriggerExit: 0
