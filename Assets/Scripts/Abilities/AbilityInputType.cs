@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class AbilityInputType
 {
     public static bool hasPressedLeftClick = false;
-    public static IEnumerator PointTargetInput(Ability ability)
+    public static IEnumerator PointTargetInput(Ability ability, EventProcessor unitEventHandler)
     {
         ChangeCursor();
 
@@ -20,12 +20,12 @@ public class AbilityInputType
 
         // Send Vector3 targetCoordinates as event param
         object targetCoordinates = targetPoint;
-        EventManager.RaiseEvent("OnAbilityInputSet", targetCoordinates);
+        unitEventHandler.RaiseEvent("OnAbilityInputSet", targetCoordinates);
 
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Change cursor back to default
     }
 
-    public static IEnumerator UnitTargetInput(Ability ability)
+    public static IEnumerator UnitTargetInput(Ability ability, EventProcessor unitEventHandler)
     {
         ChangeCursor();
 
@@ -47,7 +47,7 @@ public class AbilityInputType
                 Debug.Log(selection.gameObject.name);
                 // Send Unit target as event param
                 object target = selectedUnit;
-                EventManager.RaiseEvent("OnAbilityInputSet", target);
+                unitEventHandler.RaiseEvent("OnAbilityInputSet", target);
 
                 Debug.Log($"{selectedUnit} was selected");
             }
@@ -58,7 +58,7 @@ public class AbilityInputType
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Change cursor back to default
     }
 
-    public static IEnumerator AOETargetInput(Ability ability)
+    public static IEnumerator AOETargetInput(Ability ability, EventProcessor unitEventHandler)
     {
         ChangeCursor();
 
@@ -72,7 +72,7 @@ public class AbilityInputType
 
         // Send Vector3 centerCoordinates as event param
         object centerCoordinates = centerPoint;
-        EventManager.RaiseEvent("OnAbilityInputSet", centerCoordinates);
+        unitEventHandler.RaiseEvent("OnAbilityInputSet", centerCoordinates);
 
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Change cursor back to default
     }

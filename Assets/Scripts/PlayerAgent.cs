@@ -115,13 +115,13 @@ public class PlayerAgent : Agent
 
         if (ability.InputType == AbilityType.TargetPoint)
         {
-            currentCoroutine = AbilityInputType.PointTargetInput(ability);
+            currentCoroutine = AbilityInputType.PointTargetInput(ability, unitEventHandler);
             yield return StartCoroutine(currentCoroutine);
         }
         else if (ability.InputType == AbilityType.TargetUnit)
         {
             turnOnHighlight = true;
-            currentCoroutine = AbilityInputType.UnitTargetInput(ability);
+            currentCoroutine = AbilityInputType.UnitTargetInput(ability, unitEventHandler);
             yield return StartCoroutine(currentCoroutine);
             turnOnHighlight = false;
         }
@@ -130,7 +130,7 @@ public class PlayerAgent : Agent
             float radius = ability.AbilityStats["AOE Radius"];
             AOECircle.transform.localScale = new Vector3(radius * 1.7f, radius * 1.7f, 1.0f);
             AOECircle.enabled = true;
-            currentCoroutine = AbilityInputType.AOETargetInput(ability);
+            currentCoroutine = AbilityInputType.AOETargetInput(ability, unitEventHandler);
             yield return StartCoroutine(currentCoroutine);
             AOECircle.enabled = false;
         }

@@ -64,7 +64,7 @@ public class Unit : MonoBehaviour
 
         if (isPlayer) // temporary solution, may want to revise if the AI will use the same input
         {
-            EventManager.StartListening("OnAbilityInputSet", OnAbilityInputSet);
+            UnitEventHandler.StartListening("OnAbilityInputSet", OnAbilityInputSet);
         }
     }
 
