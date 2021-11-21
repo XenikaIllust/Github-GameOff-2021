@@ -7,7 +7,7 @@ public class PressAnyKeyToRestartTheGame : MonoBehaviour
     {
         if (Keyboard.current.anyKey.wasPressedThisFrame)
         {
-            LevelManager.Instance.LoadLevelScene();
+            LevelManager.Instance.LoadStartGameScene();
         }
     }
 }
