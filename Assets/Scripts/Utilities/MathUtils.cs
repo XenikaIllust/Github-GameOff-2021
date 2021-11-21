@@ -29,4 +29,24 @@ public static class MathUtils
         points.RemoveAt(0);
         return points.ToArray();
     }
+
+    public static float ConvertStandardToAzimuth(float originalRotation) 
+    {
+        float azimuthRotation;
+
+        if(originalRotation >= 0 && originalRotation < 90) {
+            azimuthRotation = 90 - originalRotation;
+        }
+        else if(originalRotation >= 90 && originalRotation < 180) {
+            azimuthRotation = 270 + ( 90 - ( originalRotation - 90 ) );
+        }
+        else if(originalRotation >= 180 && originalRotation < 270) {
+            azimuthRotation = 180 + ( 90 - ( originalRotation - 180 ) );
+        }
+        else {
+            azimuthRotation = 90 + ( 270 - (originalRotation - 90) );
+        }
+
+        return azimuthRotation;
+    }
 }

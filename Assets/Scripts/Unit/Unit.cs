@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// --------
@@ -21,9 +22,14 @@ public class Unit : MonoBehaviour
     [Header("Misc.")] public float updateInterval = 0.1f;
     private float _positionUpdateTimer;
     private GameObject _pseudoObject;
-    [Header("Abilities")] [SerializeField] private Ability[] abilities = new Ability[4];
+    [Header("Abilities")] [SerializeField] public Ability[] abilities = new Ability[4];
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
+    private object _aiTarget;
+
+    public GameObject PseudoObject {
+        get { return _pseudoObject; }
+    }
 
     private void Awake()
     {
@@ -51,10 +57,14 @@ public class Unit : MonoBehaviour
         UnitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
         UnitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
         UnitEventHandler.StartListening("OnDied", OnDied);
+        UnitEventHandler.StartListening("On1stAbilityCasted", On1stAbilityCasted);
+        UnitEventHandler.StartListening("On2ndAbilityCasted", On2ndAbilityCasted);
+        UnitEventHandler.StartListening("On3thAbilityCasted", On3rdAbilityCasted);
+        UnitEventHandler.StartListening("On4thAbilityCasted", On4thAbilityCasted);
 
-        if (GetComponent<PlayerAgent>()) // temporary solution, may want to revise if the AI will use the same input
+        if (isPlayer) // temporary solution, may want to revise if the AI will use the same input
         {
-            EventManager.StartListening("OnAbilityInputSet", OnAbilityInputSet);
+            UnitEventHandler.StartListening("OnAbilityInputSet", OnAbilityInputSet);
         }
     }
 
@@ -62,9 +72,16 @@ public class Unit : MonoBehaviour
     {
         UnitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
         UnitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
-        UnitEventHandler.StopListening("Ondied", OnDied);
+        UnitEventHandler.StopListening("OnDied", OnDied);
+        UnitEventHandler.StopListening("On1stAbilityCasted", On1stAbilityCasted);
+        UnitEventHandler.StopListening("On2ndAbilityCasted", On2ndAbilityCasted);
+        UnitEventHandler.StopListening("On3thAbilityCasted", On3rdAbilityCasted);
+        UnitEventHandler.StopListening("On4thAbilityCasted", On4thAbilityCasted);
 
-        EventManager.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
+        if (isPlayer)
+        {
+            EventManager.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
+        }
     }
 
     private void OnStopOrderIssued(object @null)
@@ -75,6 +92,30 @@ public class Unit : MonoBehaviour
     private void OnMoveOrderIssued(object destination)
     {
         TurnAndMove((Vector3)destination);
+    }
+
+    private void On1stAbilityCasted(object target)
+    {
+        if (!isPlayer) _aiTarget = target;
+        StartCoroutine(CastAbility(abilities[0]));
+    }
+
+    private void On2ndAbilityCasted(object target)
+    {
+        if (!isPlayer) _aiTarget = target;
+        StartCoroutine(CastAbility(abilities[1]));
+    }
+
+    private void On3rdAbilityCasted(object target)
+    {
+        if (!isPlayer) _aiTarget = target;
+        StartCoroutine(CastAbility(abilities[2]));
+    }
+
+    private void On4thAbilityCasted(object target)
+    {
+        if (!isPlayer) _aiTarget = target;
+        StartCoroutine(CastAbility(abilities[3]));
     }
 
     private void OnAbilityInputSet(object target)
@@ -90,26 +131,50 @@ public class Unit : MonoBehaviour
     private void Update()
     {
         UpdatePosition();
+        UpdateAnimationMovement();
+    }
 
-        // input testing code
-        if (gameObject.name == "Character")
+    // 'Q' Key
+    public void OnFirstAbilityPressed(InputAction.CallbackContext context)
+    {
+        if (!isPlayer) return;
+
+        if (context.canceled)
         {
-            if (Input.GetKeyUp(KeyCode.Q))
-            {
-                TestQ();
-            }
-            else if (Input.GetKeyUp(KeyCode.W))
-            {
-                TestW();
-            }
-            else if (Input.GetKeyUp(KeyCode.E))
-            {
-                TestE();
-            }
-            else if (Input.GetKeyUp(KeyCode.R))
-            {
-                TestR();
-            }
+            UnitEventHandler.RaiseEvent("On1stAbilityCasted", null);
+        }
+    }
+
+    // 'W' Key
+    public void OnSecondAbilityPressed(InputAction.CallbackContext context)
+    {
+        if (!isPlayer) return;
+
+        if (context.canceled)
+        {
+            UnitEventHandler.RaiseEvent("On2ndAbilityCasted", null);
+        }
+    }
+
+    // 'E' Key
+    public void OnThirdAbilityPressed(InputAction.CallbackContext context)
+    {
+        if (!isPlayer) return;
+
+        if (context.canceled)
+        {
+            UnitEventHandler.RaiseEvent("On3rdAbilityCasted", null);
+        }
+    }
+
+    // 'R' Key
+    public void OnFourthAbilityPressed(InputAction.CallbackContext context)
+    {
+        if (!isPlayer) return;
+
+        if (context.canceled)
+        {
+            UnitEventHandler.RaiseEvent("On4thAbilityCasted", null);
         }
     }
 
@@ -145,14 +210,17 @@ public class Unit : MonoBehaviour
 
     private void Move(Vector3 destination)
     {
+        var eulerAnglesZ = _pseudoObject.transform.rotation.eulerAngles.z;
+        agent.speed = movementSpeed * (1 - Mathf.Abs(Mathf.Sin(eulerAnglesZ * Mathf.Deg2Rad)) / 2);
         agent.SetDestination(destination);
+        UnitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
     }
 
     private float AngleToTarget(Vector3 target)
     {
-        Vector2 angle = target - transform.position;
+        Vector2 vectorToTarget = target - transform.position;
 
-        return Mathf.Atan2(angle.y, angle.x) * 180 / Mathf.PI;
+        return Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
     }
 
     // members used for ability execution
@@ -193,9 +261,23 @@ public class Unit : MonoBehaviour
         _allTargets["Executing Unit"] = this;
         _allTargets["Executing Unit Position"] = transform.position;
 
-        PlayerAgent playerAgent = GetComponent<PlayerAgent>();
+        /*-------------------------------------------------------------------------------
+        Comments from xenika:
 
-        yield return StartCoroutine(playerAgent.ProcessTargetInput(ability));
+        If all Agents implement ProcessTargetInput, then checking if isPlayer is not necessary
+        because they all can execute the line.
+        --------------------------------------------------------------------------------*/
+
+        if (isPlayer)
+        {
+            PlayerAgent playerAgent = GetComponent<PlayerAgent>();
+            yield return StartCoroutine(playerAgent.ProcessTargetInput(ability));
+        }
+        else
+        {
+            // TODO: Somehow auto aim the ability to _aiTarget
+            AbilityInput(_aiTarget);
+        }
 
         if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.AbilityStats["Cast Range"])
         {
@@ -277,23 +359,26 @@ public class Unit : MonoBehaviour
         yield return null;
     }
 
-    private void TestQ()
-    {
-        StartCoroutine(CastAbility(abilities[0]));
-    }
+    // Animation related functionality
+    float _speed;
+    Vector2 _lastPosition;
 
-    private void TestW()
+    void UpdateAnimationMovement()
     {
-        StartCoroutine(CastAbility(abilities[1]));
-    }
+        if (gameObject.name == "MainCharacter")
+        {
+            _speed = Mathf.Lerp(_speed, ((Vector2)transform.position - _lastPosition).magnitude,
+                0.3f /*adjust this number in order to make interpolation quicker or slower*/);
+            _lastPosition = (Vector2)transform.position;
 
-    private void TestE()
-    {
-        StartCoroutine(CastAbility(abilities[2]));
-    }
-
-    private void TestR()
-    {
-        StartCoroutine(CastAbility(abilities[3]));
+            if (_speed > 0.005)
+            {
+                UnitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
+            }
+            else
+            {
+                UnitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
+            }
+        }
     }
 }
