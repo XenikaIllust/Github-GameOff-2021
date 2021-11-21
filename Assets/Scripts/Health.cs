@@ -5,7 +5,7 @@ public class Health : MonoBehaviour
     private EventProcessor _unitEventHandler;
     private bool _isDead;
     public float health = 100f;
-    private float maxHealth;
+    [HideInInspector] public float maxHealth;
 
     private void Awake()
     {
