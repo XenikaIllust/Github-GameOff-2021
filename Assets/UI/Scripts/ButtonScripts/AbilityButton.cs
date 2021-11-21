@@ -1,6 +1,7 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class AbilityButton : MonoBehaviour
@@ -47,7 +48,7 @@ public class AbilityButton : MonoBehaviour
         _currentState.UpdateLoop();
 
         // Check if user presses the ability key..
-        isPressed = Input.GetKeyDown(abilityKey);
+        Input.GetKeyDown(abilityKey);
     }
 
     // UI Button callback function

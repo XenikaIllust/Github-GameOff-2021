@@ -6,8 +6,20 @@ public class HealthBar : MonoBehaviour
 {
     public Slider slider;
 
-    public void SetHealth(int health)
+    public UnitEventManager unitEventManager;
+
+    void OnEnable()
     {
-        slider.value = health;
+        //unitEventManager.UnitEventHandler.StartListening("OnHealthChanged", SetHealth);
+    }
+
+    void OnDisable()
+    {
+        //unitEventManager.UnitEventHandler.StopListening("OnHealthChanged", SetHealth);
+    }
+
+    public void SetHealth(object param)
+    {
+        slider.value = (int)param;
     }
 }

@@ -8,7 +8,7 @@ public class AbilityAvailable : AbilityButtonState
 
     public override void Enter()
     {
-        Debug.Log("Ability now available");
+        // You can enter entry actions here.
     }
 
     public override void UpdateLoop()
