@@ -3,12 +3,14 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     private EventProcessor _unitEventHandler;
+    private bool _isDead;
     public float health = 100f;
     private float maxHealth;
 
     private void Awake()
     {
         _unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
+        _isDead = false;
         maxHealth = health;
     }
 
@@ -39,17 +41,22 @@ public class Health : MonoBehaviour
     private void ReduceHealth(float value)
     {
         if (value > float.Epsilon) health -= value;
+        if (health <= float.Epsilon) health = float.Epsilon;
     }
 
     private void IncreaseHealth(float value)
     {
         if (value > float.Epsilon) health += value;
+        if (health >= maxHealth) health = maxHealth;
     }
 
     private void CheckDeathCondition()
     {
+        if (_isDead) return;
+
         if (health <= float.Epsilon)
         {
+            _isDead = true;
             _unitEventHandler.RaiseEvent("OnDied", null);
             EventManager.RaiseEvent("OnUnitDied", gameObject);
         }
@@ -58,6 +65,6 @@ public class Health : MonoBehaviour
     private void UpdateHealthBar()
     {
         _unitEventHandler.RaiseEvent("OnUpdateHealth", (maxHealth - health) / maxHealth);
-        Debug.Log($"{gameObject.name} health: {health}");
+        Debug.Log($"{gameObject.name} health: {Mathf.RoundToInt(health)}");
     }
 }
