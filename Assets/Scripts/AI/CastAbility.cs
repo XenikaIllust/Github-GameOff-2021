@@ -18,10 +18,10 @@ public class CastAbility : Action
 
     public override void OnAwake()
     {
-        // cache the player
         unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
         self = GetComponent<Unit>();
         cooldownActive.Value = false;
+        abilityInUse.Value = false;
     }
 
     public override TaskStatus OnUpdate()

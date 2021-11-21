@@ -26,6 +26,9 @@ public class WithinAbilityRange : Conditional
     }
 
     private bool withinAbilityRange(Transform targetTransform) {
+        /*------------------------------------------------------------------------
+        This code should be changed to accomodate for x and y "pseudo-Differences"
+        ------------------------------------------------------------------------*/
         return (targetTransform.position - transform.position).magnitude <= abilityRange;
     }
 }
