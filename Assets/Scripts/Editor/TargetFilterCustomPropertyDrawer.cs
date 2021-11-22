@@ -6,7 +6,8 @@ public class TargetFilterCustomPropertyDrawer : PropertyDrawer
 {
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        return EditorGUIUtility.singleLineHeight * 8 + 6;
+        const int maxPropertyCount = 6;
+        return EditorGUIUtility.singleLineHeight * (maxPropertyCount + 2) + 6;
     }
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
