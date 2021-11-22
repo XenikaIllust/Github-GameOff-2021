@@ -38,9 +38,9 @@ public class TargetFilter
     public string ConeTargetId;
 
     // Relationship
-    public bool hitEnemiesId = true;
-    public bool hitAlliesId;
-    public bool hitSelfId;
+    public bool hitEnemies = true;
+    public bool hitAllies;
+    public bool hitSelf;
 
     public List<object> DetermineTargetUnits(SerializableDictionary<string, float> AbilityStats,
         Dictionary<string, object> AllTargets)
@@ -52,19 +52,19 @@ public class TargetFilter
             // add self into targets
             Unit unit = (Unit)AllTargets["Executing Unit"];
 
-            hitEnemiesId = false;
-            hitAlliesId = false;
-            hitSelfId = true;
+            hitEnemies = false;
+            hitAllies = false;
+            hitSelf = true;
 
             AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
-                hitEnemiesId, hitAlliesId, hitSelfId);
+                hitEnemies, hitAllies, hitSelf);
         }
         else if (Type == TargetFilterType.UnitFilter)
         {
             Unit unit = (Unit)AllTargets["Target Unit"];
 
             AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
-                hitEnemiesId, hitAlliesId, hitSelfId);
+                hitEnemies, hitAllies, hitSelf);
         }
         else if (Type == TargetFilterType.LineFilter)
         {
@@ -83,7 +83,7 @@ public class TargetFilter
                 Unit unit = hit.collider.GetComponentInParent<Unit>();
 
                 AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
-                    hitEnemiesId, hitAlliesId, hitSelfId);
+                    hitEnemies, hitAllies, hitSelf);
             }
         }
         else if (Type == TargetFilterType.AOEFilter)
@@ -107,7 +107,7 @@ public class TargetFilter
                 Unit unit = collider.GetComponentInParent<Unit>();
 
                 AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
-                    hitEnemiesId, hitAlliesId, hitSelfId);
+                    hitEnemies, hitAllies, hitSelf);
             }
 
             Object.Destroy(AOECalculator);
@@ -119,12 +119,12 @@ public class TargetFilter
             {
                 Unit unit = (Unit)o;
 
-                hitEnemiesId = true;
-                hitAlliesId = true;
-                hitSelfId = true;
+                hitEnemies = true;
+                hitAllies = true;
+                hitSelf = true;
 
                 AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
-                    hitEnemiesId, hitAlliesId, hitSelfId);
+                    hitEnemies, hitAllies, hitSelf);
             }
         }
         else if (Type == TargetFilterType.ConeFilter)
@@ -160,7 +160,7 @@ public class TargetFilter
                 if (deltaAngle <= AbilityStats[ConeAngleId] / 2)
                 {
                     AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
-                        hitEnemiesId, hitAlliesId, hitSelfId);
+                        hitEnemies, hitAllies, hitSelf);
                 }
             }
 
@@ -171,17 +171,17 @@ public class TargetFilter
     }
 
     private void AddToList(List<object> targets, Unit thisUnit, Unit targetUnit,
-        bool hitEnemies, bool hitAllies, bool hitSelf)
+        bool hitEnemiesCheck, bool hitAlliesCheck, bool hitSelfCheck)
     {
-        if (hitEnemies && targetUnit.allianceId != thisUnit.allianceId)
+        if (hitEnemiesCheck && targetUnit.allianceId != thisUnit.allianceId)
         {
             targets.Add(targetUnit);
         }
-        else if (hitAllies && targetUnit.allianceId == thisUnit.allianceId && targetUnit != thisUnit)
+        else if (hitAlliesCheck && targetUnit.allianceId == thisUnit.allianceId && targetUnit != thisUnit)
         {
             targets.Add(targetUnit);
         }
-        else if (hitSelf && targetUnit == thisUnit)
+        else if (hitSelfCheck && targetUnit == thisUnit)
         {
             targets.Add(targetUnit);
         }
