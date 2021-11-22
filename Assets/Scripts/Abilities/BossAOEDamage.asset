@@ -49,7 +49,10 @@ MonoBehaviour:
         PreviousEffectId: 
         ConeRangeId: 
         ConeAngleId: 
-        Relationship: 0
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 37dc24ebe8dbc504cb628f2a5317fa4b, type: 2}
         StatId: 
@@ -59,6 +62,7 @@ MonoBehaviour:
         VFXEndPointId: 
         VFXUnitId: 
         SFXName: 
+        ProjectileName: 
   - Id: Attack
     Duration: 0
     Trigger:
@@ -71,11 +75,14 @@ MonoBehaviour:
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: Cast Range
-        TargetCenterId: Executing Unit Action
+        TargetCenterId: Target Center
         PreviousEffectId: 
         ConeRangeId: 
         ConeAngleId: 
-        Relationship: 0
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
         StatId: AOE Damage
@@ -85,3 +92,4 @@ MonoBehaviour:
         VFXEndPointId: 
         VFXUnitId: 
         SFXName: 
+        ProjectileName: 
