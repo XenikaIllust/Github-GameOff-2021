@@ -409,7 +409,7 @@ MonoBehaviour:
   turnRate: 5
   isPlayer: 0
   agent: {fileID: 0}
-  updateInterval: 0.1
+  allianceId: 1
   abilities:
   - {fileID: 11400000, guid: 4fd1dc6bfc980c04a992a4bac83f21e0, type: 2}
   - {fileID: 11400000, guid: fe0e51747d0b6c142a6056463e3314ae, type: 2}
@@ -442,6 +442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 500
+  maxHealth: 0
 --- !u!1 &3449367994159099074
 GameObject:
   m_ObjectHideFlags: 0
