@@ -47,12 +47,12 @@ public class UnitVFXManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        UnitEventHandler.StartListening("OnUpdateHealth", UnitHealthVfx);
+        UnitEventHandler.StartListening("OnUpdateDamageRate", UnitDamageRateVfx);
         UnitEventHandler.StartListening("OnDied", OnDied);
     }
     private void OnDisable()
     {
-        UnitEventHandler.StopListening("OnUpdateHealth", UnitHealthVfx);
+        UnitEventHandler.StopListening("OnUpdateDamageRate", UnitDamageRateVfx);
         UnitEventHandler.StopListening("OnDied", OnDied);
     }
 
@@ -66,7 +66,7 @@ public class UnitVFXManager : MonoBehaviour
         dissolveAmount = Mathf.Clamp01(dissolveAmount - Time.deltaTime);
         unitSprite.material.SetFloat("Fade", dissolveAmount);
     }
-    private void UnitHealthVfx(object damageRate){
+    private void UnitDamageRateVfx(object damageRate){
         unitSprite.material.SetFloat("damageRate" , (float)damageRate);
         print((float)damageRate * 100 +"%");
     }
