@@ -21,16 +21,12 @@ public class Unit : MonoBehaviour
     [HideInInspector] public NavMeshAgent agent;
     [Header("Misc.")] public int allianceId;
     private float _positionUpdateTimer;
-    private GameObject _pseudoObject;
     [Header("Abilities")] [SerializeField] public Ability[] abilities = new Ability[4];
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
     private object _aiTarget;
 
-    public GameObject PseudoObject
-    {
-        get { return _pseudoObject; }
-    }
+    public GameObject PseudoObject { get; private set; }
 
     private void Awake()
     {
@@ -44,7 +40,7 @@ public class Unit : MonoBehaviour
         agent.angularSpeed = float.MaxValue;
         agent.autoBraking = true;
 
-        _pseudoObject = new GameObject("PseudoObject")
+        PseudoObject = new GameObject("PseudoObject")
         {
             transform =
             {
@@ -189,7 +185,7 @@ public class Unit : MonoBehaviour
     private void Stop()
     {
         if (_pendingCast != null) StopCoroutine(_pendingCast);
-        _pseudoObject.transform.DOKill();
+        PseudoObject.transform.DOKill();
         agent.SetDestination(transform.position);
     }
 
@@ -197,7 +193,7 @@ public class Unit : MonoBehaviour
     {
         Stop();
 
-        _pseudoObject.transform
+        PseudoObject.transform
             .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(destination)),
                 turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
@@ -205,13 +201,13 @@ public class Unit : MonoBehaviour
 
     private void Move(Vector3 destination)
     {
-        var eulerAnglesZ = _pseudoObject.transform.rotation.eulerAngles.z;
+        var eulerAnglesZ = PseudoObject.transform.rotation.eulerAngles.z;
         agent.speed = movementSpeed * (1 - Mathf.Abs(Mathf.Sin(eulerAnglesZ * Mathf.Deg2Rad)) / 2);
         agent.SetDestination(destination);
         unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
     }
 
-    public float AngleToTarget(Vector3 target)
+    private float AngleToTarget(Vector3 target)
     {
         Vector2 vectorToTarget = target - transform.position;
 
@@ -314,7 +310,7 @@ public class Unit : MonoBehaviour
     {
         Stop();
 
-        _pseudoObject.transform
+        PseudoObject.transform
             .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(_castTargetPosition)),
                 turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => ExecuteAbility(ability));
@@ -325,6 +321,7 @@ public class Unit : MonoBehaviour
         foreach (var outcome in ability.Outcomes)
         {
             float executionTime;
+
             if (outcome.Trigger.IsNormalizedTime)
             {
                 executionTime = outcome.Trigger.ExecutionTime * ability.Duration;
@@ -366,18 +363,20 @@ public class Unit : MonoBehaviour
     }
 
     // Animation related functionality
-    float _speed;
-    Vector2 _lastPosition;
+    private float _speed;
+    private Vector2 _lastPosition;
 
-    void UpdateAnimationMovement()
+    private void UpdateAnimationMovement()
     {
-        if (gameObject.name == "MainCharacter")
+        if (isPlayer)
         {
-            _speed = Mathf.Lerp(_speed, ((Vector2)transform.position - _lastPosition).magnitude,
-                0.3f /*adjust this number in order to make interpolation quicker or slower*/);
-            _lastPosition = (Vector2)transform.position;
+            var position = transform.position;
 
-            if (_speed > 0.005)
+            _speed = Mathf.Lerp(_speed, ((Vector2)position - _lastPosition).magnitude,
+                0.3f /*adjust this number in order to make interpolation quicker or slower*/);
+            _lastPosition = position;
+
+            if (_speed > 0.005f)
             {
                 unitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
             }
