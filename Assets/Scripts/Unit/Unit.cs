@@ -19,7 +19,7 @@ public class Unit : MonoBehaviour
     public float turnRate = 5f;
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
-    [Header("Misc.")] public float updateInterval = 0.1f;
+    [Header("Misc.")] public int allianceId;
     private float _positionUpdateTimer;
     private GameObject _pseudoObject;
     [Header("Abilities")] [SerializeField] public Ability[] abilities = new Ability[4];
@@ -125,7 +125,7 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        UpdatePosition();
+        UpdatePlayerPosition();
         UpdateAnimationMovement();
     }
 
@@ -173,13 +173,13 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void UpdatePosition()
+    private void UpdatePlayerPosition()
     {
         if (!isPlayer) return;
 
         _positionUpdateTimer += Time.deltaTime;
 
-        if (_positionUpdateTimer >= updateInterval)
+        if (_positionUpdateTimer >= 0.1f)
         {
             _positionUpdateTimer = float.Epsilon;
             EventManager.RaiseEvent("OnPlayerPositionChanged", transform.position);
