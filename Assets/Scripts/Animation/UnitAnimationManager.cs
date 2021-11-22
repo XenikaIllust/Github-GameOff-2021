@@ -93,10 +93,8 @@ public class UnitAnimationManager : MonoBehaviour
 
             AnimationClip[] animationClips = new AnimationClip[degreeClipLength];
             for(int i = 0; i < degreeClipLength; i ++) {
-                Debug.Log("Now processing folder: " + prefixPath + "/" + animationStateName + "/" + (i * 10));
                 // each folder with degree as name would have only one animation clip
                 animationClips[i] = Array.ConvertAll<UnityEngine.Object, AnimationClip>( Resources.LoadAll(prefixPath + "/" + animationStateName + "/" + (i * 10), typeof(AnimationClip)), item => (AnimationClip)item )[0];
-                Debug.Log(animationClips[i].name);
             }
             
             animationLibrary[animationStateName] = animationClips;

@@ -248,8 +248,6 @@ public class Unit : MonoBehaviour
     {
         Stop();
 
-        Debug.Log("Currently executing ability " + ability.name);
-
         _currentAbilityType = ability.InputType;
         _allTargets.Clear();
 

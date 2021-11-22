@@ -68,6 +68,5 @@ public class UnitVFXManager : MonoBehaviour
     }
     private void UnitDamageRateVfx(object damageRate){
         unitSprite.material.SetFloat("damageRate" , (float)damageRate);
-        print((float)damageRate * 100 +"%");
     }
 }
