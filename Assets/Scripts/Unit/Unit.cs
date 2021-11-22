@@ -211,7 +211,7 @@ public class Unit : MonoBehaviour
         unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
     }
 
-    private float AngleToTarget(Vector3 target)
+    public float AngleToTarget(Vector3 target)
     {
         Vector2 vectorToTarget = target - transform.position;
 
