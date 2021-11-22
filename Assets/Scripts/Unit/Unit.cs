@@ -60,7 +60,7 @@ public class Unit : MonoBehaviour
         unitEventHandler.StartListening("OnDied", OnDied);
         unitEventHandler.StartListening("OnAbility1Casted", OnAbility1Casted);
         unitEventHandler.StartListening("OnAbility2Casted", OnAbility2Casted);
-        unitEventHandler.StartListening("On3thAbilityCasted", OnAbility3Casted);
+        unitEventHandler.StartListening("OnAbility3Casted", OnAbility3Casted);
         unitEventHandler.StartListening("OnAbility4Casted", OnAbility4Casted);
 
         unitEventHandler.StartListening("OnAbilityInputSet", OnAbilityInputSet);
@@ -73,7 +73,7 @@ public class Unit : MonoBehaviour
         unitEventHandler.StopListening("OnDied", OnDied);
         unitEventHandler.StopListening("OnAbility1Casted", OnAbility1Casted);
         unitEventHandler.StopListening("OnAbility2Casted", OnAbility2Casted);
-        unitEventHandler.StopListening("On3thAbilityCasted", OnAbility3Casted);
+        unitEventHandler.StopListening("OnAbility3Casted", OnAbility3Casted);
         unitEventHandler.StopListening("OnAbility4Casted", OnAbility4Casted);
 
         unitEventHandler.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
@@ -241,6 +241,11 @@ public class Unit : MonoBehaviour
             _castTargetPosition = (Vector3)target;
             _allTargets["Target Center"] = _castTargetPosition;
         }
+        else if (_currentAbilityType == AbilityType.NoTarget)
+        {
+            _castTargetPosition = (Vector3)target;
+            _allTargets["Target Center"] = _castTargetPosition;
+        }
     }
 
     private IEnumerator CastAbility(Ability ability)
@@ -263,14 +268,21 @@ public class Unit : MonoBehaviour
         because they all can execute the line.
         --------------------------------------------------------------------------------*/
 
-        if (isPlayer)
+        if (_currentAbilityType != AbilityType.NoTarget)
         {
-            var playerAgent = GetComponent<PlayerAgent>();
-            yield return StartCoroutine(playerAgent.ProcessTargetInput(ability));
+            if (isPlayer)
+            {
+                var playerAgent = GetComponent<PlayerAgent>();
+                yield return StartCoroutine(playerAgent.ProcessTargetInput(ability));
+            }
+            else
+            {
+                AbilityInput(_aiTarget);
+            }
         }
         else
         {
-            AbilityInput(_aiTarget);
+            AbilityInput(_allTargets["Executing Unit Position"]);
         }
 
         if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.AbilityStats["Cast Range"])
