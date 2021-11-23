@@ -66,7 +66,7 @@ public class SniperAIAgent : Agent
     {
         _isAiming = true;
 
-		EventManager.RaiseEvent("OnPlaySound", "SniperTargeting");
+        EventManager.RaiseEvent("OnPlaySound", "SniperTargeting");
 
         Stop();
 
@@ -95,7 +95,7 @@ public class SniperAIAgent : Agent
         compass.transform.DOScaleX(100f, float.Epsilon).SetEase(Ease.Linear);
 
         _isShooting = true; // TODO: delete this line later, only for testing visual
-		EventManager.RaiseEvent("OnPlaySound", "SniperFired");
+        EventManager.RaiseEvent("OnPlaySound", "SniperFired");
         Invoke(nameof(ResetAim), 0.5f);
     }
 
@@ -106,7 +106,7 @@ public class SniperAIAgent : Agent
 
         _isShooting = false; // TODO: delete this line later, only for testing visual
         _isAiming = false;
-		EventManager.RaiseEvent("OnPlaySound", "SniperLoading");
+        EventManager.RaiseEvent("OnPlaySound", "SniperLoading");
     }
 
     private void Chase()
