@@ -32,6 +32,13 @@ public class GameActionCustomPropertyDrawer : PropertyDrawer {
 
             totalHeight += EditorGUI.GetPropertyHeight( statIdProperty, GUIContent.none );
         }
+        else if(gameActionBlockType == typeof(AimAction)) {
+            SerializedProperty statIdProperty = property.FindPropertyRelative("StatId");
+            var statIdRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( statIdRect, statIdProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( statIdProperty, GUIContent.none );
+        }
         else if(gameActionBlockType == typeof(PointVFXActionBlock)) {
             SerializedProperty vfxNameProperty = property.FindPropertyRelative("VFXName");
             var vfxNameRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
@@ -70,6 +77,13 @@ public class GameActionCustomPropertyDrawer : PropertyDrawer {
             EditorGUI.PropertyField( sfxNameRect, sfxNameProperty );
 
             totalHeight += EditorGUI.GetPropertyHeight( sfxNameProperty, GUIContent.none );
+        }
+        else if(gameActionBlockType == typeof(FireProjectileAction)) {
+            SerializedProperty projectileNameProperty = property.FindPropertyRelative("ProjectileName");
+            var projectileNameRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( projectileNameRect, projectileNameProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( projectileNameProperty, GUIContent.none );
         }
 
         EditorGUI.indentLevel--;

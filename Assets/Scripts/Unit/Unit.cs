@@ -16,21 +16,19 @@ public class Unit : MonoBehaviour
 {
     public EventProcessor unitEventHandler; // Internal event handler
     [Header("Stats")] public float movementSpeed = 3.5f;
+    public float defaultMovementSpeed;
     public float turnRate = 5f;
+    public float defaultTurnRate;
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
-    [Header("Misc.")] public float updateInterval = 0.1f;
+    [Header("Misc.")] public int allianceId;
     private float _positionUpdateTimer;
-    private GameObject _pseudoObject;
     [Header("Abilities")] [SerializeField] public Ability[] abilities = new Ability[4];
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
     private object _aiTarget;
 
-    public GameObject PseudoObject
-    {
-        get { return _pseudoObject; }
-    }
+    public GameObject PseudoObject { get; private set; }
 
     private void Awake()
     {
@@ -44,13 +42,16 @@ public class Unit : MonoBehaviour
         agent.angularSpeed = float.MaxValue;
         agent.autoBraking = true;
 
-        _pseudoObject = new GameObject("PseudoObject")
+        PseudoObject = new GameObject("PseudoObject")
         {
             transform =
             {
                 parent = transform
             }
         };
+
+        defaultMovementSpeed = movementSpeed;
+        defaultTurnRate = turnRate;
     }
 
     private void OnEnable()
@@ -60,7 +61,7 @@ public class Unit : MonoBehaviour
         unitEventHandler.StartListening("OnDied", OnDied);
         unitEventHandler.StartListening("OnAbility1Casted", OnAbility1Casted);
         unitEventHandler.StartListening("OnAbility2Casted", OnAbility2Casted);
-        unitEventHandler.StartListening("On3thAbilityCasted", OnAbility3Casted);
+        unitEventHandler.StartListening("OnAbility3Casted", OnAbility3Casted);
         unitEventHandler.StartListening("OnAbility4Casted", OnAbility4Casted);
 
         unitEventHandler.StartListening("OnAbilityInputSet", OnAbilityInputSet);
@@ -73,7 +74,7 @@ public class Unit : MonoBehaviour
         unitEventHandler.StopListening("OnDied", OnDied);
         unitEventHandler.StopListening("OnAbility1Casted", OnAbility1Casted);
         unitEventHandler.StopListening("OnAbility2Casted", OnAbility2Casted);
-        unitEventHandler.StopListening("On3thAbilityCasted", OnAbility3Casted);
+        unitEventHandler.StopListening("OnAbility3Casted", OnAbility3Casted);
         unitEventHandler.StopListening("OnAbility4Casted", OnAbility4Casted);
 
         unitEventHandler.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
@@ -120,12 +121,14 @@ public class Unit : MonoBehaviour
 
     private void OnDied(object @null)
     {
+        OnDisable();
+        Stop();
         Destroy(gameObject, 1f); // edit by rin , wanna to have 1s for unit dead vfx animation
     }
 
     private void Update()
     {
-        UpdatePosition();
+        UpdatePlayerPosition();
         UpdateAnimationMovement();
     }
 
@@ -173,13 +176,13 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void UpdatePosition()
+    private void UpdatePlayerPosition()
     {
         if (!isPlayer) return;
 
         _positionUpdateTimer += Time.deltaTime;
 
-        if (_positionUpdateTimer >= updateInterval)
+        if (_positionUpdateTimer >= 0.1f)
         {
             _positionUpdateTimer = float.Epsilon;
             EventManager.RaiseEvent("OnPlayerPositionChanged", transform.position);
@@ -189,7 +192,7 @@ public class Unit : MonoBehaviour
     private void Stop()
     {
         if (_pendingCast != null) StopCoroutine(_pendingCast);
-        _pseudoObject.transform.DOKill();
+        PseudoObject.transform.DOKill();
         agent.SetDestination(transform.position);
     }
 
@@ -197,7 +200,7 @@ public class Unit : MonoBehaviour
     {
         Stop();
 
-        _pseudoObject.transform
+        PseudoObject.transform
             .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(destination)),
                 turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
@@ -205,7 +208,7 @@ public class Unit : MonoBehaviour
 
     private void Move(Vector3 destination)
     {
-        var eulerAnglesZ = _pseudoObject.transform.rotation.eulerAngles.z;
+        var eulerAnglesZ = PseudoObject.transform.rotation.eulerAngles.z;
         agent.speed = movementSpeed * (1 - Mathf.Abs(Mathf.Sin(eulerAnglesZ * Mathf.Deg2Rad)) / 2);
         agent.SetDestination(destination);
         unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
@@ -241,16 +244,16 @@ public class Unit : MonoBehaviour
             _castTargetPosition = (Vector3)target;
             _allTargets["Target Center"] = _castTargetPosition;
         }
-        else if(_currentAbilityType == AbilityType.NoTarget) {
-            _castTargetPosition = (Vector3) _allTargets["Executing Unit Position"];
+        else if (_currentAbilityType == AbilityType.NoTarget)
+        {
+            _castTargetPosition = (Vector3)target;
+            _allTargets["Target Center"] = _castTargetPosition;
         }
     }
 
     private IEnumerator CastAbility(Ability ability)
     {
         Stop();
-
-        Debug.Log("Currently executing ability " + ability.name);
 
         _currentAbilityType = ability.InputType;
         _allTargets.Clear();
@@ -266,14 +269,21 @@ public class Unit : MonoBehaviour
         because they all can execute the line.
         --------------------------------------------------------------------------------*/
 
-        if (isPlayer)
+        if (_currentAbilityType != AbilityType.NoTarget)
         {
-            var playerAgent = GetComponent<PlayerAgent>();
-            yield return StartCoroutine(playerAgent.ProcessTargetInput(ability));
+            if (isPlayer)
+            {
+                var playerAgent = GetComponent<PlayerAgent>();
+                yield return StartCoroutine(playerAgent.ProcessTargetInput(ability));
+            }
+            else
+            {
+                AbilityInput(_aiTarget);
+            }
         }
         else
         {
-            AbilityInput(_aiTarget);
+            AbilityInput(_allTargets["Executing Unit Position"]);
         }
 
         if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.AbilityStats["Cast Range"])
@@ -305,7 +315,7 @@ public class Unit : MonoBehaviour
     {
         Stop();
 
-        _pseudoObject.transform
+        PseudoObject.transform
             .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(_castTargetPosition)),
                 turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => ExecuteAbility(ability));
@@ -313,9 +323,14 @@ public class Unit : MonoBehaviour
 
     private void ExecuteAbility(Ability ability)
     {
+        // Update the Player's rotation
+        float eulerAnglesZ = PseudoObject.transform.rotation.eulerAngles.z;
+        unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
+
         foreach (var outcome in ability.Outcomes)
         {
             float executionTime;
+
             if (outcome.Trigger.IsNormalizedTime)
             {
                 executionTime = outcome.Trigger.ExecutionTime * ability.Duration;
@@ -357,18 +372,20 @@ public class Unit : MonoBehaviour
     }
 
     // Animation related functionality
-    float _speed;
-    Vector2 _lastPosition;
+    private float _speed;
+    private Vector2 _lastPosition;
 
-    void UpdateAnimationMovement()
+    private void UpdateAnimationMovement()
     {
-        if (gameObject.name == "MainCharacter")
+        if (isPlayer)
         {
-            _speed = Mathf.Lerp(_speed, ((Vector2)transform.position - _lastPosition).magnitude,
-                0.3f /*adjust this number in order to make interpolation quicker or slower*/);
-            _lastPosition = (Vector2)transform.position;
+            var position = transform.position;
 
-            if (_speed > 0.005)
+            _speed = Mathf.Lerp(_speed, ((Vector2)position - _lastPosition).magnitude,
+                0.3f /*adjust this number in order to make interpolation quicker or slower*/);
+            _lastPosition = position;
+
+            if (_speed > 0.005f)
             {
                 unitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
             }

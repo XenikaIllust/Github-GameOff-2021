@@ -18,4 +18,4 @@ public class TeleportActionBlock : GameActionBlock
         unitToTeleport.transform.position = targetPosition;
         navMeshAgent.Warp(targetPosition);
     }
-} 
+}

@@ -19,36 +19,28 @@ public class TargetFilter
     // a series of filters in turn to narrow down your targets until you're left
     // with who you want to target.
 
-    public enum TargetRelationship
-    {
-        Hostile = 1 << 0,
-        Neutral = 1 << 1,
-        Friendly = 1 << 2,
-    }
-
     public TargetFilterType Type;
 
-    [Tooltip("Only fill in this field for Line TargetFilter")]
+    // Line
     public string InitialPointId;
-
     public string FinalPointId;
 
-    [Tooltip("Only fill in this field for AOE TargetFilter")]
+    // AOE
     public string AOERadiusId;
-
     public string TargetCenterId;
 
-    [Tooltip("Only fill in this field for TargetOfPreviousEffect TargetFilter")]
+    // Previous
     public string PreviousEffectId;
 
-    [Tooltip("Only fill in this field for Cone TargetFilter")]
+    // Cone
     public string ConeRangeId;
-
     public string ConeAngleId;
-
     public string ConeTargetId;
 
-    public TargetRelationship Relationship;
+    // Relationship
+    public bool hitEnemies = true;
+    public bool hitAllies;
+    public bool hitSelf;
 
     public List<object> DetermineTargetUnits(SerializableDictionary<string, float> AbilityStats,
         Dictionary<string, object> AllTargets)
@@ -58,11 +50,21 @@ public class TargetFilter
         if (Type == TargetFilterType.SelfFilter)
         {
             // add self into targets
-            targets.Add(AllTargets["Executing Unit"]);
+            Unit unit = (Unit)AllTargets["Executing Unit"];
+
+            hitEnemies = false;
+            hitAllies = false;
+            hitSelf = true;
+
+            AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
+                hitEnemies, hitAllies, hitSelf);
         }
         else if (Type == TargetFilterType.UnitFilter)
         {
-            targets.Add(AllTargets["Target Unit"]);
+            Unit unit = (Unit)AllTargets["Target Unit"];
+
+            AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
+                hitEnemies, hitAllies, hitSelf);
         }
         else if (Type == TargetFilterType.LineFilter)
         {
@@ -78,8 +80,10 @@ public class TargetFilter
 
             foreach (RaycastHit2D hit in hits)
             {
-                Unit targetUnit = hit.collider.GetComponentInParent<Unit>();
-                targets.Add(targetUnit);
+                Unit unit = hit.collider.GetComponentInParent<Unit>();
+
+                AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
+                    hitEnemies, hitAllies, hitSelf);
             }
         }
         else if (Type == TargetFilterType.AOEFilter)
@@ -101,17 +105,27 @@ public class TargetFilter
             foreach (Collider2D collider in results)
             {
                 Unit unit = collider.GetComponentInParent<Unit>();
-                targets.Add(unit);
+
+                AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
+                    hitEnemies, hitAllies, hitSelf);
             }
 
-            // GameObject.Destroy(AOECalculator);
+            Object.Destroy(AOECalculator);
+
         }
         else if (Type == TargetFilterType.TargetsOfPreviousEffect)
         {
             // get targets from previous effect in EffectTargets[id] and add them into targets
             foreach (object o in (List<object>)AllTargets[PreviousEffectId])
             {
-                targets.Add(o);
+                Unit unit = (Unit)o;
+
+                hitEnemies = true;
+                hitAllies = true;
+                hitSelf = true;
+
+                AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
+                    hitEnemies, hitAllies, hitSelf);
             }
         }
         else if (Type == TargetFilterType.ConeFilter)
@@ -144,15 +158,33 @@ public class TargetFilter
                 float angleToUnit = Mathf.Atan2(vectorToUnit.y, vectorToUnit.x) * Mathf.Rad2Deg;
                 float deltaAngle = Mathf.Abs(angleToTarget - angleToUnit);
 
-                if (deltaAngle <= AbilityStats[ConeAngleId] / 2 && unit != (Unit)AllTargets["Executing Unit"])
+                if (deltaAngle <= AbilityStats[ConeAngleId] / 2)
                 {
-                    targets.Add(unit);
+                    AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
+                        hitEnemies, hitAllies, hitSelf);
                 }
             }
 
-            GameObject.Destroy(AOECalculator);
+            Object.Destroy(AOECalculator);
         }
 
         return targets;
+    }
+
+    private void AddToList(List<object> targets, Unit thisUnit, Unit targetUnit,
+        bool hitEnemiesCheck, bool hitAlliesCheck, bool hitSelfCheck)
+    {
+        if (hitEnemiesCheck && targetUnit.allianceId != thisUnit.allianceId)
+        {
+            targets.Add(targetUnit);
+        }
+        else if (hitAlliesCheck && targetUnit.allianceId == thisUnit.allianceId && targetUnit != thisUnit)
+        {
+            targets.Add(targetUnit);
+        }
+        else if (hitSelfCheck && targetUnit == thisUnit)
+        {
+            targets.Add(targetUnit);
+        }
     }
 }

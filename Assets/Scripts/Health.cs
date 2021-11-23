@@ -64,7 +64,7 @@ public class Health : MonoBehaviour
 
     private void UpdateHealthBar()
     {
-        _unitEventHandler.RaiseEvent("OnUpdateHealth", (maxHealth - health) / maxHealth);
-        Debug.Log($"{gameObject.name} health: {Mathf.RoundToInt(health)}");
+        float damageRate = (maxHealth - health) / maxHealth;
+        _unitEventHandler.RaiseEvent("OnUpdateDamageRate", damageRate);
     }
 }

@@ -26,6 +26,9 @@ public class GameAction
     // for SFX GameActionBlocks that require inputs
     public string SFXName;
 
+    // Name of Projectile Prefab
+    public string ProjectileName;
+
     public void Invoke(AbilityStatsDict AbilityStats, List<object> CurrentFilteredTargets, Dictionary<string, object> AllTargets) {
         if(AbilityStats.ContainsKey(StatId)) { // this GameActionBlock type requires a stat
             GameActionBlock.Invoke(AbilityStats[StatId], CurrentFilteredTargets, AllTargets);
@@ -36,6 +39,10 @@ public class GameAction
         }
         else if(GameActionBlock.GetType() == typeof(SFXActionBlock)) {
             string[] idParams = new string[] { SFXName };
+            GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);
+        }
+        else if(GameActionBlock.GetType() == typeof(FireProjectileAction)) {
+            string[] idParams = new string[] { ProjectileName };
             GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);
         }
         else {  // this GameActionBlock type requires no stat

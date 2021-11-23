@@ -1,73 +1,77 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
+
 public class UnitVFXManager : MonoBehaviour
 {
-    EventProcessor UnitEventHandler; // Internal event handler
-    private SpriteRenderer unitSprite;
-    private Material defaultMaterial;
+    private EventProcessor _unitEventHandler; // Internal event handler
+    private SpriteRenderer _unitSprite;
+    private Material _defaultMaterial;
     [SerializeField] private Material highlightMaterial;
-    [SerializeField] private Material dissloveMaterial;
+    [SerializeField] private Material dissolveMaterial;
     [SerializeField] private Material damageMaterial;
     [SerializeField] private float dissolveAmount;
     [SerializeField] private bool someoneDead;
 
-
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
-        UnitEventHandler = GetComponentInParent<UnitEventManager>().UnitEventHandler;
+        _unitEventHandler = GetComponentInParent<UnitEventManager>().UnitEventHandler;
     }
-    void Start()
+
+    private void Start()
     {
-        unitSprite = GetComponent<SpriteRenderer>();
-        defaultMaterial = unitSprite.material;
-        if(damageMaterial) unitSprite.material = damageMaterial;
+        _unitSprite = GetComponent<SpriteRenderer>();
+        _defaultMaterial = _unitSprite.material;
+        if (damageMaterial) _unitSprite.material = damageMaterial;
         dissolveAmount = 1;
         someoneDead = false;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //ClearEffects();
-        if(someoneDead){
-            Fadding();
+        if (someoneDead)
+        {
+            Fading();
         }
     }
 
     public void HighlightOutline()
     {
-        unitSprite.material = highlightMaterial;
+        _unitSprite.material = highlightMaterial;
     }
 
     public void ClearEffects()
     {
-        unitSprite.material = defaultMaterial;
-    }
-    private void OnEnable()
-    {
-        UnitEventHandler.StartListening("OnUpdateHealth", UnitHealthVfx);
-        UnitEventHandler.StartListening("OnDied", OnDied);
-    }
-    private void OnDisable()
-    {
-        UnitEventHandler.StopListening("OnUpdateHealth", UnitHealthVfx);
-        UnitEventHandler.StopListening("OnDied", OnDied);
+        _unitSprite.material = _defaultMaterial;
     }
 
+    private void OnEnable()
+    {
+        _unitEventHandler.StartListening("OnUpdateDamageRate", UnitDamageRateVfx);
+        _unitEventHandler.StartListening("OnDied", OnDied);
+    }
+
+    private void OnDisable()
+    {
+        _unitEventHandler.StopListening("OnUpdateDamageRate", UnitDamageRateVfx);
+        _unitEventHandler.StopListening("OnDied", OnDied);
+    }
 
     private void OnDied(object @null)
     {
-        unitSprite.material = dissloveMaterial;
+        _unitSprite.material = dissolveMaterial;
         someoneDead = true;
     }
-    private void Fadding(){
+
+    private void Fading()
+    {
         dissolveAmount = Mathf.Clamp01(dissolveAmount - Time.deltaTime);
-        unitSprite.material.SetFloat("Fade", dissolveAmount);
+        _unitSprite.material.SetFloat("Fade", dissolveAmount);
     }
-    private void UnitHealthVfx(object damageRate){
-        unitSprite.material.SetFloat("damageRate" , (float)damageRate);
-        print((float)damageRate * 100 +"%");
+
+    private void UnitDamageRateVfx(object damageRate)
+    {
+        _unitSprite.material.SetFloat("damageRate", (float)damageRate);
     }
 }
