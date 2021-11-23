@@ -41,12 +41,14 @@ public class AudioManager : MonoBehaviour
     {
         EventManager.StartListening("OnPlaySound", Play);
         EventManager.StartListening("OnStopSound", Stop);
+        EventManager.StartListening("OnMuteSound", Mute);
     }
 
     private void OnDisable()
     {
         EventManager.StopListening("OnPlaySound", Play);
         EventManager.StopListening("OnStopSound", Stop);
+        EventManager.StopListening("OnMuteSound", Mute);
     }
 
     public void Play(object name) {
@@ -63,5 +65,13 @@ public class AudioManager : MonoBehaviour
             sound.Source.Stop();
         else
             Debug.Log("Sound named " + (string)name + " doesn't exist. Can't stop sound.");
+    }
+
+    public void Mute(object name) {
+        Sound sound = Array.Find(sounds, Sound => Sound.name == (string)name);
+        if (sound != null)
+            sound.Source.mute = !sound.Source.mute;
+        else
+            Debug.Log("Sound named " + (string)name + " doesn't exist. Can't mute / unmute.");
     }
 }
