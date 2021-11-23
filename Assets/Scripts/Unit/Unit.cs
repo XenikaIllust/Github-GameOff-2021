@@ -16,9 +16,9 @@ public class Unit : MonoBehaviour
 {
     public EventProcessor unitEventHandler; // Internal event handler
     [Header("Stats")] public float movementSpeed = 3.5f;
-    public float defaultMovementSpeed;
+    [HideInInspector] public float defaultMovementSpeed;
     public float turnRate = 5f;
-    public float defaultTurnRate;
+    [HideInInspector] public float defaultTurnRate;
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
     [Header("Misc.")] public int allianceId;
