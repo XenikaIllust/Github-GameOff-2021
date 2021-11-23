@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -159,18 +158,18 @@ public class PlayerAgent : Agent
 
     private void HighlightUnitUnderMouseCursor()
     {
-        string[] tags = { "Enemy" };
         LayerMask enemyMask = LayerMask.GetMask("Enemy");
 
         // Get target and check that it's valid
         RaycastHit2D hit = Physics2D.Raycast(CursorWorldPosition(),
             Vector2.zero, Mathf.Infinity, enemyMask);
+
         if (hit.collider != null)
         {
-            Transform selection = hit.transform;
-            if (tags.Contains(selection.tag)) // Check if its the target we want.
+            Unit selectedUnit = hit.collider.GetComponent<Unit>();
+
+            if (selectedUnit.allianceId != thisUnit.allianceId)
             {
-                Unit selectedUnit = hit.collider.GetComponent<Unit>();
                 selectedUnit.GetComponentInChildren<UnitVFXManager>().HighlightOutline();
             }
         }
