@@ -16,7 +16,9 @@ public class Unit : MonoBehaviour
 {
     public EventProcessor unitEventHandler; // Internal event handler
     [Header("Stats")] public float movementSpeed = 3.5f;
+    public float defaultMovementSpeed;
     public float turnRate = 5f;
+    public float defaultTurnRate;
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
     [Header("Misc.")] public int allianceId;
@@ -47,6 +49,9 @@ public class Unit : MonoBehaviour
                 parent = transform
             }
         };
+
+        defaultMovementSpeed = movementSpeed;
+        defaultTurnRate = turnRate;
     }
 
     private void OnEnable()
@@ -318,6 +323,10 @@ public class Unit : MonoBehaviour
 
     private void ExecuteAbility(Ability ability)
     {
+        // Update the Player's rotation
+        float eulerAnglesZ = PseudoObject.transform.rotation.eulerAngles.z;
+        unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
+
         foreach (var outcome in ability.Outcomes)
         {
             float executionTime;

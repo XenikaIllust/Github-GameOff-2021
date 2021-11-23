@@ -17,26 +17,56 @@ MonoBehaviour:
   Duration: 0
   Cooldown: 0
   AbilityStats:
-    _Buckets: ffffffffffffffffffffffff
-    _HashCodes: 000000000000000000000000
-    _Next: 000000000000000000000000
-    _Count: 0
-    _Version: 0
+    _Buckets: 0100000000000000ffffffff
+    _HashCodes: a0bf2b7e3f5a672f00000000
+    _Next: ffffffffffffffff00000000
+    _Count: 2
+    _Version: 44
     _FreeList: -1
     _FreeCount: 0
     _Keys:
-    - 
-    - 
+    - Cast Range
+    - Turn Rate
     - 
     _Values:
-    - 0
-    - 0
+    - 20
+    - 0.2
     - 0
   Outcomes:
-  - Id: Fire
+  - Id: AIm
     Duration: 0
     Trigger:
       ExecutionTime: 0
+      IsNormalizedTime: 0
+    Effects:
+    - Id: AimDown
+      TargetFilter:
+        Type: 0
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 26d6e713ba42c4ba88bb4f7adaf8e00a, type: 2}
+        StatId: Turn Rate
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        SFXName: 
+        ProjectileName: TestProjectile
+  - Id: Fire
+    Duration: 0
+    Trigger:
+      ExecutionTime: 4
       IsNormalizedTime: 0
     Effects:
     - Id: Projectile
@@ -50,7 +80,9 @@ MonoBehaviour:
         ConeRangeId: 
         ConeAngleId: 
         ConeTargetId: 
-        Relationship: 0
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 75961689d04916d6cb0dde78108b75d4, type: 2}
         StatId: 

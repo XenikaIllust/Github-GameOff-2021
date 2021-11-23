@@ -17,8 +17,7 @@ public class FireProjectileAction : GameActionBlock
 
         Instantiate(projectilePrefab, firingUnit.transform.position, firingUnit.PseudoObject.transform.rotation);
 
-        // Update the Player's rotation
-        float eulerAnglesZ = firingUnit.PseudoObject.transform.rotation.eulerAngles.z;
-        firingUnit.unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
+        firingUnit.movementSpeed = firingUnit.defaultMovementSpeed;
+        firingUnit.turnRate = firingUnit.defaultTurnRate;
     }
 }
