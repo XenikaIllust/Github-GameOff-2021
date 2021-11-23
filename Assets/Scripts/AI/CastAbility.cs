@@ -75,7 +75,15 @@ public class CastAbility : Action
 
         float utility = n1 * w1 + n2 * w2 + n3 * w3 + n4 * w4;
 
-        Debug.Log(self.abilities[abilityIndex].name + " " + utility);
+        if(cooldownActive.Value) {
+            utility = 0;
+        }
+
+        if(abilityInUse.Value) {
+            utility = 0;
+        }
+
+        // Debug.Log(self.abilities[abilityIndex].name + " Total utility: " + utility + " first score: " + (n1 * w1) + " second score: " + (n2 * w2) + " third score: " + (n3 * w3) + " fourth score: " + (n4 * w4));
 
         return utility;
     }

@@ -24,4 +24,11 @@ public class MoveTowardsPlayer : Action
         unitEventHandler.RaiseEvent("OnMoveOrderIssued", playerUnit.transform.position);
         return TaskStatus.Success;
     }
+
+    public override float GetUtility()
+    {
+        float utility = 0.5f; // slightly bigger than 0, so that the unit moves if all coolDowns are active
+
+        return utility;
+    }
 }

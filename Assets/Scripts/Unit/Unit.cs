@@ -241,6 +241,9 @@ public class Unit : MonoBehaviour
             _castTargetPosition = (Vector3)target;
             _allTargets["Target Center"] = _castTargetPosition;
         }
+        else if(_currentAbilityType == AbilityType.NoTarget) {
+            _castTargetPosition = (Vector3) _allTargets["Executing Unit Position"];
+        }
     }
 
     private IEnumerator CastAbility(Ability ability)

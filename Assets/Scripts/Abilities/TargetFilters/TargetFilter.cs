@@ -104,7 +104,7 @@ public class TargetFilter
                 targets.Add(unit);
             }
 
-            GameObject.Destroy(AOECalculator);
+            // GameObject.Destroy(AOECalculator);
         }
         else if (Type == TargetFilterType.TargetsOfPreviousEffect)
         {

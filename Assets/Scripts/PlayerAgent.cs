@@ -128,7 +128,7 @@ public class PlayerAgent : Agent
         else if (ability.InputType == AbilityType.TargetArea)
         {
             float radius = ability.AbilityStats["AOE Radius"];
-            AOECircle.transform.localScale = new Vector3(radius * 1.7f, radius * 1.7f, 1.0f);
+            AOECircle.transform.localScale = new Vector3(radius * 3.3f, radius * 0.5f * 3.3f, 1.0f);
             AOECircle.enabled = true;
             currentCoroutine = AbilityInputType.AOETargetInput(ability, unitEventHandler);
             yield return StartCoroutine(currentCoroutine);

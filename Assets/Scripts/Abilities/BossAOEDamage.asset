@@ -21,7 +21,7 @@ MonoBehaviour:
     _HashCodes: a0bf2b7edae6b970ffffffff
     _Next: 01000000ffffffffffffffff
     _Count: 3
-    _Version: 129
+    _Version: 161
     _FreeList: 2
     _FreeCount: 1
     _Keys:
@@ -49,6 +49,7 @@ MonoBehaviour:
         PreviousEffectId: 
         ConeRangeId: 
         ConeAngleId: 
+        ConeTargetId: 
         Relationship: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 37dc24ebe8dbc504cb628f2a5317fa4b, type: 2}
@@ -71,10 +72,11 @@ MonoBehaviour:
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: Cast Range
-        TargetCenterId: Executing Unit Action
+        TargetCenterId: Executing Unit Position
         PreviousEffectId: 
         ConeRangeId: 
         ConeAngleId: 
+        ConeTargetId: 
         Relationship: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
