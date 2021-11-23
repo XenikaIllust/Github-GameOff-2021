@@ -168,7 +168,7 @@ public class PlayerAgent : Agent
         {
             Unit selectedUnit = hit.collider.GetComponent<Unit>();
 
-            if (selectedUnit.allianceId != thisUnit.allianceId)
+            if (selectedUnit.alliance != thisUnit.alliance)
             {
                 selectedUnit.GetComponentInChildren<UnitVFXManager>().HighlightOutline();
             }

@@ -21,12 +21,18 @@ public class Unit : MonoBehaviour
     [HideInInspector] public float defaultTurnRate;
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
-    [Header("Misc.")] public int allianceId;
+    [Header("Misc.")] public Alliance alliance;
     private float _positionUpdateTimer;
     [Header("Abilities")] [SerializeField] public Ability[] abilities = new Ability[4];
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
     private object _aiTarget;
+
+    public enum Alliance
+    {
+        TaciaAlliance,
+        ClaireHorde
+    }
 
     public GameObject PseudoObject { get; private set; }
 
