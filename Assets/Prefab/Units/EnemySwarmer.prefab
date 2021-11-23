@@ -392,7 +392,7 @@ MonoBehaviour:
   defaultTurnRate: 0
   isPlayer: 0
   agent: {fileID: 0}
-  allianceId: 2
+  alliance: 1
   abilities:
   - {fileID: 11400000, guid: e07134232319e7348a52f7b0d555f1c7, type: 2}
 --- !u!114 &1356358264916591144

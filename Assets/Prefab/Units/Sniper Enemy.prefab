@@ -237,10 +237,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 3.5
+  defaultMovementSpeed: 0
   turnRate: 1
+  defaultTurnRate: 0
   isPlayer: 0
   agent: {fileID: 0}
-  updateInterval: 0.1
+  alliance: 1
   abilities: []
 --- !u!114 &6709142033712369222
 MonoBehaviour:
@@ -272,3 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightMaterial: {fileID: 2100000, guid: d3947d02491d9ca4a89e1ca73c1e8c09, type: 2}
+  dissolveMaterial: {fileID: 0}
+  damageMaterial: {fileID: 0}
+  dissolveAmount: 0
+  someoneDead: 0
