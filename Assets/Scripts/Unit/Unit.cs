@@ -374,6 +374,14 @@ public class Unit : MonoBehaviour
     // Animation related functionality
     private float _speed;
     private Vector2 _lastPosition;
+    private float _stopAnimationTimer;
+    private AnimationType _currentAnimation;
+
+    private enum AnimationType
+    {
+        Stop,
+        Move
+    }
 
     private void UpdateAnimationMovement()
     {
@@ -385,13 +393,31 @@ public class Unit : MonoBehaviour
                 0.3f /*adjust this number in order to make interpolation quicker or slower*/);
             _lastPosition = position;
 
-            if (_speed > 0.005f)
+            if (_speed < 0.005f)
             {
-                unitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
+                if (_currentAnimation != AnimationType.Stop)
+                {
+                    _currentAnimation = AnimationType.Stop;
+                }
+                else return;
+
+                _stopAnimationTimer -= Time.deltaTime;
+
+                if (_stopAnimationTimer <= float.Epsilon)
+                {
+                    unitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
+                }
             }
             else
             {
-                unitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
+                if (_currentAnimation != AnimationType.Move)
+                {
+                    _currentAnimation = AnimationType.Move;
+                }
+                else return;
+
+                _stopAnimationTimer = 1 / turnRate;
+                unitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
             }
         }
     }
