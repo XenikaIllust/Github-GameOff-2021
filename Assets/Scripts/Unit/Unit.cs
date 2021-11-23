@@ -262,13 +262,6 @@ public class Unit : MonoBehaviour
         _allTargets["Executing Unit"] = this;
         _allTargets["Executing Unit Position"] = transform.position;
 
-        /*-------------------------------------------------------------------------------
-        Comments from xenika:
-
-        If all Agents implement ProcessTargetInput, then checking if isPlayer is not necessary
-        because they all can execute the line.
-        --------------------------------------------------------------------------------*/
-
         if (_currentAbilityType != AbilityType.NoTarget)
         {
             if (isPlayer)

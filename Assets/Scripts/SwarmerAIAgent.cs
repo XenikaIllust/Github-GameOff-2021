@@ -100,7 +100,7 @@ public class SwarmerAIAgent : Agent
         unitEventHandler.RaiseEvent("OnMoveOrderIssued", transform.position);
     }
 
-    public override IEnumerator ProcessTargetInput(Ability ability)
+    public IEnumerator ProcessTargetInput(Ability ability)
     {
         /*-----------------------------------------------------------------
         This function is only for you to throw out the _aiTarget that you 

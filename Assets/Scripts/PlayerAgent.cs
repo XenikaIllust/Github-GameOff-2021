@@ -108,7 +108,7 @@ public class PlayerAgent : Agent
     }
 
     // Responsible for aiming abilities, coupled with AbilityInputType.cs
-    public override IEnumerator ProcessTargetInput(Ability ability)
+    public IEnumerator ProcessTargetInput(Ability ability)
     {
         defaultControlsEnabled = false;
         StopAbilityInput();
@@ -134,7 +134,6 @@ public class PlayerAgent : Agent
             yield return StartCoroutine(currentCoroutine);
             AOECircle.enabled = false;
         }
-        // else if (ability.InputType == AbilityType.NoTarget) yield return StartCoroutine(AbilityInputType.PointTargetInput(ability));
 
         defaultControlsEnabled = true;
     }
