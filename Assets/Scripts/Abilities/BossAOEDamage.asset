@@ -48,7 +48,7 @@ MonoBehaviour:
         TargetCenterId:
         PreviousEffectId:
         ConeRangeId:
-        ConeAngleId: 
+        ConeAngleId:
         ConeTargetId:
         hitEnemies: 1
         hitAllies: 0
@@ -75,22 +75,14 @@ MonoBehaviour:
         InitialPointId:
         FinalPointId:
         AOERadiusId: Cast Range
-<<<<<<< HEAD
-        TargetCenterId: Executing Unit Position
-=======
         TargetCenterId: Target Center
->>>>>>> 24cbe21a38862a72d5d77e61f714497202bad0a1
         PreviousEffectId:
         ConeRangeId:
         ConeAngleId:
         ConeTargetId:
-<<<<<<< HEAD
-        Relationship: 0
-=======
         hitEnemies: 1
         hitAllies: 0
         hitSelf: 0
->>>>>>> 24cbe21a38862a72d5d77e61f714497202bad0a1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
         StatId: AOE Damage
