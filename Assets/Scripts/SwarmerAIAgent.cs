@@ -76,11 +76,4 @@ public class SwarmerAIAgent : Agent
     {
         unitEventHandler.RaiseEvent("OnMoveOrderIssued", transform.position);
     }
-
-    // public IEnumerator CooldownTimer(float time)
-    // {
-    //     _1stAbilityOnCooldown = true;
-    //     yield return new WaitForSeconds(time);
-    //     _1stAbilityOnCooldown = false;
-    // }
 }

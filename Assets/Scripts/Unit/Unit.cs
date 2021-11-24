@@ -5,13 +5,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-/// <summary>
-/// --------
-///   Unit
-/// --------
-/// 
-/// Basic framework for scene actors.
-/// </summary>
 public class Unit : MonoBehaviour
 {
     public EventProcessor unitEventHandler; // Internal event handler
