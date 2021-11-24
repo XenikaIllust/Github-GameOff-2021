@@ -6,6 +6,7 @@ public class AIAgent : Agent
 {
     [Header("General Stats")] public float aggroRange = 5f;
     protected Vector3 playerPosition;
+    protected float distanceToPlayer;
     protected List<float> abilityUtilities;
     protected float chasePlayerUtility;
     protected float stopUtility;
@@ -31,6 +32,7 @@ public class AIAgent : Agent
     private void OnPlayerPositionChanged(object newPosition)
     {
         playerPosition = (Vector3)newPosition;
+        distanceToPlayer = distanceToPlayer;
         UtilityAI();
     }
 
@@ -43,7 +45,7 @@ public class AIAgent : Agent
 
     protected virtual void CalculateUtility()
     {
-        chasePlayerUtility = aggroRange - Vector3.Distance(transform.position, playerPosition);
+        chasePlayerUtility = aggroRange - distanceToPlayer;
         stopUtility = 0;
     }
 
@@ -57,8 +59,13 @@ public class AIAgent : Agent
                 continue;
             }
 
-            if (thisUnit.abilityCooldowns[i] > float.Epsilon ||
-                thisUnit.abilities[i].castRange < Vector3.Distance(transform.position, playerPosition))
+            if (thisUnit.abilityCooldowns[i] > float.Epsilon)
+            {
+                abilityUtilities[i] = float.NegativeInfinity;
+                continue;
+            }
+
+            if (thisUnit.abilities[i].castRange < distanceToPlayer)
             {
                 abilityUtilities[i] = float.NegativeInfinity;
             }
