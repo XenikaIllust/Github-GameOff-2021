@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: FireProjectileTest
   m_EditorClassIdentifier: 
   abilitySprite: {fileID: 0}
-  InputType: 0
-  Duration: 0
-  Cooldown: 5
-  AbilityStats:
+  inputType: 0
+  duration: 0
+  cooldown: 5
+  castRange: 20
+  abilityStats:
     _Buckets: 0100000000000000ffffffff
     _HashCodes: a0bf2b7e3f5a672f00000000
     _Next: ffffffffffffffff00000000
@@ -32,7 +33,7 @@ MonoBehaviour:
     - 20
     - 0.2
     - 0
-  Outcomes:
+  outcomes:
   - Id: AIm
     Duration: 0
     Trigger:

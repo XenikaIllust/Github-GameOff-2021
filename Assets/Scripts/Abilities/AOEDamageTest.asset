@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: AOEDamageTest
   m_EditorClassIdentifier: 
   abilitySprite: {fileID: 0}
-  InputType: 2
-  Duration: 0
-  Cooldown: 5
-  AbilityStats:
+  inputType: 2
+  duration: 0
+  cooldown: 5
+  castRange: 4
+  abilityStats:
     _Buckets: 0200000001000000ffffffff
     _HashCodes: a0bf2b7e77c3df52f4dc220c
     _Next: ffffffff00000000ffffffff
@@ -32,7 +33,7 @@ MonoBehaviour:
     - 4
     - 3
     - 60
-  Outcomes:
+  outcomes:
   - Id: Damage
     Duration: 0
     Trigger:
@@ -49,7 +50,10 @@ MonoBehaviour:
         PreviousEffectId: 
         ConeRangeId: 
         ConeAngleId: 
-        Relationship: 0
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
         StatId: Damage Stat 1
@@ -59,3 +63,4 @@ MonoBehaviour:
         VFXEndPointId: 
         VFXUnitId: 
         SFXName: 
+        ProjectileName: 

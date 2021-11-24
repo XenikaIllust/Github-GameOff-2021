@@ -17,6 +17,7 @@ public class Ability : ScriptableObject
     [FormerlySerializedAs("InputType")] public AbilityType inputType;
     [FormerlySerializedAs("Duration")] public float duration;
     [FormerlySerializedAs("Cooldown")] public float cooldown;
+    public float castRange;
     [FormerlySerializedAs("AbilityStats")] public AbilityStatsDict abilityStats;
     [FormerlySerializedAs("Outcomes")] public Outcome[] outcomes;
 }

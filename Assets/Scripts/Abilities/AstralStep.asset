@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: AstralStep
   m_EditorClassIdentifier: 
   abilitySprite: {fileID: 0}
-  InputType: 0
-  Duration: 1.5
-  Cooldown: 5
-  AbilityStats:
+  inputType: 0
+  duration: 1.5
+  cooldown: 5
+  castRange: 5
+  abilityStats:
     _Buckets: 010000000000000002000000
     _HashCodes: a0bf2b7ef4dc220cf3dc220c
     _Next: ffffffffffffffffffffffff
@@ -32,7 +33,7 @@ MonoBehaviour:
     - 5
     - 40
     - 10
-  Outcomes:
+  outcomes:
   - Id: Disappear
     Duration: 0
     Trigger:
@@ -49,7 +50,10 @@ MonoBehaviour:
         PreviousEffectId: 
         ConeRangeId: 
         ConeAngleId: 
-        Relationship: 0
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 2d72a3468b1000249b7e0a5ae82f98bc, type: 2}
         StatId: 
@@ -59,6 +63,7 @@ MonoBehaviour:
         VFXEndPointId: 
         VFXUnitId: 
         SFXName: 
+        ProjectileName: 
   - Id: Damage, Teleport and Reappear
     Duration: 0
     Trigger:
@@ -75,7 +80,10 @@ MonoBehaviour:
         PreviousEffectId: 
         ConeRangeId: 
         ConeAngleId: 
-        Relationship: 0
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
         StatId: Damage Stat 1
@@ -85,6 +93,7 @@ MonoBehaviour:
         VFXEndPointId: 
         VFXUnitId: 
         SFXName: 
+        ProjectileName: 
     - Id: Teleport
       TargetFilter:
         Type: 4
@@ -95,7 +104,10 @@ MonoBehaviour:
         PreviousEffectId: Disappear
         ConeRangeId: 
         ConeAngleId: 
-        Relationship: 0
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 1e92247e4d8679a4a93e1da975cb1f48, type: 2}
         StatId: 
@@ -105,6 +117,7 @@ MonoBehaviour:
         VFXEndPointId: 
         VFXUnitId: 
         SFXName: 
+        ProjectileName: 
     - Id: Reappear
       TargetFilter:
         Type: 4
@@ -115,7 +128,10 @@ MonoBehaviour:
         PreviousEffectId: Teleport
         ConeRangeId: 
         ConeAngleId: 
-        Relationship: 0
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 5fbaac34ccd01a54d8c39db1b3b267ce, type: 2}
         StatId: 
@@ -125,6 +141,7 @@ MonoBehaviour:
         VFXEndPointId: 
         VFXUnitId: 
         SFXName: 
+        ProjectileName: 
   - Id: Delayed Damage
     Duration: 0
     Trigger:
@@ -141,7 +158,10 @@ MonoBehaviour:
         PreviousEffectId: Damage
         ConeRangeId: 
         ConeAngleId: 
-        Relationship: 0
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
         StatId: Damage Stat 2
@@ -151,3 +171,4 @@ MonoBehaviour:
         VFXEndPointId: 
         VFXUnitId: 
         SFXName: 
+        ProjectileName: 
