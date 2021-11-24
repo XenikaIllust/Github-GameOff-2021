@@ -8,6 +8,8 @@ public class AIAgent : Agent
     protected Vector3 playerPosition;
     protected float distanceToPlayer;
     protected List<float> abilityUtilities;
+    protected List<float> damageSort;
+    protected List<float> cooldownSort;
     protected float chasePlayerUtility;
     protected float stopUtility;
 
@@ -17,6 +19,14 @@ public class AIAgent : Agent
 
         abilityUtilities = new List<float>(new float[4]);
         for (var i = 0; i < abilityUtilities.Count; i++) abilityUtilities[i] = -1;
+
+        cooldownSort = new List<float>(new float[4]);
+        for (var i = 0; i < cooldownSort.Count; i++) cooldownSort[i] = thisUnit.abilities[i].cooldown;
+        cooldownSort.Sort();
+
+        damageSort = new List<float>(new float[4]);
+        for (var i = 0; i < damageSort.Count; i++) damageSort[i] = thisUnit.abilities[i].potentialDamage;
+        damageSort.Sort();
     }
 
     private void OnEnable()
@@ -32,7 +42,7 @@ public class AIAgent : Agent
     private void OnPlayerPositionChanged(object newPosition)
     {
         playerPosition = (Vector3)newPosition;
-        distanceToPlayer = distanceToPlayer;
+        distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
         UtilityAI();
     }
 

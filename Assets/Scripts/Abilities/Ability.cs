@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -18,6 +19,15 @@ public class Ability : ScriptableObject
     [FormerlySerializedAs("Duration")] public float duration;
     [FormerlySerializedAs("Cooldown")] public float cooldown;
     public float castRange;
-    [FormerlySerializedAs("AbilityStats")] public AbilityStatsDict abilityStats;
+
+    [Header("Utility AI")] public float potentialDamage;
+
+    [Range(0f, 100f)]
+    [Tooltip("0% means the ability is ideal at point blank range, 100% means the ability is ideal at max cast range")]
+    public float idealRangePercentage = 100f;
+
+    [Space] [FormerlySerializedAs("AbilityStats")]
+    public AbilityStatsDict abilityStats;
+
     [FormerlySerializedAs("Outcomes")] public Outcome[] outcomes;
 }
