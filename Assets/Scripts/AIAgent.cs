@@ -5,8 +5,7 @@ using UnityEngine;
 public class AIAgent : Agent
 {
     [Header("General Stats")] public float aggroRange = 5f;
-    private Vector3 _playerPosition;
-    protected float distanceFromPlayer;
+    protected Vector3 playerPosition;
     protected List<float> abilityUtilities = new List<float>(new float[4]);
     protected float chasePlayerUtility;
     protected float stopUtility;
@@ -33,8 +32,7 @@ public class AIAgent : Agent
 
     private void OnPlayerPositionChanged(object newPosition)
     {
-        _playerPosition = (Vector3)newPosition;
-        distanceFromPlayer = Vector3.Distance(transform.position, _playerPosition);
+        playerPosition = (Vector3)newPosition;
         UtilityAI();
     }
 
@@ -47,7 +45,7 @@ public class AIAgent : Agent
 
     protected virtual void CalculateUtility()
     {
-        chasePlayerUtility = aggroRange - Vector3.Distance(transform.position, _playerPosition);
+        chasePlayerUtility = aggroRange - Vector3.Distance(transform.position, playerPosition);
         stopUtility = 0;
     }
 
@@ -62,7 +60,7 @@ public class AIAgent : Agent
             }
 
             if (thisUnit.cooldownTimers[i] > float.Epsilon ||
-                thisUnit.abilities[i].castRange < Vector3.Distance(transform.position, _playerPosition))
+                thisUnit.abilities[i].castRange < Vector3.Distance(transform.position, playerPosition))
             {
                 abilityUtilities[i] = float.NegativeInfinity;
             }
@@ -87,27 +85,27 @@ public class AIAgent : Agent
 
     private void Ability1()
     {
-        unitEventHandler.RaiseEvent("OnAbility1Casted", _playerPosition);
+        unitEventHandler.RaiseEvent("OnAbility1Casted", playerPosition);
     }
 
     private void Ability2()
     {
-        unitEventHandler.RaiseEvent("OnAbility2Casted", _playerPosition);
+        unitEventHandler.RaiseEvent("OnAbility2Casted", playerPosition);
     }
 
     private void Ability3()
     {
-        unitEventHandler.RaiseEvent("OnAbility3Casted", _playerPosition);
+        unitEventHandler.RaiseEvent("OnAbility3Casted", playerPosition);
     }
 
     private void Ability4()
     {
-        unitEventHandler.RaiseEvent("OnAbility4Casted", _playerPosition);
+        unitEventHandler.RaiseEvent("OnAbility4Casted", playerPosition);
     }
 
     private void Chase()
     {
-        unitEventHandler.RaiseEvent("OnMoveOrderIssued", _playerPosition);
+        unitEventHandler.RaiseEvent("OnMoveOrderIssued", playerPosition);
     }
 
     private void Stop()
