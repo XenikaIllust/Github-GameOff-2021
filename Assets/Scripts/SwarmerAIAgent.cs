@@ -12,7 +12,7 @@ public class SwarmerAIAgent : Agent
 
     private void Update()
     {
-        InvokeBestAction();
+        _attackCooldown -= Time.deltaTime;
     }
 
     private void OnEnable()
@@ -28,6 +28,7 @@ public class SwarmerAIAgent : Agent
     private void OnPlayerPositionChanged(object newPosition)
     {
         _playerPosition = (Vector3)newPosition;
+        InvokeBestAction();
     }
 
     private void InvokeBestAction()
@@ -35,7 +36,6 @@ public class SwarmerAIAgent : Agent
         float distanceFromPlayer = Vector3.Distance(transform.position, _playerPosition);
 
         // Calculate utility value
-        _attackCooldown -= Time.deltaTime;
         float attackPlayerUtility;
         if (_attackCooldown <= float.Epsilon)
         {

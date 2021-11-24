@@ -12,7 +12,7 @@ public class SniperAIAgent : Agent
 
     private void Update()
     {
-        InvokeBestAction();
+        _aimCooldown -= Time.deltaTime;
     }
 
     private void OnEnable()
@@ -28,6 +28,7 @@ public class SniperAIAgent : Agent
     private void OnPlayerPositionChanged(object newPosition)
     {
         _playerPosition = (Vector3)newPosition;
+        InvokeBestAction();
     }
 
     private void InvokeBestAction()
@@ -35,7 +36,6 @@ public class SniperAIAgent : Agent
         float distanceFromPlayer = Vector3.Distance(transform.position, _playerPosition);
 
         // Calculate utility value
-        _aimCooldown -= Time.deltaTime;
         float aimUtility;
         if (_aimCooldown <= float.Epsilon)
         {
