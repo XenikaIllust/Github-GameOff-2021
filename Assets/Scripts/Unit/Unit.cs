@@ -16,7 +16,7 @@ public class Unit : MonoBehaviour
     [HideInInspector] public NavMeshAgent agent;
     [Header("Misc.")] public Alliance alliance;
     private float _positionUpdateTimer;
-    [Header("Abilities")] [SerializeField] public Ability[] abilities = new Ability[4];
+    [Header("Abilities")] public List<Ability> abilities;
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
     private object _aiTarget;
@@ -51,6 +51,11 @@ public class Unit : MonoBehaviour
 
         defaultMovementSpeed = movementSpeed;
         defaultTurnRate = turnRate;
+
+        while (abilities.Count < 4)
+        {
+            abilities.Add(null);
+        }
     }
 
     private void OnEnable()

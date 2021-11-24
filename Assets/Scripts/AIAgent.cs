@@ -64,6 +64,12 @@ public class AIAgent : Agent
     {
         for (var i = 0; i < abilityUtilities.Count; i++)
         {
+            if (thisUnit.abilities[i] == null)
+            {
+                abilityUtilities[i] = float.NegativeInfinity;
+                continue;
+            }
+
             if (abilityCooldownTimers[i] > float.Epsilon ||
                 thisUnit.abilities[i].castRange < Vector3.Distance(transform.position, _playerPosition))
             {
