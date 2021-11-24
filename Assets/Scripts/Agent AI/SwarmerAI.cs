@@ -4,7 +4,7 @@ public class SwarmerAI : AIAgent
 {
     protected override void CalculateUtility()
     {
-        if (thisUnit.cooldownTimers[0] <= float.Epsilon)
+        if (thisUnit.abilityCooldowns[0] <= float.Epsilon)
         {
             abilityUtilities[0] = float.PositiveInfinity *
                                   (thisUnit.abilities[0].castRange -

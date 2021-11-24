@@ -57,7 +57,7 @@ public class AIAgent : Agent
                 continue;
             }
 
-            if (thisUnit.cooldownTimers[i] > float.Epsilon ||
+            if (thisUnit.abilityCooldowns[i] > float.Epsilon ||
                 thisUnit.abilities[i].castRange < Vector3.Distance(transform.position, playerPosition))
             {
                 abilityUtilities[i] = float.NegativeInfinity;
