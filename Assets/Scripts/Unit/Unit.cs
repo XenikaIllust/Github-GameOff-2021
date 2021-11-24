@@ -104,26 +104,62 @@ public class Unit : MonoBehaviour
 
     private void OnAbility1Casted(object target)
     {
-        if (!isPlayer) _aiTarget = target;
-        StartCoroutine(CastAbility(abilities[0]));
+        const int index = 0;
+        if (cooldownTimers[index] <= float.Epsilon)
+        {
+            cooldownTimers[index] = abilities[index].cooldown;
+            if (!isPlayer) _aiTarget = target;
+            StartCoroutine(CastAbility(abilities[index]));
+        }
+        else
+        {
+            Debug.Log(abilities[index].name + " is still on cooldown for " + cooldownTimers[index] + "s");
+        }
     }
 
     private void OnAbility2Casted(object target)
     {
-        if (!isPlayer) _aiTarget = target;
-        StartCoroutine(CastAbility(abilities[1]));
+        const int index = 1;
+        if (cooldownTimers[index] <= float.Epsilon)
+        {
+            cooldownTimers[index] = abilities[index].cooldown;
+            if (!isPlayer) _aiTarget = target;
+            StartCoroutine(CastAbility(abilities[index]));
+        }
+        else
+        {
+            Debug.Log(abilities[index].name + " is still on cooldown for " + cooldownTimers[index] + "s");
+        }
     }
 
     private void OnAbility3Casted(object target)
     {
-        if (!isPlayer) _aiTarget = target;
-        StartCoroutine(CastAbility(abilities[2]));
+        const int index = 2;
+        if (cooldownTimers[index] <= float.Epsilon)
+        {
+            cooldownTimers[index] = abilities[index].cooldown;
+            if (!isPlayer) _aiTarget = target;
+            StartCoroutine(CastAbility(abilities[index]));
+        }
+        else
+        {
+            Debug.Log(abilities[index].name + " is still on cooldown for " + cooldownTimers[index] + "s");
+        }
     }
 
     private void OnAbility4Casted(object target)
     {
-        if (!isPlayer) _aiTarget = target;
-        StartCoroutine(CastAbility(abilities[3]));
+        const int index = 3;
+        if (cooldownTimers[index] <= float.Epsilon)
+        {
+            cooldownTimers[index] = abilities[index].cooldown;
+            if (!isPlayer) _aiTarget = target;
+            StartCoroutine(CastAbility(abilities[index]));
+        }
+        else
+        {
+            Debug.Log(abilities[index].name + " is still on cooldown for " + cooldownTimers[index] + "s");
+        }
     }
 
     private void OnAbilityInputSet(object target)
