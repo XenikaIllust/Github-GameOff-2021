@@ -13,6 +13,8 @@ public class CastAbility : Action
     float abilityRange;
     public float abilityExecutionTime;
 
+    bool onAbilityStartedExecuting;
+
     EventProcessor unitEventHandler;
     Unit self;
     Unit playerUnit;
@@ -54,6 +56,8 @@ public class CastAbility : Action
         abilityInUse.Value = false;
 
         abilityRange = self.abilities[abilityIndex].AbilityStats["Cast Range"];
+
+        unitEventHandler.StartListening("OnAbilityStartedExecuting", OnAbilityStartedExecuting);
     }
 
     public override TaskStatus OnUpdate()
@@ -63,8 +67,7 @@ public class CastAbility : Action
         unitEventHandler.RaiseEvent(castEventName, self.transform.position);
         unitEventHandler.RaiseEvent("OnAbilityInputSet", self.transform.position);
         Debug.Log(abilityIndex + " ability casted!");
-        StartCoroutine(StartAbilityInUseTimer(self.abilities[abilityIndex].Duration));
-        StartCoroutine(StartCooldown(self.abilities[abilityIndex].Cooldown));
+        StartCoroutine(StartAbilityBlockingTimers());
         return TaskStatus.Success;
     }
 
@@ -114,6 +117,14 @@ public class CastAbility : Action
         return normalizedDirectionDifferenceScore;
     }
 
+    private IEnumerator StartAbilityBlockingTimers() {
+        onAbilityStartedExecuting = false;
+        yield return new WaitUntil(() => onAbilityStartedExecuting = true);
+        onAbilityStartedExecuting = false;
+        StartCoroutine(StartAbilityInUseTimer(self.abilities[abilityIndex].Duration));
+        StartCoroutine(StartCooldown(self.abilities[abilityIndex].Cooldown));
+    }
+
     private IEnumerator StartAbilityInUseTimer(float time) {
         /*---------------------------------------------------------------------------
         This function will block execution of other abilities until the current 
@@ -126,14 +137,19 @@ public class CastAbility : Action
         Eg. Astral step deals additional damage after. But main control should resume
         after the teleport and first damage.
         ---------------------------------------------------------------------------*/
+        Debug.Log(self.abilities[abilityIndex] + "started the ability in use timer for " + time + "!");
         abilityInUse.Value = true;
         yield return new WaitForSeconds(time);
         abilityInUse.Value = false;
     }
 
-    private IEnumerator StartCooldown(float time) { // function for testing
+    private IEnumerator StartCooldown(float time) {
         cooldownActive.Value = true;
         yield return new WaitForSeconds(time);
         cooldownActive.Value = false;
+    }
+
+    void OnAbilityStartedExecuting(object param) {
+        onAbilityStartedExecuting = true;
     }
 }

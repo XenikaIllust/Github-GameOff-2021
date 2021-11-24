@@ -327,6 +327,9 @@ public class Unit : MonoBehaviour
         float eulerAnglesZ = PseudoObject.transform.rotation.eulerAngles.z;
         unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
 
+        // used by AI to indicate ability has started execution
+        unitEventHandler.RaiseEvent("OnAbilityStartedExecuting", null);
+
         foreach (var outcome in ability.Outcomes)
         {
             float executionTime;

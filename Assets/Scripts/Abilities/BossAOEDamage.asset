@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: BossAOEDamage
-  m_EditorClassIdentifier:
+  m_EditorClassIdentifier: 
   abilitySprite: {fileID: 0}
   InputType: 3
   Duration: 1
@@ -21,13 +21,12 @@ MonoBehaviour:
     _HashCodes: a0bf2b7edae6b970ffffffff
     _Next: 01000000ffffffffffffffff
     _Count: 3
-    _Version: 161
+    _Version: 166
     _FreeList: 2
     _FreeCount: 1
     _Keys:
     - Cast Range
     - AOE Damage
-    -
     _Values:
     - 3
     - 30
@@ -42,54 +41,54 @@ MonoBehaviour:
     - Id: Play VFX
       TargetFilter:
         Type: 5
-        InitialPointId:
-        FinalPointId:
-        AOERadiusId:
-        TargetCenterId:
-        PreviousEffectId:
-        ConeRangeId:
-        ConeAngleId:
-        ConeTargetId:
-        hitEnemies: 1
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
         hitAllies: 0
         hitSelf: 0
       GameAction:
-        GameActionBlock: {fileID: 11400000, guid: 37dc24ebe8dbc504cb628f2a5317fa4b, type: 2}
-        StatId:
-        VFXName: Point_Disappear
+        GameActionBlock: {fileID: 11400000, guid: b4be687f7c429904a9ad191d2d3d03a8, type: 2}
+        StatId: 
+        VFXName: Arc60
         VFXPointId: Executing Unit Position
-        VFXStartPointId:
-        VFXEndPointId:
-        VFXUnitId:
-        SFXName:
-        ProjectileName:
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        SFXName: 
+        ProjectileName: 
   - Id: Attack
     Duration: 0
     Trigger:
       ExecutionTime: 1
       IsNormalizedTime: 1
     Effects:
-    - Id: AOE Damage Attack
+    - Id: Damage
       TargetFilter:
         Type: 3
-        InitialPointId:
-        FinalPointId:
+        InitialPointId: 
+        FinalPointId: 
         AOERadiusId: Cast Range
         TargetCenterId: Target Center
-        PreviousEffectId:
-        ConeRangeId:
-        ConeAngleId:
-        ConeTargetId:
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
         hitEnemies: 1
         hitAllies: 0
         hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
         StatId: AOE Damage
-        VFXName:
-        VFXPointId:
-        VFXStartPointId:
-        VFXEndPointId:
-        VFXUnitId:
-        SFXName:
-        ProjectileName:
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        SFXName: 
+        ProjectileName: 
