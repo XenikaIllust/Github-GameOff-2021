@@ -7,18 +7,9 @@ public class AIAgent : Agent
     [Header("General Stats")] public float aggroRange = 5f;
     private Vector3 _playerPosition;
     protected float distanceFromPlayer;
-    protected List<float> abilityCooldownTimers = new List<float>(new float[4]);
     protected List<float> abilityUtilities = new List<float>(new float[4]);
     protected float chasePlayerUtility;
     protected float stopUtility;
-
-    private void Update()
-    {
-        for (var i = 0; i < abilityCooldownTimers.Count; i++)
-        {
-            abilityCooldownTimers[i] -= Time.deltaTime;
-        }
-    }
 
     protected override void Awake()
     {
@@ -70,7 +61,7 @@ public class AIAgent : Agent
                 continue;
             }
 
-            if (abilityCooldownTimers[i] > float.Epsilon ||
+            if (thisUnit.cooldownTimers[i] > float.Epsilon ||
                 thisUnit.abilities[i].castRange < Vector3.Distance(transform.position, _playerPosition))
             {
                 abilityUtilities[i] = float.NegativeInfinity;

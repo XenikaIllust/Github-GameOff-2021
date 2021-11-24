@@ -17,6 +17,7 @@ public class Unit : MonoBehaviour
     [Header("Misc.")] public Alliance alliance;
     private float _positionUpdateTimer;
     [Header("Abilities")] public List<Ability> abilities;
+    [HideInInspector] public List<float> cooldownTimers = new List<float>(new float[4]);
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
     private object _aiTarget;
@@ -28,6 +29,13 @@ public class Unit : MonoBehaviour
     }
 
     public GameObject PseudoObject { get; private set; }
+
+    private void Update()
+    {
+        for (var i = 0; i < cooldownTimers.Count; i++) cooldownTimers[i] -= Time.deltaTime;
+        UpdatePlayerPosition();
+        UpdateAnimationMovement();
+    }
 
     private void Awake()
     {
@@ -128,12 +136,6 @@ public class Unit : MonoBehaviour
         OnDisable();
         Stop();
         Destroy(gameObject, 1f); // edit by rin , wanna to have 1s for unit dead vfx animation
-    }
-
-    private void Update()
-    {
-        UpdatePlayerPosition();
-        UpdateAnimationMovement();
     }
 
     // 'Q' Key
