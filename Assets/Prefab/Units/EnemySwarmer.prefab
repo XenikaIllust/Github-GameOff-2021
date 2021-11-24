@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightMaterial: {fileID: 2100000, guid: f7a6b3ae97751c044bf9c5ec73cd7299, type: 2}
-  dissloveMaterial: {fileID: 2100000, guid: 3304a6e97b4038a4f98a6120b73d119c, type: 2}
+  dissolveMaterial: {fileID: 2100000, guid: 3304a6e97b4038a4f98a6120b73d119c, type: 2}
   damageMaterial: {fileID: 2100000, guid: efefa8a53f6c72a418f5cbc97e5aee56, type: 2}
   dissolveAmount: 0
   someoneDead: 0
@@ -387,10 +387,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 7
+  defaultMovementSpeed: 0
   turnRate: 10
+  defaultTurnRate: 0
   isPlayer: 0
   agent: {fileID: 0}
-  allianceId: 2
+  alliance: 1
   abilities:
   - {fileID: 11400000, guid: e07134232319e7348a52f7b0d555f1c7, type: 2}
 --- !u!114 &1356358264916591144
@@ -407,7 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hostileRange: 5
   attackRange: 0.5
-  attackSpeed: 0.5
+  attackAbility: {fileID: 11400000, guid: e07134232319e7348a52f7b0d555f1c7, type: 2}
 --- !u!114 &-8624061012861718292
 MonoBehaviour:
   m_ObjectHideFlags: 0

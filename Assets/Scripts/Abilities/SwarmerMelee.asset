@@ -15,7 +15,7 @@ MonoBehaviour:
   abilitySprite: {fileID: 0}
   InputType: 0
   Duration: 0
-  Cooldown: 0.1
+  Cooldown: 1
   AbilityStats:
     _Buckets: 01000000ffffffff0000000003000000ffffffffffffffffffffffff
     _HashCodes: a0bf2b7ef4dc220cbcd45b150640e609000000000000000000000000
@@ -58,7 +58,9 @@ MonoBehaviour:
         ConeRangeId: Cone Range
         ConeAngleId: Cone Angle
         ConeTargetId: Target Point
-        Relationship: 0
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
         StatId: Damage Stat 1
@@ -68,3 +70,4 @@ MonoBehaviour:
         VFXEndPointId: 
         VFXUnitId: 
         SFXName: 
+        ProjectileName: 

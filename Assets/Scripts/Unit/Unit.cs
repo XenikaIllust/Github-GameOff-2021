@@ -16,17 +16,23 @@ public class Unit : MonoBehaviour
 {
     public EventProcessor unitEventHandler; // Internal event handler
     [Header("Stats")] public float movementSpeed = 3.5f;
-    public float defaultMovementSpeed;
+    [HideInInspector] public float defaultMovementSpeed;
     public float turnRate = 5f;
-    public float defaultTurnRate;
+    [HideInInspector] public float defaultTurnRate;
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
-    [Header("Misc.")] public int allianceId;
+    [Header("Misc.")] public Alliance alliance;
     private float _positionUpdateTimer;
     [Header("Abilities")] [SerializeField] public Ability[] abilities = new Ability[4];
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
     private object _aiTarget;
+
+    public enum Alliance
+    {
+        TaciaAlliance,
+        ClaireHorde
+    }
 
     public GameObject PseudoObject { get; private set; }
 
@@ -262,13 +268,6 @@ public class Unit : MonoBehaviour
         _allTargets["Executing Unit"] = this;
         _allTargets["Executing Unit Position"] = transform.position;
 
-        /*-------------------------------------------------------------------------------
-        Comments from xenika:
-
-        If all Agents implement ProcessTargetInput, then checking if isPlayer is not necessary
-        because they all can execute the line.
-        --------------------------------------------------------------------------------*/
-
         if (_currentAbilityType != AbilityType.NoTarget)
         {
             if (isPlayer)
@@ -377,6 +376,14 @@ public class Unit : MonoBehaviour
     // Animation related functionality
     private float _speed;
     private Vector2 _lastPosition;
+    private float _stopAnimationTimer;
+    private AnimationType _currentAnimation;
+
+    private enum AnimationType
+    {
+        Stop,
+        Move
+    }
 
     private void UpdateAnimationMovement()
     {
@@ -388,13 +395,31 @@ public class Unit : MonoBehaviour
                 0.3f /*adjust this number in order to make interpolation quicker or slower*/);
             _lastPosition = position;
 
-            if (_speed > 0.005f)
+            if (_speed < 0.005f)
             {
-                unitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
+                if (_currentAnimation != AnimationType.Stop)
+                {
+                    _currentAnimation = AnimationType.Stop;
+                }
+                else return;
+
+                _stopAnimationTimer -= Time.deltaTime;
+
+                if (_stopAnimationTimer <= float.Epsilon)
+                {
+                    unitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
+                }
             }
             else
             {
-                unitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
+                if (_currentAnimation != AnimationType.Move)
+                {
+                    _currentAnimation = AnimationType.Move;
+                }
+                else return;
+
+                _stopAnimationTimer = 1 / turnRate;
+                unitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
             }
         }
     }

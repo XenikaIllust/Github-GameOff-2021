@@ -174,11 +174,11 @@ public class TargetFilter
     private void AddToList(List<object> targets, Unit thisUnit, Unit targetUnit,
         bool hitEnemiesCheck, bool hitAlliesCheck, bool hitSelfCheck)
     {
-        if (hitEnemiesCheck && targetUnit.allianceId != thisUnit.allianceId)
+        if (hitEnemiesCheck && targetUnit.alliance != thisUnit.alliance)
         {
             targets.Add(targetUnit);
         }
-        else if (hitAlliesCheck && targetUnit.allianceId == thisUnit.allianceId && targetUnit != thisUnit)
+        else if (hitAlliesCheck && targetUnit.alliance == thisUnit.alliance && targetUnit != thisUnit)
         {
             targets.Add(targetUnit);
         }

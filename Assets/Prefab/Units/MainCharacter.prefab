@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightMaterial: {fileID: 2100000, guid: f7a6b3ae97751c044bf9c5ec73cd7299, type: 2}
-  dissloveMaterial: {fileID: 2100000, guid: 3304a6e97b4038a4f98a6120b73d119c, type: 2}
+  dissolveMaterial: {fileID: 2100000, guid: 3304a6e97b4038a4f98a6120b73d119c, type: 2}
   damageMaterial: {fileID: 2100000, guid: efefa8a53f6c72a418f5cbc97e5aee56, type: 2}
   dissolveAmount: 0
   someoneDead: 0
@@ -406,7 +406,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 3.5
+  defaultMovementSpeed: 0
   turnRate: 5
+  defaultTurnRate: 0
   isPlayer: 0
   agent: {fileID: 0}
   allianceId: 1
