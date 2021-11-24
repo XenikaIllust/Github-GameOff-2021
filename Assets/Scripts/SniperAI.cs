@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SniperAIAgent : AIAgent
+public class SniperAI : AIAgent
 {
     [Header("Stats")] public float hostileRange = 5f;
     public float aimRange = 3f;
