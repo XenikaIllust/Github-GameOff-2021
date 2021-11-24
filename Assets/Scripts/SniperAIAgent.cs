@@ -39,7 +39,7 @@ public class SniperAIAgent : Agent
         float aimUtility;
         if (_aimCooldown <= float.Epsilon)
         {
-            _aimCooldown = aimAbility.Cooldown;
+            _aimCooldown = aimAbility.cooldown;
             aimUtility = float.PositiveInfinity * (aimRange - distanceFromPlayer);
         }
         else

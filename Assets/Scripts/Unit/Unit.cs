@@ -261,7 +261,7 @@ public class Unit : MonoBehaviour
     {
         Stop();
 
-        _currentAbilityType = ability.InputType;
+        _currentAbilityType = ability.inputType;
         _allTargets.Clear();
 
         // by default, _allTargets should contain a reference to unit and a reference to unit position separately
@@ -285,7 +285,7 @@ public class Unit : MonoBehaviour
             AbilityInput(_allTargets["Executing Unit Position"]);
         }
 
-        if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.AbilityStats["Cast Range"])
+        if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.abilityStats["Cast Range"])
         {
             TurnAndExecuteAbility(ability);
         }
@@ -300,7 +300,7 @@ public class Unit : MonoBehaviour
 
     private IEnumerator PendingCast(Ability ability)
     {
-        while (Vector3.Distance(transform.position, _castTargetPosition) >= ability.AbilityStats["Cast Range"])
+        while (Vector3.Distance(transform.position, _castTargetPosition) >= ability.abilityStats["Cast Range"])
         {
             yield return new WaitForFixedUpdate();
             agent.SetDestination(_castTargetPosition);
@@ -329,20 +329,20 @@ public class Unit : MonoBehaviour
         // used by AI to indicate ability has started execution
         unitEventHandler.RaiseEvent("OnAbilityStartedExecuting", null);
 
-        foreach (var outcome in ability.Outcomes)
+        foreach (var outcome in ability.outcomes)
         {
             float executionTime;
 
             if (outcome.Trigger.IsNormalizedTime)
             {
-                executionTime = outcome.Trigger.ExecutionTime * ability.Duration;
+                executionTime = outcome.Trigger.ExecutionTime * ability.duration;
             }
             else
             {
                 executionTime = outcome.Trigger.ExecutionTime;
             }
 
-            StartCoroutine(ExecuteOutcome(outcome, ability.AbilityStats, executionTime, outcome.Duration));
+            StartCoroutine(ExecuteOutcome(outcome, ability.abilityStats, executionTime, outcome.Duration));
         }
     }
 

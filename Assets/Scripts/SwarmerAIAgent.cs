@@ -39,7 +39,7 @@ public class SwarmerAIAgent : Agent
         float attackPlayerUtility;
         if (_attackCooldown <= float.Epsilon)
         {
-            _attackCooldown = attackAbility.Cooldown;
+            _attackCooldown = attackAbility.cooldown;
             attackPlayerUtility = float.PositiveInfinity * (attackRange - distanceFromPlayer);
         }
         else

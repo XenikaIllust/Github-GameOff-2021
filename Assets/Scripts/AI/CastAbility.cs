@@ -55,7 +55,7 @@ public class CastAbility : Action
         cooldownActive.Value = false;
         abilityInUse.Value = false;
 
-        abilityRange = self.abilities[abilityIndex].AbilityStats["Cast Range"];
+        abilityRange = self.abilities[abilityIndex].abilityStats["Cast Range"];
 
         unitEventHandler.StartListening("OnAbilityStartedExecuting", OnAbilityStartedExecuting);
     }
@@ -121,8 +121,8 @@ public class CastAbility : Action
         onAbilityStartedExecuting = false;
         yield return new WaitUntil(() => onAbilityStartedExecuting = true);
         onAbilityStartedExecuting = false;
-        StartCoroutine(StartAbilityInUseTimer(self.abilities[abilityIndex].Duration));
-        StartCoroutine(StartCooldown(self.abilities[abilityIndex].Cooldown));
+        StartCoroutine(StartAbilityInUseTimer(self.abilities[abilityIndex].duration));
+        StartCoroutine(StartCooldown(self.abilities[abilityIndex].cooldown));
     }
 
     private IEnumerator StartAbilityInUseTimer(float time) {

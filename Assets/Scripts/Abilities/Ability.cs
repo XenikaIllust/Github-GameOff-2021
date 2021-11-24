@@ -1,16 +1,22 @@
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public enum AbilityType {TargetPoint, TargetUnit, TargetArea, NoTarget};
+public enum AbilityType
+{
+    TargetPoint,
+    TargetUnit,
+    TargetArea,
+    NoTarget
+}
 
 [System.Serializable]
 [CreateAssetMenu(fileName = "New Ability", menuName = "Scriptable Objects/Ability/Ability")]
 public class Ability : ScriptableObject
 {
     public Sprite abilitySprite;
-    public AbilityType InputType;
-    public float Duration;
-    public float Cooldown;
-    public AbilityStatsDict AbilityStats;
-    public Outcome[] Outcomes;
+    [FormerlySerializedAs("InputType")] public AbilityType inputType;
+    [FormerlySerializedAs("Duration")] public float duration;
+    [FormerlySerializedAs("Cooldown")] public float cooldown;
+    [FormerlySerializedAs("AbilityStats")] public AbilityStatsDict abilityStats;
+    [FormerlySerializedAs("Outcomes")] public Outcome[] outcomes;
 }

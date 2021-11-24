@@ -105,7 +105,7 @@ public class PlayerAgent : Agent
         _defaultControlsEnabled = false;
         StopAbilityInput();
 
-        switch (ability.InputType)
+        switch (ability.inputType)
         {
             case AbilityType.TargetPoint:
                 _currentCoroutine = AbilityInputType.PointTargetInput(ability, unitEventHandler);
@@ -119,7 +119,7 @@ public class PlayerAgent : Agent
                 break;
             case AbilityType.TargetArea:
             {
-                float radius = ability.AbilityStats["AOE Radius"];
+                float radius = ability.abilityStats["AOE Radius"];
                 AOECircle.transform.localScale = new Vector3(radius * 3.3f, radius * 0.5f * 3.3f, 1.0f);
                 AOECircle.enabled = true;
                 _currentCoroutine = AbilityInputType.AOETargetInput(ability, unitEventHandler);
