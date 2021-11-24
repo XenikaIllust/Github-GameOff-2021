@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwarmerAIAgent : Agent
+public class SwarmerAIAgent : AIAgent
 {
     [Header("Stats")] public float hostileRange = 5f;
     public float attackRange = 2f;
