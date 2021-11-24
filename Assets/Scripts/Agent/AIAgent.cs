@@ -6,7 +6,7 @@ public class AIAgent : Agent
 {
     [Header("General Stats")] public float aggroRange = 5f;
     protected Vector3 playerPosition;
-    protected List<float> abilityUtilities = new List<float>(new float[4]);
+    protected List<float> abilityUtilities;
     protected float chasePlayerUtility;
     protected float stopUtility;
 
@@ -14,10 +14,8 @@ public class AIAgent : Agent
     {
         base.Awake();
 
-        for (var i = 0; i < abilityUtilities.Count; i++)
-        {
-            abilityUtilities[i] = -1;
-        }
+        abilityUtilities = new List<float>(new float[4]);
+        for (var i = 0; i < abilityUtilities.Count; i++) abilityUtilities[i] = -1;
     }
 
     private void OnEnable()
