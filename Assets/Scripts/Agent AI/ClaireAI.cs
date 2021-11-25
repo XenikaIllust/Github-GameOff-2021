@@ -20,12 +20,12 @@ public class ClaireAI : AIAgent
 
         for (var i = 0; i < abilityUtilities.Count; i++)
         {
-            var rangeUtility = multiplier[i][1] * RangeFactor(
+            var rangeUtility = multiplier[i][0] * RangeFactor(
                 abilities[i].castRange * abilities[i].idealRangePercentage / 100,
                 abilities[i].castRange * abilities[i].idealRangePercentage / 100 * 2);
-            var directionUtility = multiplier[i][2] * DirectionFactor(defaultBestAngle, defaultWorstAngle);
-            var damageUtility = multiplier[i][3] * DamageFactor(abilities[i].totalDamage);
-            var cooldownUtility = multiplier[i][4] * CooldownFactor(abilities[i].cooldown);
+            var directionUtility = multiplier[i][1] * DirectionFactor(defaultBestAngle, defaultWorstAngle);
+            var damageUtility = multiplier[i][2] * DamageFactor(abilities[i].totalDamage);
+            var cooldownUtility = multiplier[i][3] * CooldownFactor(abilities[i].cooldown);
 
             abilityUtilities[i] = rangeUtility + directionUtility + damageUtility + cooldownUtility;
         }
