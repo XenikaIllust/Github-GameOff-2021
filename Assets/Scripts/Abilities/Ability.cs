@@ -27,6 +27,8 @@ public class Ability : ScriptableObject
     public float duration;
     public float cooldown;
     public float castRange;
+    public float castPoint = 0.3f;
+    public float castBackSwing = 0.7f;
 
     [FormerlySerializedAs("potentialDamage")] [Header("Utility AI")]
     public float totalDamage;
