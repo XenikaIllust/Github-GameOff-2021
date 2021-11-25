@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum AbilityType
 {
@@ -18,7 +19,8 @@ public class Ability : ScriptableObject
     public float cooldown;
     public float castRange;
 
-    [Header("Utility AI")] public float potentialDamage;
+    [FormerlySerializedAs("potentialDamage")] [Header("Utility AI")]
+    public float totalDamage;
 
     [Range(0f, 200f)]
     [Tooltip("0% means the ability is ideal at point blank range, 100% means the ability is ideal at max cast range")]

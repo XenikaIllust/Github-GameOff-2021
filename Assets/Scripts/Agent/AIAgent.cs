@@ -21,11 +21,18 @@ public class AIAgent : Agent
         for (var i = 0; i < abilityUtilities.Count; i++) abilityUtilities[i] = -1;
 
         cooldownSort = new List<float>(new float[4]);
-        for (var i = 0; i < cooldownSort.Count; i++) cooldownSort[i] = thisUnit.abilities[i].cooldown;
-        cooldownSort.Sort();
+        for (var i = 0; i < cooldownSort.Count; i++)
+        {
+            cooldownSort[i] = thisUnit.abilities[i] == null ? float.NegativeInfinity : thisUnit.abilities[i].cooldown;
+        }
 
         damageSort = new List<float>(new float[4]);
-        for (var i = 0; i < damageSort.Count; i++) damageSort[i] = thisUnit.abilities[i].potentialDamage;
+        for (var i = 0; i < damageSort.Count; i++)
+        {
+            damageSort[i] = thisUnit.abilities[i] == null ? float.NegativeInfinity : thisUnit.abilities[i].totalDamage;
+        }
+
+        cooldownSort.Sort();
         damageSort.Sort();
     }
 

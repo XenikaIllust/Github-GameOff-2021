@@ -20,7 +20,7 @@ public class ClaireAI : AIAgent
                 abilities[i].castRange * abilities[i].idealRangePercentage / 100,
                 abilities[i].castRange * abilities[i].idealRangePercentage / 100 * 2);
             var directionUtility = directionMultiplier[i] * DirectionFactor(bestAngle, worstAngle);
-            var damageUtility = damageMultiplier[i] * DamageFactor(abilities[i].potentialDamage);
+            var damageUtility = damageMultiplier[i] * DamageFactor(abilities[i].totalDamage);
             var cooldownUtility = cooldownMultiplier[i] * CooldownFactor(abilities[i].cooldown);
 
             abilityUtilities[i] = rangeUtility + directionUtility + damageUtility + cooldownUtility;
