@@ -1,18 +1,22 @@
 using System;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class AIAgent : Agent
 {
     [Header("General Stats")] public float aggroRange = 5;
+    [Header("Min, Max")] public float2 preferredCombatRange = new float2 { x = 1, y = 2 };
     private bool _isAggro;
+    private bool _allAbilityOnCooldown;
     protected Vector3 targetPosition;
     protected float distanceToTarget = float.PositiveInfinity;
     private readonly List<Vector3> _abilityTargetPosition = new List<Vector3>(new Vector3[4]);
-    protected readonly List<float> abilityUtilities = new List<float>(new float[4]);
+    [SerializeField] protected List<float> abilityUtilities = new List<float>(new float[4]);
     protected readonly List<float> damageSort = new List<float>(new float[4]);
     protected readonly List<float> cooldownSort = new List<float>(new float[4]);
     protected float chaseTargetUtility;
+    protected float avoidUtility;
     protected float stopUtility;
 
     protected override void Awake()
@@ -58,6 +62,7 @@ public class AIAgent : Agent
         CalculateUtility();
         CheckRestrictionException();
         CalculateRestriction();
+        if (_allAbilityOnCooldown) RecalculateUtility();
         ExecuteBestAction();
     }
 
@@ -97,6 +102,9 @@ public class AIAgent : Agent
 
     private void CalculateRestriction()
     {
+        var abilityCount = 0;
+        var abilityOnCooldownCount = 0;
+
         for (var i = 0; i < abilityUtilities.Count; i++)
         {
             if (thisUnit.abilities[i] == null)
@@ -105,9 +113,11 @@ public class AIAgent : Agent
                 continue;
             }
 
+            abilityCount += 1;
             if (thisUnit.abilityCooldownList[i] > float.Epsilon)
             {
                 abilityUtilities[i] = float.NegativeInfinity;
+                abilityOnCooldownCount += 1;
                 continue;
             }
 
@@ -116,6 +126,13 @@ public class AIAgent : Agent
                 abilityUtilities[i] = float.NegativeInfinity;
             }
         }
+
+        _allAbilityOnCooldown = abilityOnCooldownCount == abilityCount;
+    }
+
+    private void RecalculateUtility()
+    {
+        avoidUtility = float.PositiveInfinity;
     }
 
     private void ExecuteBestAction()
@@ -127,6 +144,7 @@ public class AIAgent : Agent
             (Ability3, abilityUtilities[2]),
             (Ability4, abilityUtilities[3]),
             (Chase, chaseTargetUtility),
+            (Avoid, avoidUtility),
             (Stop, stopUtility)
         };
 
@@ -152,6 +170,12 @@ public class AIAgent : Agent
     private void Ability4()
     {
         unitEventHandler.RaiseEvent("OnAbility4Casted", _abilityTargetPosition[3]);
+    }
+
+    private void Avoid()
+    {
+        var targetOpposition = transform.position - (targetPosition - transform.position);
+        unitEventHandler.RaiseEvent("OnMoveOrderIssued", targetOpposition);
     }
 
     private void Chase()

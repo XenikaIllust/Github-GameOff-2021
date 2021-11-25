@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ClaireAI : AIAgent
 {
-    [Header("Utility Stats")] [Range(0, 100)] [SerializeField]
+    [Header("Default Utility Stats")] [Range(0, 100)] [SerializeField]
     private float chaseTarget = 25;
 
-    [Range(0, 100)] [SerializeField] private float stop;
+    [Range(0, 100)] [SerializeField] private float avoidTarget, stop;
     [Range(0, 360)] [SerializeField] private float defaultBestAngle = 180, defaultWorstAngle = 360;
 
     [Header("Utility Multiplier (Range, Direction, Damage, Cooldown)")] [SerializeField]
@@ -32,6 +32,7 @@ public class ClaireAI : AIAgent
         }
 
         chaseTargetUtility = chaseTarget;
+        avoidUtility = avoidTarget;
         stopUtility = stop;
     }
 
