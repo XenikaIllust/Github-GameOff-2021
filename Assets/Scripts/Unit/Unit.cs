@@ -107,9 +107,9 @@ public class Unit : MonoBehaviour
         const int index = 0;
         if (abilityCooldowns[index] <= float.Epsilon)
         {
-            abilityCooldowns[index] = abilities[index].cooldown;
+            // abilityCooldowns[index] = abilities[index].cooldown;
             if (!isPlayer) _aiTarget = target;
-            StartCoroutine(CastAbility(abilities[index]));
+            StartCoroutine(CastAbility(abilities[index], index));
         }
         else
         {
@@ -122,9 +122,8 @@ public class Unit : MonoBehaviour
         const int index = 1;
         if (abilityCooldowns[index] <= float.Epsilon)
         {
-            abilityCooldowns[index] = abilities[index].cooldown;
             if (!isPlayer) _aiTarget = target;
-            StartCoroutine(CastAbility(abilities[index]));
+            StartCoroutine(CastAbility(abilities[index], index));
         }
         else
         {
@@ -137,9 +136,8 @@ public class Unit : MonoBehaviour
         const int index = 2;
         if (abilityCooldowns[index] <= float.Epsilon)
         {
-            abilityCooldowns[index] = abilities[index].cooldown;
             if (!isPlayer) _aiTarget = target;
-            StartCoroutine(CastAbility(abilities[index]));
+            StartCoroutine(CastAbility(abilities[index], index));
         }
         else
         {
@@ -152,9 +150,8 @@ public class Unit : MonoBehaviour
         const int index = 3;
         if (abilityCooldowns[index] <= float.Epsilon)
         {
-            abilityCooldowns[index] = abilities[index].cooldown;
             if (!isPlayer) _aiTarget = target;
-            StartCoroutine(CastAbility(abilities[index]));
+            StartCoroutine(CastAbility(abilities[index], index));
         }
         else
         {
@@ -190,7 +187,7 @@ public class Unit : MonoBehaviour
     {
         if (!isPlayer) return;
 
-        if (context.canceled)
+        if (context.canceled) // Button Released
         {
             unitEventHandler.RaiseEvent("OnAbility2Casted", null);
         }
@@ -201,7 +198,7 @@ public class Unit : MonoBehaviour
     {
         if (!isPlayer) return;
 
-        if (context.canceled)
+        if (context.canceled) // Button Released
         {
             unitEventHandler.RaiseEvent("OnAbility3Casted", null);
         }
@@ -212,7 +209,7 @@ public class Unit : MonoBehaviour
     {
         if (!isPlayer) return;
 
-        if (context.canceled)
+        if (context.canceled) // Button Released
         {
             unitEventHandler.RaiseEvent("OnAbility4Casted", null);
         }
@@ -293,7 +290,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private IEnumerator CastAbility(Ability ability)
+    private IEnumerator CastAbility(Ability ability, int index)
     {
         Stop();
 
@@ -310,10 +307,12 @@ public class Unit : MonoBehaviour
             {
                 var playerAgent = GetComponent<PlayerAgent>();
                 yield return StartCoroutine(playerAgent.ProcessTargetInput(ability));
+                abilityCooldowns[index] = abilities[index].cooldown;
             }
             else
             {
                 AbilityInput(_aiTarget);
+                abilityCooldowns[index] = abilities[index].cooldown;
             }
         }
         else
