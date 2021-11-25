@@ -107,9 +107,9 @@ public class Unit : MonoBehaviour
         const int index = 0;
         if (abilityCooldowns[index] <= float.Epsilon)
         {
-            // abilityCooldowns[index] = abilities[index].cooldown;
             if (!isPlayer) _aiTarget = target;
-            StartCoroutine(CastAbility(abilities[index], index));
+            _currentAbilityIndex = index;
+            StartCoroutine(CastAbility(abilities[index]));
         }
         else
         {
@@ -123,7 +123,8 @@ public class Unit : MonoBehaviour
         if (abilityCooldowns[index] <= float.Epsilon)
         {
             if (!isPlayer) _aiTarget = target;
-            StartCoroutine(CastAbility(abilities[index], index));
+            _currentAbilityIndex = index;
+            StartCoroutine(CastAbility(abilities[index]));
         }
         else
         {
@@ -137,7 +138,8 @@ public class Unit : MonoBehaviour
         if (abilityCooldowns[index] <= float.Epsilon)
         {
             if (!isPlayer) _aiTarget = target;
-            StartCoroutine(CastAbility(abilities[index], index));
+            _currentAbilityIndex = index;
+            StartCoroutine(CastAbility(abilities[index]));
         }
         else
         {
@@ -151,7 +153,8 @@ public class Unit : MonoBehaviour
         if (abilityCooldowns[index] <= float.Epsilon)
         {
             if (!isPlayer) _aiTarget = target;
-            StartCoroutine(CastAbility(abilities[index], index));
+            _currentAbilityIndex = index;
+            StartCoroutine(CastAbility(abilities[index]));
         }
         else
         {
@@ -262,6 +265,7 @@ public class Unit : MonoBehaviour
 
     // members used for ability execution
     private AbilityType _currentAbilityType;
+    private int _currentAbilityIndex;
     private readonly Dictionary<string, object> _allTargets = new Dictionary<string, object>();
 
     private void AbilityInput(object target)
@@ -290,7 +294,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private IEnumerator CastAbility(Ability ability, int index)
+    private IEnumerator CastAbility(Ability ability)
     {
         Stop();
 
@@ -307,12 +311,10 @@ public class Unit : MonoBehaviour
             {
                 var playerAgent = GetComponent<PlayerAgent>();
                 yield return StartCoroutine(playerAgent.ProcessTargetInput(ability));
-                abilityCooldowns[index] = abilities[index].cooldown;
             }
             else
             {
                 AbilityInput(_aiTarget);
-                abilityCooldowns[index] = abilities[index].cooldown;
             }
         }
         else
@@ -357,6 +359,9 @@ public class Unit : MonoBehaviour
 
     private void ExecuteAbility(Ability ability)
     {
+        // Put the executed ability on cooldown
+        abilityCooldowns[_currentAbilityIndex] = abilities[_currentAbilityIndex].cooldown;
+
         // Update the Player's rotation
         float eulerAnglesZ = PseudoObject.transform.rotation.eulerAngles.z;
         unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
