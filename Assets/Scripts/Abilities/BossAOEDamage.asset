@@ -13,25 +13,28 @@ MonoBehaviour:
   m_Name: BossAOEDamage
   m_EditorClassIdentifier: 
   abilitySprite: {fileID: 0}
-  InputType: 3
-  Duration: 1
-  Cooldown: 5
-  AbilityStats:
+  inputType: 3
+  duration: 1
+  cooldown: 5
+  castRange: 3
+  potentialDamage: 30
+  idealRangePercentage: 100
+  abilityStats:
     _Buckets: ffffffff00000000ffffffff
-    _HashCodes: a0bf2b7edae6b970ffffffff
+    _HashCodes: 77c3df52dae6b970ffffffff
     _Next: 01000000ffffffffffffffff
     _Count: 3
-    _Version: 166
+    _Version: 186
     _FreeList: 2
     _FreeCount: 1
     _Keys:
-    - Cast Range
+    - AOE Radius
     - AOE Damage
     _Values:
     - 3
     - 30
     - 0
-  Outcomes:
+  outcomes:
   - Id: Telegraph Attack
     Duration: 0
     Trigger:
@@ -73,7 +76,7 @@ MonoBehaviour:
         Type: 3
         InitialPointId: 
         FinalPointId: 
-        AOERadiusId: Cast Range
+        AOERadiusId: AOE Radius
         TargetCenterId: Target Center
         PreviousEffectId: 
         ConeRangeId: 

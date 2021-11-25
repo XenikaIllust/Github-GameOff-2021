@@ -17,16 +17,18 @@ MonoBehaviour:
   duration: 1
   cooldown: 4
   castRange: 2
+  potentialDamage: 50
+  idealRangePercentage: 100
   abilityStats:
-    _Buckets: 01000000ffffffff0000000003000000ffffffffffffffffffffffff
-    _HashCodes: a0bf2b7ef4dc220cbcd45b150640e609000000000000000000000000
+    _Buckets: 01000000ffffffffffffffff03000000ffffffffffffffffffffffff
+    _HashCodes: fffffffff4dc220cbcd45b150640e609000000000000000000000000
     _Next: ffffffff02000000ffffffffffffffff000000000000000000000000
     _Count: 4
-    _Version: 112
-    _FreeList: -1
-    _FreeCount: 0
+    _Version: 113
+    _FreeList: 0
+    _FreeCount: 1
     _Keys:
-    - Cast Range
+    - 
     - Damage Stat 1
     - Cone Range
     - Cone Angle
@@ -34,7 +36,7 @@ MonoBehaviour:
     - 
     - 
     _Values:
-    - 2
+    - 0
     - 50
     - 1
     - 60

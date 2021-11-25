@@ -17,16 +17,18 @@ MonoBehaviour:
   duration: 4
   cooldown: 5
   castRange: 4
+  potentialDamage: 90
+  idealRangePercentage: 100
   abilityStats:
     _Buckets: ffffffffffffffff03000000ffffffffffffffffffffffff01000000
-    _HashCodes: a0bf2b7e77c3df528580155520f5bc77000000000000000000000000
-    _Next: ffffffffffffffff0000000002000000000000000000000000000000
+    _HashCodes: ffffffff77c3df528580155520f5bc77000000000000000000000000
+    _Next: ffffffffffffffffffffffff02000000000000000000000000000000
     _Count: 4
-    _Version: 158
-    _FreeList: -1
-    _FreeCount: 0
+    _Version: 159
+    _FreeList: 0
+    _FreeCount: 1
     _Keys:
-    - Cast Range
+    - 
     - AOE Radius
     - AOE Damage 1
     - AOE Damage 2
@@ -34,7 +36,7 @@ MonoBehaviour:
     - 
     - 
     _Values:
-    - 4
+    - 0
     - 4
     - 50
     - 40
