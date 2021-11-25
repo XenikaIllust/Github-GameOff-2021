@@ -85,6 +85,13 @@ public class GameActionCustomPropertyDrawer : PropertyDrawer {
 
             totalHeight += EditorGUI.GetPropertyHeight( projectileNameProperty, GUIContent.none );
         }
+        else if(gameActionBlockType == typeof(AnimationAction)) {
+            SerializedProperty animationNameProperty = property.FindPropertyRelative("AnimationName");
+            var animationNameRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( animationNameRect, animationNameProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( animationNameProperty, GUIContent.none );
+        }
 
         EditorGUI.indentLevel--;
 
