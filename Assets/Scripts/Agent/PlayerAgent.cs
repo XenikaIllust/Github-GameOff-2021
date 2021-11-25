@@ -20,6 +20,16 @@ public class PlayerAgent : Agent
         _camera = Camera.main;
     }
 
+    private void OnEnable()
+    {
+        EventManager.StartListening("OnGamePaused", StopAbilityInput);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening("OnGamePaused", StopAbilityInput);
+    }
+
     private void Update()
     {
         if (_defaultControlsEnabled)
@@ -60,8 +70,7 @@ public class PlayerAgent : Agent
     {
         if (!_defaultControlsEnabled)
         {
-            StopAbilityInput();
-            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Change cursor back to default
+            StopAbilityInput(null);
             _defaultControlsEnabled = true;
             return;
         }
@@ -104,7 +113,7 @@ public class PlayerAgent : Agent
     public IEnumerator ProcessTargetInput(Ability ability)
     {
         _defaultControlsEnabled = false;
-        StopAbilityInput();
+        StopAbilityInput(null);
 
         switch (ability.inputType)
         {
@@ -138,13 +147,14 @@ public class PlayerAgent : Agent
         _defaultControlsEnabled = true;
     }
 
-    private void StopAbilityInput()
+    private void StopAbilityInput(object @null)
     {
         if (_currentCoroutine != null)
         {
             StopCoroutine(_currentCoroutine);
             _turnOnHighlight = false;
             AOECircle.enabled = false;
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Change cursor back to default
         }
     }
 

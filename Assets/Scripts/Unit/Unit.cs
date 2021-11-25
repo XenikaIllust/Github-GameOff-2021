@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour
     private float _positionUpdateTimer;
     [Header("Abilities")] public List<Ability> abilities;
     [HideInInspector] public List<float> abilityCooldowns = new List<float>(new float[4]);
+    private bool isGamePaused = false;
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
     private object _aiTarget;
@@ -77,6 +78,9 @@ public class Unit : MonoBehaviour
         unitEventHandler.StartListening("OnAbility4Casted", OnAbility4Casted);
 
         unitEventHandler.StartListening("OnAbilityInputSet", OnAbilityInputSet);
+
+        EventManager.StartListening("OnGamePaused", OnGamePaused);
+        EventManager.StartListening("OnGameResumed", OnGameResumed);
     }
 
     private void OnDisable()
@@ -90,6 +94,19 @@ public class Unit : MonoBehaviour
         unitEventHandler.StopListening("OnAbility4Casted", OnAbility4Casted);
 
         unitEventHandler.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
+
+        EventManager.StopListening("OnGamePaused", OnGamePaused);
+        EventManager.StopListening("OnGameResumed", OnGameResumed);
+    }
+
+    private void OnGamePaused(object @null)
+    {
+        isGamePaused = true;
+    }
+
+    private void OnGameResumed(object @null)
+    {
+        isGamePaused = false;
     }
 
     private void OnStopOrderIssued(object @null)
@@ -177,7 +194,7 @@ public class Unit : MonoBehaviour
     // 'Q' Key
     public void OnFirstAbilityPressed(InputAction.CallbackContext context)
     {
-        if (!isPlayer) return;
+        if (!isPlayer || isGamePaused) return;
 
         if (context.canceled)
         {
@@ -188,7 +205,7 @@ public class Unit : MonoBehaviour
     // 'W' Key
     public void OnSecondAbilityPressed(InputAction.CallbackContext context)
     {
-        if (!isPlayer) return;
+        if (!isPlayer || isGamePaused) return;
 
         if (context.canceled) // Button Released
         {
@@ -199,7 +216,7 @@ public class Unit : MonoBehaviour
     // 'E' Key
     public void OnThirdAbilityPressed(InputAction.CallbackContext context)
     {
-        if (!isPlayer) return;
+        if (!isPlayer || isGamePaused) return;
 
         if (context.canceled) // Button Released
         {
@@ -210,7 +227,7 @@ public class Unit : MonoBehaviour
     // 'R' Key
     public void OnFourthAbilityPressed(InputAction.CallbackContext context)
     {
-        if (!isPlayer) return;
+        if (!isPlayer || isGamePaused) return;
 
         if (context.canceled) // Button Released
         {

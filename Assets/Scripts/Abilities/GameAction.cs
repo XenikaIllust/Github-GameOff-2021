@@ -29,6 +29,9 @@ public class GameAction
     // Name of Projectile Prefab
     public string ProjectileName;
 
+    // for AnimationAction
+    public string AnimationName;
+
     public void Invoke(AbilityStatsDict AbilityStats, List<object> CurrentFilteredTargets, Dictionary<string, object> AllTargets) {
         if(AbilityStats.ContainsKey(StatId)) { // this GameActionBlock type requires a stat
             GameActionBlock.Invoke(AbilityStats[StatId], CurrentFilteredTargets, AllTargets);
@@ -43,6 +46,10 @@ public class GameAction
         }
         else if(GameActionBlock.GetType() == typeof(FireProjectileAction)) {
             string[] idParams = new string[] { ProjectileName };
+            GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);
+        }
+        else if(GameActionBlock.GetType() == typeof(AnimationAction)) {
+            string[] idParams = new string[] { AnimationName };
             GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);
         }
         else {  // this GameActionBlock type requires no stat
