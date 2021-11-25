@@ -105,7 +105,7 @@ public class AIAgent : Agent
                 continue;
             }
 
-            if (thisUnit.abilityCooldowns[i] > float.Epsilon)
+            if (thisUnit.abilityCooldownList[i] > float.Epsilon)
             {
                 abilityUtilities[i] = float.NegativeInfinity;
                 continue;
