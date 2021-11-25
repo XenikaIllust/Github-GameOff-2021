@@ -20,6 +20,8 @@ public enum AITargetPositionType
 [CreateAssetMenu(fileName = "New Ability", menuName = "Scriptable Objects/Ability/Ability")]
 public class Ability : ScriptableObject
 {
+    public string abilityName;
+    [TextArea] public string abilityDescription;
     public Sprite abilitySprite;
     public AbilityType inputType;
     public float duration;
