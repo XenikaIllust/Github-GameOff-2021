@@ -19,21 +19,21 @@ public class ActionBar : MonoBehaviour
     // Button event handling...
     public void OnQPress()
     {
-        EventManager.RaiseEvent("QPressed", null);
+        EventManager.RaiseEvent("OnQPressed", null);
     }
 
     public void OnWPress()
     {
-        EventManager.RaiseEvent("WPressed", null);
+        EventManager.RaiseEvent("OnWPressed", null);
     }
 
     public void OnEPress()
     {
-        EventManager.RaiseEvent("EPressed", null);
+        EventManager.RaiseEvent("OnEPressed", null);
     }
 
     public void OnRPress()
     {
-        EventManager.RaiseEvent("RPressed", null);
+        EventManager.RaiseEvent("OnRPressed", null);
     }
 }
