@@ -26,11 +26,9 @@ public class PlayerUI : MonoBehaviour
     void Update()
     {
         PauseGame();
-
     }
 
-
-    // Pause function.    
+    // Pause function.
     void PauseGame()
     {
         if (Input.GetKeyDown(pauseKey))
@@ -44,10 +42,13 @@ public class PlayerUI : MonoBehaviour
             {
                 EventManager.RaiseEvent("OnGamePaused", null);
             }
+            else
+            {
+                EventManager.RaiseEvent("OnGameResumed", null);
+            }
 
             // Freeze time if game is paused.
             Time.timeScale = 1f * (PauseScreen.activeSelf == true ? 0 : 1);
-
         }
     }
 
