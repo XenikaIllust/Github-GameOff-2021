@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -7,16 +8,14 @@ public class ClaireAI : AIAgent
     private float chaseTarget = 25;
 
     [Range(0, 100)] [SerializeField] private float stop;
+    [Range(0, 360)] [SerializeField] private float defaultBestAngle = 180, defaultWorstAngle = 360;
 
     [Header("Utility Multiplier (Range, Direction, Damage, Cooldown)")] [SerializeField]
-    private float4[] multiplier = { 25, 25, 25, 25 };
+    private List<float4> multiplier = new List<float4> { 25, 25, 25, 25 };
 
     protected override void CalculateUtility()
     {
         var abilities = thisUnit.abilities;
-
-        const float defaultBestAngle = 180;
-        const float defaultWorstAngle = 360;
 
         for (var i = 0; i < abilityUtilities.Count; i++)
         {
