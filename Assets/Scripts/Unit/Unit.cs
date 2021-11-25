@@ -223,10 +223,8 @@ public class Unit : MonoBehaviour
 
     private void Move(Vector3 destination)
     {
-        var eulerAnglesZ = PseudoObject.transform.rotation.eulerAngles.z;
-        agent.speed = movementSpeed * (1 - Mathf.Abs(Mathf.Sin(eulerAnglesZ * Mathf.Deg2Rad)) / 2);
         agent.SetDestination(destination);
-        unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
+        unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", PseudoObject.transform.rotation.eulerAngles.z);
     }
 
     private float AngleToTarget(Vector3 target)
