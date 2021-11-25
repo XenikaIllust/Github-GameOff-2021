@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -17,8 +18,8 @@ public class Unit : MonoBehaviour
     [Header("Misc.")] public Alliance alliance;
     private float _positionUpdateTimer;
     [Header("Abilities")] public List<Ability> abilities;
-    [HideInInspector] public List<float> abilityCooldowns = new List<float>(new float[4]);
-    private bool isGamePaused = false;
+    [HideInInspector] public List<float> abilityCooldownList = new List<float>(new float[4]);
+    private bool _isGamePaused;
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
     private object _aiTarget;
@@ -33,7 +34,7 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        for (var i = 0; i < abilityCooldowns.Count; i++) abilityCooldowns[i] -= Time.deltaTime;
+        for (var i = 0; i < abilityCooldownList.Count; i++) abilityCooldownList[i] -= Time.deltaTime;
         UpdatePlayerPosition();
         UpdateAnimationMovement();
     }
@@ -43,12 +44,17 @@ public class Unit : MonoBehaviour
         unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
         isPlayer = GetComponent<PlayerAgent>() != null;
         agent = GetComponent<NavMeshAgent>();
+
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.speed = movementSpeed;
         agent.acceleration = float.MaxValue;
         agent.angularSpeed = float.MaxValue;
         agent.autoBraking = true;
+
+        defaultMovementSpeed = movementSpeed;
+        defaultTurnRate = turnRate;
+        while (abilities.Count < 4) abilities.Add(null);
 
         PseudoObject = new GameObject("PseudoObject")
         {
@@ -57,27 +63,18 @@ public class Unit : MonoBehaviour
                 parent = transform
             }
         };
-
-        defaultMovementSpeed = movementSpeed;
-        defaultTurnRate = turnRate;
-
-        while (abilities.Count < 4)
-        {
-            abilities.Add(null);
-        }
     }
 
     private void OnEnable()
     {
         unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
         unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
-        unitEventHandler.StartListening("OnDied", OnDied);
         unitEventHandler.StartListening("OnAbility1Casted", OnAbility1Casted);
         unitEventHandler.StartListening("OnAbility2Casted", OnAbility2Casted);
         unitEventHandler.StartListening("OnAbility3Casted", OnAbility3Casted);
         unitEventHandler.StartListening("OnAbility4Casted", OnAbility4Casted);
-
         unitEventHandler.StartListening("OnAbilityInputSet", OnAbilityInputSet);
+        unitEventHandler.StartListening("OnDied", OnDied);
 
         EventManager.StartListening("OnGamePaused", OnGamePaused);
         EventManager.StartListening("OnGameResumed", OnGameResumed);
@@ -87,13 +84,12 @@ public class Unit : MonoBehaviour
     {
         unitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
         unitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
-        unitEventHandler.StopListening("OnDied", OnDied);
         unitEventHandler.StopListening("OnAbility1Casted", OnAbility1Casted);
         unitEventHandler.StopListening("OnAbility2Casted", OnAbility2Casted);
         unitEventHandler.StopListening("OnAbility3Casted", OnAbility3Casted);
         unitEventHandler.StopListening("OnAbility4Casted", OnAbility4Casted);
-
-        unitEventHandler.StopListening("OnAbilityInputSet", OnAbilityInputSet); // temporary for testing
+        unitEventHandler.StopListening("OnAbilityInputSet", OnAbilityInputSet);
+        unitEventHandler.StopListening("OnDied", OnDied);
 
         EventManager.StopListening("OnGamePaused", OnGamePaused);
         EventManager.StopListening("OnGameResumed", OnGameResumed);
@@ -101,12 +97,12 @@ public class Unit : MonoBehaviour
 
     private void OnGamePaused(object @null)
     {
-        isGamePaused = true;
+        _isGamePaused = true;
     }
 
     private void OnGameResumed(object @null)
     {
-        isGamePaused = false;
+        _isGamePaused = false;
     }
 
     private void OnStopOrderIssued(object @null)
@@ -121,62 +117,22 @@ public class Unit : MonoBehaviour
 
     private void OnAbility1Casted(object target)
     {
-        const int index = 0;
-        if (abilityCooldowns[index] <= float.Epsilon)
-        {
-            if (!isPlayer) _aiTarget = target;
-            _currentAbilityIndex = index;
-            StartCoroutine(CastAbility(abilities[index]));
-        }
-        else
-        {
-            Debug.Log(abilities[index].name + " is still on cooldown for " + abilityCooldowns[index] + "s");
-        }
+        AbilityCasted(target, 0);
     }
 
     private void OnAbility2Casted(object target)
     {
-        const int index = 1;
-        if (abilityCooldowns[index] <= float.Epsilon)
-        {
-            if (!isPlayer) _aiTarget = target;
-            _currentAbilityIndex = index;
-            StartCoroutine(CastAbility(abilities[index]));
-        }
-        else
-        {
-            Debug.Log(abilities[index].name + " is still on cooldown for " + abilityCooldowns[index] + "s");
-        }
+        AbilityCasted(target, 1);
     }
 
     private void OnAbility3Casted(object target)
     {
-        const int index = 2;
-        if (abilityCooldowns[index] <= float.Epsilon)
-        {
-            if (!isPlayer) _aiTarget = target;
-            _currentAbilityIndex = index;
-            StartCoroutine(CastAbility(abilities[index]));
-        }
-        else
-        {
-            Debug.Log(abilities[index].name + " is still on cooldown for " + abilityCooldowns[index] + "s");
-        }
+        AbilityCasted(target, 2);
     }
 
     private void OnAbility4Casted(object target)
     {
-        const int index = 3;
-        if (abilityCooldowns[index] <= float.Epsilon)
-        {
-            if (!isPlayer) _aiTarget = target;
-            _currentAbilityIndex = index;
-            StartCoroutine(CastAbility(abilities[index]));
-        }
-        else
-        {
-            Debug.Log(abilities[index].name + " is still on cooldown for " + abilityCooldowns[index] + "s");
-        }
+        AbilityCasted(target, 3);
     }
 
     private void OnAbilityInputSet(object target)
@@ -194,9 +150,9 @@ public class Unit : MonoBehaviour
     // 'Q' Key
     public void OnFirstAbilityPressed(InputAction.CallbackContext context)
     {
-        if (!isPlayer || isGamePaused) return;
+        if (!isPlayer || _isGamePaused) return;
 
-        if (context.canceled)
+        if (context.canceled) // Button Released
         {
             unitEventHandler.RaiseEvent("OnAbility1Casted", null);
         }
@@ -205,7 +161,7 @@ public class Unit : MonoBehaviour
     // 'W' Key
     public void OnSecondAbilityPressed(InputAction.CallbackContext context)
     {
-        if (!isPlayer || isGamePaused) return;
+        if (!isPlayer || _isGamePaused) return;
 
         if (context.canceled) // Button Released
         {
@@ -216,7 +172,7 @@ public class Unit : MonoBehaviour
     // 'E' Key
     public void OnThirdAbilityPressed(InputAction.CallbackContext context)
     {
-        if (!isPlayer || isGamePaused) return;
+        if (!isPlayer || _isGamePaused) return;
 
         if (context.canceled) // Button Released
         {
@@ -227,7 +183,7 @@ public class Unit : MonoBehaviour
     // 'R' Key
     public void OnFourthAbilityPressed(InputAction.CallbackContext context)
     {
-        if (!isPlayer || isGamePaused) return;
+        if (!isPlayer || _isGamePaused) return;
 
         if (context.canceled) // Button Released
         {
@@ -276,7 +232,6 @@ public class Unit : MonoBehaviour
     private float AngleToTarget(Vector3 target)
     {
         Vector2 vectorToTarget = target - transform.position;
-
         return Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
     }
 
@@ -285,29 +240,46 @@ public class Unit : MonoBehaviour
     private int _currentAbilityIndex;
     private readonly Dictionary<string, object> _allTargets = new Dictionary<string, object>();
 
+    private void AbilityCasted(object target, int index)
+    {
+        if (abilityCooldownList[index] <= float.Epsilon)
+        {
+            if (!isPlayer) _aiTarget = target;
+            _currentAbilityIndex = index;
+            StartCoroutine(CastAbility(abilities[index]));
+        }
+        else
+        {
+            Debug.Log(abilities[index].name + " is still on cooldown for " + abilityCooldownList[index] + "s");
+        }
+    }
+
     private void AbilityInput(object target)
     {
-        if (_currentAbilityType == AbilityType.TargetPoint)
+        switch (_currentAbilityType)
         {
-            _castTargetPosition = (Vector3)target;
-            _allTargets["Target Point"] = _castTargetPosition;
-        }
-        else if (_currentAbilityType == AbilityType.TargetUnit)
-        {
-            var targetUnit = (Unit)target;
-            _castTargetPosition = targetUnit.transform.position;
-            _allTargets["Target Unit"] = target;
-            _allTargets["Target Unit Position"] = _castTargetPosition;
-        }
-        else if (_currentAbilityType == AbilityType.TargetArea)
-        {
-            _castTargetPosition = (Vector3)target;
-            _allTargets["Target Center"] = _castTargetPosition;
-        }
-        else if (_currentAbilityType == AbilityType.NoTarget)
-        {
-            _castTargetPosition = (Vector3)target;
-            _allTargets["Target Center"] = _castTargetPosition;
+            case AbilityType.TargetPoint:
+                _castTargetPosition = (Vector3)target;
+                _allTargets["Target Point"] = _castTargetPosition;
+                break;
+            case AbilityType.TargetUnit:
+            {
+                var targetUnit = (Unit)target;
+                _castTargetPosition = targetUnit.transform.position;
+                _allTargets["Target Unit"] = target;
+                _allTargets["Target Unit Position"] = _castTargetPosition;
+                break;
+            }
+            case AbilityType.TargetArea:
+                _castTargetPosition = (Vector3)target;
+                _allTargets["Target Center"] = _castTargetPosition;
+                break;
+            case AbilityType.NoTarget:
+                _castTargetPosition = (Vector3)target;
+                _allTargets["Target Center"] = _castTargetPosition;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 
@@ -324,15 +296,8 @@ public class Unit : MonoBehaviour
 
         if (_currentAbilityType != AbilityType.NoTarget)
         {
-            if (isPlayer)
-            {
-                var playerAgent = GetComponent<PlayerAgent>();
-                yield return StartCoroutine(playerAgent.ProcessTargetInput(ability));
-            }
-            else
-            {
-                AbilityInput(_aiTarget);
-            }
+            if (isPlayer) yield return StartCoroutine(GetComponent<PlayerAgent>().ProcessTargetInput(ability));
+            else AbilityInput(_aiTarget);
         }
         else
         {
@@ -346,7 +311,6 @@ public class Unit : MonoBehaviour
         else
         {
             TurnAndMove(_castTargetPosition);
-
             _pendingCast = PendingCast(ability);
             StartCoroutine(_pendingCast);
         }
@@ -377,7 +341,7 @@ public class Unit : MonoBehaviour
     private void ExecuteAbility(Ability ability)
     {
         // Put the executed ability on cooldown
-        abilityCooldowns[_currentAbilityIndex] = abilities[_currentAbilityIndex].cooldown;
+        abilityCooldownList[_currentAbilityIndex] = abilities[_currentAbilityIndex].cooldown;
 
         // Update the Player's rotation
         float eulerAnglesZ = PseudoObject.transform.rotation.eulerAngles.z;
@@ -388,16 +352,9 @@ public class Unit : MonoBehaviour
 
         foreach (var outcome in ability.outcomes)
         {
-            float executionTime;
-
-            if (outcome.Trigger.IsNormalizedTime)
-            {
-                executionTime = outcome.Trigger.ExecutionTime * ability.duration;
-            }
-            else
-            {
-                executionTime = outcome.Trigger.ExecutionTime;
-            }
+            var executionTime = outcome.Trigger.IsNormalizedTime
+                ? outcome.Trigger.ExecutionTime * ability.duration
+                : outcome.Trigger.ExecutionTime;
 
             StartCoroutine(ExecuteOutcome(outcome, ability.abilityStats, executionTime, outcome.Duration));
         }
@@ -407,26 +364,7 @@ public class Unit : MonoBehaviour
         float duration)
     {
         yield return new WaitForSeconds(timeToExecute);
-
-        foreach (var effect in outcome.Effects)
-        {
-            effect.ExecuteEffect(abilityStats, _allTargets);
-        }
-
-        yield return null;
-    }
-
-    private IEnumerator ExecuteConstantUpdateGameAction(GameAction gameAction, object param, float duration)
-    {
-        // float timeElapsed = 0;
-
-        // while(timeElapsed < duration) {
-        //     print(timeElapsed);
-        //     timeElapsed += Time.deltaTime;
-        //     GameActionBlock.Invoke(param);
-        //     yield return null;
-        // }
-
+        foreach (var effect in outcome.Effects) effect.ExecuteEffect(abilityStats, _allTargets);
         yield return null;
     }
 
@@ -454,27 +392,17 @@ public class Unit : MonoBehaviour
 
             if (_speed < 0.005f)
             {
-                if (_currentAnimation != AnimationType.Stop)
-                {
-                    _currentAnimation = AnimationType.Stop;
-                }
-                else return;
+                if (_currentAnimation == AnimationType.Stop) return;
 
+                _currentAnimation = AnimationType.Stop;
                 _stopAnimationTimer -= Time.deltaTime;
-
-                if (_stopAnimationTimer <= float.Epsilon)
-                {
-                    unitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
-                }
+                if (_stopAnimationTimer <= float.Epsilon) unitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
             }
             else
             {
-                if (_currentAnimation != AnimationType.Move)
-                {
-                    _currentAnimation = AnimationType.Move;
-                }
-                else return;
+                if (_currentAnimation == AnimationType.Move) return;
 
+                _currentAnimation = AnimationType.Move;
                 _stopAnimationTimer = 1 / turnRate;
                 unitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
             }

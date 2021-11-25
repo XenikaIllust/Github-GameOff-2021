@@ -2038,6 +2038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 8348757375398884883}
+  unitEventManager: {fileID: 0}
 --- !u!1 &5243279762856067852
 GameObject:
   m_ObjectHideFlags: 0
@@ -3181,6 +3182,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseScreen: {fileID: 38520685198462340}
+  EnemyHealthBarPrefab: {fileID: 0}
+  healthbarDisplacement: 1
+  unitEventManager: {fileID: 0}
   pauseKey: 27
 --- !u!1 &7521764798183637389
 GameObject:
