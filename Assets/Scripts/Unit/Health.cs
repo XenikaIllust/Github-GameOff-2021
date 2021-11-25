@@ -5,7 +5,7 @@ public class Health : MonoBehaviour
     private EventProcessor _unitEventHandler;
     private bool _isDead;
     public float health = 100f;
-    [HideInInspector] public float maxHealth;
+    public float maxHealth;
 
     private void Awake()
     {
@@ -65,6 +65,6 @@ public class Health : MonoBehaviour
     private void UpdateHealthBar()
     {
         float damageRate = (maxHealth - health) / maxHealth;
-        _unitEventHandler.RaiseEvent("OnUpdateDamageRate", damageRate);
+        _unitEventHandler.RaiseEvent("OnHealthChanged", damageRate);
     }
 }

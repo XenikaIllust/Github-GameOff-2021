@@ -10,16 +10,16 @@ public class HealthBar : MonoBehaviour
 
     void OnEnable()
     {
-        //unitEventManager.UnitEventHandler.StartListening("OnHealthChanged", SetHealth);
+        unitEventManager.UnitEventHandler.StartListening("OnHealthChanged", SetHealth);
     }
 
     void OnDisable()
     {
-        //unitEventManager.UnitEventHandler.StopListening("OnHealthChanged", SetHealth);
+        unitEventManager.UnitEventHandler.StopListening("OnHealthChanged", SetHealth);
     }
 
     public void SetHealth(object param)
     {
-        slider.value = (int)param;
+        slider.value = slider.maxValue - (float)param * 100;
     }
 }

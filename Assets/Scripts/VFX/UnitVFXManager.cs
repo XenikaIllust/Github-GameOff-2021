@@ -48,13 +48,13 @@ public class UnitVFXManager : MonoBehaviour
 
     private void OnEnable()
     {
-        _unitEventHandler.StartListening("OnUpdateDamageRate", UnitDamageRateVfx);
+        _unitEventHandler.StartListening("OnHealthChanged", UnitDamageRateVfx);
         _unitEventHandler.StartListening("OnDied", OnDied);
     }
 
     private void OnDisable()
     {
-        _unitEventHandler.StopListening("OnUpdateDamageRate", UnitDamageRateVfx);
+        _unitEventHandler.StopListening("OnHealthChanged", UnitDamageRateVfx);
         _unitEventHandler.StopListening("OnDied", OnDied);
     }
 
