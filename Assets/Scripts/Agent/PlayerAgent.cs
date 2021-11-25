@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -137,11 +138,10 @@ public class PlayerAgent : Agent
                 break;
             }
             case AbilityType.NoTarget:
-                Debug.LogError("this should never happen");
+                Debug.LogError("This case should never be true");
                 break;
             default:
-                Debug.LogError("I can't believe you've done this.");
-                break;
+                throw new ArgumentOutOfRangeException();
         }
 
         _defaultControlsEnabled = true;
