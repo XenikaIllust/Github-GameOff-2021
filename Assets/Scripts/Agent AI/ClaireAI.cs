@@ -16,8 +16,9 @@ public class ClaireAI : AIAgent
 
         for (var i = 0; i < abilityUtilities.Count; i++)
         {
-            var rangeUtility = rangeMultiplier[i] *
-                               RangeFactor(abilities[i].idealRangePercentage, abilities[i].idealRangePercentage * 2);
+            var rangeUtility = rangeMultiplier[i] * RangeFactor(
+                abilities[i].castRange * abilities[i].idealRangePercentage / 100,
+                abilities[i].castRange * abilities[i].idealRangePercentage / 100 * 2);
             var directionUtility = directionMultiplier[i] * DirectionFactor(bestAngle, worstAngle);
             var damageUtility = damageMultiplier[i] * DamageFactor(abilities[i].potentialDamage);
             var cooldownUtility = cooldownMultiplier[i] * CooldownFactor(abilities[i].cooldown);
@@ -25,7 +26,7 @@ public class ClaireAI : AIAgent
             abilityUtilities[i] = rangeUtility + directionUtility + damageUtility + cooldownUtility;
         }
 
-        chasePlayerUtility = 50;
+        chasePlayerUtility = 25;
         stopUtility = 0;
     }
 
