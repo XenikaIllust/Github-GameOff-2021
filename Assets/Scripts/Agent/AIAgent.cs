@@ -6,12 +6,12 @@ public class AIAgent : Agent
 {
     [Header("General Stats")] public float aggroRange = 5f;
     private bool _isAggro;
-    protected Vector3 playerPosition;
-    protected float distanceToPlayer = float.PositiveInfinity;
+    protected Vector3 targetPosition;
+    protected float distanceToTarget = float.PositiveInfinity;
     protected List<float> abilityUtilities;
     protected List<float> damageSort;
     protected List<float> cooldownSort;
-    protected float chasePlayerUtility;
+    protected float chaseTargetUtility;
     protected float stopUtility;
 
     protected override void Awake()
@@ -49,8 +49,8 @@ public class AIAgent : Agent
 
     private void OnPlayerPositionChanged(object newPosition)
     {
-        playerPosition = (Vector3)newPosition;
-        distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
+        targetPosition = (Vector3)newPosition;
+        distanceToTarget = Vector3.Distance(transform.position, (Vector3)newPosition);
         UtilityAI();
     }
 
@@ -58,7 +58,7 @@ public class AIAgent : Agent
     {
         if (_isAggro == false)
         {
-            if (distanceToPlayer > aggroRange) return;
+            if (distanceToTarget > aggroRange) return;
             _isAggro = true;
         }
 
@@ -69,7 +69,7 @@ public class AIAgent : Agent
 
     protected virtual void CalculateUtility()
     {
-        chasePlayerUtility = aggroRange - distanceToPlayer;
+        chaseTargetUtility = aggroRange - distanceToTarget;
         stopUtility = 0;
     }
 
@@ -89,7 +89,7 @@ public class AIAgent : Agent
                 continue;
             }
 
-            if (thisUnit.abilities[i].castRange < distanceToPlayer)
+            if (thisUnit.abilities[i].castRange < distanceToTarget)
             {
                 abilityUtilities[i] = float.NegativeInfinity;
             }
@@ -104,7 +104,7 @@ public class AIAgent : Agent
             (Ability2, abilityUtilities[1]),
             (Ability3, abilityUtilities[2]),
             (Ability4, abilityUtilities[3]),
-            (Chase, chasePlayerUtility),
+            (Chase, chaseTargetUtility),
             (Stop, stopUtility)
         };
 
@@ -114,27 +114,27 @@ public class AIAgent : Agent
 
     private void Ability1()
     {
-        unitEventHandler.RaiseEvent("OnAbility1Casted", playerPosition);
+        unitEventHandler.RaiseEvent("OnAbility1Casted", targetPosition);
     }
 
     private void Ability2()
     {
-        unitEventHandler.RaiseEvent("OnAbility2Casted", playerPosition);
+        unitEventHandler.RaiseEvent("OnAbility2Casted", targetPosition);
     }
 
     private void Ability3()
     {
-        unitEventHandler.RaiseEvent("OnAbility3Casted", playerPosition);
+        unitEventHandler.RaiseEvent("OnAbility3Casted", targetPosition);
     }
 
     private void Ability4()
     {
-        unitEventHandler.RaiseEvent("OnAbility4Casted", playerPosition);
+        unitEventHandler.RaiseEvent("OnAbility4Casted", targetPosition);
     }
 
     private void Chase()
     {
-        unitEventHandler.RaiseEvent("OnMoveOrderIssued", playerPosition);
+        unitEventHandler.RaiseEvent("OnMoveOrderIssued", targetPosition);
     }
 
     private void Stop()

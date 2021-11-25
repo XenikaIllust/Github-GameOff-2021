@@ -6,14 +6,14 @@ public class SniperAI : AIAgent
     {
         if (thisUnit.abilityCooldowns[0] <= float.Epsilon)
         {
-            abilityUtilities[0] = float.PositiveInfinity * (thisUnit.abilities[0].castRange - distanceToPlayer);
+            abilityUtilities[0] = float.PositiveInfinity * (thisUnit.abilities[0].castRange - distanceToTarget);
         }
         else
         {
             abilityUtilities[0] = float.NegativeInfinity;
         }
 
-        chasePlayerUtility = aggroRange - distanceToPlayer;
+        chaseTargetUtility = aggroRange - distanceToTarget;
         stopUtility = 0;
     }
 }

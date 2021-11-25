@@ -4,7 +4,7 @@ using UnityEngine;
 public class ClaireAI : AIAgent
 {
     [Header("Utility Stats")] [Range(0f, 100f)] [SerializeField]
-    private float chasePlayer = 25;
+    private float chaseTarget = 25;
 
     [Range(0f, 100f)] [SerializeField] private float stop;
 
@@ -30,20 +30,20 @@ public class ClaireAI : AIAgent
             abilityUtilities[i] = rangeUtility + directionUtility + damageUtility + cooldownUtility;
         }
 
-        chasePlayerUtility = chasePlayer;
+        chaseTargetUtility = chaseTarget;
         stopUtility = stop;
     }
 
     private float RangeFactor(float bestRange, float worstRange)
     {
-        if (distanceToPlayer <= bestRange) return 1;
-        if (distanceToPlayer >= worstRange) return 0;
-        return Mathf.Abs(distanceToPlayer - bestRange) / Mathf.Abs(worstRange - bestRange);
+        if (distanceToTarget <= bestRange) return 1;
+        if (distanceToTarget >= worstRange) return 0;
+        return Mathf.Abs(distanceToTarget - bestRange) / Mathf.Abs(worstRange - bestRange);
     }
 
     private float DirectionFactor(float bestAngle, float worstAngle)
     {
-        Vector2 vectorToTarget = playerPosition - transform.position;
+        Vector2 vectorToTarget = targetPosition - transform.position;
         var angleToTarget = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
 
         if (angleToTarget <= bestAngle / 2) return 1;
