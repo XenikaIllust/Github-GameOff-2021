@@ -5,8 +5,9 @@ using UnityEngine;
 public class AIAgent : Agent
 {
     [Header("General Stats")] public float aggroRange = 5f;
+    private bool _isAggro;
     protected Vector3 playerPosition;
-    protected float distanceToPlayer;
+    protected float distanceToPlayer = float.PositiveInfinity;
     protected List<float> abilityUtilities;
     protected List<float> damageSort;
     protected List<float> cooldownSort;
@@ -55,6 +56,12 @@ public class AIAgent : Agent
 
     private void UtilityAI()
     {
+        if (_isAggro == false)
+        {
+            if (distanceToPlayer > aggroRange) return;
+            _isAggro = true;
+        }
+
         CalculateUtility();
         CalculateRestriction();
         ExecuteBestAction();
