@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class AIAgent : Agent
 {
-    [Header("General Stats")] public float aggroRange = 5f;
+    [Header("General Stats")] public float aggroRange = 5;
     private bool _isAggro;
     protected Vector3 targetPosition;
     protected float distanceToTarget = float.PositiveInfinity;
-    protected List<float> abilityUtilities;
-    protected List<float> damageSort;
-    protected List<float> cooldownSort;
+    private readonly List<Vector3> _abilityTargetPosition = new List<Vector3>(new Vector3[4]);
+    protected readonly List<float> abilityUtilities = new List<float>(new float[4]);
+    protected readonly List<float> damageSort = new List<float>(new float[4]);
+    protected readonly List<float> cooldownSort = new List<float>(new float[4]);
     protected float chaseTargetUtility;
     protected float stopUtility;
 
@@ -18,20 +19,11 @@ public class AIAgent : Agent
     {
         base.Awake();
 
-        abilityUtilities = new List<float>(new float[4]);
         for (var i = 0; i < abilityUtilities.Count; i++) abilityUtilities[i] = -1;
-
-        cooldownSort = new List<float>(new float[4]);
         for (var i = 0; i < cooldownSort.Count; i++)
-        {
             cooldownSort[i] = thisUnit.abilities[i] == null ? float.NegativeInfinity : thisUnit.abilities[i].cooldown;
-        }
-
-        damageSort = new List<float>(new float[4]);
         for (var i = 0; i < damageSort.Count; i++)
-        {
             damageSort[i] = thisUnit.abilities[i] == null ? float.NegativeInfinity : thisUnit.abilities[i].totalDamage;
-        }
 
         cooldownSort.Sort();
         damageSort.Sort();
@@ -50,7 +42,8 @@ public class AIAgent : Agent
     private void OnPlayerPositionChanged(object newPosition)
     {
         targetPosition = (Vector3)newPosition;
-        distanceToTarget = Vector3.Distance(transform.position, (Vector3)newPosition);
+        distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+        for (var i = 0; i < _abilityTargetPosition.Count; i++) _abilityTargetPosition[i] = targetPosition;
         UtilityAI();
     }
 
@@ -63,14 +56,43 @@ public class AIAgent : Agent
         }
 
         CalculateUtility();
+        CheckRestrictionException();
         CalculateRestriction();
         ExecuteBestAction();
     }
 
     protected virtual void CalculateUtility()
     {
-        chaseTargetUtility = aggroRange - distanceToTarget;
-        stopUtility = 0;
+        Debug.LogError("Please override this method!");
+    }
+
+    private void CheckRestrictionException()
+    {
+        for (var i = 0; i < thisUnit.abilities.Count; i++)
+        {
+            var ability = thisUnit.abilities[i];
+
+            if (ability != null)
+            {
+                switch (ability.idealAITargetPosition)
+                {
+                    case AITargetPositionType.OnTarget:
+                        break;
+                    case AITargetPositionType.BehindTarget:
+                        var outDirection = (_abilityTargetPosition[i] - transform.position).normalized;
+                        _abilityTargetPosition[i] += outDirection * ability.targetPositionOffset;
+                        break;
+                    case AITargetPositionType.InFrontOfTarget:
+                        var inDirection = (transform.position - _abilityTargetPosition[i]).normalized;
+                        _abilityTargetPosition[i] += inDirection * ability.targetPositionOffset;
+                        if (distanceToTarget < ability.targetPositionOffset * 2)
+                            abilityUtilities[i] = float.NegativeInfinity;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
     }
 
     private void CalculateRestriction()
@@ -114,22 +136,22 @@ public class AIAgent : Agent
 
     private void Ability1()
     {
-        unitEventHandler.RaiseEvent("OnAbility1Casted", targetPosition);
+        unitEventHandler.RaiseEvent("OnAbility1Casted", _abilityTargetPosition[0]);
     }
 
     private void Ability2()
     {
-        unitEventHandler.RaiseEvent("OnAbility2Casted", targetPosition);
+        unitEventHandler.RaiseEvent("OnAbility2Casted", _abilityTargetPosition[1]);
     }
 
     private void Ability3()
     {
-        unitEventHandler.RaiseEvent("OnAbility3Casted", targetPosition);
+        unitEventHandler.RaiseEvent("OnAbility3Casted", _abilityTargetPosition[2]);
     }
 
     private void Ability4()
     {
-        unitEventHandler.RaiseEvent("OnAbility4Casted", targetPosition);
+        unitEventHandler.RaiseEvent("OnAbility4Casted", _abilityTargetPosition[3]);
     }
 
     private void Chase()

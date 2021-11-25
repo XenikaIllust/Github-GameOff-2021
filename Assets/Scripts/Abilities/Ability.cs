@@ -9,6 +9,13 @@ public enum AbilityType
     NoTarget
 }
 
+public enum AITargetPositionType
+{
+    OnTarget,
+    BehindTarget,
+    InFrontOfTarget
+}
+
 [System.Serializable]
 [CreateAssetMenu(fileName = "New Ability", menuName = "Scriptable Objects/Ability/Ability")]
 public class Ability : ScriptableObject
@@ -22,9 +29,14 @@ public class Ability : ScriptableObject
     [FormerlySerializedAs("potentialDamage")] [Header("Utility AI")]
     public float totalDamage;
 
-    [Range(0f, 200f)]
-    [Tooltip("0% means the ability is ideal at point blank range, 100% means the ability is ideal at max cast range")]
-    public float idealRangePercentage = 100f;
+    [Range(0, 200)]
+    [Tooltip("0%: ideal when target at point blank range\n" +
+             "100%: ideal up to max cast range\n" +
+             ">100%: ideal up to more than max cast range")]
+    public float idealRangePercentage = 100;
+
+    public AITargetPositionType idealAITargetPosition = AITargetPositionType.OnTarget;
+    public float targetPositionOffset = 1;
 
     [Space] public AbilityStatsDict abilityStats;
     public Outcome[] outcomes;

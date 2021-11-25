@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class ClaireAI : AIAgent
 {
-    [Header("Utility Stats")] [Range(0f, 100f)] [SerializeField]
+    [Header("Utility Stats")] [Range(0, 100)] [SerializeField]
     private float chaseTarget = 25;
 
-    [Range(0f, 100f)] [SerializeField] private float stop;
+    [Range(0, 100)] [SerializeField] private float stop;
 
     [Header("Utility Multiplier (Range, Direction, Damage, Cooldown)")] [SerializeField]
     private float4[] multiplier = { 25, 25, 25, 25 };
@@ -20,6 +20,8 @@ public class ClaireAI : AIAgent
 
         for (var i = 0; i < abilityUtilities.Count; i++)
         {
+            if (abilities[i] == null) return;
+
             var rangeUtility = multiplier[i][0] * RangeFactor(
                 abilities[i].castRange * abilities[i].idealRangePercentage / 100,
                 abilities[i].castRange * abilities[i].idealRangePercentage / 100 * 2);
