@@ -1,39 +1,47 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ActionBar : MonoBehaviour
 {
-    // For testing only...
-    void Update()
-    {
-        bool isQPressed = Input.GetKeyDown(KeyCode.Q);
-        bool isWPressed = Input.GetKeyDown(KeyCode.W);
-        bool isEPressed = Input.GetKeyDown(KeyCode.E);
-        bool isRPressed = Input.GetKeyDown(KeyCode.R);
+    /*  
+    These functions have to be called from the Player Input Component
+    If this script is only meant to raise events based on input, then it shouldn't exist
+    and just handle this logic inside Unit.cs
+    */
 
-        if (isQPressed) OnQPress();
-        if (isWPressed) OnWPress();
-        if (isEPressed) OnEPress();
-        if (isRPressed) OnRPress();
+    // 'Q' Key
+    public void OnQPressed(InputAction.CallbackContext context)
+    {
+        if (context.started) // Button Pressed
+        {
+            EventManager.RaiseEvent("QPressed", null);
+        }
     }
 
-    // Button event handling...
-    public void OnQPress()
+    // 'W' Key
+    public void OnWPressed(InputAction.CallbackContext context)
     {
-        EventManager.RaiseEvent("QPressed", null);
+        if (context.started) // Button Pressed
+        {
+            EventManager.RaiseEvent("WPressed", null);
+        }
     }
 
-    public void OnWPress()
+    // 'E' Key
+    public void OnEPressed(InputAction.CallbackContext context)
     {
-        EventManager.RaiseEvent("WPressed", null);
+        if (context.started) // Button Pressed
+        {
+            EventManager.RaiseEvent("EPressed", null);
+        }
     }
 
-    public void OnEPress()
+    // 'R' Key
+    public void OnRPressed(InputAction.CallbackContext context)
     {
-        EventManager.RaiseEvent("EPressed", null);
-    }
-
-    public void OnRPress()
-    {
-        EventManager.RaiseEvent("RPressed", null);
+        if (context.started) // Button Pressed
+        {
+            EventManager.RaiseEvent("RPressed", null);
+        }
     }
 }
