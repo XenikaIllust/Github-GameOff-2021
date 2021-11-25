@@ -19,6 +19,7 @@ public class Unit : MonoBehaviour
     private float _positionUpdateTimer;
     [Header("Abilities")] public List<Ability> abilities;
     [HideInInspector] public List<float> abilityCooldownList = new List<float>(new float[4]);
+    private float _inputLockDuration;
     private bool _isGamePaused;
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
@@ -34,6 +35,7 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
+        _inputLockDuration -= Time.deltaTime;
         for (var i = 0; i < abilityCooldownList.Count; i++) abilityCooldownList[i] -= Time.deltaTime;
         UpdatePlayerPosition();
         UpdateAnimationMovement();
@@ -74,6 +76,7 @@ public class Unit : MonoBehaviour
         unitEventHandler.StartListening("OnAbility3Casted", OnAbility3Casted);
         unitEventHandler.StartListening("OnAbility4Casted", OnAbility4Casted);
         unitEventHandler.StartListening("OnAbilityInputSet", OnAbilityInputSet);
+        unitEventHandler.StartListening("OnInputLocked", OnInputLocked);
         unitEventHandler.StartListening("OnDied", OnDied);
 
         EventManager.StartListening("OnGamePaused", OnGamePaused);
@@ -89,10 +92,16 @@ public class Unit : MonoBehaviour
         unitEventHandler.StopListening("OnAbility3Casted", OnAbility3Casted);
         unitEventHandler.StopListening("OnAbility4Casted", OnAbility4Casted);
         unitEventHandler.StopListening("OnAbilityInputSet", OnAbilityInputSet);
+        unitEventHandler.StopListening("OnInputLocked", OnInputLocked);
         unitEventHandler.StopListening("OnDied", OnDied);
 
         EventManager.StopListening("OnGamePaused", OnGamePaused);
         EventManager.StopListening("OnGameResumed", OnGameResumed);
+    }
+
+    private void OnInputLocked(object duration)
+    {
+        _inputLockDuration = Mathf.Max((float)duration, _inputLockDuration);
     }
 
     private void OnGamePaused(object @null)
@@ -107,31 +116,37 @@ public class Unit : MonoBehaviour
 
     private void OnStopOrderIssued(object @null)
     {
+        if (_inputLockDuration > float.Epsilon) return;
         Stop();
     }
 
     private void OnMoveOrderIssued(object destination)
     {
+        if (_inputLockDuration > float.Epsilon) return;
         TurnAndMove((Vector3)destination);
     }
 
     private void OnAbility1Casted(object target)
     {
+        if (_inputLockDuration > float.Epsilon) return;
         AbilityCasted(target, 0);
     }
 
     private void OnAbility2Casted(object target)
     {
+        if (_inputLockDuration > float.Epsilon) return;
         AbilityCasted(target, 1);
     }
 
     private void OnAbility3Casted(object target)
     {
+        if (_inputLockDuration > float.Epsilon) return;
         AbilityCasted(target, 2);
     }
 
     private void OnAbility4Casted(object target)
     {
+        if (_inputLockDuration > float.Epsilon) return;
         AbilityCasted(target, 3);
     }
 
@@ -354,15 +369,19 @@ public class Unit : MonoBehaviour
                 ? outcome.Trigger.ExecutionTime * ability.duration
                 : outcome.Trigger.ExecutionTime;
 
-            StartCoroutine(ExecuteOutcome(outcome, ability.abilityStats, executionTime, outcome.Duration));
+            StartCoroutine(ExecuteOutcome(outcome, ability, executionTime, outcome.Duration));
         }
     }
 
-    private IEnumerator ExecuteOutcome(Outcome outcome, AbilityStatsDict abilityStats, float timeToExecute,
+    private IEnumerator ExecuteOutcome(Outcome outcome, Ability ability, float timeToExecute,
         float duration)
     {
+        _inputLockDuration = ability.castPoint + ability.castBackSwing;
+        // Pre-cast Animation for ability.castPoint duration
+        yield return new WaitForSeconds(ability.castPoint);
+        // Post-cast Animation for ability.castBackSwing duration
         yield return new WaitForSeconds(timeToExecute);
-        foreach (var effect in outcome.Effects) effect.ExecuteEffect(abilityStats, _allTargets);
+        foreach (var effect in outcome.Effects) effect.ExecuteEffect(ability.abilityStats, _allTargets);
         yield return null;
     }
 
