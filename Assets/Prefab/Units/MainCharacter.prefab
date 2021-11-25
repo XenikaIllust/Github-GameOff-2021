@@ -376,6 +376,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9a7e6208-5e38-4968-b4ea-80f1cfb04268
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PlayerUI, Assembly-CSharp
+        m_MethodName: OnPauseGamePressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: bdeaf9d4-0360-4e22-8deb-a205920df3b3
+    m_ActionName: Player/PauseGame[/Keyboard/escape,/Keyboard/p]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -411,12 +427,17 @@ MonoBehaviour:
   defaultTurnRate: 0
   isPlayer: 0
   agent: {fileID: 0}
-  allianceId: 1
+  alliance: 0
   abilities:
   - {fileID: 11400000, guid: 4fd1dc6bfc980c04a992a4bac83f21e0, type: 2}
   - {fileID: 11400000, guid: fe0e51747d0b6c142a6056463e3314ae, type: 2}
   - {fileID: 11400000, guid: 276f7e7509eb54c4fbc29e9213421a07, type: 2}
   - {fileID: 11400000, guid: 6c69752357dc1cf4ab9a73760dc2fead, type: 2}
+  abilityCooldowns:
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!114 &3449367993870842367
 MonoBehaviour:
   m_ObjectHideFlags: 0

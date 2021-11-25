@@ -196,7 +196,7 @@ public class Unit : MonoBehaviour
     {
         if (!isPlayer || isGamePaused) return;
 
-        if (context.canceled)
+        if (context.canceled) // Button Released
         {
             unitEventHandler.RaiseEvent("OnAbility1Casted", null);
         }

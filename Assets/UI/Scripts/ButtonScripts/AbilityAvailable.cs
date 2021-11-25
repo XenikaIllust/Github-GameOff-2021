@@ -1,9 +1,7 @@
-
 using UnityEngine;
 
 public class AbilityAvailable : AbilityButtonState
 {
-
     public AbilityAvailable(AbilityButton button) : base(button){}
 
     public override void Enter()
@@ -14,7 +12,7 @@ public class AbilityAvailable : AbilityButtonState
     public override void UpdateLoop()
     {
         if (AbilityButtonContext.isPressed)
-        {    
+        {
             OnActivated();
             AbilityButtonContext.isPressed = false;
         }
@@ -30,5 +28,4 @@ public class AbilityAvailable : AbilityButtonState
 
         AbilityButtonContext.SwitchState(AbilityButtonContext.abilityTarget);
     }
-
 }

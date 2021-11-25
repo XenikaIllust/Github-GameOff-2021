@@ -1,11 +1,10 @@
-
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using UnityEngine.InputSystem;
 
 public class PlayerUI : MonoBehaviour
 {
-
     public GameObject PauseScreen;
 
     public Slider EnemyHealthBarPrefab;
@@ -14,24 +13,16 @@ public class PlayerUI : MonoBehaviour
 
     public UnitEventManager unitEventManager;
 
-    public KeyCode pauseKey = KeyCode.Escape;
-
     // Start is called before the first frame update
     void Start()
     {
         unitEventManager.UnitEventHandler.StartListening("OnSpawned", ShowEnemyHealth);
     }
 
-    // Update is called once per frame
-    void Update()
+    // 'Escape' Key, 'P' Key
+    public void OnPauseGamePressed(InputAction.CallbackContext context)
     {
-        PauseGame();
-    }
-
-    // Pause function.
-    void PauseGame()
-    {
-        if (Input.GetKeyDown(pauseKey))
+        if (context.started) // Button Pressed
         {
             // Toggle the pause screen
             PauseScreen.SetActive(!PauseScreen.activeSelf);
