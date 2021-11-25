@@ -1,33 +1,37 @@
+using Unity.Mathematics;
 using UnityEngine;
 
 public class ClaireAI : AIAgent
 {
+    [Header("Utility Stats")] [Range(0f, 100f)] [SerializeField]
+    private float chasePlayer = 25;
+
+    [Range(0f, 100f)] [SerializeField] private float stop;
+
+    [Header("Utility Multiplier (Range, Direction, Damage, Cooldown)")] [SerializeField]
+    private float4[] multiplier = { 25, 25, 25, 25 };
+
     protected override void CalculateUtility()
     {
         var abilities = thisUnit.abilities;
 
-        // Set multiplier respectively for Ability 1, 2, 3, 4
-        var rangeMultiplier = new float[] { 25, 25, 25, 25 };
-        var directionMultiplier = new float[] { 25, 25, 25, 25 };
-        var damageMultiplier = new float[] { 25, 25, 25, 25 };
-        var cooldownMultiplier = new float[] { 25, 25, 25, 25 };
-        const float bestAngle = 180;
-        const float worstAngle = 360;
+        const float defaultBestAngle = 180;
+        const float defaultWorstAngle = 360;
 
         for (var i = 0; i < abilityUtilities.Count; i++)
         {
-            var rangeUtility = rangeMultiplier[i] * RangeFactor(
+            var rangeUtility = multiplier[i][1] * RangeFactor(
                 abilities[i].castRange * abilities[i].idealRangePercentage / 100,
                 abilities[i].castRange * abilities[i].idealRangePercentage / 100 * 2);
-            var directionUtility = directionMultiplier[i] * DirectionFactor(bestAngle, worstAngle);
-            var damageUtility = damageMultiplier[i] * DamageFactor(abilities[i].totalDamage);
-            var cooldownUtility = cooldownMultiplier[i] * CooldownFactor(abilities[i].cooldown);
+            var directionUtility = multiplier[i][2] * DirectionFactor(defaultBestAngle, defaultWorstAngle);
+            var damageUtility = multiplier[i][3] * DamageFactor(abilities[i].totalDamage);
+            var cooldownUtility = multiplier[i][4] * CooldownFactor(abilities[i].cooldown);
 
             abilityUtilities[i] = rangeUtility + directionUtility + damageUtility + cooldownUtility;
         }
 
-        chasePlayerUtility = 25;
-        stopUtility = 0;
+        chasePlayerUtility = chasePlayer;
+        stopUtility = stop;
     }
 
     private float RangeFactor(float bestRange, float worstRange)
