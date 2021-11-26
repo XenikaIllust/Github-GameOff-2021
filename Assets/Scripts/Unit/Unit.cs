@@ -71,6 +71,7 @@ public class Unit : MonoBehaviour
     {
         unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
         unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        unitEventHandler.StartListening("OnLookOrderIssued", OnLookOrderIssued);
         unitEventHandler.StartListening("OnAbility1Casted", OnAbility1Casted);
         unitEventHandler.StartListening("OnAbility2Casted", OnAbility2Casted);
         unitEventHandler.StartListening("OnAbility3Casted", OnAbility3Casted);
@@ -87,6 +88,7 @@ public class Unit : MonoBehaviour
     {
         unitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
         unitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        unitEventHandler.StopListening("OnLookOrderIssued", OnLookOrderIssued);
         unitEventHandler.StopListening("OnAbility1Casted", OnAbility1Casted);
         unitEventHandler.StopListening("OnAbility2Casted", OnAbility2Casted);
         unitEventHandler.StopListening("OnAbility3Casted", OnAbility3Casted);
@@ -124,6 +126,12 @@ public class Unit : MonoBehaviour
     {
         if (_inputLockDuration > float.Epsilon) return;
         TurnAndMove((Vector3)destination);
+    }
+
+    private void OnLookOrderIssued(object target)
+    {
+        if (_inputLockDuration > float.Epsilon) return;
+        TurnAndLook((Vector3)target);
     }
 
     private void OnAbility1Casted(object target)
@@ -240,6 +248,16 @@ public class Unit : MonoBehaviour
     {
         agent.SetDestination(destination);
         unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", PseudoObject.transform.rotation.eulerAngles.z);
+    }
+
+    private void TurnAndLook(Vector3 target)
+    {
+        Stop();
+
+        PseudoObject.transform
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(target)),
+                turnRate * 360)
+            .SetSpeedBased().SetEase(Ease.Linear);
     }
 
     private float AngleToTarget(Vector3 target)
