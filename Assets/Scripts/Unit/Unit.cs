@@ -71,6 +71,7 @@ public class Unit : MonoBehaviour
     {
         unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
         unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        unitEventHandler.StartListening("OnLookOrderIssued", OnLookOrderIssued);
         unitEventHandler.StartListening("OnAbility1Casted", OnAbility1Casted);
         unitEventHandler.StartListening("OnAbility2Casted", OnAbility2Casted);
         unitEventHandler.StartListening("OnAbility3Casted", OnAbility3Casted);
@@ -87,6 +88,7 @@ public class Unit : MonoBehaviour
     {
         unitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
         unitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
+        unitEventHandler.StopListening("OnLookOrderIssued", OnLookOrderIssued);
         unitEventHandler.StopListening("OnAbility1Casted", OnAbility1Casted);
         unitEventHandler.StopListening("OnAbility2Casted", OnAbility2Casted);
         unitEventHandler.StopListening("OnAbility3Casted", OnAbility3Casted);
@@ -124,6 +126,12 @@ public class Unit : MonoBehaviour
     {
         if (_inputLockDuration > float.Epsilon) return;
         TurnAndMove((Vector3)destination);
+    }
+
+    private void OnLookOrderIssued(object target)
+    {
+        if (_inputLockDuration > float.Epsilon) return;
+        TurnAndLook((Vector3)target);
     }
 
     private void OnAbility1Casted(object target)
@@ -242,6 +250,16 @@ public class Unit : MonoBehaviour
         unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", PseudoObject.transform.rotation.eulerAngles.z);
     }
 
+    private void TurnAndLook(Vector3 target)
+    {
+        Stop();
+
+        PseudoObject.transform
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(target)),
+                turnRate * 360)
+            .SetSpeedBased().SetEase(Ease.Linear);
+    }
+
     private float AngleToTarget(Vector3 target)
     {
         Vector2 vectorToTarget = target - transform.position;
@@ -348,10 +366,10 @@ public class Unit : MonoBehaviour
         PseudoObject.transform
             .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(_castTargetPosition)),
                 turnRate * 360)
-            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => ExecuteAbility(ability));
+            .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => StartCoroutine(ExecuteAbility(ability)));
     }
 
-    private void ExecuteAbility(Ability ability)
+    private IEnumerator ExecuteAbility(Ability ability)
     {
         // Put the executed ability on cooldown
         abilityCooldownList[_currentAbilityIndex] = abilities[_currentAbilityIndex].cooldown;
@@ -359,6 +377,12 @@ public class Unit : MonoBehaviour
         // Update the Player's rotation
         float eulerAnglesZ = PseudoObject.transform.rotation.eulerAngles.z;
         unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
+
+        _inputLockDuration = ability.castPoint + ability.castBackSwing;
+
+        unitEventHandler.RaiseEvent("OnCastPointAnimating", ability.castPoint);
+        yield return new WaitForSeconds(ability.castPoint);
+        unitEventHandler.RaiseEvent("OnCastBackSwingAnimating", ability.castBackSwing);
 
         // used by AI to indicate ability has started execution
         unitEventHandler.RaiseEvent("OnAbilityStartedExecuting", null);
@@ -369,17 +393,14 @@ public class Unit : MonoBehaviour
                 ? outcome.Trigger.ExecutionTime * ability.duration
                 : outcome.Trigger.ExecutionTime;
 
-            StartCoroutine(ExecuteOutcome(outcome, ability, executionTime, outcome.Duration));
+            StartCoroutine(ExecuteOutcome(outcome, ability, executionTime));
         }
+
+        yield return null;
     }
 
-    private IEnumerator ExecuteOutcome(Outcome outcome, Ability ability, float timeToExecute,
-        float duration)
+    private IEnumerator ExecuteOutcome(Outcome outcome, Ability ability, float timeToExecute)
     {
-        _inputLockDuration = ability.castPoint + ability.castBackSwing;
-        // Pre-cast Animation for ability.castPoint duration
-        yield return new WaitForSeconds(ability.castPoint);
-        // Post-cast Animation for ability.castBackSwing duration
         yield return new WaitForSeconds(timeToExecute);
         foreach (var effect in outcome.Effects) effect.ExecuteEffect(ability.abilityStats, _allTargets);
         yield return null;

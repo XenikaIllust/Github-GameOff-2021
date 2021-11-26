@@ -4,22 +4,21 @@ using UnityEngine;
 
 public class ClaireAI : AIAgent
 {
-    [Header("Utility Stats")] [Range(0, 100)] [SerializeField]
-    private float chaseTarget = 25;
+    [Header("Utility Stats")] [Range(0, 360)] [SerializeField]
+    private float defaultBestAngle = 180;
 
-    [Range(0, 100)] [SerializeField] private float stop;
-    [Range(0, 360)] [SerializeField] private float defaultBestAngle = 180, defaultWorstAngle = 360;
+    [Range(0, 360)] [SerializeField] private float defaultWorstAngle = 360;
 
     [Header("Utility Multiplier (Range, Direction, Damage, Cooldown)")] [SerializeField]
     private List<float4> multiplier = new List<float4> { 25, 25, 25, 25 };
 
-    protected override void CalculateUtility()
+    protected override void CalculateAbilityUtility()
     {
         var abilities = thisUnit.abilities;
 
         for (var i = 0; i < abilityUtilities.Count; i++)
         {
-            if (abilities[i] == null) return;
+            if (abilities[i] == null) continue;
 
             var rangeUtility = multiplier[i][0] * RangeFactor(
                 abilities[i].castRange * abilities[i].idealRangePercentage / 100,
@@ -30,9 +29,6 @@ public class ClaireAI : AIAgent
 
             abilityUtilities[i] = rangeUtility + directionUtility + damageUtility + cooldownUtility;
         }
-
-        chaseTargetUtility = chaseTarget;
-        stopUtility = stop;
     }
 
     private float RangeFactor(float bestRange, float worstRange)
