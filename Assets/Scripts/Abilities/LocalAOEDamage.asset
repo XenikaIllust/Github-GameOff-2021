@@ -23,7 +23,7 @@ MonoBehaviour:
   castBackSwing: 0.7
   totalDamage: 0
   idealTargetPosition: 1
-  targetPositionOffset: 4
+  targetPositionOffset: 2
   abilityStats:
     _Buckets: ffffffff01000000ffffffff
     _HashCodes: 77c3df522068d20600000000
