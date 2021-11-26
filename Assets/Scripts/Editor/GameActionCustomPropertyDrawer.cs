@@ -50,6 +50,9 @@ public class GameActionCustomPropertyDrawer : PropertyDrawer {
             var vfxPointIdRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
             EditorGUI.PropertyField( vfxPointIdRect, vfxPointIdProperty );
 
+            SerializedProperty statIdProperty = property.FindPropertyRelative("StatId");
+            statIdProperty.stringValue = "";
+
             totalHeight += EditorGUI.GetPropertyHeight( vfxPointIdProperty, GUIContent.none );
         }
         else if(gameActionBlockType == typeof(LineVFXActionBlock)) {
