@@ -12,13 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: BossAOEDamage
   m_EditorClassIdentifier: 
+  abilityName: 
+  abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 3
   duration: 1
   cooldown: 5
-  castRange: 3
-  potentialDamage: 30
-  idealRangePercentage: 100
+  castRange: 0
+  castPoint: 0.3
+  castBackSwing: 0.7
+  totalDamage: 30
+  idealTargetPosition: 1
+  targetPositionOffset: 3
   abilityStats:
     _Buckets: ffffffff00000000ffffffff
     _HashCodes: 77c3df52dae6b970ffffffff
@@ -65,6 +70,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
   - Id: Attack
     Duration: 0
     Trigger:
@@ -95,3 +101,4 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
