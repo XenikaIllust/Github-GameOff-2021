@@ -395,6 +395,11 @@ MonoBehaviour:
   alliance: 1
   abilities:
   - {fileID: 11400000, guid: e07134232319e7348a52f7b0d555f1c7, type: 2}
+  abilityCooldownList:
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!114 &1356358264916591144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,9 +412,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f64f0d4ebdaf24a9acc0323f17cc11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hostileRange: 5
-  attackRange: 0.5
-  attackAbility: {fileID: 11400000, guid: e07134232319e7348a52f7b0d555f1c7, type: 2}
+  aggroRange: 5
+  preferredCombatRange:
+    x: 0
+    y: 0.5
+  defaultBestAngle: 180
+  defaultWorstAngle: 360
+  multiplier:
+  - x: 25
+    y: 25
+    z: 25
+    w: 25
+  - x: 25
+    y: 25
+    z: 25
+    w: 25
+  - x: 25
+    y: 25
+    z: 25
+    w: 25
+  - x: 25
+    y: 25
+    z: 25
+    w: 25
 --- !u!114 &-8624061012861718292
 MonoBehaviour:
   m_ObjectHideFlags: 0
