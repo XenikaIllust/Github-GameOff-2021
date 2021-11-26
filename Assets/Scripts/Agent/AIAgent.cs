@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -8,7 +9,6 @@ public class AIAgent : Agent
     [Header("General Stats")] [SerializeField]
     private float aggroRange = 5;
 
-    [Header("Min, Max")] [SerializeField] private float2 preferredCombatRange = new float2 { x = 2.4f, y = 2.6f };
     private bool _isAggro;
     private bool _noLegalAbility;
 
@@ -21,13 +21,14 @@ public class AIAgent : Agent
     protected float distanceToTarget = float.PositiveInfinity;
     protected readonly List<float> idealRanges = new List<float>(new float[4]);
 
-    [Header("Utility Stats")] [Range(0, 360)] [SerializeField]
-    protected float defaultBestAngle = 180;
+    [Header("Utility Stats")] [SerializeField]
+    private float2 preferredCombatRange = new float2 { x = 2.4f, y = 2.6f };
 
-    [Range(0, 360)] [SerializeField] protected float defaultWorstAngle = 360;
+    [Range(0, 100)] [SerializeField] protected float basicMovementMultiplier = 50;
+    [Range(0, 360)] protected float defaultBestAngle = 180, defaultWorstAngle = 360;
 
     [Header("Utility Multiplier (Range, Direction, Damage, Cooldown)")] [SerializeField]
-    protected List<float4> multiplier = new List<float4> { 25, 25, 25, 25 };
+    protected List<float4> abilityMultiplier = new List<float4> { 25, 25, 25, 25 };
 
     [Header("Read Only")] [SerializeField] protected List<float> abilityUtilities = new List<float>(new float[4]);
     [SerializeField] private float chaseUtility;
@@ -165,28 +166,25 @@ public class AIAgent : Agent
 
     private void CalculateMovementUtility()
     {
-        chaseUtility = 25;
+        chaseUtility = 0;
         avoidUtility = 0;
         lookUtility = 0;
-        stopUtility = 0;
+        stopUtility = 1;
 
-        if (_noLegalAbility)
+        var minRange = Mathf.Min(preferredCombatRange[0], preferredCombatRange[1]);
+        var maxRange = Mathf.Max(preferredCombatRange[0], preferredCombatRange[1]);
+
+        if (distanceToTarget < minRange)
         {
-            var minRange = Mathf.Min(preferredCombatRange[0], preferredCombatRange[1]);
-            var maxRange = Mathf.Max(preferredCombatRange[0], preferredCombatRange[1]);
-
-            if (distanceToTarget < minRange)
-            {
-                avoidUtility = 100;
-            }
-            else if (minRange <= distanceToTarget && distanceToTarget <= maxRange)
-            {
-                lookUtility = 100;
-            }
-            else if (maxRange < distanceToTarget)
-            {
-                chaseUtility = 100;
-            }
+            avoidUtility = basicMovementMultiplier;
+        }
+        else if (minRange <= distanceToTarget && distanceToTarget <= maxRange)
+        {
+            lookUtility = basicMovementMultiplier;
+        }
+        else if (maxRange < distanceToTarget)
+        {
+            chaseUtility = basicMovementMultiplier;
         }
     }
 
