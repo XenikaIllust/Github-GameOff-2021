@@ -5,7 +5,9 @@ using UnityEngine;
 public class ClaireAI : AIAgent
 {
     [Header("Utility Stats")] [Range(0, 360)] [SerializeField]
-    private float defaultBestAngle = 180, defaultWorstAngle = 360;
+    private float defaultBestAngle = 180;
+
+    [Range(0, 360)] [SerializeField] private float defaultWorstAngle = 360;
 
     [Header("Utility Multiplier (Range, Direction, Damage, Cooldown)")] [SerializeField]
     private List<float4> multiplier = new List<float4> { 25, 25, 25, 25 };

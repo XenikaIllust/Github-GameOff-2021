@@ -12,7 +12,7 @@ public class AIAgent : Agent
     protected Vector3 targetPosition;
     protected float distanceToTarget = float.PositiveInfinity;
     private readonly List<Vector3> _abilityTargetPosition = new List<Vector3>(new Vector3[4]);
-    [SerializeField] protected List<float> abilityUtilities = new List<float>(new float[4]);
+    protected readonly List<float> abilityUtilities = new List<float>(new float[4]);
     protected readonly List<float> damageSort = new List<float>(new float[4]);
     protected readonly List<float> cooldownSort = new List<float>(new float[4]);
     protected float chaseUtility;
