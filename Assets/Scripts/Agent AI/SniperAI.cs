@@ -1,6 +1,6 @@
 public class SniperAI : AIAgent
 {
-    protected override void CalculateUtility()
+    protected override void CalculateAbilityUtility()
     {
         if (thisUnit.abilityCooldownList[0] <= float.Epsilon)
         {
@@ -10,9 +10,5 @@ public class SniperAI : AIAgent
         {
             abilityUtilities[0] = float.NegativeInfinity;
         }
-
-        chaseTargetUtility = 25;
-        avoidUtility = 0;
-        stopUtility = 0;
     }
 }

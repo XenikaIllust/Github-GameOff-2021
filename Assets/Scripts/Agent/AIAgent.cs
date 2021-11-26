@@ -15,7 +15,7 @@ public class AIAgent : Agent
     [SerializeField] protected List<float> abilityUtilities = new List<float>(new float[4]);
     protected readonly List<float> damageSort = new List<float>(new float[4]);
     protected readonly List<float> cooldownSort = new List<float>(new float[4]);
-    protected float chaseTargetUtility;
+    protected float chaseUtility;
     protected float avoidUtility;
     protected float lookUtility;
     protected float stopUtility;
@@ -64,16 +64,25 @@ public class AIAgent : Agent
             _isAggro = true;
         }
 
-        CalculateUtility();
+        CalculateAbilityUtility();
+        CalculateMovementUtility();
         CheckRestrictionException();
         CalculateRestriction();
-        if (_allAbilityOnCooldown) RecalculateUtility();
+        if (_allAbilityOnCooldown) RecalculateMovementUtility();
         ExecuteBestAction();
     }
 
-    protected virtual void CalculateUtility()
+    protected virtual void CalculateAbilityUtility()
     {
         Debug.LogError("Please override this method!");
+    }
+
+    private void CalculateMovementUtility()
+    {
+        chaseUtility = 25;
+        avoidUtility = 0;
+        lookUtility = 0;
+        stopUtility = 0;
     }
 
     private void CheckRestrictionException()
@@ -135,7 +144,7 @@ public class AIAgent : Agent
         _allAbilityOnCooldown = abilityOnCooldownCount == abilityCount;
     }
 
-    private void RecalculateUtility()
+    private void RecalculateMovementUtility()
     {
         var minRange = Mathf.Min(preferredCombatRange[0], preferredCombatRange[1]);
         var maxRange = Mathf.Max(preferredCombatRange[0], preferredCombatRange[1]);
@@ -150,7 +159,7 @@ public class AIAgent : Agent
         }
         else if (maxRange < distanceToTarget)
         {
-            chaseTargetUtility = 100;
+            chaseUtility = 100;
         }
     }
 
@@ -162,7 +171,7 @@ public class AIAgent : Agent
             (Ability2, abilityUtilities[1]),
             (Ability3, abilityUtilities[2]),
             (Ability4, abilityUtilities[3]),
-            (Chase, chaseTargetUtility),
+            (Chase, chaseUtility),
             (Avoid, avoidUtility),
             (Look, lookUtility),
             (Stop, stopUtility)
