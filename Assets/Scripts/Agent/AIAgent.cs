@@ -15,15 +15,10 @@ public class AIAgent : Agent
     private readonly List<Vector3> _abilityTargetPosition = new List<Vector3>(new Vector3[4]);
     private readonly List<float> _damageSort = new List<float>(new float[4]);
     private readonly List<float> _cooldownSort = new List<float>(new float[4]);
-    private float _chaseUtility;
-    private float _avoidUtility;
-    private float _lookUtility;
-    private float _stopUtility;
 
     protected List<Ability> abilities = new List<Ability>(new Ability[4]);
     protected Vector3 targetPosition;
     protected float distanceToTarget = float.PositiveInfinity;
-    protected readonly List<float> abilityUtilities = new List<float>(new float[4]);
     protected readonly List<float> idealRanges = new List<float>(new float[4]);
 
     [Header("Utility Stats")] [Range(0, 360)] [SerializeField]
@@ -33,6 +28,12 @@ public class AIAgent : Agent
 
     [Header("Utility Multiplier (Range, Direction, Damage, Cooldown)")] [SerializeField]
     protected List<float4> multiplier = new List<float4> { 25, 25, 25, 25 };
+
+    [Header("Read Only")] [SerializeField] protected List<float> abilityUtilities = new List<float>(new float[4]);
+    [SerializeField] private float chaseUtility;
+    [SerializeField] private float avoidUtility;
+    [SerializeField] private float lookUtility;
+    [SerializeField] private float stopUtility;
 
     protected override void Awake()
     {
@@ -121,7 +122,7 @@ public class AIAgent : Agent
                         var inDirection = (transform.position - _abilityTargetPosition[i]).normalized;
                         _abilityTargetPosition[i] += inDirection * ability.targetPositionOffset;
                         if (distanceToTarget < ability.targetPositionOffset * 2)
-                            abilityUtilities[i] = float.NegativeInfinity;
+                            abilityUtilities[i] = 0;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -153,7 +154,7 @@ public class AIAgent : Agent
 
             if (abilities[i].castRange < distanceToTarget)
             {
-                abilityUtilities[i] = float.NegativeInfinity;
+                abilityUtilities[i] = 0;
             }
         }
 
@@ -162,27 +163,28 @@ public class AIAgent : Agent
 
     private void CalculateMovementUtility()
     {
-        _chaseUtility = 25;
-        _avoidUtility = 0;
-        _lookUtility = 0;
-        _stopUtility = 0;
+        chaseUtility = 25;
+        avoidUtility = 0;
+        lookUtility = 0;
+        stopUtility = 0;
 
-        if (_allAbilityOnCooldown == false) return;
+        if (_allAbilityOnCooldown)
+        {
+            var minRange = Mathf.Min(preferredCombatRange[0], preferredCombatRange[1]);
+            var maxRange = Mathf.Max(preferredCombatRange[0], preferredCombatRange[1]);
 
-        var minRange = Mathf.Min(preferredCombatRange[0], preferredCombatRange[1]);
-        var maxRange = Mathf.Max(preferredCombatRange[0], preferredCombatRange[1]);
-
-        if (distanceToTarget < minRange)
-        {
-            _avoidUtility = 100;
-        }
-        else if (minRange <= distanceToTarget && distanceToTarget <= maxRange)
-        {
-            _lookUtility = 100;
-        }
-        else if (maxRange < distanceToTarget)
-        {
-            _chaseUtility = 100;
+            if (distanceToTarget < minRange)
+            {
+                avoidUtility = 100;
+            }
+            else if (minRange <= distanceToTarget && distanceToTarget <= maxRange)
+            {
+                lookUtility = 100;
+            }
+            else if (maxRange < distanceToTarget)
+            {
+                chaseUtility = 100;
+            }
         }
     }
 
@@ -194,10 +196,10 @@ public class AIAgent : Agent
             (Ability2, abilityUtilities[1]),
             (Ability3, abilityUtilities[2]),
             (Ability4, abilityUtilities[3]),
-            (Chase, _chaseUtility),
-            (Avoid, _avoidUtility),
-            (Look, _lookUtility),
-            (Stop, _stopUtility)
+            (Chase, chaseUtility),
+            (Avoid, avoidUtility),
+            (Look, lookUtility),
+            (Stop, stopUtility)
         };
 
         list.Sort((x, y) => y.Item2.CompareTo(x.Item2));
