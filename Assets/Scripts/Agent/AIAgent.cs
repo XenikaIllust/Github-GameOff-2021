@@ -6,7 +6,7 @@ using UnityEngine;
 public class AIAgent : Agent
 {
     [Header("General Stats")] public float aggroRange = 5;
-    [Header("Min, Max")] public float2 preferredCombatRange = new float2 { x = 1, y = 2 };
+    [Header("Min, Max")] public float2 preferredCombatRange = new float2 { x = 2.4f, y = 2.6f };
     private bool _isAggro;
     private bool _allAbilityOnCooldown;
     protected Vector3 targetPosition;
@@ -132,7 +132,21 @@ public class AIAgent : Agent
 
     private void RecalculateUtility()
     {
-        avoidUtility = float.PositiveInfinity;
+        var minRange = Mathf.Min(preferredCombatRange[0], preferredCombatRange[1]);
+        var maxRange = Mathf.Max(preferredCombatRange[0], preferredCombatRange[1]);
+
+        if (distanceToTarget < minRange)
+        {
+            avoidUtility = 100;
+        }
+        else if (minRange <= distanceToTarget && distanceToTarget <= maxRange)
+        {
+            stopUtility = 100;
+        }
+        else if (maxRange < distanceToTarget)
+        {
+            chaseTargetUtility = 100;
+        }
     }
 
     private void ExecuteBestAction()
@@ -174,7 +188,8 @@ public class AIAgent : Agent
 
     private void Avoid()
     {
-        var targetOpposition = transform.position - (targetPosition - transform.position);
+        var thisPosition = transform.position;
+        var targetOpposition = thisPosition - (targetPosition - thisPosition);
         unitEventHandler.RaiseEvent("OnMoveOrderIssued", targetOpposition);
     }
 

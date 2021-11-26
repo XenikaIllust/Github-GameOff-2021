@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class SniperAI : AIAgent
 {
     protected override void CalculateUtility()
@@ -13,7 +11,8 @@ public class SniperAI : AIAgent
             abilityUtilities[0] = float.NegativeInfinity;
         }
 
-        chaseTargetUtility = aggroRange - distanceToTarget;
+        chaseTargetUtility = 25;
+        avoidUtility = 0;
         stopUtility = 0;
     }
 }

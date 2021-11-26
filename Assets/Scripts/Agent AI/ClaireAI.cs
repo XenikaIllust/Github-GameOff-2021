@@ -19,7 +19,7 @@ public class ClaireAI : AIAgent
 
         for (var i = 0; i < abilityUtilities.Count; i++)
         {
-            if (abilities[i] == null) return;
+            if (abilities[i] == null) continue;
 
             var rangeUtility = multiplier[i][0] * RangeFactor(
                 abilities[i].castRange * abilities[i].idealRangePercentage / 100,
