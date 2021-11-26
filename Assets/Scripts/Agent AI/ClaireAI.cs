@@ -35,7 +35,7 @@ public class ClaireAI : AIAgent
     {
         if (distanceToTarget <= bestRange) return 1;
         if (distanceToTarget >= worstRange) return 0;
-        return Mathf.Abs(distanceToTarget - bestRange) / Mathf.Abs(worstRange - bestRange);
+        return 1 - Mathf.Abs(distanceToTarget - bestRange) / Mathf.Abs(worstRange - bestRange);
     }
 
     private float DirectionFactor(float bestAngle, float worstAngle)
@@ -45,7 +45,7 @@ public class ClaireAI : AIAgent
 
         if (angleToTarget <= bestAngle / 2) return 1;
         if (angleToTarget >= worstAngle / 2) return 0;
-        return Mathf.Abs(angleToTarget - bestAngle / 2) / (Mathf.Abs(worstAngle - bestAngle) / 2);
+        return 1 - Mathf.Abs(angleToTarget - bestAngle / 2) / (Mathf.Abs(worstAngle - bestAngle) / 2);
     }
 
     private float DamageFactor(float damage)
