@@ -17,13 +17,18 @@ public class AIAgent : Agent
     protected readonly List<float> cooldownSort = new List<float>(new float[4]);
     protected float chaseTargetUtility;
     protected float avoidUtility;
+    protected float lookUtility;
     protected float stopUtility;
 
     protected override void Awake()
     {
         base.Awake();
+        InitializeUtilityLists();
+    }
 
-        for (var i = 0; i < abilityUtilities.Count; i++) abilityUtilities[i] = -1;
+    private void InitializeUtilityLists()
+    {
+        for (var i = 0; i < abilityUtilities.Count; i++) abilityUtilities[i] = 0;
         for (var i = 0; i < cooldownSort.Count; i++)
             cooldownSort[i] = thisUnit.abilities[i] == null ? float.NegativeInfinity : thisUnit.abilities[i].cooldown;
         for (var i = 0; i < damageSort.Count; i++)
@@ -48,10 +53,10 @@ public class AIAgent : Agent
         targetPosition = (Vector3)newPosition;
         distanceToTarget = Vector3.Distance(transform.position, targetPosition);
         for (var i = 0; i < _abilityTargetPosition.Count; i++) _abilityTargetPosition[i] = targetPosition;
-        UtilityAI();
+        AISequence();
     }
 
-    private void UtilityAI()
+    private void AISequence()
     {
         if (_isAggro == false)
         {
@@ -141,7 +146,7 @@ public class AIAgent : Agent
         }
         else if (minRange <= distanceToTarget && distanceToTarget <= maxRange)
         {
-            stopUtility = 100;
+            lookUtility = 100;
         }
         else if (maxRange < distanceToTarget)
         {
@@ -159,6 +164,7 @@ public class AIAgent : Agent
             (Ability4, abilityUtilities[3]),
             (Chase, chaseTargetUtility),
             (Avoid, avoidUtility),
+            (Look, lookUtility),
             (Stop, stopUtility)
         };
 
@@ -186,6 +192,11 @@ public class AIAgent : Agent
         unitEventHandler.RaiseEvent("OnAbility4Casted", _abilityTargetPosition[3]);
     }
 
+    private void Chase()
+    {
+        unitEventHandler.RaiseEvent("OnMoveOrderIssued", targetPosition);
+    }
+
     private void Avoid()
     {
         var thisPosition = transform.position;
@@ -193,9 +204,9 @@ public class AIAgent : Agent
         unitEventHandler.RaiseEvent("OnMoveOrderIssued", targetOpposition);
     }
 
-    private void Chase()
+    private void Look()
     {
-        unitEventHandler.RaiseEvent("OnMoveOrderIssued", targetPosition);
+        unitEventHandler.RaiseEvent("OnLookOrderIssued", targetPosition);
     }
 
     private void Stop()
