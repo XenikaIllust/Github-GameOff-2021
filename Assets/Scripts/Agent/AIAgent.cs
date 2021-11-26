@@ -5,20 +5,34 @@ using UnityEngine;
 
 public class AIAgent : Agent
 {
-    [Header("General Stats")] public float aggroRange = 5;
-    [Header("Min, Max")] public float2 preferredCombatRange = new float2 { x = 2.4f, y = 2.6f };
+    [Header("General Stats")] [SerializeField]
+    private float aggroRange = 5;
+
+    [Header("Min, Max")] [SerializeField] private float2 preferredCombatRange = new float2 { x = 2.4f, y = 2.6f };
     private bool _isAggro;
     private bool _allAbilityOnCooldown;
+
+    private readonly List<Vector3> _abilityTargetPosition = new List<Vector3>(new Vector3[4]);
+    private readonly List<float> _damageSort = new List<float>(new float[4]);
+    private readonly List<float> _cooldownSort = new List<float>(new float[4]);
+    private float _chaseUtility;
+    private float _avoidUtility;
+    private float _lookUtility;
+    private float _stopUtility;
+
+    protected List<Ability> abilities = new List<Ability>(new Ability[4]);
     protected Vector3 targetPosition;
     protected float distanceToTarget = float.PositiveInfinity;
-    private readonly List<Vector3> _abilityTargetPosition = new List<Vector3>(new Vector3[4]);
     protected readonly List<float> abilityUtilities = new List<float>(new float[4]);
-    protected readonly List<float> damageSort = new List<float>(new float[4]);
-    protected readonly List<float> cooldownSort = new List<float>(new float[4]);
-    protected float chaseUtility;
-    protected float avoidUtility;
-    protected float lookUtility;
-    protected float stopUtility;
+    protected readonly List<float> idealRanges = new List<float>(new float[4]);
+
+    [Header("Utility Stats")] [Range(0, 360)] [SerializeField]
+    protected float defaultBestAngle = 180;
+
+    [Range(0, 360)] [SerializeField] protected float defaultWorstAngle = 360;
+
+    [Header("Utility Multiplier (Range, Direction, Damage, Cooldown)")] [SerializeField]
+    protected List<float4> multiplier = new List<float4> { 25, 25, 25, 25 };
 
     protected override void Awake()
     {
@@ -28,14 +42,27 @@ public class AIAgent : Agent
 
     private void InitializeUtilityLists()
     {
+        abilities = thisUnit.abilities;
         for (var i = 0; i < abilityUtilities.Count; i++) abilityUtilities[i] = 0;
-        for (var i = 0; i < cooldownSort.Count; i++)
-            cooldownSort[i] = thisUnit.abilities[i] == null ? float.NegativeInfinity : thisUnit.abilities[i].cooldown;
-        for (var i = 0; i < damageSort.Count; i++)
-            damageSort[i] = thisUnit.abilities[i] == null ? float.NegativeInfinity : thisUnit.abilities[i].totalDamage;
+        for (var i = 0; i < _cooldownSort.Count; i++)
+            _cooldownSort[i] = abilities[i] == null ? float.NegativeInfinity : abilities[i].cooldown;
+        for (var i = 0; i < _damageSort.Count; i++)
+            _damageSort[i] = abilities[i] == null ? float.NegativeInfinity : abilities[i].totalDamage;
 
-        cooldownSort.Sort();
-        damageSort.Sort();
+        for (var i = 0; i < idealRanges.Count; i++)
+        {
+            if (abilities[i] == null) return;
+
+            idealRanges[i] = abilities[i].idealTargetPosition switch
+            {
+                AITargetPositionType.BehindTarget => abilities[i].castRange - abilities[i].targetPositionOffset,
+                AITargetPositionType.InFrontOfTarget => abilities[i].castRange + abilities[i].targetPositionOffset,
+                _ => idealRanges[i]
+            };
+        }
+
+        _cooldownSort.Sort();
+        _damageSort.Sort();
     }
 
     private void OnEnable()
@@ -65,10 +92,9 @@ public class AIAgent : Agent
         }
 
         CalculateAbilityUtility();
-        CalculateMovementUtility();
         CheckRestrictionException();
         CalculateRestriction();
-        if (_allAbilityOnCooldown) RecalculateMovementUtility();
+        CalculateMovementUtility();
         ExecuteBestAction();
     }
 
@@ -77,26 +103,16 @@ public class AIAgent : Agent
         Debug.LogError("Please override this method!");
     }
 
-    private void CalculateMovementUtility()
-    {
-        chaseUtility = 25;
-        avoidUtility = 0;
-        lookUtility = 0;
-        stopUtility = 0;
-    }
-
     private void CheckRestrictionException()
     {
-        for (var i = 0; i < thisUnit.abilities.Count; i++)
+        for (var i = 0; i < abilities.Count; i++)
         {
-            var ability = thisUnit.abilities[i];
+            var ability = abilities[i];
 
             if (ability != null)
             {
-                switch (ability.idealAITargetPosition)
+                switch (ability.idealTargetPosition)
                 {
-                    case AITargetPositionType.OnTarget:
-                        break;
                     case AITargetPositionType.BehindTarget:
                         var outDirection = (_abilityTargetPosition[i] - transform.position).normalized;
                         _abilityTargetPosition[i] += outDirection * ability.targetPositionOffset;
@@ -121,7 +137,7 @@ public class AIAgent : Agent
 
         for (var i = 0; i < abilityUtilities.Count; i++)
         {
-            if (thisUnit.abilities[i] == null)
+            if (abilities[i] == null)
             {
                 abilityUtilities[i] = float.NegativeInfinity;
                 continue;
@@ -135,7 +151,7 @@ public class AIAgent : Agent
                 continue;
             }
 
-            if (thisUnit.abilities[i].castRange < distanceToTarget)
+            if (abilities[i].castRange < distanceToTarget)
             {
                 abilityUtilities[i] = float.NegativeInfinity;
             }
@@ -144,22 +160,29 @@ public class AIAgent : Agent
         _allAbilityOnCooldown = abilityOnCooldownCount == abilityCount;
     }
 
-    private void RecalculateMovementUtility()
+    private void CalculateMovementUtility()
     {
+        _chaseUtility = 25;
+        _avoidUtility = 0;
+        _lookUtility = 0;
+        _stopUtility = 0;
+
+        if (_allAbilityOnCooldown == false) return;
+
         var minRange = Mathf.Min(preferredCombatRange[0], preferredCombatRange[1]);
         var maxRange = Mathf.Max(preferredCombatRange[0], preferredCombatRange[1]);
 
         if (distanceToTarget < minRange)
         {
-            avoidUtility = 100;
+            _avoidUtility = 100;
         }
         else if (minRange <= distanceToTarget && distanceToTarget <= maxRange)
         {
-            lookUtility = 100;
+            _lookUtility = 100;
         }
         else if (maxRange < distanceToTarget)
         {
-            chaseUtility = 100;
+            _chaseUtility = 100;
         }
     }
 
@@ -171,10 +194,10 @@ public class AIAgent : Agent
             (Ability2, abilityUtilities[1]),
             (Ability3, abilityUtilities[2]),
             (Ability4, abilityUtilities[3]),
-            (Chase, chaseUtility),
-            (Avoid, avoidUtility),
-            (Look, lookUtility),
-            (Stop, stopUtility)
+            (Chase, _chaseUtility),
+            (Avoid, _avoidUtility),
+            (Look, _lookUtility),
+            (Stop, _stopUtility)
         };
 
         list.Sort((x, y) => y.Item2.CompareTo(x.Item2));
@@ -221,5 +244,38 @@ public class AIAgent : Agent
     private void Stop()
     {
         unitEventHandler.RaiseEvent("OnStopOrderIssued", null);
+    }
+
+    protected float RangeFactor(float bestRange, float worstRange)
+    {
+        if (distanceToTarget <= bestRange) return 1;
+        if (distanceToTarget >= worstRange) return 0;
+        return 1 - Mathf.Abs(distanceToTarget - bestRange) / Mathf.Abs(worstRange - bestRange);
+    }
+
+    protected float DirectionFactor(float bestAngle, float worstAngle)
+    {
+        Vector2 vectorToTarget = targetPosition - transform.position;
+        var angleToTarget = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
+
+        if (angleToTarget <= bestAngle / 2) return 1;
+        if (angleToTarget >= worstAngle / 2) return 0;
+        return 1 - Mathf.Abs(angleToTarget - bestAngle / 2) / (Mathf.Abs(worstAngle - bestAngle) / 2);
+    }
+
+    protected float DamageFactor(float damage)
+    {
+        if (Mathf.Approximately(damage, _damageSort[0])) return 1;
+        if (Mathf.Approximately(damage, _damageSort[1])) return 0.75f;
+        if (Mathf.Approximately(damage, _damageSort[2])) return 0.50f;
+        return 0.25f;
+    }
+
+    protected float CooldownFactor(float cooldown)
+    {
+        if (Mathf.Approximately(cooldown, _cooldownSort[0])) return 1;
+        if (Mathf.Approximately(cooldown, _cooldownSort[1])) return 0.75f;
+        if (Mathf.Approximately(cooldown, _cooldownSort[2])) return 0.50f;
+        return 0.25f;
     }
 }

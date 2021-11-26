@@ -2,13 +2,16 @@ public class SwarmerAI : AIAgent
 {
     protected override void CalculateAbilityUtility()
     {
-        if (thisUnit.abilityCooldownList[0] <= float.Epsilon)
+        for (var i = 0; i < abilityUtilities.Count; i++)
         {
-            abilityUtilities[0] = float.PositiveInfinity * (thisUnit.abilities[0].castRange - distanceToTarget);
-        }
-        else
-        {
-            abilityUtilities[0] = float.NegativeInfinity;
+            if (abilities[i] == null) continue;
+
+            var rangeUtility = multiplier[i][0] * RangeFactor(idealRanges[i], idealRanges[i] * 2);
+            var directionUtility = multiplier[i][1] * DirectionFactor(defaultBestAngle, defaultWorstAngle);
+            var damageUtility = multiplier[i][2] * DamageFactor(abilities[i].totalDamage);
+            var cooldownUtility = multiplier[i][3] * CooldownFactor(abilities[i].cooldown);
+
+            abilityUtilities[i] = rangeUtility + directionUtility + damageUtility + cooldownUtility;
         }
     }
 }
