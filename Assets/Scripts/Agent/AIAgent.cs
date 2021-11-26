@@ -10,7 +10,7 @@ public class AIAgent : Agent
 
     [Header("Min, Max")] [SerializeField] private float2 preferredCombatRange = new float2 { x = 2.4f, y = 2.6f };
     private bool _isAggro;
-    private bool _allAbilityOnCooldown;
+    private bool _noLegalAbility;
 
     private readonly List<Vector3> _abilityTargetPosition = new List<Vector3>(new Vector3[4]);
     private readonly List<float> _damageSort = new List<float>(new float[4]);
@@ -134,31 +134,33 @@ public class AIAgent : Agent
     private void CalculateRestriction()
     {
         var abilityCount = 0;
-        var abilityOnCooldownCount = 0;
+        var illegalAbilityCount = 0;
 
         for (var i = 0; i < abilityUtilities.Count; i++)
         {
+            abilityCount += 1;
             if (abilities[i] == null)
             {
                 abilityUtilities[i] = float.NegativeInfinity;
+                illegalAbilityCount += 1;
                 continue;
             }
 
-            abilityCount += 1;
             if (thisUnit.abilityCooldownList[i] > float.Epsilon)
             {
                 abilityUtilities[i] = float.NegativeInfinity;
-                abilityOnCooldownCount += 1;
+                illegalAbilityCount += 1;
                 continue;
             }
 
-            if (abilities[i].castRange < distanceToTarget)
+            if (abilities[i].castRange < Vector3.Distance(transform.position, _abilityTargetPosition[i]))
             {
                 abilityUtilities[i] = 0;
+                illegalAbilityCount += 1;
             }
         }
 
-        _allAbilityOnCooldown = abilityOnCooldownCount == abilityCount;
+        _noLegalAbility = illegalAbilityCount == abilityCount;
     }
 
     private void CalculateMovementUtility()
@@ -168,7 +170,7 @@ public class AIAgent : Agent
         lookUtility = 0;
         stopUtility = 0;
 
-        if (_allAbilityOnCooldown)
+        if (_noLegalAbility)
         {
             var minRange = Mathf.Min(preferredCombatRange[0], preferredCombatRange[1]);
             var maxRange = Mathf.Max(preferredCombatRange[0], preferredCombatRange[1]);
