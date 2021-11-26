@@ -12,13 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: AstralStep
   m_EditorClassIdentifier: 
+  abilityName: SLASHDOT
+  abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 0
   duration: 1.5
   cooldown: 5
   castRange: 5
-  potentialDamage: 50
+  castPoint: 0.3
+  castBackSwing: 0.7
+  totalDamage: 50
   idealRangePercentage: 100
+  idealAITargetPosition: 0
+  targetPositionOffset: 1
   abilityStats:
     _Buckets: 01000000ffffffff02000000
     _HashCodes: fffffffff4dc220cf3dc220c
@@ -66,6 +72,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
   - Id: Damage, Teleport and Reappear
     Duration: 0
     Trigger:
@@ -96,6 +103,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
     - Id: Teleport
       TargetFilter:
         Type: 4
@@ -120,6 +128,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
     - Id: Reappear
       TargetFilter:
         Type: 4
@@ -144,6 +153,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
   - Id: Delayed Damage
     Duration: 0
     Trigger:
@@ -174,3 +184,4 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 

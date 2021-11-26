@@ -12,13 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: ConsecutiveAOEDamageTest
   m_EditorClassIdentifier: 
+  abilityName: FORKBOMB
+  abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 2
   duration: 4
   cooldown: 5
   castRange: 4
-  potentialDamage: 90
+  castPoint: 0.3
+  castBackSwing: 0.7
+  totalDamage: 90
   idealRangePercentage: 100
+  idealAITargetPosition: 0
+  targetPositionOffset: 1
   abilityStats:
     _Buckets: ffffffffffffffff03000000ffffffffffffffffffffffff01000000
     _HashCodes: ffffffff77c3df528580155520f5bc77000000000000000000000000
@@ -74,6 +80,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
   - Id: AOE Damage 2nd Round
     Duration: 0
     Trigger:
@@ -104,3 +111,4 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 

@@ -12,11 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: Blink
   m_EditorClassIdentifier: 
+  abilityName: GOTO
+  abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 0
   duration: 0.25
   cooldown: 3
   castRange: 5
+  castPoint: 0.3
+  castBackSwing: 0.7
+  totalDamage: 0
+  idealRangePercentage: 100
+  idealAITargetPosition: 0
+  targetPositionOffset: 1
   abilityStats:
     _Buckets: ffffffff01000000ffffffff
     _HashCodes: ffffffffa0bf2b7e00000000
@@ -64,6 +72,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
     - Id: Disappear VFX
       TargetFilter:
         Type: 5
@@ -88,6 +97,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
   - Id: Teleport and Reappear
     Duration: 0
     Trigger:
@@ -118,6 +128,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
     - Id: Reappear
       TargetFilter:
         Type: 4
@@ -142,6 +153,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
     - Id: Teleport SFX
       TargetFilter:
         Type: 5
@@ -166,3 +178,4 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: Teleport
         ProjectileName: 
+        AnimationName: 

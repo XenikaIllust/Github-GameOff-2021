@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: LocalAOEDamage
   m_EditorClassIdentifier: 
+  abilityName: PING OF DEATH
+  abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 3
   duration: 0.3
   cooldown: 4
   castRange: 4
+  castPoint: 0.3
+  castBackSwing: 0.7
   totalDamage: 0
   idealRangePercentage: 100
   idealAITargetPosition: 0
@@ -26,7 +30,7 @@ MonoBehaviour:
     _HashCodes: 77c3df522068d20600000000
     _Next: ffffffff0000000000000000
     _Count: 2
-    _Version: 102
+    _Version: 104
     _FreeList: -1
     _FreeCount: 0
     _Keys:
@@ -35,7 +39,7 @@ MonoBehaviour:
     - 
     _Values:
     - 4
-    - 200
+    - 70
     - 0
   outcomes:
   - Id: AOE Damage
