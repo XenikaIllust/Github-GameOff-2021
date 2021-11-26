@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -10,8 +9,6 @@ public class AIAgent : Agent
     private float aggroRange = 5;
 
     private bool _isAggro;
-    private bool _noLegalAbility;
-
     private readonly List<Vector3> _abilityTargetPosition = new List<Vector3>(new Vector3[4]);
     private readonly List<float> _damageSort = new List<float>(new float[4]);
     private readonly List<float> _cooldownSort = new List<float>(new float[4]);
@@ -25,9 +22,9 @@ public class AIAgent : Agent
     private float2 preferredCombatRange = new float2 { x = 2.4f, y = 2.6f };
 
     [Range(0, 100)] [SerializeField] protected float basicMovementMultiplier = 50;
-    [Range(0, 360)] protected float defaultBestAngle = 180, defaultWorstAngle = 360;
+    [Range(0, 360)] [SerializeField] protected float defaultBestAngle = 180, defaultWorstAngle = 360;
 
-    [Header("Utility Multiplier (Range, Direction, Damage, Cooldown)")] [SerializeField]
+    [Header("(Range, Direction, Damage, Cooldown)")] [SerializeField]
     protected List<float4> abilityMultiplier = new List<float4> { 25, 25, 25, 25 };
 
     [Header("Read Only")] [SerializeField] protected List<float> abilityUtilities = new List<float>(new float[4]);
@@ -39,10 +36,10 @@ public class AIAgent : Agent
     protected override void Awake()
     {
         base.Awake();
-        InitializeUtilityLists();
+        InitializeAILogic();
     }
 
-    private void InitializeUtilityLists()
+    private void InitializeAILogic()
     {
         abilities = thisUnit.abilities;
         for (var i = 0; i < abilityUtilities.Count; i++) abilityUtilities[i] = 0;
@@ -134,34 +131,25 @@ public class AIAgent : Agent
 
     private void CalculateRestriction()
     {
-        var abilityCount = 0;
-        var illegalAbilityCount = 0;
-
         for (var i = 0; i < abilityUtilities.Count; i++)
         {
-            abilityCount += 1;
             if (abilities[i] == null)
             {
                 abilityUtilities[i] = float.NegativeInfinity;
-                illegalAbilityCount += 1;
                 continue;
             }
 
             if (thisUnit.abilityCooldownList[i] > float.Epsilon)
             {
                 abilityUtilities[i] = float.NegativeInfinity;
-                illegalAbilityCount += 1;
                 continue;
             }
 
             if (abilities[i].castRange < Vector3.Distance(transform.position, _abilityTargetPosition[i]))
             {
                 abilityUtilities[i] = 0;
-                illegalAbilityCount += 1;
             }
         }
-
-        _noLegalAbility = illegalAbilityCount == abilityCount;
     }
 
     private void CalculateMovementUtility()
