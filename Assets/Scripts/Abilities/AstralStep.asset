@@ -17,8 +17,12 @@ MonoBehaviour:
   duration: 1.5
   cooldown: 5
   castRange: 5
-  potentialDamage: 50
-  idealRangePercentage: 100
+  castPoint: 0.3
+  castBackSwing: 0.7
+  totalDamage: 50
+  idealRangePercentage: 90
+  idealAITargetPosition: 1
+  targetPositionOffset: 0.5
   abilityStats:
     _Buckets: 01000000ffffffff02000000
     _HashCodes: fffffffff4dc220cf3dc220c
@@ -53,9 +57,9 @@ MonoBehaviour:
         ConeRangeId: 
         ConeAngleId: 
         ConeTargetId: 
-        hitEnemies: 1
+        hitEnemies: 0
         hitAllies: 0
-        hitSelf: 0
+        hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 2d72a3468b1000249b7e0a5ae82f98bc, type: 2}
         StatId: 
@@ -66,6 +70,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
   - Id: Damage, Teleport and Reappear
     Duration: 0
     Trigger:
@@ -96,6 +101,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
     - Id: Teleport
       TargetFilter:
         Type: 4
@@ -108,8 +114,8 @@ MonoBehaviour:
         ConeAngleId: 
         ConeTargetId: 
         hitEnemies: 1
-        hitAllies: 0
-        hitSelf: 0
+        hitAllies: 1
+        hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 1e92247e4d8679a4a93e1da975cb1f48, type: 2}
         StatId: 
@@ -120,6 +126,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
     - Id: Reappear
       TargetFilter:
         Type: 4
@@ -132,8 +139,8 @@ MonoBehaviour:
         ConeAngleId: 
         ConeTargetId: 
         hitEnemies: 1
-        hitAllies: 0
-        hitSelf: 0
+        hitAllies: 1
+        hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 5fbaac34ccd01a54d8c39db1b3b267ce, type: 2}
         StatId: 
@@ -144,6 +151,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
   - Id: Delayed Damage
     Duration: 0
     Trigger:
@@ -162,8 +170,8 @@ MonoBehaviour:
         ConeAngleId: 
         ConeTargetId: 
         hitEnemies: 1
-        hitAllies: 0
-        hitSelf: 0
+        hitAllies: 1
+        hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
         StatId: Damage Stat 2
@@ -174,3 +182,4 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
