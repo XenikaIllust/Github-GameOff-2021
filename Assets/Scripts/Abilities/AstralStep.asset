@@ -29,16 +29,14 @@ MonoBehaviour:
     _Buckets: 01000000ffffffff02000000
     _HashCodes: fffffffff4dc220cf3dc220c
     _Next: ffffffffffffffffffffffff
-    _Count: 3
+    _Count: 2
     _Version: 93
     _FreeList: 0
     _FreeCount: 1
     _Keys:
-    -
     - Damage Stat 1
     - Damage Stat 2
     _Values:
-    - 0
     - 40
     - 10
   outcomes:

@@ -29,18 +29,14 @@ MonoBehaviour:
     _Buckets: ffffffff01000000ffffffff
     _HashCodes: ffffffffa0bf2b7e00000000
     _Next: ffffffffffffffff00000000
-    _Count: 2
+    _Count: 1
     _Version: 433
     _FreeList: 0
     _FreeCount: 1
     _Keys:
-    -
     - Cast Range
-    -
     _Values:
-    - 0
     - 5
-    - 0
   outcomes:
   - Id: Disappear
     Duration: 0

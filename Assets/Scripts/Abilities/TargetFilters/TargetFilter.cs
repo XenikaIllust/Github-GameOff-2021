@@ -110,7 +110,7 @@ public class TargetFilter
                     hitEnemies, hitAllies, hitSelf);
             }
 
-            Object.Destroy(AOECalculator);
+            GameObject.Destroy(AOECalculator);
 
         }
         else if (Type == TargetFilterType.TargetsOfPreviousEffect)
@@ -165,7 +165,7 @@ public class TargetFilter
                 }
             }
 
-            Object.Destroy(AOECalculator);
+            GameObject.Destroy(AOECalculator);
         }
 
         return targets;

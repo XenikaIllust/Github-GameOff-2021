@@ -62,7 +62,7 @@ public class Spawner : MonoBehaviour
 
     private void OnPlayerPositionChanged(object playerPosition)
     {
-        _distanceFromPlayer = Vector3.Distance(transform.position, (Vector3)playerPosition);
+        _distanceFromPlayer = Vector2.Distance(transform.position, (Vector3)playerPosition);
     }
 
     private void OnUnitDied(object unit)
