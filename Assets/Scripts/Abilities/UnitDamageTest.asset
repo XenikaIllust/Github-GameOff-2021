@@ -12,13 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: UnitDamageTest
   m_EditorClassIdentifier: 
+  abilityName: 
+  abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 1
   duration: 0
   cooldown: 0
   castRange: 10
-  potentialDamage: 60
-  idealRangePercentage: 100
+  castPoint: 0.3
+  castBackSwing: 0.7
+  totalDamage: 60
+  idealTargetPosition: 0
+  targetPositionOffset: 0
   abilityStats:
     _Buckets: 01000000ffffffffffffffff
     _HashCodes: fffffffff4dc220c00000000
@@ -66,3 +71,4 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 

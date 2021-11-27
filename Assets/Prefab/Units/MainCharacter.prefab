@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 5552549139427639097}
   m_Layer: 0
   m_Name: MainCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -433,7 +433,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fe0e51747d0b6c142a6056463e3314ae, type: 2}
   - {fileID: 11400000, guid: 276f7e7509eb54c4fbc29e9213421a07, type: 2}
   - {fileID: 11400000, guid: 6c69752357dc1cf4ab9a73760dc2fead, type: 2}
-  abilityCooldowns:
+  abilityCooldownList:
   - 0
   - 0
   - 0

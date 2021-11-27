@@ -5158,11 +5158,11 @@ MonoBehaviour:
   agent: {fileID: 0}
   alliance: 1
   abilities:
+  - {fileID: 11400000, guid: 4fd1dc6bfc980c04a992a4bac83f21e0, type: 2}
+  - {fileID: 11400000, guid: 6c69752357dc1cf4ab9a73760dc2fead, type: 2}
   - {fileID: 11400000, guid: fe0e51747d0b6c142a6056463e3314ae, type: 2}
-  - {fileID: 11400000, guid: fe0e51747d0b6c142a6056463e3314ae, type: 2}
-  - {fileID: 11400000, guid: fe0e51747d0b6c142a6056463e3314ae, type: 2}
-  - {fileID: 11400000, guid: fe0e51747d0b6c142a6056463e3314ae, type: 2}
-  cooldownTimers:
+  - {fileID: 11400000, guid: 276f7e7509eb54c4fbc29e9213421a07, type: 2}
+  abilityCooldownList:
   - 0
   - 0
   - 0
@@ -5194,6 +5194,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aggroRange: 5
+  preferredCombatRange:
+    x: 2.4
+    y: 2.6
+  abilityUtilities:
+  - 0
+  - 0
+  - 0
+  - 0
+  chaseTarget: 25
+  avoidTarget: 0
+  stop: 0
+  defaultBestAngle: 180
+  defaultWorstAngle: 360
+  multiplier:
+  - x: 25
+    y: 25
+    z: 25
+    w: 25
+  - x: 25
+    y: 25
+    z: 25
+    w: 25
+  - x: 25
+    y: 25
+    z: 25
+    w: 25
+  - x: 25
+    y: 25
+    z: 25
+    w: 25
 --- !u!1 &5811359814666668957
 GameObject:
   m_ObjectHideFlags: 0

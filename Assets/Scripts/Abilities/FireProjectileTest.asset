@@ -12,25 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: FireProjectileTest
   m_EditorClassIdentifier: 
+  abilityName: 
+  abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 0
   duration: 0
-  cooldown: 5
-  castRange: 20
+  cooldown: 10
+  castRange: 10
+  castPoint: 0.3
+  castBackSwing: 0.7
+  totalDamage: 0
+  idealTargetPosition: 0
+  targetPositionOffset: 0.1
   abilityStats:
-    _Buckets: 0100000000000000ffffffff
-    _HashCodes: a0bf2b7e3f5a672f00000000
+    _Buckets: 01000000ffffffffffffffff
+    _HashCodes: ffffffff3f5a672f00000000
     _Next: ffffffffffffffff00000000
     _Count: 2
-    _Version: 44
-    _FreeList: -1
-    _FreeCount: 0
+    _Version: 45
+    _FreeList: 0
+    _FreeCount: 1
     _Keys:
-    - Cast Range
+    - 
     - Turn Rate
     - 
     _Values:
-    - 20
+    - 0
     - 0.2
     - 0
   outcomes:
@@ -64,6 +71,7 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: TestProjectile
+        AnimationName: 
   - Id: Fire
     Duration: 0
     Trigger:
@@ -93,4 +101,5 @@ MonoBehaviour:
         VFXEndPointId: 
         VFXUnitId: 
         SFXName: 
-        ProjectileName: TestProjectile
+        ProjectileName: SniperProjectile
+        AnimationName: 

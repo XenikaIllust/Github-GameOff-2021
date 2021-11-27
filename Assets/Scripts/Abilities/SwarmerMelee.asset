@@ -12,37 +12,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: SwarmerMelee
   m_EditorClassIdentifier: 
+  abilityName: 
+  abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 0
   duration: 0
-  cooldown: 1
-  castRange: 2
-  potentialDamage: 10
-  idealRangePercentage: 100
+  cooldown: 2
+  castRange: 1
+  castPoint: 0.3
+  castBackSwing: 0.7
+  totalDamage: 3
+  idealTargetPosition: 0
+  targetPositionOffset: 0.5
   abilityStats:
-    _Buckets: 01000000ffffffffffffffff03000000ffffffffffffffffffffffff
-    _HashCodes: fffffffff4dc220cbcd45b150640e609000000000000000000000000
-    _Next: ffffffff02000000ffffffffffffffff000000000000000000000000
-    _Count: 4
-    _Version: 113
-    _FreeList: 0
-    _FreeCount: 1
+    _Buckets: 02000000ffffffffffffffff01000000ffffffffffffffffffffffff
+    _HashCodes: bcd45b150640e609f4dc220c0640e609000000000000000000000000
+    _Next: ffffffffffffffff00000000ffffffff000000000000000000000000
+    _Count: 3
+    _Version: 218
+    _FreeList: -1
+    _FreeCount: 0
     _Keys:
-    - 
-    - Damage Stat 1
     - Cone Range
     - Cone Angle
-    - 
-    - 
-    - 
+    - Damage Stat 1
     _Values:
-    - 0
-    - 10
     - 1
     - 90
-    - 0
-    - 0
-    - 0
+    - 3
   outcomes:
   - Id: Damage
     Duration: 0
@@ -74,3 +71,29 @@ MonoBehaviour:
         VFXUnitId: 
         SFXName: 
         ProjectileName: 
+        AnimationName: 
+    - Id: Disappear VFX
+      TargetFilter:
+        Type: 0
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: Cone Range
+        ConeAngleId: Cone Angle
+        ConeTargetId: Target Point
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 37dc24ebe8dbc504cb628f2a5317fa4b, type: 2}
+        StatId: 
+        VFXName: Point_Disappear
+        VFXPointId: Executing Unit Position
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        SFXName: 
+        ProjectileName: 
+        AnimationName: 

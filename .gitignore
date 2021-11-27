@@ -38,6 +38,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+*.unitypackage.meta
 
 # Created by https://www.toptal.com/developers/gitignore/api/unity,csharp,visualstudiocode,jetbrains
 # Edit at https://www.toptal.com/developers/gitignore?templates=unity,csharp,visualstudiocode,jetbrains
@@ -613,3 +614,5 @@ sysinfo.txt
 !.vscode/*.code-snippets
 
 # End of https://www.toptal.com/developers/gitignore/api/unity,csharp,visualstudiocode,jetbrains
+.vscode/launch.json
+.vscode/tasks.json
