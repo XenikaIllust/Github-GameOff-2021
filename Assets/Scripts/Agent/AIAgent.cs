@@ -56,7 +56,7 @@ public class AIAgent : Agent
             {
                 AITargetPositionType.BehindTarget => abilities[i].castRange - abilities[i].targetPositionOffset,
                 AITargetPositionType.InFrontOfTarget => abilities[i].castRange + abilities[i].targetPositionOffset,
-                _ => idealRanges[i]
+                _ => throw new ArgumentOutOfRangeException()
             };
         }
 
@@ -145,7 +145,14 @@ public class AIAgent : Agent
                 continue;
             }
 
-            if (abilities[i].castRange < Vector3.Distance(transform.position, _abilityTargetPosition[i]))
+            var offset = abilities[i].idealTargetPosition switch
+            {
+                AITargetPositionType.BehindTarget => -abilities[i].targetPositionOffset,
+                AITargetPositionType.InFrontOfTarget => abilities[i].targetPositionOffset,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            if (abilities[i].castRange < distanceToTarget + offset)
             {
                 abilityUtilities[i] = 0;
             }
