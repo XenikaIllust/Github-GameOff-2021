@@ -63,6 +63,11 @@ public class Unit : MonoBehaviour
         };
     }
 
+    private void Start()
+    {
+        if (isPlayer) EventManager.RaiseEvent("OnPlayerSpawned", GetComponent<Unit>());
+    }
+
     private void OnEnable()
     {
         unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);

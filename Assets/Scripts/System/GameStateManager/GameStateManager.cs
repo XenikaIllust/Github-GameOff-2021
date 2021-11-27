@@ -56,7 +56,7 @@ public class GameStateManager : MonoBehaviour
     /// </summary>
     private void Initialize()
     {
-        if (EventManager.instance != null)
+        if (EventManager.Instance != null)
         {
             EventManager.StartListening("ChangeScene", ChangeSceneEvent);
 
