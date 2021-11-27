@@ -11,9 +11,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: ConsecutiveAOEDamageTest
-  m_EditorClassIdentifier: 
-  abilityName: 
-  abilityDescription: 
+  m_EditorClassIdentifier:
+  abilityName:
+  abilityDescription:
   abilitySprite: {fileID: 0}
   inputType: 2
   duration: 4
@@ -33,13 +33,13 @@ MonoBehaviour:
     _FreeList: 0
     _FreeCount: 1
     _Keys:
-    - 
+    -
     - AOE Radius
     - AOE Damage 1
     - AOE Damage 2
-    - 
-    - 
-    - 
+    -
+    -
+    -
     _Values:
     - 0
     - 4
@@ -58,28 +58,28 @@ MonoBehaviour:
     - Id: AOE Damage 1st Round
       TargetFilter:
         Type: 3
-        InitialPointId: 
-        FinalPointId: 
+        InitialPointId:
+        FinalPointId:
         AOERadiusId: AOE Radius
         TargetCenterId: Target Center
-        PreviousEffectId: 
-        ConeRangeId: 
-        ConeAngleId: 
-        ConeTargetId: 
+        PreviousEffectId:
+        ConeRangeId:
+        ConeAngleId:
+        ConeTargetId:
         hitEnemies: 1
         hitAllies: 0
         hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
         StatId: AOE Damage 1
-        VFXName: 
-        VFXPointId: 
-        VFXStartPointId: 
-        VFXEndPointId: 
-        VFXUnitId: 
-        SFXName: 
-        ProjectileName: 
-        AnimationName: 
+        VFXName:
+        VFXPointId:
+        VFXStartPointId:
+        VFXEndPointId:
+        VFXUnitId:
+        SFXName:
+        ProjectileName:
+        AnimationName:
   - Id: AOE Damage 2nd Round
     Duration: 0
     Trigger:
@@ -89,25 +89,25 @@ MonoBehaviour:
     - Id: AOE Damage 2
       TargetFilter:
         Type: 4
-        InitialPointId: 
-        FinalPointId: 
+        InitialPointId:
+        FinalPointId:
         AOERadiusId: AOE Radius
-        TargetCenterId: 
+        TargetCenterId:
         PreviousEffectId: AOE Damage 1st Round
-        ConeRangeId: 
-        ConeAngleId: 
-        ConeTargetId: 
+        ConeRangeId:
+        ConeAngleId:
+        ConeTargetId:
         hitEnemies: 1
         hitAllies: 1
         hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
         StatId: AOE Damage 2
-        VFXName: 
-        VFXPointId: 
-        VFXStartPointId: 
-        VFXEndPointId: 
-        VFXUnitId: 
-        SFXName: 
-        ProjectileName: 
-        AnimationName: 
+        VFXName:
+        VFXPointId:
+        VFXStartPointId:
+        VFXEndPointId:
+        VFXUnitId:
+        SFXName:
+        ProjectileName:
+        AnimationName:

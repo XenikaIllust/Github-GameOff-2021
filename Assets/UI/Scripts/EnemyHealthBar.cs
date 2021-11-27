@@ -7,8 +7,15 @@ public class EnemyHealthBar : MonoBehaviour
     public Slider slider;
 
     public GameObject EnemyInstance;
+    public GameObject EnemyUIDummy;
+    public Health enemyHealth;
 
     public Vector2 DisplacementPosition;
+
+    private void Start() {
+        EnemyUIDummy = EnemyInstance.transform.Find("UIDummy").gameObject;
+        enemyHealth = EnemyInstance.GetComponentInParent<Health>();
+    }
 
     void Update()
     {
@@ -17,9 +24,9 @@ public class EnemyHealthBar : MonoBehaviour
         // Only update when the enemy is not yet deleted/marked for deletion.
         if (EnemyInstance != null)
         {
-            slider.value = EnemyInstance.GetComponent<Health>().health;
+            slider.value = enemyHealth.health;
 
-            gameObject.transform.position = Camera.main.WorldToScreenPoint((Vector2)EnemyInstance.transform.position + DisplacementPosition);
+            gameObject.transform.position = Camera.main.WorldToScreenPoint((Vector2)EnemyUIDummy.transform.position + DisplacementPosition);
         }
     }
 
