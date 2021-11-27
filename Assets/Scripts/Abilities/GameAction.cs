@@ -23,6 +23,10 @@ public class GameAction
     // Unit VFX
     public string VFXUnitId;
 
+    // Special, for Boss Telegraphing Attacks
+    [Tooltip("This would be the duration of this telegraphing outcome")]
+    public float TimeToLive;
+
     // for SFX GameActionBlocks that require inputs
     public string SFXName;
 
@@ -39,6 +43,14 @@ public class GameAction
         else if(GameActionBlock.GetType() == typeof(PointVFXActionBlock)) {
             string[] idParams = new string[] { VFXName, VFXPointId };
             GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);
+        }
+        else if(GameActionBlock.GetType() == typeof(ArcIndicatorVFXActionBlock)) {
+            string[] idParams = new string[] { VFXName, VFXPointId };
+            GameActionBlock.Invoke(TimeToLive, AbilityStats, idParams, CurrentFilteredTargets, AllTargets);
+        }
+        else if(GameActionBlock.GetType() == typeof(AOEIndicatorVFXActionBlock)) {
+            string[] idParams = new string[] { VFXName, VFXPointId };
+            GameActionBlock.Invoke(TimeToLive, AbilityStats, idParams, CurrentFilteredTargets, AllTargets);
         }
         else if(GameActionBlock.GetType() == typeof(SFXActionBlock)) {
             string[] idParams = new string[] { SFXName };

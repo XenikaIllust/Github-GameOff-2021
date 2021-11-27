@@ -61,13 +61,14 @@ MonoBehaviour:
         hitAllies: 0
         hitSelf: 0
       GameAction:
-        GameActionBlock: {fileID: 11400000, guid: b4be687f7c429904a9ad191d2d3d03a8, type: 2}
+        GameActionBlock: {fileID: 11400000, guid: d6b00dc76afe1f048a167b3ddfc08355, type: 2}
         StatId: 
-        VFXName: Arc60
-        VFXPointId: Executing Unit Position
+        VFXName: AOE
+        VFXPointId: Executing Unit
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
+        TimeToLive: 1
         SFXName: 
         ProjectileName: 
         AnimationName: 
@@ -99,6 +100,7 @@ MonoBehaviour:
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
+        TimeToLive: 0
         SFXName: 
         ProjectileName: 
         AnimationName: 
