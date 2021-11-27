@@ -76,6 +76,7 @@ public class Spawner : MonoBehaviour
         aliveUnits.Add(unit);
         lifetimeQuota -= 1;
         Vector3 offset = new Vector2(Random.Range(0, spawnRadius), Random.Range(0, spawnRadius));
+        Debug.Log("transform.position of spawner: " + transform.position);
         unit.transform.position = transform.position + offset;
     }
 }

@@ -51,7 +51,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SwarmerMove
+  m_Name: Run
   m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
@@ -64,7 +64,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 7ab387753b5d0f0458b378830625a7b6, type: 2}
+  m_Motion: {fileID: 7400000, guid: e87843d5546cf0b45b6bc8afb5ffbbea, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
