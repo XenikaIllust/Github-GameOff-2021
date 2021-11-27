@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AbilityTarget : AbilityButtonState
 {
@@ -12,7 +13,7 @@ public class AbilityTarget : AbilityButtonState
 
     public override void UpdateLoop()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Mouse.current.leftButton.isPressed)
         {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
