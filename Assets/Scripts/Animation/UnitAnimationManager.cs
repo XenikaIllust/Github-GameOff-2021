@@ -12,6 +12,10 @@ public class UnitAnimationManager : MonoBehaviour
     private Camera _camera;
     private int _degreeClipLength;
 
+    public Animator Animator {
+        get {return _anim;}
+    }
+
     private readonly Dictionary<string, AnimationClip[]> _animationLibrary = new Dictionary<string, AnimationClip[]>();
 
     [SerializeField] private int degreeVariation;
@@ -61,10 +65,6 @@ public class UnitAnimationManager : MonoBehaviour
         // standard bearing to azimuth is required because the animations are saved in azimuth format
         float azimuthRotation = MathUtils.ConvertStandardToAzimuth(rotationAngle);
         string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
-
-        if(GetComponentInParent<Unit>().gameObject.name == "Sniper") {
-            Debug.Log("Sniper" + _animationLibrary[currentAnimationStatename][(int)azimuthRotation / 10]);
-        }
         anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(_animationLibrary[currentAnimationStatename][0],
             _animationLibrary[currentAnimationStatename][(int)azimuthRotation / 10]));
         _aoc.ApplyOverrides(anims);
