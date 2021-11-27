@@ -18,7 +18,7 @@ MonoBehaviour:
   inputType: 3
   duration: 0.3
   cooldown: 4
-  castRange: 4
+  castRange: 0
   castPoint: 0.3
   castBackSwing: 0.7
   totalDamage: 70
