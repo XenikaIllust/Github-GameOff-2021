@@ -17,7 +17,8 @@ public class AbilityButton : MonoBehaviour
 
     public bool isPressed = false;
 
-    public KeyCode abilityKey;
+    //public KeyCode abilityKey;
+    public char abilityKey;
 
     public Texture2D targetCursor;
 
@@ -25,8 +26,8 @@ public class AbilityButton : MonoBehaviour
     public Image cooldownBG;
     public TMP_Text cooldownTimer;
 
-    // Start is called before the first frame update
-    void Start()
+    // OnEnable is called when this game object is activated
+    void OnEnable()
     {
         uiButton = GetComponent<Button>();
 
@@ -47,7 +48,23 @@ public class AbilityButton : MonoBehaviour
         _currentState.UpdateLoop();
 
         // Check if user presses the ability key..
-        // Input.GetKeyDown(abilityKey);
+        switch (abilityKey)
+        {
+            case 'q':
+                isPressed = Keyboard.current.qKey.isPressed;
+                break;
+            case 'w':
+                isPressed = Keyboard.current.wKey.isPressed;
+                break;
+            case 'e':
+                isPressed = Keyboard.current.eKey.isPressed;
+                break;
+            case 'r':
+                isPressed = Keyboard.current.rKey.isPressed;
+                break;
+            default:
+                break;
+        }
     }
 
     // UI Button callback function

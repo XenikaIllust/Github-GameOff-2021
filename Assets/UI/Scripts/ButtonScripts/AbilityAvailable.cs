@@ -20,11 +20,9 @@ public class AbilityAvailable : AbilityButtonState
 
     void OnActivated()
     {
-        char keyChar = (char)AbilityButtonContext.abilityKey;
+        char keyChar = AbilityButtonContext.abilityKey;
 
-        EventManager.RaiseEvent(keyChar+"Pressed", null);
-
-        Debug.Log(keyChar+"Pressed");
+        EventManager.RaiseEvent(char.ToUpper(keyChar)+"Pressed", null);
 
         AbilityButtonContext.SwitchState(AbilityButtonContext.abilityTarget);
     }
