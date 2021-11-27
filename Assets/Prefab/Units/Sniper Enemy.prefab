@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81e4df4340dad741af7001e4dcdb145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 3.5
+  movementSpeed: 1
   defaultMovementSpeed: 0
   turnRate: 1
   defaultTurnRate: 0
@@ -162,6 +162,11 @@ MonoBehaviour:
   alliance: 1
   abilities:
   - {fileID: 11400000, guid: 35e05b957c9ac96609da7ea44b3890d2, type: 2}
+  abilityCooldownList:
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!114 &6709142033712369222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,9 +179,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4936cda0905cc242b3999cf0a67fd2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hostileRange: 5
-  aimRange: 3
-  aimAbility: {fileID: 11400000, guid: 35e05b957c9ac96609da7ea44b3890d2, type: 2}
+  aggroRange: 5
+  preferredCombatRange:
+    x: 9
+    y: 10
+  defaultBestAngle: 180
+  defaultWorstAngle: 360
+  multiplier:
+  - x: 25
+    y: 25
+    z: 25
+    w: 25
+  - x: 25
+    y: 25
+    z: 25
+    w: 25
+  - x: 25
+    y: 25
+    z: 25
+    w: 25
+  - x: 25
+    y: 25
+    z: 25
+    w: 25
 --- !u!114 &8270074324960196171
 MonoBehaviour:
   m_ObjectHideFlags: 0

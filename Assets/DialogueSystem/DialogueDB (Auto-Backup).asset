@@ -788,7 +788,13 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks: []
+      outgoingLinks:
+      - originConversationID: 2
+        originDialogueID: 7
+        destinationConversationID: 2
+        destinationDialogueID: 12
+        isConnector: 0
+        priority: 2
       conditionsString: 
       userScript: 
       onExecute:
@@ -971,6 +977,55 @@ MonoBehaviour:
         serializedVersion: 2
         x: 30
         y: 269
+        width: 160
+        height: 30
+    - id: 12
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: Run.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: Run.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: AudioWait(Sounds/Voice Acting/Evangelist/Op 01 - Evangelist_Run_x1)
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 2
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 28
+        y: 480
         width: 160
         height: 30
     entryGroups: []
@@ -2595,7 +2650,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
+        x: 28.550728
         y: 370
         width: 160
         height: 30
@@ -2626,8 +2681,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Evangelist/Op 08 - Evangelist Socialize
-          Corp)
+        value: AudioWait(Sounds/Voice Acting/Evangelist/Op 09 - Evangelist Designed)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -2682,8 +2736,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 09 Tacia Cannot Delete
-          Humans)
+        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 10 Tacia Save Me)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -2740,7 +2793,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
+        value: AudioWait()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -2814,67 +2867,6 @@ MonoBehaviour:
       - originConversationID: 9
         originDialogueID: 11
         destinationConversationID: 9
-        destinationDialogueID: 12
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 30
-        y: 570
-        width: 160
-        height: 30
-    - id: 12
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 'To do this, we need you to retrieve the Administrator Privilege from
-          the Internal Registry.
-
-'
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: 'To do this, we need you to retrieve the Administrator Privilege from
-          the Internal Registry.
-
-'
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Evangelist/Op 11 - Evangelist_To_Do_This)
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 9
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 9
-        originDialogueID: 12
-        destinationConversationID: 9
         destinationDialogueID: 13
         isConnector: 0
         priority: 2
@@ -2886,7 +2878,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 30
-        y: 620
+        y: 570
         width: 160
         height: 30
     - id: 13
@@ -2918,7 +2910,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
+        value: AudioWait()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -2942,8 +2934,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
-        y: 670
+        x: 31.754395
+        y: 620.8772
         width: 160
         height: 30
     - id: 14
@@ -3002,8 +2994,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
-        y: 720
+        x: 31.754395
+        y: 670.8772
         width: 160
         height: 30
     - id: 15
@@ -3062,8 +3054,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 31.265823
-        y: 770
+        x: 33.020218
+        y: 720.8772
         width: 160
         height: 30
     - id: 16
@@ -3111,13 +3103,13 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
-        y: 818.5715
+        x: 31.754395
+        y: 769.44867
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 142.62283}
-    canvasZoom: 0.6100005
+    canvasScrollPosition: {x: 0, y: 147.36841}
+    canvasZoom: 0.57000005
   - id: 10
     fields:
     - title: Title
@@ -3248,7 +3240,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 10
@@ -3272,8 +3264,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
-        y: 70
+        x: 29
+        y: 69
         width: 160
         height: 30
     - id: 2
@@ -3307,7 +3299,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 10
@@ -3368,7 +3360,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 10
@@ -3407,11 +3399,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 1
+        value: 4
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 4
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -3423,7 +3415,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 10
@@ -3576,7 +3568,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -3633,7 +3625,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -3658,7 +3650,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 30
-        y: 120
+        y: 119
         width: 160
         height: 30
     - id: 3
@@ -3690,7 +3682,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -3749,7 +3741,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -3804,7 +3796,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: AudioWait(Sounds/Voice Acting/Evangelist/Op 14 - Evangelist God Speed)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11

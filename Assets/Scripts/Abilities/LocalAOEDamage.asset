@@ -11,9 +11,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: LocalAOEDamage
-  m_EditorClassIdentifier: 
-  abilityName: PING OF DEATH
-  abilityDescription: 
+  m_EditorClassIdentifier:
+  abilityName:
+  abilityDescription:
   abilitySprite: {fileID: 0}
   inputType: 3
   duration: 0.3
@@ -22,9 +22,8 @@ MonoBehaviour:
   castPoint: 0.3
   castBackSwing: 0.7
   totalDamage: 0
-  idealRangePercentage: 100
-  idealAITargetPosition: 0
-  targetPositionOffset: 1
+  idealTargetPosition: 1
+  targetPositionOffset: 2
   abilityStats:
     _Buckets: ffffffff01000000ffffffff
     _HashCodes: 77c3df522068d20600000000
@@ -36,7 +35,7 @@ MonoBehaviour:
     _Keys:
     - AOE Radius
     - AOE Damage Stat
-    - 
+    -
     _Values:
     - 4
     - 70
@@ -51,25 +50,25 @@ MonoBehaviour:
     - Id: AOE Damage
       TargetFilter:
         Type: 3
-        InitialPointId: 
-        FinalPointId: 
+        InitialPointId:
+        FinalPointId:
         AOERadiusId: AOE Radius
         TargetCenterId: Executing Unit Position
-        PreviousEffectId: 
-        ConeRangeId: 
-        ConeAngleId: 
-        ConeTargetId: 
+        PreviousEffectId:
+        ConeRangeId:
+        ConeAngleId:
+        ConeTargetId:
         hitEnemies: 1
         hitAllies: 0
         hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
         StatId: AOE Damage Stat
-        VFXName: 
-        VFXPointId: 
-        VFXStartPointId: 
-        VFXEndPointId: 
-        VFXUnitId: 
-        SFXName: 
-        ProjectileName: 
-        AnimationName: 
+        VFXName:
+        VFXPointId:
+        VFXStartPointId:
+        VFXEndPointId:
+        VFXUnitId:
+        SFXName:
+        ProjectileName:
+        AnimationName:

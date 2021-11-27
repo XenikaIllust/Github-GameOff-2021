@@ -2,13 +2,16 @@ public class SniperAI : AIAgent
 {
     protected override void CalculateAbilityUtility()
     {
-        if (thisUnit.abilityCooldownList[0] <= float.Epsilon)
+        for (var i = 0; i < abilityUtilities.Count; i++)
         {
-            abilityUtilities[0] = float.PositiveInfinity * (thisUnit.abilities[0].castRange - distanceToTarget);
-        }
-        else
-        {
-            abilityUtilities[0] = float.NegativeInfinity;
+            if (abilities[i] == null) continue;
+
+            var rangeUtility = abilityMultiplier[i][0] * RangeFactor(idealRanges[i], idealRanges[i] * 2);
+            var directionUtility = abilityMultiplier[i][1] * DirectionFactor(defaultBestAngle, defaultWorstAngle);
+            var damageUtility = abilityMultiplier[i][2] * DamageFactor(abilities[i].totalDamage);
+            var cooldownUtility = abilityMultiplier[i][3] * CooldownFactor(abilities[i].cooldown);
+
+            abilityUtilities[i] = rangeUtility + directionUtility + damageUtility + cooldownUtility;
         }
     }
 }

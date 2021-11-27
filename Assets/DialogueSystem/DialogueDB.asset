@@ -53,8 +53,8 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
-    portrait: {fileID: 0}
-    spritePortrait: {fileID: 2877471580529523173, guid: c15ba1dcb835b28498cc6239dc893a2e, type: 3}
+    portrait: {fileID: 2800000, guid: b08a940078bb62c4aacd39d4b3c0aece, type: 3}
+    spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
   - id: 2
@@ -163,7 +163,7 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
-    portrait: {fileID: 0}
+    portrait: {fileID: 2800000, guid: 71050b87da2b6e149bd8a4cf969d2c65, type: 3}
     spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
@@ -2650,7 +2650,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
+        x: 28.550728
         y: 370
         width: 160
         height: 30
@@ -2681,8 +2681,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Evangelist/Op 08 - Evangelist Socialize
-          Corp)
+        value: AudioWait(Sounds/Voice Acting/Evangelist/Op 09 - Evangelist Designed)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -2737,8 +2736,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 09 Tacia Cannot Delete
-          Humans)
+        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 10 Tacia Save Me)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -2795,7 +2793,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
+        value: AudioWait()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -2869,67 +2867,6 @@ MonoBehaviour:
       - originConversationID: 9
         originDialogueID: 11
         destinationConversationID: 9
-        destinationDialogueID: 12
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 30
-        y: 570
-        width: 160
-        height: 30
-    - id: 12
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 'To do this, we need you to retrieve the Administrator Privilege from
-          the Internal Registry.
-
-'
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: 'To do this, we need you to retrieve the Administrator Privilege from
-          the Internal Registry.
-
-'
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Evangelist/Op 11 - Evangelist_To_Do_This)
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 9
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 9
-        originDialogueID: 12
-        destinationConversationID: 9
         destinationDialogueID: 13
         isConnector: 0
         priority: 2
@@ -2941,7 +2878,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 30
-        y: 620
+        y: 570
         width: 160
         height: 30
     - id: 13
@@ -2973,7 +2910,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
+        value: AudioWait()
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -2997,8 +2934,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
-        y: 670
+        x: 31.754395
+        y: 620.8772
         width: 160
         height: 30
     - id: 14
@@ -3057,8 +2994,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
-        y: 720
+        x: 31.754395
+        y: 670.8772
         width: 160
         height: 30
     - id: 15
@@ -3117,8 +3054,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 31.265823
-        y: 770
+        x: 33.020218
+        y: 720.8772
         width: 160
         height: 30
     - id: 16
@@ -3166,13 +3103,13 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
-        y: 818.5715
+        x: 31.754395
+        y: 769.44867
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 1.4492493, y: 0}
-    canvasZoom: 0.69
+    canvasScrollPosition: {x: 0, y: 147.36841}
+    canvasZoom: 0.57000005
   - id: 10
     fields:
     - title: Title
