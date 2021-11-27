@@ -87,7 +87,7 @@ MonoBehaviour:
         hitAllies: 0
         hitSelf: 1
       GameAction:
-        GameActionBlock: {fileID: 11400000, guid: 37dc24ebe8dbc504cb628f2a5317fa4b, type: 2}
+        GameActionBlock: {fileID: 11400000, guid: a6f36898e372c884d980920e5a52eefe, type: 2}
         StatId: 
         VFXName: Point_Disappear
         VFXPointId: Executing Unit Position
