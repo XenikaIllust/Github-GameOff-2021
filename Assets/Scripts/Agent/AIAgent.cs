@@ -32,6 +32,18 @@ public class AIAgent : Agent
     [SerializeField] private float avoidUtility;
     [SerializeField] private float lookUtility;
     [SerializeField] private float stopUtility;
+    [Space] [SerializeField] private float forceChaseDuration;
+    [SerializeField] private float forceAvoidDuration;
+    [SerializeField] private float forceLookDuration;
+    [SerializeField] private float forceStopDuration;
+
+    private void Update()
+    {
+        forceChaseDuration -= Time.deltaTime;
+        forceAvoidDuration -= Time.deltaTime;
+        forceLookDuration -= Time.deltaTime;
+        forceStopDuration -= Time.deltaTime;
+    }
 
     protected override void Awake()
     {
@@ -67,11 +79,18 @@ public class AIAgent : Agent
     private void OnEnable()
     {
         EventManager.StartListening("OnPlayerPositionChanged", OnPlayerPositionChanged);
+        unitEventHandler.StartListening("OnLookForced", OnLookForced);
+    }
+
+    private void OnLookForced(object duration)
+    {
+        forceLookDuration = Mathf.Max((float)duration, forceLookDuration);
     }
 
     private void OnDisable()
     {
         EventManager.StopListening("OnPlayerPositionChanged", OnPlayerPositionChanged);
+        unitEventHandler.StopListening("OnLookForced", OnLookForced);
     }
 
     private void OnPlayerPositionChanged(object newPosition)
@@ -181,6 +200,11 @@ public class AIAgent : Agent
         {
             chaseUtility = basicMovementMultiplier;
         }
+
+        if (forceChaseDuration > float.Epsilon) chaseUtility = float.PositiveInfinity;
+        if (forceAvoidDuration > float.Epsilon) avoidUtility = float.PositiveInfinity;
+        if (forceLookDuration > float.Epsilon) lookUtility = float.PositiveInfinity;
+        if (forceStopDuration > float.Epsilon) stopUtility = float.PositiveInfinity;
     }
 
     private void ExecuteBestAction()

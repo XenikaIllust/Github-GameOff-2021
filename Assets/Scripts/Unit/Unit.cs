@@ -10,9 +10,7 @@ public class Unit : MonoBehaviour
 {
     public EventProcessor unitEventHandler; // Internal event handler
     [Header("Stats")] public float movementSpeed = 3.5f;
-    [HideInInspector] public float defaultMovementSpeed;
     public float turnRate = 5f;
-    [HideInInspector] public float defaultTurnRate;
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
     [Header("Misc.")] public Alliance alliance;
@@ -54,8 +52,6 @@ public class Unit : MonoBehaviour
         agent.angularSpeed = float.MaxValue;
         agent.autoBraking = true;
 
-        defaultMovementSpeed = movementSpeed;
-        defaultTurnRate = turnRate;
         while (abilities.Count < 4) abilities.Add(null);
 
         PseudoObject = new GameObject("PseudoObject")
