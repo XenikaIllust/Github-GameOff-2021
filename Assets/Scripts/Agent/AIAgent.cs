@@ -78,8 +78,30 @@ public class AIAgent : Agent
 
     private void OnEnable()
     {
-        EventManager.StartListening("OnPlayerPositionChanged", OnPlayerPositionChanged);
+        unitEventHandler.StartListening("OnChaseForced", OnChaseForced);
+        unitEventHandler.StartListening("OnAvoidForced", OnAvoidForced);
         unitEventHandler.StartListening("OnLookForced", OnLookForced);
+        unitEventHandler.StartListening("OnStopForced", OnStopForced);
+        EventManager.StartListening("OnPlayerPositionChanged", OnPlayerPositionChanged);
+    }
+
+    private void OnDisable()
+    {
+        unitEventHandler.StopListening("OnChaseForced", OnChaseForced);
+        unitEventHandler.StopListening("OnAvoidForced", OnAvoidForced);
+        unitEventHandler.StopListening("OnLookForced", OnLookForced);
+        unitEventHandler.StopListening("OnStopForced", OnStopForced);
+        EventManager.StopListening("OnPlayerPositionChanged", OnPlayerPositionChanged);
+    }
+
+    private void OnChaseForced(object duration)
+    {
+        forceChaseDuration = Mathf.Max((float)duration, forceLookDuration);
+    }
+
+    private void OnAvoidForced(object duration)
+    {
+        forceAvoidDuration = Mathf.Max((float)duration, forceLookDuration);
     }
 
     private void OnLookForced(object duration)
@@ -87,10 +109,9 @@ public class AIAgent : Agent
         forceLookDuration = Mathf.Max((float)duration, forceLookDuration);
     }
 
-    private void OnDisable()
+    private void OnStopForced(object duration)
     {
-        EventManager.StopListening("OnPlayerPositionChanged", OnPlayerPositionChanged);
-        unitEventHandler.StopListening("OnLookForced", OnLookForced);
+        forceStopDuration = Mathf.Max((float)duration, forceLookDuration);
     }
 
     private void OnPlayerPositionChanged(object newPosition)
