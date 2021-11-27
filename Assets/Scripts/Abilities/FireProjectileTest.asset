@@ -26,19 +26,19 @@ MonoBehaviour:
   targetPositionOffset: 0.1
   abilityStats:
     _Buckets: 01000000ffffffffffffffff
-    _HashCodes: ffffffff3f5a672f00000000
+    _HashCodes: ffffffff3fb75b6800000000
     _Next: ffffffffffffffff00000000
     _Count: 2
-    _Version: 45
+    _Version: 86
     _FreeList: 0
     _FreeCount: 1
     _Keys:
     - 
-    - Turn Rate
+    - Aim Duration
     - 
     _Values:
     - 0
-    - 0.2
+    - 4
     - 0
   outcomes:
   - Id: AIm
@@ -63,7 +63,7 @@ MonoBehaviour:
         hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 26d6e713ba42c4ba88bb4f7adaf8e00a, type: 2}
-        StatId: Turn Rate
+        StatId: Aim Duration
         VFXName: 
         VFXPointId: 
         VFXStartPointId: 
