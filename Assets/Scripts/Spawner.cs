@@ -72,11 +72,13 @@ public class Spawner : MonoBehaviour
 
     private void Spawn()
     {
-        var unit = Instantiate(gameObjectPrefab);
-        aliveUnits.Add(unit);
+        var unitGO = Instantiate(gameObjectPrefab);
+        aliveUnits.Add(unitGO);
         lifetimeQuota -= 1;
         Vector3 offset = new Vector2(Random.Range(0, spawnRadius), Random.Range(0, spawnRadius));
         Debug.Log("transform.position of spawner: " + transform.position);
+        Unit unit = unitGO.GetComponent<Unit>();
+        unit.agent.Warp(new Vector3(transform.position.x + offset.x, transform.position.y + offset.y, 0));
         unit.transform.position = transform.position + offset;
     }
 }
