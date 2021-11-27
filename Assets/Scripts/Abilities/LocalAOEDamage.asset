@@ -35,11 +35,9 @@ MonoBehaviour:
     _Keys:
     - AOE Radius
     - AOE Damage Stat
-    -
     _Values:
     - 4
     - 70
-    - 0
   outcomes:
   - Id: AOE Damage
     Duration: 0

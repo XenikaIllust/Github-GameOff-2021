@@ -101,5 +101,5 @@ MonoBehaviour:
         VFXEndPointId: 
         VFXUnitId: 
         SFXName: 
-        ProjectileName: TestProjectile
+        ProjectileName: SniperProjectile
         AnimationName: 
