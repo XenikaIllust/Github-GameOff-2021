@@ -61,6 +61,10 @@ public class UnitAnimationManager : MonoBehaviour
         // standard bearing to azimuth is required because the animations are saved in azimuth format
         float azimuthRotation = MathUtils.ConvertStandardToAzimuth(rotationAngle);
         string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
+
+        if(GetComponentInParent<Unit>().gameObject.name == "Sniper") {
+            Debug.Log("Sniper" + _animationLibrary[currentAnimationStatename][(int)azimuthRotation / 10]);
+        }
         anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(_animationLibrary[currentAnimationStatename][0],
             _animationLibrary[currentAnimationStatename][(int)azimuthRotation / 10]));
         _aoc.ApplyOverrides(anims);
@@ -89,7 +93,7 @@ public class UnitAnimationManager : MonoBehaviour
         {
             // it is expected that the folders are named the same name as the animation state specified in the list of UnitAnimationManager
 
-            string prefixPath = "Animations/" + transform.parent.gameObject.name;
+            string prefixPath = "Animations/" + (transform.parent.gameObject.name.Split('(')[0]); // split the word "Clone" and take only the true name
 
             AnimationClip[] animationClips = new AnimationClip[_degreeClipLength];
             for (int i = 0; i < _degreeClipLength; i++)

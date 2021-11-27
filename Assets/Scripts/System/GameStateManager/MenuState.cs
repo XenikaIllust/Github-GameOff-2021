@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 namespace StateMachine.GameStateManager
 {
@@ -25,11 +26,11 @@ namespace StateMachine.GameStateManager
             {
                 yield return null;
 
-                if (Input.GetKeyDown(KeyCode.G))
+                if (Keyboard.current.gKey.wasPressedThisFrame)
                 {
                     EventManager.RaiseEvent("StartGame", null);
                 }
-                else if (Input.GetKeyDown(KeyCode.P))
+                else if (Keyboard.current.pKey.wasPressedThisFrame)
                 {
                     EventManager.RaiseEvent("PauseGame", null);
                 }

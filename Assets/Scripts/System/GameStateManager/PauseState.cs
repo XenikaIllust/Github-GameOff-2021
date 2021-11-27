@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 namespace StateMachine.GameStateManager
 {
@@ -25,11 +26,11 @@ namespace StateMachine.GameStateManager
             {
                 yield return null;
 
-                if (Input.GetKeyDown(KeyCode.P))
+                if (Keyboard.current.pKey.wasPressedThisFrame)
                 {
                     EventManager.RaiseEvent("ExitPauseMenu", null);
                 }
-                else if (Input.GetKeyDown(KeyCode.Escape))
+                else if (Keyboard.current.escapeKey.wasPressedThisFrame)
                 {
                     EventManager.RaiseEvent("ReturnToMenu", null);
                 }
