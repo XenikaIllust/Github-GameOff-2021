@@ -866,7 +866,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 29
-        y: 375
+        y: 373.57144
         width: 160
         height: 30
     - id: 10
@@ -1460,7 +1460,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: -1
+        value: 4
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -1479,8 +1479,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Evangelist/Op 03 - Evangelist Open Your
-          Eyes)
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 1)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 5
@@ -1965,8 +1964,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Evangelist/Op 03 - Evangelist Open Your
-          Eyes)
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 2)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 7
@@ -2121,8 +2119,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Evangelist/Op 03 - Evangelist Open Your
-          Eyes)
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 3)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 8
@@ -2507,7 +2504,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 4)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -2775,7 +2772,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 2
+        value: 4
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -2793,7 +2790,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait()
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 5)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -2910,7 +2907,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait()
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 6)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -3108,8 +3105,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 147.36841}
-    canvasZoom: 0.57000005
+    canvasScrollPosition: {x: 0, y: 85.46358}
+    canvasZoom: 0.63000005
   - id: 10
     fields:
     - title: Title
@@ -3240,7 +3237,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 7)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 10
@@ -3293,13 +3290,12 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: Tacia, there are bugs and security loopholes in the Metaverse infrastructure.
-          Even the SRDT cannot fix it. You now have the ability to use Exploits to
-          exploit these bugs to manipulate hostile programs.
+        value: 'Tacia, there are bugs and security loopholes in the Metaverse infrastructure.
+          Even the SRDT cannot fix it. '
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 8)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 10
@@ -3313,7 +3309,7 @@ MonoBehaviour:
       - originConversationID: 10
         originDialogueID: 2
         destinationConversationID: 10
-        destinationDialogueID: 3
+        destinationDialogueID: 5
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -3360,7 +3356,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 10)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 10
@@ -3384,8 +3380,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
-        y: 170
+        x: 28
+        y: 223
         width: 160
         height: 30
     - id: 4
@@ -3415,7 +3411,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 11)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 10
@@ -3433,12 +3429,69 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 30
-        y: 220
+        x: 26
+        y: 280
+        width: 160
+        height: 30
+    - id: 5
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: You now have the ability to use Exploits to exploit these bugs to
+          manipulate hostile programs.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 4
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: You now have the ability to use Exploits to exploit these bugs to
+          manipulate hostile programs.
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 9)
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 10
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 10
+        originDialogueID: 5
+        destinationConversationID: 10
+        destinationDialogueID: 3
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 29
+        y: 169
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 0, y: 94}
     canvasZoom: 1
   - id: 11
     fields:
@@ -3568,7 +3621,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 12)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -3625,7 +3678,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 13)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -3682,7 +3735,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 14)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
@@ -3741,7 +3794,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: AudioWait(Sounds/Voice Acting/Tacia/Opening/Op 08 Tacia What Happened)
+        value: AudioWait(Sounds/Voice Acting/Bitmask/Bit Mask 15)
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 11
