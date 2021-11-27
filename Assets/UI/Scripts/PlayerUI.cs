@@ -17,6 +17,11 @@ public class PlayerUI : MonoBehaviour
     void Start()
     {
         unitEventManager.UnitEventHandler.StartListening("OnSpawned", ShowEnemyHealth);
+
+        // Set time scale to 1 so that the game starts unpaused.
+        // There is currently a weird bug where if you don't set
+        // this, the game starts frozen as if it is paused.
+        Time.timeScale = 1f;
     }
 
     // 'Escape' Key, 'P' Key
