@@ -72,6 +72,7 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 
   - Id: AOE Damage 2nd Round
     Duration: 0
@@ -104,4 +105,5 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 

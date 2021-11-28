@@ -70,4 +70,5 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 

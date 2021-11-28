@@ -71,6 +71,7 @@ MonoBehaviour:
         TimeToLive: 1
         SFXName: 
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 
   - Id: Attack
     Duration: 0
@@ -103,4 +104,5 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 

@@ -25,13 +25,13 @@ MonoBehaviour:
   idealTargetPosition: 0
   targetPositionOffset: 0.5
   abilityStats:
-    _Buckets: 01000000ffffffff02000000
-    _HashCodes: fffffffff4dc220cf3dc220c
-    _Next: ffffffffffffffffffffffff
+    _Buckets: 00000000ffffffff02000000
+    _HashCodes: f4dc220cf4dc220cf3dc220c
+    _Next: 01000000ffffffffffffffff
     _Count: 2
-    _Version: 93
-    _FreeList: 0
-    _FreeCount: 1
+    _Version: 126
+    _FreeList: -1
+    _FreeCount: 0
     _Keys:
     - Damage Stat 1
     - Damage Stat 2
@@ -70,6 +70,7 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 
   - Id: Damage, Teleport and Reappear
     Duration: 0
@@ -102,6 +103,7 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 
     - Id: Teleport
       TargetFilter:
@@ -128,6 +130,7 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 
     - Id: Reappear
       TargetFilter:
@@ -154,6 +157,7 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 
   - Id: Delayed Damage
     Duration: 0
@@ -177,7 +181,7 @@ MonoBehaviour:
         hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
-        StatId: Damage Stat 2
+        StatId: 
         VFXName: 
         VFXPointId: 
         VFXStartPointId: 
@@ -186,4 +190,5 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 

@@ -72,6 +72,7 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: TestProjectile
+        ProjectileStatId: 
         AnimationTriggerName: 
     - Id: Telegraph Aim
       TargetFilter:
@@ -98,6 +99,7 @@ MonoBehaviour:
         TimeToLive: 4
         SFXName: 
         ProjectileName: TestProjectile
+        ProjectileStatId: 
         AnimationTriggerName: 
   - Id: Fire
     Duration: 0
@@ -121,7 +123,7 @@ MonoBehaviour:
         hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 75961689d04916d6cb0dde78108b75d4, type: 2}
-        StatId: Projectile Damage
+        StatId: 
         VFXName: 
         VFXPointId: 
         VFXStartPointId: 
@@ -130,4 +132,5 @@ MonoBehaviour:
         TimeToLive: 10
         SFXName: 
         ProjectileName: SniperProjectile
+        ProjectileStatId: Projectile Damage
         AnimationTriggerName: 
