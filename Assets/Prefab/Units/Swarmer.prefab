@@ -402,10 +402,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81e4df4340dad741af7001e4dcdb145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 7
-  defaultMovementSpeed: 0
-  turnRate: 10
-  defaultTurnRate: 0
+  movementSpeed: 5.5
+  turnRate: 6.75
   isPlayer: 0
   agent: {fileID: 0}
   alliance: 1
@@ -432,7 +430,7 @@ MonoBehaviour:
   preferredCombatRange:
     x: 0
     y: 0.5
-  basicMovementMultiplier: 50
+  basicMovementMultiplier: 33
   defaultBestAngle: 180
   defaultWorstAngle: 360
   abilityMultiplier:
@@ -461,6 +459,10 @@ MonoBehaviour:
   avoidUtility: 0
   lookUtility: 0
   stopUtility: 0
+  forceChaseDuration: 0
+  forceAvoidDuration: 0
+  forceLookDuration: 0
+  forceStopDuration: 0
 --- !u!114 &-8624061012861718292
 MonoBehaviour:
   m_ObjectHideFlags: 0

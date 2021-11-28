@@ -17,10 +17,10 @@ MonoBehaviour:
   abilitySprite: {fileID: 0}
   inputType: 0
   duration: 0.25
-  cooldown: 3
+  cooldown: 2
   castRange: 5
   castPoint: 0.3
-  castBackSwing: 0.7
+  castBackSwing: 0.14
   totalDamage: 0
   idealTargetPosition: 0
   targetPositionOffset: 0.5
@@ -68,6 +68,7 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 
     - Id: Disappear VFX
       TargetFilter:
@@ -94,6 +95,7 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 
   - Id: Teleport and Reappear
     Duration: 0
@@ -126,6 +128,7 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 
     - Id: Reappear
       TargetFilter:
@@ -152,6 +155,7 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 
     - Id: Teleport SFX
       TargetFilter:
@@ -178,4 +182,5 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: Teleport
         ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 

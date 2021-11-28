@@ -17,10 +17,10 @@ MonoBehaviour:
   abilitySprite: {fileID: 0}
   inputType: 0
   duration: 1.5
-  cooldown: 5
+  cooldown: 3
   castRange: 5
   castPoint: 0.3
-  castBackSwing: 0.7
+  castBackSwing: 0.24
   totalDamage: 50
   idealTargetPosition: 0
   targetPositionOffset: 0.5
@@ -156,6 +156,33 @@ MonoBehaviour:
         VFXUnitId: 
         TimeToLive: 0
         SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: AstralStep
+      TargetFilter:
+        Type: 4
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: Teleport
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 1
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: AstralStep
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 

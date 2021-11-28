@@ -42,7 +42,7 @@ MonoBehaviour:
     - 4
   outcomes:
   - Id: AOE Damage 1st Round
-    Duration: 0
+    Duration: 3
     Trigger:
       ExecutionTime: 0
       IsNormalizedTime: 0
@@ -71,6 +71,33 @@ MonoBehaviour:
         VFXUnitId: 
         TimeToLive: 0
         SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: Damage SFX
+      TargetFilter:
+        Type: 3
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: AOE Radius
+        TargetCenterId: Target Center
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
+        StatId: Damage SFX
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: Damage SFX
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
