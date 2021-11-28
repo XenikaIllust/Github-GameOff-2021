@@ -23,14 +23,19 @@ public class GameAction
     // Unit VFX
     public string VFXUnitId;
 
+    // Special, for Boss Telegraphing Attacks
+    [Tooltip("This would be the duration of this telegraphing outcome")]
+    public float TimeToLive;
+
     // for SFX GameActionBlocks that require inputs
     public string SFXName;
 
     // Name of Projectile Prefab
     public string ProjectileName;
+    public string ProjectileStatId;
 
     // for AnimationAction
-    public string AnimationName;
+    public string AnimationTriggerName;
 
     public void Invoke(AbilityStatsDict AbilityStats, List<object> CurrentFilteredTargets, Dictionary<string, object> AllTargets) {
         if(AbilityStats.ContainsKey(StatId)) { // this GameActionBlock type requires a stat
@@ -40,8 +45,20 @@ public class GameAction
             string[] idParams = new string[] { VFXName, VFXPointId };
             GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);
         }
+        else if(GameActionBlock.GetType() == typeof(ArcIndicatorVFXActionBlock)) {
+            string[] idParams = new string[] { VFXName, VFXPointId };
+            GameActionBlock.Invoke(TimeToLive, AbilityStats, idParams, CurrentFilteredTargets, AllTargets);
+        }
+        else if(GameActionBlock.GetType() == typeof(AOEIndicatorVFXActionBlock)) {
+            string[] idParams = new string[] { VFXName, VFXPointId };
+            GameActionBlock.Invoke(TimeToLive, AbilityStats, idParams, CurrentFilteredTargets, AllTargets);
+        }
+        else if(GameActionBlock.GetType() == typeof(LineIndicatorVFXActionBlock)) {
+            string[] idParams = new string[] { VFXName };
+            GameActionBlock.Invoke(TimeToLive, AbilityStats, idParams, CurrentFilteredTargets, AllTargets);
+        }
         else if(GameActionBlock.GetType() == typeof(UnitVFXActionBlock)) {
-            string[] idParams = new string[] { AnimationName };
+            string[] idParams = new string[] { VFXName };
             GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);
         }
         else if(GameActionBlock.GetType() == typeof(SFXActionBlock)) {
@@ -49,11 +66,11 @@ public class GameAction
             GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);
         }
         else if(GameActionBlock.GetType() == typeof(FireProjectileAction)) {
-            string[] idParams = new string[] { ProjectileName };
-            GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);
+            string[] idParams = new string[] { ProjectileName, ProjectileStatId };
+            GameActionBlock.Invoke(TimeToLive, AbilityStats, idParams, CurrentFilteredTargets, AllTargets);
         }
-        else if(GameActionBlock.GetType() == typeof(AnimationAction)) {
-            string[] idParams = new string[] { AnimationName };
+        else if(GameActionBlock.GetType() == typeof(AnimationActionBlock)) {
+            string[] idParams = new string[] { AnimationTriggerName };
             GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);
         }
         else {  // this GameActionBlock type requires no stat

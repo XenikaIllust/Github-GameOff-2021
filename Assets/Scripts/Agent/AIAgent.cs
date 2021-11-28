@@ -32,6 +32,18 @@ public class AIAgent : Agent
     [SerializeField] private float avoidUtility;
     [SerializeField] private float lookUtility;
     [SerializeField] private float stopUtility;
+    [Space] [SerializeField] private float forceChaseDuration;
+    [SerializeField] private float forceAvoidDuration;
+    [SerializeField] private float forceLookDuration;
+    [SerializeField] private float forceStopDuration;
+
+    private void Update()
+    {
+        forceChaseDuration -= Time.deltaTime;
+        forceAvoidDuration -= Time.deltaTime;
+        forceLookDuration -= Time.deltaTime;
+        forceStopDuration -= Time.deltaTime;
+    }
 
     protected override void Awake()
     {
@@ -56,7 +68,7 @@ public class AIAgent : Agent
             {
                 AITargetPositionType.BehindTarget => abilities[i].castRange - abilities[i].targetPositionOffset,
                 AITargetPositionType.InFrontOfTarget => abilities[i].castRange + abilities[i].targetPositionOffset,
-                _ => idealRanges[i]
+                _ => throw new ArgumentOutOfRangeException()
             };
         }
 
@@ -66,12 +78,40 @@ public class AIAgent : Agent
 
     private void OnEnable()
     {
+        unitEventHandler.StartListening("OnChaseForced", OnChaseForced);
+        unitEventHandler.StartListening("OnAvoidForced", OnAvoidForced);
+        unitEventHandler.StartListening("OnLookForced", OnLookForced);
+        unitEventHandler.StartListening("OnStopForced", OnStopForced);
         EventManager.StartListening("OnPlayerPositionChanged", OnPlayerPositionChanged);
     }
 
     private void OnDisable()
     {
+        unitEventHandler.StopListening("OnChaseForced", OnChaseForced);
+        unitEventHandler.StopListening("OnAvoidForced", OnAvoidForced);
+        unitEventHandler.StopListening("OnLookForced", OnLookForced);
+        unitEventHandler.StopListening("OnStopForced", OnStopForced);
         EventManager.StopListening("OnPlayerPositionChanged", OnPlayerPositionChanged);
+    }
+
+    private void OnChaseForced(object duration)
+    {
+        forceChaseDuration = Mathf.Max((float)duration, forceLookDuration);
+    }
+
+    private void OnAvoidForced(object duration)
+    {
+        forceAvoidDuration = Mathf.Max((float)duration, forceLookDuration);
+    }
+
+    private void OnLookForced(object duration)
+    {
+        forceLookDuration = Mathf.Max((float)duration, forceLookDuration);
+    }
+
+    private void OnStopForced(object duration)
+    {
+        forceStopDuration = Mathf.Max((float)duration, forceLookDuration);
     }
 
     private void OnPlayerPositionChanged(object newPosition)
@@ -145,7 +185,14 @@ public class AIAgent : Agent
                 continue;
             }
 
-            if (abilities[i].castRange < Vector3.Distance(transform.position, _abilityTargetPosition[i]))
+            var offset = abilities[i].idealTargetPosition switch
+            {
+                AITargetPositionType.BehindTarget => -abilities[i].targetPositionOffset,
+                AITargetPositionType.InFrontOfTarget => abilities[i].targetPositionOffset,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            if (abilities[i].castRange < distanceToTarget + offset)
             {
                 abilityUtilities[i] = 0;
             }
@@ -174,6 +221,11 @@ public class AIAgent : Agent
         {
             chaseUtility = basicMovementMultiplier;
         }
+
+        if (forceChaseDuration > float.Epsilon) chaseUtility = float.PositiveInfinity;
+        if (forceAvoidDuration > float.Epsilon) avoidUtility = float.PositiveInfinity;
+        if (forceLookDuration > float.Epsilon) lookUtility = float.PositiveInfinity;
+        if (forceStopDuration > float.Epsilon) stopUtility = float.PositiveInfinity;
     }
 
     private void ExecuteBestAction()

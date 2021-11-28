@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Level 1 - Point A to B.unity
     guid: 0214105d49ac6f64f9044ead6bd46de9
   - enabled: 0
-    path: Assets/Scenes/Audio and Dialogue Testing/DialogueTesting.unity
-    guid: a465478833777f049bf2b04d130e436b
-  - enabled: 0
     path: Assets/Scenes/Start Game - Temporary.unity
     guid: 62b876c83cc04634ba4030bb625a53fa
   - enabled: 0

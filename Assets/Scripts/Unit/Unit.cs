@@ -6,13 +6,17 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
+public enum Alliance
+{
+    TaciaAlliance,
+    ClaireHorde
+}
+
 public class Unit : MonoBehaviour
 {
     public EventProcessor unitEventHandler; // Internal event handler
     [Header("Stats")] public float movementSpeed = 3.5f;
-    [HideInInspector] public float defaultMovementSpeed;
     public float turnRate = 5f;
-    [HideInInspector] public float defaultTurnRate;
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
     [Header("Misc.")] public Alliance alliance;
@@ -24,12 +28,6 @@ public class Unit : MonoBehaviour
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
     private object _aiTarget;
-
-    public enum Alliance
-    {
-        TaciaAlliance,
-        ClaireHorde
-    }
 
     public GameObject PseudoObject { get; private set; }
 
@@ -54,8 +52,6 @@ public class Unit : MonoBehaviour
         agent.angularSpeed = float.MaxValue;
         agent.autoBraking = true;
 
-        defaultMovementSpeed = movementSpeed;
-        defaultTurnRate = turnRate;
         while (abilities.Count < 4) abilities.Add(null);
 
         PseudoObject = new GameObject("PseudoObject")
@@ -65,6 +61,13 @@ public class Unit : MonoBehaviour
                 parent = transform
             }
         };
+        // remove this line if it causes any problems
+        PseudoObject.transform.localPosition = Vector3.zero;
+    }
+
+    private void Start()
+    {
+        if (isPlayer) EventManager.RaiseEvent("OnPlayerSpawned", GetComponent<Unit>());
     }
 
     private void OnEnable()

@@ -12,6 +12,10 @@ public class UnitAnimationManager : MonoBehaviour
     private Camera _camera;
     private int _degreeClipLength;
 
+    public Animator Animator {
+        get {return _anim;}
+    }
+
     private readonly Dictionary<string, AnimationClip[]> _animationLibrary = new Dictionary<string, AnimationClip[]>();
 
     [SerializeField] private int degreeVariation;
@@ -89,7 +93,7 @@ public class UnitAnimationManager : MonoBehaviour
         {
             // it is expected that the folders are named the same name as the animation state specified in the list of UnitAnimationManager
 
-            string prefixPath = "Animations/" + transform.parent.gameObject.name;
+            string prefixPath = "Animations/" + (transform.parent.gameObject.name.Split('(')[0]); // split the word "Clone" and take only the true name
 
             AnimationClip[] animationClips = new AnimationClip[_degreeClipLength];
             for (int i = 0; i < _degreeClipLength; i++)

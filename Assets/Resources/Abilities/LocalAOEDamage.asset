@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
+  m_Name: LocalAOEDamage
+  m_EditorClassIdentifier: 
+  abilityName: Local AOE Damage
+  abilityDescription: 
+  abilitySprite: {fileID: 0}
+  inputType: 3
+  duration: 0.3
+  cooldown: 4
+  castRange: 0
+  castPoint: 0.3
+  castBackSwing: 0.7
+  totalDamage: 70
+  idealTargetPosition: 1
+  targetPositionOffset: 2
+  abilityStats:
+    _Buckets: ffffffff01000000ffffffff
+    _HashCodes: 77c3df522068d20600000000
+    _Next: ffffffff0000000000000000
+    _Count: 2
+    _Version: 104
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - AOE Radius
+    - AOE Damage Stat
+    _Values:
+    - 4
+    - 70
+  outcomes:
+  - Id: AOE Damage
+    Duration: 0
+    Trigger:
+      ExecutionTime: 0.3
+      IsNormalizedTime: 0
+    Effects:
+    - Id: AOE Damage
+      TargetFilter:
+        Type: 3
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: AOE Radius
+        TargetCenterId: Executing Unit Position
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
+        StatId: AOE Damage Stat
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: Water
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: AOE Radius
+        TargetCenterId: Executing Unit Position
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
+        StatId: AOE Damage Stat
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: Water
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 

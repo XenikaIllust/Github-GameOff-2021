@@ -32,7 +32,7 @@ public class GameActionCustomPropertyDrawer : PropertyDrawer {
 
             totalHeight += EditorGUI.GetPropertyHeight( statIdProperty, GUIContent.none );
         }
-        else if(gameActionBlockType == typeof(AimAction)) {
+        else if(gameActionBlockType == typeof(AimActionBlock)) {
             SerializedProperty statIdProperty = property.FindPropertyRelative("StatId");
             var statIdRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
             EditorGUI.PropertyField( statIdRect, statIdProperty );
@@ -50,18 +50,24 @@ public class GameActionCustomPropertyDrawer : PropertyDrawer {
             var vfxPointIdRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
             EditorGUI.PropertyField( vfxPointIdRect, vfxPointIdProperty );
 
+            totalHeight += EditorGUI.GetPropertyHeight( vfxPointIdProperty, GUIContent.none );
+
             SerializedProperty statIdProperty = property.FindPropertyRelative("StatId");
             statIdProperty.stringValue = "";
 
-            totalHeight += EditorGUI.GetPropertyHeight( vfxPointIdProperty, GUIContent.none );
+            totalHeight += EditorGUI.GetPropertyHeight( statIdProperty, GUIContent.none );
         }
         else if(gameActionBlockType == typeof(LineVFXActionBlock)) {
             
         }
         else if(gameActionBlockType == typeof(UnitVFXActionBlock)) {
-            
+            SerializedProperty vfxNameProperty = property.FindPropertyRelative("VFXName");
+            var vfxNameRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( vfxNameRect, vfxNameProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( vfxNameProperty, GUIContent.none );
         }
-        else if(gameActionBlockType == typeof(ArcIndicatorVFXAction)) {
+        else if(gameActionBlockType == typeof(ArcIndicatorVFXActionBlock)) {
             SerializedProperty vfxNameProperty = property.FindPropertyRelative("VFXName");
             var vfxNameRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
             EditorGUI.PropertyField( vfxNameRect, vfxNameProperty );
@@ -73,6 +79,44 @@ public class GameActionCustomPropertyDrawer : PropertyDrawer {
             EditorGUI.PropertyField( vfxPointIdRect, vfxPointIdProperty );
 
             totalHeight += EditorGUI.GetPropertyHeight( vfxPointIdProperty, GUIContent.none );
+
+            SerializedProperty timeToLiveProperty = property.FindPropertyRelative("TimeToLive");
+            var timeToLiveRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( timeToLiveRect, timeToLiveProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( timeToLiveProperty, GUIContent.none );
+        }
+        else if(gameActionBlockType == typeof(AOEIndicatorVFXActionBlock)) {
+            SerializedProperty vfxNameProperty = property.FindPropertyRelative("VFXName");
+            var vfxNameRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( vfxNameRect, vfxNameProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( vfxNameProperty, GUIContent.none );
+
+            SerializedProperty vfxPointIdProperty = property.FindPropertyRelative("VFXPointId");
+            var vfxPointIdRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( vfxPointIdRect, vfxPointIdProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( vfxPointIdProperty, GUIContent.none );
+
+            SerializedProperty timeToLiveProperty = property.FindPropertyRelative("TimeToLive");
+            var timeToLiveRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( timeToLiveRect, timeToLiveProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( timeToLiveProperty, GUIContent.none );
+        }
+        else if(gameActionBlockType == typeof(LineIndicatorVFXActionBlock)) {
+            SerializedProperty vfxNameProperty = property.FindPropertyRelative("VFXName");
+            var vfxNameRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( vfxNameRect, vfxNameProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( vfxNameProperty, GUIContent.none );
+
+            SerializedProperty timeToLiveProperty = property.FindPropertyRelative("TimeToLive");
+            var timeToLiveRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( timeToLiveRect, timeToLiveProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( timeToLiveProperty, GUIContent.none );
         }
         else if(gameActionBlockType == typeof(SFXActionBlock)) {
             SerializedProperty sfxNameProperty = property.FindPropertyRelative("SFXName");
@@ -87,17 +131,33 @@ public class GameActionCustomPropertyDrawer : PropertyDrawer {
             EditorGUI.PropertyField( projectileNameRect, projectileNameProperty );
 
             totalHeight += EditorGUI.GetPropertyHeight( projectileNameProperty, GUIContent.none );
-        }
-        else if(gameActionBlockType == typeof(AnimationAction)) {
-            SerializedProperty animationNameProperty = property.FindPropertyRelative("AnimationName");
-            var animationNameRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
-            EditorGUI.PropertyField( animationNameRect, animationNameProperty );
 
-            totalHeight += EditorGUI.GetPropertyHeight( animationNameProperty, GUIContent.none );
+            SerializedProperty projectileStatIdProperty = property.FindPropertyRelative("ProjectileStatId");
+            var projectileStatIdRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( projectileStatIdRect, projectileStatIdProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( projectileStatIdProperty, GUIContent.none );
+
+            SerializedProperty timeToLiveProperty = property.FindPropertyRelative("TimeToLive");
+            var timeToLiveRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( timeToLiveRect, timeToLiveProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( timeToLiveProperty, GUIContent.none );
+        }
+        else if(gameActionBlockType == typeof(AnimationActionBlock)) {
+            SerializedProperty animationTriggerNameProperty = property.FindPropertyRelative("AnimationTriggerName");
+            var animationTriggerNameRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( animationTriggerNameRect, animationTriggerNameProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( animationTriggerNameProperty, GUIContent.none );
         }
 
         EditorGUI.indentLevel--;
 
         EditorGUI.EndProperty();
+    }
+
+    void ClearAllFields() {
+        // TODO
     }
 }
