@@ -11,9 +11,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: Blink
-  m_EditorClassIdentifier:
-  abilityName:
-  abilityDescription:
+  m_EditorClassIdentifier: 
+  abilityName: Blink
+  abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 0
   duration: 0.25
@@ -22,8 +22,7 @@ MonoBehaviour:
   castPoint: 0.3
   castBackSwing: 0.7
   totalDamage: 0
-  idealRangePercentage: 110
-  idealAITargetPosition: 2
+  idealTargetPosition: 0
   targetPositionOffset: 0.5
   abilityStats:
     _Buckets: ffffffff01000000ffffffff
@@ -47,53 +46,55 @@ MonoBehaviour:
     - Id: Disappear
       TargetFilter:
         Type: 0
-        InitialPointId:
-        FinalPointId:
-        AOERadiusId:
-        TargetCenterId:
-        PreviousEffectId:
-        ConeRangeId:
-        ConeAngleId:
-        ConeTargetId:
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
         hitEnemies: 0
         hitAllies: 0
         hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 2d72a3468b1000249b7e0a5ae82f98bc, type: 2}
-        StatId:
-        VFXName:
-        VFXPointId:
-        VFXStartPointId:
-        VFXEndPointId:
-        VFXUnitId:
-        SFXName:
-        ProjectileName:
-        AnimationName:
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        AnimationTriggerName: 
     - Id: Disappear VFX
       TargetFilter:
         Type: 5
-        InitialPointId:
-        FinalPointId:
-        AOERadiusId:
-        TargetCenterId:
-        PreviousEffectId:
-        ConeRangeId:
-        ConeAngleId:
-        ConeTargetId:
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
         hitEnemies: 1
         hitAllies: 0
         hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 37dc24ebe8dbc504cb628f2a5317fa4b, type: 2}
-        StatId:
+        StatId: 
         VFXName: Point_Disappear
         VFXPointId: Executing Unit Position
-        VFXStartPointId:
-        VFXEndPointId:
-        VFXUnitId:
-        SFXName:
-        ProjectileName:
-        AnimationName:
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        AnimationTriggerName: 
   - Id: Teleport and Reappear
     Duration: 0
     Trigger:
@@ -103,75 +104,78 @@ MonoBehaviour:
     - Id: Teleport
       TargetFilter:
         Type: 4
-        InitialPointId:
-        FinalPointId:
-        AOERadiusId:
-        TargetCenterId:
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
         PreviousEffectId: Disappear
-        ConeRangeId:
-        ConeAngleId:
-        ConeTargetId:
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
         hitEnemies: 1
         hitAllies: 1
         hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 1e92247e4d8679a4a93e1da975cb1f48, type: 2}
-        StatId:
-        VFXName:
-        VFXPointId:
-        VFXStartPointId:
-        VFXEndPointId:
-        VFXUnitId:
-        SFXName:
-        ProjectileName:
-        AnimationName:
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        AnimationTriggerName: 
     - Id: Reappear
       TargetFilter:
         Type: 4
-        InitialPointId:
-        FinalPointId:
-        AOERadiusId:
-        TargetCenterId:
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
         PreviousEffectId: Disappear
-        ConeRangeId:
-        ConeAngleId:
-        ConeTargetId:
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
         hitEnemies: 1
         hitAllies: 1
         hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 5fbaac34ccd01a54d8c39db1b3b267ce, type: 2}
-        StatId:
-        VFXName:
-        VFXPointId:
-        VFXStartPointId:
-        VFXEndPointId:
-        VFXUnitId:
-        SFXName:
-        ProjectileName:
-        AnimationName:
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        AnimationTriggerName: 
     - Id: Teleport SFX
       TargetFilter:
         Type: 5
-        InitialPointId:
-        FinalPointId:
-        AOERadiusId:
-        TargetCenterId:
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
         PreviousEffectId: Disappear
-        ConeRangeId:
-        ConeAngleId:
-        ConeTargetId:
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
         hitEnemies: 1
         hitAllies: 0
         hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
-        StatId:
-        VFXName:
-        VFXPointId:
-        VFXStartPointId:
-        VFXEndPointId:
-        VFXUnitId:
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
         SFXName: Teleport
-        ProjectileName:
-        AnimationName:
+        ProjectileName: 
+        AnimationTriggerName: 

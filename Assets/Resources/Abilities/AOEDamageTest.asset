@@ -10,48 +10,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
-  m_Name: LocalAOEDamage
+  m_Name: AOEDamageTest
   m_EditorClassIdentifier: 
-  abilityName: 
+  abilityName: AOE Damage Test
   abilityDescription: 
   abilitySprite: {fileID: 0}
-  inputType: 3
-  duration: 0.3
-  cooldown: 4
-  castRange: 0
+  inputType: 2
+  duration: 0
+  cooldown: 5
+  castRange: 4
   castPoint: 0.3
   castBackSwing: 0.7
-  totalDamage: 70
-  idealTargetPosition: 1
-  targetPositionOffset: 2
+  totalDamage: 60
+  idealTargetPosition: 0
+  targetPositionOffset: 0.1
   abilityStats:
-    _Buckets: ffffffff01000000ffffffff
-    _HashCodes: 77c3df522068d20600000000
-    _Next: ffffffff0000000000000000
-    _Count: 2
-    _Version: 104
-    _FreeList: -1
-    _FreeCount: 0
+    _Buckets: 0200000001000000ffffffff
+    _HashCodes: ffffffff77c3df52f4dc220c
+    _Next: ffffffffffffffffffffffff
+    _Count: 3
+    _Version: 130
+    _FreeList: 0
+    _FreeCount: 1
     _Keys:
+    - 
     - AOE Radius
-    - AOE Damage Stat
+    - Damage Stat 1
     _Values:
-    - 4
-    - 70
+    - 0
+    - 3
+    - 60
   outcomes:
-  - Id: AOE Damage
+  - Id: Damage
     Duration: 0
     Trigger:
-      ExecutionTime: 0.3
+      ExecutionTime: 0
       IsNormalizedTime: 0
     Effects:
-    - Id: AOE Damage
+    - Id: Damage
       TargetFilter:
         Type: 3
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: AOE Radius
-        TargetCenterId: Executing Unit Position
+        TargetCenterId: Target Center
         PreviousEffectId: 
         ConeRangeId: 
         ConeAngleId: 
@@ -61,12 +63,13 @@ MonoBehaviour:
         hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
-        StatId: AOE Damage Stat
+        StatId: Damage Stat 1
         VFXName: 
         VFXPointId: 
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
+        TimeToLive: 0
         SFXName: 
         ProjectileName: 
-        AnimationName: 
+        AnimationTriggerName: 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: BossAOEDamage
   m_EditorClassIdentifier: 
-  abilityName: 
+  abilityName: Boss AOE Damage
   abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 3
@@ -71,7 +71,7 @@ MonoBehaviour:
         TimeToLive: 1
         SFXName: 
         ProjectileName: 
-        AnimationName: 
+        AnimationTriggerName: 
   - Id: Attack
     Duration: 0
     Trigger:
@@ -103,4 +103,4 @@ MonoBehaviour:
         TimeToLive: 0
         SFXName: 
         ProjectileName: 
-        AnimationName: 
+        AnimationTriggerName: 

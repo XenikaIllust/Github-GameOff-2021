@@ -65,6 +65,11 @@ public class Unit : MonoBehaviour
         PseudoObject.transform.localPosition = Vector3.zero;
     }
 
+    private void Start()
+    {
+        if (isPlayer) EventManager.RaiseEvent("OnPlayerSpawned", GetComponent<Unit>());
+    }
+
     private void OnEnable()
     {
         unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);

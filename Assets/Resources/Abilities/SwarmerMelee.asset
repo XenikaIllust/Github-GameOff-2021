@@ -10,96 +10,92 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
-  m_Name: ConsecutiveAOEDamageTest
+  m_Name: SwarmerMelee
   m_EditorClassIdentifier: 
-  abilityName: 
+  abilityName: Swarmer Melee
   abilityDescription: 
   abilitySprite: {fileID: 0}
-  inputType: 2
-  duration: 4
-  cooldown: 5
-  castRange: 4
+  inputType: 0
+  duration: 0
+  cooldown: 2
+  castRange: 1
   castPoint: 0.3
   castBackSwing: 0.7
-  totalDamage: 90
+  totalDamage: 3
   idealTargetPosition: 0
-  targetPositionOffset: 0
+  targetPositionOffset: 0.5
   abilityStats:
-    _Buckets: ffffffffffffffff01000000ffffffffffffffffffffffff02000000
-    _HashCodes: 8580155520f5bc7777c3df5220f5bc77000000000000000000000000
-    _Next: ffffffff00000000ffffffff02000000000000000000000000000000
+    _Buckets: 02000000ffffffffffffffff01000000ffffffffffffffffffffffff
+    _HashCodes: bcd45b150640e609f4dc220c0640e609000000000000000000000000
+    _Next: ffffffffffffffff00000000ffffffff000000000000000000000000
     _Count: 3
-    _Version: 244
+    _Version: 218
     _FreeList: -1
     _FreeCount: 0
     _Keys:
-    - AOE Damage 1
-    - AOE Damage 2
-    - AOE Radius
+    - Cone Range
+    - Cone Angle
+    - Damage Stat 1
     _Values:
-    - 50
-    - 40
-    - 4
+    - 1
+    - 90
+    - 3
   outcomes:
-  - Id: AOE Damage 1st Round
+  - Id: Damage
     Duration: 0
     Trigger:
       ExecutionTime: 0
       IsNormalizedTime: 0
     Effects:
-    - Id: AOE Damage 1st Round
+    - Id: Damage
       TargetFilter:
-        Type: 3
+        Type: 6
         InitialPointId: 
         FinalPointId: 
-        AOERadiusId: AOE Radius
-        TargetCenterId: Target Center
+        AOERadiusId: 
+        TargetCenterId: 
         PreviousEffectId: 
-        ConeRangeId: 
-        ConeAngleId: 
-        ConeTargetId: 
+        ConeRangeId: Cone Range
+        ConeAngleId: Cone Angle
+        ConeTargetId: Target Point
         hitEnemies: 1
         hitAllies: 0
         hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
-        StatId: AOE Damage 1
+        StatId: Damage Stat 1
         VFXName: 
         VFXPointId: 
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
+        TimeToLive: 0
         SFXName: 
         ProjectileName: 
-        AnimationName: 
-  - Id: AOE Damage 2nd Round
-    Duration: 0
-    Trigger:
-      ExecutionTime: 0.5
-      IsNormalizedTime: 1
-    Effects:
-    - Id: AOE Damage 2
+        AnimationTriggerName: 
+    - Id: Welding VFX
       TargetFilter:
         Type: 4
         InitialPointId: 
         FinalPointId: 
-        AOERadiusId: AOE Radius
+        AOERadiusId: 
         TargetCenterId: 
-        PreviousEffectId: AOE Damage 1st Round
-        ConeRangeId: 
-        ConeAngleId: 
-        ConeTargetId: 
-        hitEnemies: 1
-        hitAllies: 1
+        PreviousEffectId: Damage
+        ConeRangeId: Cone Range
+        ConeAngleId: Cone Angle
+        ConeTargetId: Target Point
+        hitEnemies: 0
+        hitAllies: 0
         hitSelf: 1
       GameAction:
-        GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
-        StatId: AOE Damage 2
-        VFXName: 
-        VFXPointId: 
+        GameActionBlock: {fileID: 11400000, guid: a6f36898e372c884d980920e5a52eefe, type: 2}
+        StatId: 
+        VFXName: SwarmerMeleeSpark
+        VFXPointId: Executing Unit Position
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
+        TimeToLive: 0
         SFXName: 
         ProjectileName: 
-        AnimationName: 
+        AnimationTriggerName: 

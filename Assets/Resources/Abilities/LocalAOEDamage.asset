@@ -10,45 +10,48 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
-  m_Name: AOEDamageTest
+  m_Name: LocalAOEDamage
   m_EditorClassIdentifier: 
+  abilityName: Local AOE Damage
+  abilityDescription: 
   abilitySprite: {fileID: 0}
-  inputType: 2
-  duration: 0
-  cooldown: 5
-  castRange: 4
-  potentialDamage: 60
-  idealRangePercentage: 100
+  inputType: 3
+  duration: 0.3
+  cooldown: 4
+  castRange: 0
+  castPoint: 0.3
+  castBackSwing: 0.7
+  totalDamage: 70
+  idealTargetPosition: 1
+  targetPositionOffset: 2
   abilityStats:
-    _Buckets: 0200000001000000ffffffff
-    _HashCodes: ffffffff77c3df52f4dc220c
-    _Next: ffffffffffffffffffffffff
-    _Count: 3
-    _Version: 130
-    _FreeList: 0
-    _FreeCount: 1
+    _Buckets: ffffffff01000000ffffffff
+    _HashCodes: 77c3df522068d20600000000
+    _Next: ffffffff0000000000000000
+    _Count: 2
+    _Version: 104
+    _FreeList: -1
+    _FreeCount: 0
     _Keys:
-    - 
     - AOE Radius
-    - Damage Stat 1
+    - AOE Damage Stat
     _Values:
-    - 0
-    - 3
-    - 60
+    - 4
+    - 70
   outcomes:
-  - Id: Damage
+  - Id: AOE Damage
     Duration: 0
     Trigger:
-      ExecutionTime: 0
+      ExecutionTime: 0.3
       IsNormalizedTime: 0
     Effects:
-    - Id: Damage
+    - Id: AOE Damage
       TargetFilter:
         Type: 3
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: AOE Radius
-        TargetCenterId: Target Center
+        TargetCenterId: Executing Unit Position
         PreviousEffectId: 
         ConeRangeId: 
         ConeAngleId: 
@@ -58,11 +61,13 @@ MonoBehaviour:
         hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
-        StatId: Damage Stat 1
+        StatId: AOE Damage Stat
         VFXName: 
         VFXPointId: 
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
+        TimeToLive: 0
         SFXName: 
         ProjectileName: 
+        AnimationTriggerName: 
