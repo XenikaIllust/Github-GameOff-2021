@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: FireProjectileTest
   m_EditorClassIdentifier: 
-  abilityName: 
+  abilityName: Fire Projectile Test
   abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 0
@@ -69,9 +69,10 @@ MonoBehaviour:
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
+        TimeToLive: 0
         SFXName: 
         ProjectileName: TestProjectile
-        AnimationName: 
+        AnimationTriggerName: 
   - Id: Fire
     Duration: 0
     Trigger:
@@ -100,6 +101,7 @@ MonoBehaviour:
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
+        TimeToLive: 0
         SFXName: 
         ProjectileName: SniperProjectile
-        AnimationName: 
+        AnimationTriggerName: 

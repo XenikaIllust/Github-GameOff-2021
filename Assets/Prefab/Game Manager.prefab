@@ -216,11 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e91190ea6ef4c44f863b3731f3f9355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAbilities:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  currentAbilities: []
   currentAbilityPrefabs:
   - {fileID: 7340530449092882611}
   - {fileID: 2607805890474319224}
@@ -724,14 +720,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ability (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 827023575604641264, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
-      propertyPath: index
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 827023575604641264, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
-      propertyPath: abilityManager
-      value: 
-      objectReference: {fileID: 1319637770}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

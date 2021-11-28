@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: SwarmerMelee
   m_EditorClassIdentifier: 
-  abilityName: 
+  abilityName: Swarmer Melee
   abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 0
@@ -69,9 +69,10 @@ MonoBehaviour:
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
+        TimeToLive: 0
         SFXName: 
         ProjectileName: 
-        AnimationName: 
+        AnimationTriggerName: 
     - Id: Disappear VFX
       TargetFilter:
         Type: 0
@@ -94,6 +95,7 @@ MonoBehaviour:
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
+        TimeToLive: 0
         SFXName: 
         ProjectileName: 
-        AnimationName: 
+        AnimationTriggerName: 
