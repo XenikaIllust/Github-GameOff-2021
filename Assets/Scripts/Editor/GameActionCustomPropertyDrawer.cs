@@ -131,6 +131,18 @@ public class GameActionCustomPropertyDrawer : PropertyDrawer {
             EditorGUI.PropertyField( projectileNameRect, projectileNameProperty );
 
             totalHeight += EditorGUI.GetPropertyHeight( projectileNameProperty, GUIContent.none );
+
+            SerializedProperty projectileStatIdProperty = property.FindPropertyRelative("ProjectileStatId");
+            var projectileStatIdRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( projectileStatIdRect, projectileStatIdProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( projectileStatIdProperty, GUIContent.none );
+
+            SerializedProperty timeToLiveProperty = property.FindPropertyRelative("TimeToLive");
+            var timeToLiveRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( timeToLiveRect, timeToLiveProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( timeToLiveProperty, GUIContent.none );
         }
         else if(gameActionBlockType == typeof(AnimationActionBlock)) {
             SerializedProperty animationTriggerNameProperty = property.FindPropertyRelative("AnimationTriggerName");
@@ -143,5 +155,9 @@ public class GameActionCustomPropertyDrawer : PropertyDrawer {
         EditorGUI.indentLevel--;
 
         EditorGUI.EndProperty();
+    }
+
+    void ClearAllFields() {
+        // TODO
     }
 }

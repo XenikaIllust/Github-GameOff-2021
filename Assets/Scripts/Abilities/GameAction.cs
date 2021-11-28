@@ -32,6 +32,7 @@ public class GameAction
 
     // Name of Projectile Prefab
     public string ProjectileName;
+    public string ProjectileStatId;
 
     // for AnimationAction
     public string AnimationTriggerName;
@@ -65,8 +66,8 @@ public class GameAction
             GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);
         }
         else if(GameActionBlock.GetType() == typeof(FireProjectileAction)) {
-            string[] idParams = new string[] { ProjectileName };
-            GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);
+            string[] idParams = new string[] { ProjectileName, ProjectileStatId };
+            GameActionBlock.Invoke(TimeToLive, AbilityStats, idParams, CurrentFilteredTargets, AllTargets);
         }
         else if(GameActionBlock.GetType() == typeof(AnimationActionBlock)) {
             string[] idParams = new string[] { AnimationTriggerName };

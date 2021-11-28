@@ -6,6 +6,12 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
+public enum Alliance
+{
+    TaciaAlliance,
+    ClaireHorde
+}
+
 public class Unit : MonoBehaviour
 {
     public EventProcessor unitEventHandler; // Internal event handler
@@ -22,12 +28,6 @@ public class Unit : MonoBehaviour
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
     private object _aiTarget;
-
-    public enum Alliance
-    {
-        TaciaAlliance,
-        ClaireHorde
-    }
 
     public GameObject PseudoObject { get; private set; }
 
