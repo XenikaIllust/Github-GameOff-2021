@@ -73,14 +73,14 @@ MonoBehaviour:
         SFXName: 
         ProjectileName: 
         AnimationTriggerName: 
-    - Id: Disappear VFX
+    - Id: Welding VFX
       TargetFilter:
-        Type: 0
+        Type: 4
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: 
         TargetCenterId: 
-        PreviousEffectId: 
+        PreviousEffectId: Damage
         ConeRangeId: Cone Range
         ConeAngleId: Cone Angle
         ConeTargetId: Target Point
@@ -90,7 +90,7 @@ MonoBehaviour:
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: a6f36898e372c884d980920e5a52eefe, type: 2}
         StatId: 
-        VFXName: Point_Disappear
+        VFXName: SwarmerMeleeSpark
         VFXPointId: Executing Unit Position
         VFXStartPointId: 
         VFXEndPointId: 

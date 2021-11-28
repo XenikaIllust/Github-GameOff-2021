@@ -151,6 +151,10 @@ public class TargetFilter
             {
                 Unit unit = collider.GetComponentInParent<Unit>();
 
+                if(unit == null) {
+                    continue;
+                }
+
                 // Calculate delta angle
                 Vector2 vectorToTarget = targetCenter - executingUnitPosition;
                 Vector2 vectorToUnit = unit.transform.position - executingUnitPosition;
