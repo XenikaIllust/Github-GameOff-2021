@@ -7,7 +7,7 @@ public class AbilityManager : MonoBehaviour
 {
     [HideInInspector] public Unit playerUnit;
     public List<Ability> currentAbilities;
-    private List<Ability> _allAbilities;
+    private List<Ability> _playerAbilities;
     public List<AbilityPrefab> currentAbilityPrefabs;
     public AbilityPrefab newAbilityPrefab;
     [Space] public Canvas canvas;
@@ -15,10 +15,10 @@ public class AbilityManager : MonoBehaviour
 
     private void Awake()
     {
-        _allAbilities = new List<Ability>(Resources.LoadAll<Ability>("Abilities"));
+        _playerAbilities = new List<Ability>(Resources.LoadAll<Ability>("Abilities/PlayerAbilities"));
         while (currentAbilities.Count < 4)
         {
-            var newAbility = _allAbilities[Random.Range(0, _allAbilities.Count)];
+            var newAbility = _playerAbilities[Random.Range(0, _playerAbilities.Count)];
             if (currentAbilities.Contains(newAbility) == false) currentAbilities.Add(newAbility);
         }
 
