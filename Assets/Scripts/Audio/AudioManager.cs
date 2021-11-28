@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -42,6 +43,8 @@ public class AudioManager : MonoBehaviour
         EventManager.StartListening("OnPlaySound", Play);
         EventManager.StartListening("OnStopSound", Stop);
         EventManager.StartListening("OnMuteSound", Mute);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
@@ -49,6 +52,8 @@ public class AudioManager : MonoBehaviour
         EventManager.StopListening("OnPlaySound", Play);
         EventManager.StopListening("OnStopSound", Stop);
         EventManager.StopListening("OnMuteSound", Mute);
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void Play(object name) {
@@ -73,5 +78,32 @@ public class AudioManager : MonoBehaviour
             sound.Source.mute = !sound.Source.mute;
         else
             Debug.Log("Sound named " + (string)name + " doesn't exist. Can't mute / unmute.");
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Stop("BGM");
+        switch (scene.name)
+        {
+            case "MainMenu":
+                Play("BGM");
+                break;
+            
+            case "Level 1 - Point A to B":
+                Play("BGM");
+                break;
+            
+            case "Level 2 - Survive [X] Time":
+                Play("BGM");
+                break;
+            
+            case "Level 3 - Kill All Enemies":
+                Play("BGM");
+                break;
+            
+            case "Level 4 - Kill Boss":
+                Play("BGM");
+                break;
+        }
     }
 }

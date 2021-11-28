@@ -108,3 +108,67 @@ MonoBehaviour:
     spatialBlend: 0
     reverbZoneMix: 1
     Source: {fileID: 0}
+  - name: Damage SFX
+    audioClip: {fileID: 8300000, guid: 7209b1bee106e4e4286e1e55421d4cee, type: 3}
+    audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 1
+    loop: 0
+    priority: 128
+    volume: 1
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}
+  - name: AstralStep
+    audioClip: {fileID: 8300000, guid: 6be3311170fc8ba4390f54c614edfd50, type: 3}
+    audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 1
+    loop: 0
+    priority: 128
+    volume: 0.667
+    pitch: 1.11
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}
+  - name: Water
+    audioClip: {fileID: 8300000, guid: 1c112b9b4456bd04baa12bc1be5b25d1, type: 3}
+    audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 1
+    loop: 0
+    priority: 128
+    volume: 0.65
+    pitch: 1.18
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}
+  - name: BGM
+    audioClip: {fileID: 8300000, guid: bf52ca4ec9e42a149a2c912d455e733e, type: 3}
+    audioMixerGroup: {fileID: 1805428926815748455, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 1
+    loop: 1
+    priority: 0
+    volume: 0.55
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}
