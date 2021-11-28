@@ -96,12 +96,12 @@ public class AIAgent : Agent
 
     private void OnChaseForced(object duration)
     {
-        forceChaseDuration = Mathf.Max((float)duration, forceLookDuration);
+        forceChaseDuration = Mathf.Max((float)duration, forceChaseDuration);
     }
 
     private void OnAvoidForced(object duration)
     {
-        forceAvoidDuration = Mathf.Max((float)duration, forceLookDuration);
+        forceAvoidDuration = Mathf.Max((float)duration, forceAvoidDuration);
     }
 
     private void OnLookForced(object duration)
@@ -111,7 +111,7 @@ public class AIAgent : Agent
 
     private void OnStopForced(object duration)
     {
-        forceStopDuration = Mathf.Max((float)duration, forceLookDuration);
+        forceStopDuration = Mathf.Max((float)duration, forceStopDuration);
     }
 
     private void OnPlayerPositionChanged(object newPosition)
