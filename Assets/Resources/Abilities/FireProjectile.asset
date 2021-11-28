@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
-  m_Name: FireProjectileTest
+  m_Name: FireProjectile
   m_EditorClassIdentifier: 
   abilityName: Fire Projectile Test
   abilityDescription: 
@@ -133,4 +133,31 @@ MonoBehaviour:
         SFXName: 
         ProjectileName: SniperProjectile
         ProjectileStatId: Projectile Damage
+        AnimationTriggerName: 
+    - Id: FireSFX
+      TargetFilter:
+        Type: 0
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: SniperFired
+        ProjectileName: 
+        ProjectileStatId: 
         AnimationTriggerName: 
