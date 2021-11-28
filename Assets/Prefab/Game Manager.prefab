@@ -122,7 +122,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 7
+  m_ChildAlignment: 4
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -216,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e91190ea6ef4c44f863b3731f3f9355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerUnit: {fileID: 0}
   currentAbilities: []
   currentAbilityPrefabs:
   - {fileID: 7340530449092882611}
@@ -244,6 +245,10 @@ PrefabInstance:
       propertyPath: abilityManager
       value: 
       objectReference: {fileID: 1319637770}
+    - target: {fileID: 6527588427179085822, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_fontSize
+      value: 64.9
+      objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -274,11 +279,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_LocalPosition.x
@@ -365,6 +370,10 @@ PrefabInstance:
       propertyPath: abilityManager
       value: 
       objectReference: {fileID: 1319637770}
+    - target: {fileID: 6527588427179085822, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_fontSize
+      value: 64.9
+      objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -395,11 +404,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_LocalPosition.x
@@ -486,6 +495,10 @@ PrefabInstance:
       propertyPath: abilityManager
       value: 
       objectReference: {fileID: 1319637770}
+    - target: {fileID: 6527588427179085822, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_fontSize
+      value: 64.9
+      objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -516,11 +529,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_LocalPosition.x
@@ -637,11 +650,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_LocalPosition.x
@@ -750,11 +763,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 160
+      value: 240
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_LocalPosition.x

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,12 +6,20 @@ public class AbilityPrefab : MonoBehaviour
 {
     private AbilityManager _abilityManager;
     public Ability ability;
-    [SerializeField] private float dropRadius = 100;
-    [SerializeField] private int index;
+    [SerializeField] private float dropRadius = 150;
+    private int _index = -1;
+    public TMP_Text abilityNameUI;
+    private float _ability5Cooldown;
 
     private void Awake()
     {
         _abilityManager = FindObjectOfType<AbilityManager>();
+        _index = _abilityManager.currentAbilityPrefabs.IndexOf(this);
+    }
+
+    private void OnDisable()
+    {
+        _ability5Cooldown = float.Epsilon;
     }
 
     public void OnBeginDrag()
@@ -27,7 +36,14 @@ public class AbilityPrefab : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, _abilityManager.newAbilityPrefab.transform.position) <= dropRadius)
         {
-            (ability, _abilityManager.newAbilityPrefab.ability) = (_abilityManager.newAbilityPrefab.ability, ability);
+            if (_index != -1)
+            {
+                (ability, _abilityManager.newAbilityPrefab.ability)
+                    = (_abilityManager.newAbilityPrefab.ability, ability);
+
+                (_abilityManager.playerUnit.abilityCooldownList[_index], _ability5Cooldown)
+                    = (_ability5Cooldown, _abilityManager.playerUnit.abilityCooldownList[_index]);
+            }
         }
         else
         {
@@ -37,7 +53,7 @@ public class AbilityPrefab : MonoBehaviour
                 if (Vector3.Distance(transform.position, abilities[i].transform.position) <= dropRadius)
                 {
                     (ability, abilities[i].ability) = (abilities[i].ability, ability);
-                    _abilityManager.AdjustUnitCooldownTimer(i, index);
+                    _abilityManager.AdjustUnitCooldownTimer(i, _index);
                 }
             }
         }
@@ -45,5 +61,6 @@ public class AbilityPrefab : MonoBehaviour
         _abilityManager.horizontalLayoutGroup.enabled = true;
         _abilityManager.ImportFromPrefabs();
         _abilityManager.ExportToUnit();
+        _abilityManager.UpdateAbilityPrefabsUI();
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class AbilityManager : MonoBehaviour
 {
-    private Unit _playerUnit;
+    [HideInInspector] public Unit playerUnit;
     public List<Ability> currentAbilities;
     private List<Ability> _allAbilities;
     public List<AbilityPrefab> currentAbilityPrefabs;
@@ -16,6 +16,12 @@ public class AbilityManager : MonoBehaviour
     private void Awake()
     {
         _allAbilities = new List<Ability>(Resources.LoadAll<Ability>("Abilities"));
+        while (currentAbilities.Count < 4)
+        {
+            var newAbility = _allAbilities[Random.Range(0, _allAbilities.Count)];
+            if (currentAbilities.Contains(newAbility) == false) currentAbilities.Add(newAbility);
+        }
+
         ExportToPrefabs();
     }
 
@@ -38,7 +44,7 @@ public class AbilityManager : MonoBehaviour
         EventManager.StopListening("OnPlayerSpawned", OnPlayerSpawned);
         ImportFromUnit();
         ExportToPrefabs();
-        _playerUnit = null;
+        playerUnit = null;
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
@@ -60,21 +66,21 @@ public class AbilityManager : MonoBehaviour
 
     private void OnPlayerSpawned(object unit)
     {
-        _playerUnit = (Unit)unit;
+        playerUnit = (Unit)unit;
         ExportToUnit();
         ExportToPrefabs();
     }
 
     private void ImportFromUnit()
     {
-        if (_playerUnit == null) return;
-        currentAbilities = _playerUnit.abilities;
+        if (playerUnit == null) return;
+        currentAbilities = playerUnit.abilities;
     }
 
     public void ExportToUnit()
     {
-        if (_playerUnit == null) return;
-        _playerUnit.abilities = currentAbilities;
+        if (playerUnit == null) return;
+        playerUnit.abilities = currentAbilities;
     }
 
     public void ImportFromPrefabs()
@@ -85,12 +91,21 @@ public class AbilityManager : MonoBehaviour
     private void ExportToPrefabs()
     {
         for (var i = 0; i < currentAbilityPrefabs.Count; i++) currentAbilityPrefabs[i].ability = currentAbilities[i];
+        UpdateAbilityPrefabsUI();
     }
 
     public void AdjustUnitCooldownTimer(int index1, int index2)
     {
-        if (_playerUnit == null) return;
-        (_playerUnit.abilityCooldownList[index1], _playerUnit.abilityCooldownList[index2])
-            = (_playerUnit.abilityCooldownList[index2], _playerUnit.abilityCooldownList[index1]);
+        if (playerUnit == null) return;
+        (playerUnit.abilityCooldownList[index1], playerUnit.abilityCooldownList[index2])
+            = (playerUnit.abilityCooldownList[index2], playerUnit.abilityCooldownList[index1]);
+    }
+
+    public void UpdateAbilityPrefabsUI()
+    {
+        foreach (var abilityPrefab in currentAbilityPrefabs)
+        {
+            abilityPrefab.abilityNameUI.text = abilityPrefab.ability.abilityName;
+        }
     }
 }
