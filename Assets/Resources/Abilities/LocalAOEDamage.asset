@@ -72,9 +72,9 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
-    - Id: Water Damage
+    - Id: Water
       TargetFilter:
-        Type: 3
+        Type: 5
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: AOE Radius
