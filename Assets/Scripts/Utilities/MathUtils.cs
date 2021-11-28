@@ -49,4 +49,8 @@ public static class MathUtils
 
         return azimuthRotation;
     }
+
+    public static void ConvertCircleToIsometricCircle(float radius, GameObject circularIndicatorObject) {
+        circularIndicatorObject.transform.localScale = new Vector3(radius * 0.825f, radius * 0.5f * 0.825f, 1.0f); // this assumes the graphic is 512x512, and pixels per unit is 256!
+    }
 }

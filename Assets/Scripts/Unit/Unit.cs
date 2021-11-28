@@ -61,6 +61,8 @@ public class Unit : MonoBehaviour
                 parent = transform
             }
         };
+        // remove this line if it causes any problems
+        PseudoObject.transform.localPosition = Vector3.zero;
     }
 
     private void OnEnable()

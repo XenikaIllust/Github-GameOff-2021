@@ -23,15 +23,11 @@ public class AOEIndicatorVFXActionBlock : VFXActionBlock
         AOEIndicatorParent.transform.position = selfPosition;
         GameObject AOEIndicator = Instantiate<GameObject>(Resources.Load<GameObject>("VFX/AbilityVFX/AOEVFX/AOEIndicator/AOEIndicator"), selfPosition, Quaternion.identity, AOEIndicatorParent.transform);
         AOEIndicatorParent.transform.position = self.transform.position;
-        ConvertCircleToIsometricCircle( abilityStats["AOE Radius"] , AOEIndicator);
+        MathUtils.ConvertCircleToIsometricCircle( abilityStats["AOE Radius"] , AOEIndicator);
         var rot = AOEIndicatorParent.transform.rotation.eulerAngles;
         rot.z = selfRotation;
         AOEIndicatorParent.transform.rotation = Quaternion.Euler(rot);
 
-        Destroy(AOEIndicatorParent, timeToLive); // hardcoded, change later
-    }
-
-    void ConvertCircleToIsometricCircle(float radius, GameObject circularIndicatorObject) {
-        circularIndicatorObject.transform.localScale = new Vector3(radius * 0.825f, radius * 0.5f * 0.825f, 1.0f); // this assumes the graphic is 512x512, and pixels per unit is 256!
+        Destroy(AOEIndicatorParent, timeToLive);
     }
 }

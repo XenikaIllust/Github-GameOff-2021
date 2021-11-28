@@ -105,6 +105,19 @@ public class GameActionCustomPropertyDrawer : PropertyDrawer {
 
             totalHeight += EditorGUI.GetPropertyHeight( timeToLiveProperty, GUIContent.none );
         }
+        else if(gameActionBlockType == typeof(LineIndicatorVFXActionBlock)) {
+            SerializedProperty vfxNameProperty = property.FindPropertyRelative("VFXName");
+            var vfxNameRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( vfxNameRect, vfxNameProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( vfxNameProperty, GUIContent.none );
+
+            SerializedProperty timeToLiveProperty = property.FindPropertyRelative("TimeToLive");
+            var timeToLiveRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( timeToLiveRect, timeToLiveProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( timeToLiveProperty, GUIContent.none );
+        }
         else if(gameActionBlockType == typeof(SFXActionBlock)) {
             SerializedProperty sfxNameProperty = property.FindPropertyRelative("SFXName");
             var sfxNameRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
