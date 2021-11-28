@@ -4,20 +4,24 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     public Slider slider;
+    private UnitEventManager _unitEventManager;
 
-    public UnitEventManager unitEventManager;
-
-    void OnEnable()
+    private void Awake()
     {
-        unitEventManager.UnitEventHandler.StartListening("OnHealthChanged", SetHealth);
+        _unitEventManager = FindObjectOfType<PlayerAgent>().GetComponent<UnitEventManager>();
     }
 
-    void OnDisable()
+    private void OnEnable()
     {
-        unitEventManager.UnitEventHandler.StopListening("OnHealthChanged", SetHealth);
+        _unitEventManager.UnitEventHandler.StartListening("OnHealthChanged", SetHealth);
     }
 
-    public void SetHealth(object param)
+    private void OnDisable()
+    {
+        _unitEventManager.UnitEventHandler.StopListening("OnHealthChanged", SetHealth);
+    }
+
+    private void SetHealth(object param)
     {
         slider.value = slider.maxValue - (float)param * 100;
     }

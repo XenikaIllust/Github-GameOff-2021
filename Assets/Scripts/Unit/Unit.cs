@@ -22,7 +22,7 @@ public class Unit : MonoBehaviour
     [Header("Misc.")] public Alliance alliance;
     private float _positionUpdateTimer;
     [Header("Abilities")] public List<Ability> abilities;
-    [HideInInspector] public List<float> abilityCooldownList = new List<float>(new float[4]);
+    [Header("Read Only")] public List<float> abilityCooldownList = new List<float>(new float[4]);
     private float _inputLockDuration;
     private bool _isGamePaused;
     private Vector3 _castTargetPosition;
