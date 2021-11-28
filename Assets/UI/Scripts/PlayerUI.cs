@@ -8,7 +8,7 @@ public class PlayerUI : MonoBehaviour
     public GameObject PauseScreen;
 
     public Slider EnemyHealthBarPrefab;
-    private int numEnemies = 0;
+    //private int numEnemies = 0;
     public float healthbarDisplacement = 1f;
 
     public UnitEventManager unitEventManager;
@@ -16,7 +16,7 @@ public class PlayerUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        unitEventManager.UnitEventHandler.StartListening("OnSpawned", ShowEnemyHealth);
+        //unitEventManager.UnitEventHandler.StartListening("OnSpawned", ShowEnemyHealth);
 
         // Set time scale to 1 so that the game starts unpaused.
         // There is currently a weird bug where if you don't set
