@@ -23,7 +23,8 @@ public class PlayerUI : MonoBehaviour
     {
         for (var i = 0; i < abilityButtons.Count; i++)
         {
-            abilityButtons[i].cooldownTime = _playerUnit.abilities[i].cooldown;
+            abilityButtons[i].ability = _playerUnit.abilities[i];
+            abilityButtons[i].cooldownTimeLive = _playerUnit.abilityCooldownList[i];
         }
     }
 

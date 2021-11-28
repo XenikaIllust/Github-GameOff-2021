@@ -6,28 +6,26 @@ using TMPro;
 public class AbilityButton : MonoBehaviour
 {
     // States
-    AbilityButtonState _currentState;
+    private AbilityButtonState _currentState;
 
     public AbilityAvailable availableState;
     public AbilityTarget abilityTarget;
     public AbilityCooldown cooldownState;
 
     // The UIButton component from Canvas.
-    Button uiButton;
-
-    public bool isPressed = false;
+    private Button uiButton;
+    public bool isPressed;
 
     //public KeyCode abilityKey;
     public char abilityKey;
-
     public Texture2D targetCursor;
 
-    public float cooldownTime;
+    public Ability ability;
+    public float cooldownTimeLive;
     public Image cooldownBG;
     public TMP_Text cooldownTimer;
 
-    // OnEnable is called when this game object is activated
-    void OnEnable()
+    private void OnEnable()
     {
         uiButton = GetComponent<Button>();
 
@@ -39,11 +37,28 @@ public class AbilityButton : MonoBehaviour
         cooldownTimer.enabled = false;
 
         _currentState = availableState;
+
+        EventManager.StartListening("OnGamePaused", OnGamePaused);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.StopListening("OnGamePaused", OnGamePaused);
+    }
+
+    private void OnGamePaused(object @null)
+    {
+        if (_currentState == abilityTarget)
+        {
+            SwitchState(_currentState, availableState);
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        AutoSwitchState();
+
         // Run the current state's update loop.
         _currentState.UpdateLoop();
 
@@ -62,8 +77,6 @@ public class AbilityButton : MonoBehaviour
             case 'r':
                 isPressed = Keyboard.current.rKey.isPressed;
                 break;
-            default:
-                break;
         }
     }
 
@@ -73,9 +86,18 @@ public class AbilityButton : MonoBehaviour
         isPressed = true;
     }
 
-    public void SwitchState(AbilityButtonState newState)
+    public void SwitchState(AbilityButtonState oldState, AbilityButtonState newState)
     {
+        oldState.Leave();
         newState.Enter();
         _currentState = newState;
+    }
+
+    private void AutoSwitchState()
+    {
+        if (cooldownTimeLive > float.Epsilon)
+        {
+            SwitchState(_currentState, cooldownState);
+        }
     }
 }

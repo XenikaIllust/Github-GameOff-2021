@@ -1,11 +1,12 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class AbilityCooldown : AbilityButtonState
 {
-    public AbilityCooldown(AbilityButton button) : base(button) {}
+    public AbilityCooldown(AbilityButton button) : base(button)
+    {
+    }
 
     public override void Enter()
     {
@@ -16,38 +17,33 @@ public class AbilityCooldown : AbilityButtonState
     public override void UpdateLoop()
     {
         TimeIt();
+    }
+
+    public override void Leave()
+    {
         StopTime();
     }
 
-    // Timing section
-
-    float timeAccum = 0f;
-
-    void TimeIt()
+    private void TimeIt()
     {
         Image cooldownBG = AbilityButtonContext.cooldownBG;
         TMP_Text cooldownTimer = AbilityButtonContext.cooldownTimer;
-        float cooldownTime = AbilityButtonContext.cooldownTime;
 
-        cooldownBG.fillAmount = (cooldownTime - timeAccum)/cooldownTime;
+        cooldownBG.fillAmount = AbilityButtonContext.cooldownTimeLive / AbilityButtonContext.ability.cooldown;
+        cooldownTimer.text = $"{Mathf.CeilToInt(AbilityButtonContext.cooldownTimeLive)}";
 
-        cooldownTimer.text = string.Format("{0}", Mathf.RoundToInt(cooldownTime - timeAccum));
-
-        timeAccum += Time.deltaTime;
+        if (AbilityButtonContext.cooldownTimeLive <= float.Epsilon)
+        {
+            AbilityButtonContext.SwitchState(this, AbilityButtonContext.availableState);
+        }
     }
 
-    void StopTime()
+    private void StopTime()
     {
-        if (timeAccum >= AbilityButtonContext.cooldownTime)
-        {
-            AbilityButtonContext.cooldownBG.fillAmount = 0;
-            AbilityButtonContext.cooldownTimer.text = "";
+        AbilityButtonContext.cooldownBG.fillAmount = 0;
+        AbilityButtonContext.cooldownTimer.text = "";
 
-            AbilityButtonContext.cooldownBG.enabled = false;
-            AbilityButtonContext.cooldownTimer.enabled = false;
-
-            timeAccum = 0;
-            AbilityButtonContext.SwitchState(AbilityButtonContext.availableState);
-        }
+        AbilityButtonContext.cooldownBG.enabled = false;
+        AbilityButtonContext.cooldownTimer.enabled = false;
     }
 }
