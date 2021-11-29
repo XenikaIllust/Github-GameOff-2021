@@ -24,7 +24,7 @@ public class Unit : MonoBehaviour
     private float _positionUpdateTimer;
     [Header("Abilities")] public List<Ability> abilities;
     [Header("Read Only")] public List<float> abilityCooldownList = new List<float>(new float[4]);
-    private float _inputLockDuration;
+    public float inputLockDuration;
     private bool _isGamePaused;
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
@@ -34,7 +34,7 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        _inputLockDuration -= Time.deltaTime;
+        inputLockDuration -= Time.deltaTime;
         for (var i = 0; i < abilityCooldownList.Count; i++) abilityCooldownList[i] -= Time.deltaTime;
         UpdatePlayerPosition();
         UpdateAnimationMovement();
@@ -107,7 +107,7 @@ public class Unit : MonoBehaviour
 
     private void OnInputLocked(object duration)
     {
-        _inputLockDuration = Mathf.Max((float)duration, _inputLockDuration);
+        inputLockDuration = Mathf.Max((float)duration, inputLockDuration);
     }
 
     private void OnGamePaused(object @null)
@@ -122,43 +122,43 @@ public class Unit : MonoBehaviour
 
     private void OnStopOrderIssued(object @null)
     {
-        if (_inputLockDuration > float.Epsilon) return;
+        if (inputLockDuration > float.Epsilon) return;
         Stop();
     }
 
     private void OnMoveOrderIssued(object destination)
     {
-        if (_inputLockDuration > float.Epsilon) return;
+        if (inputLockDuration > float.Epsilon) return;
         TurnAndMove((Vector3)destination);
     }
 
     private void OnLookOrderIssued(object target)
     {
-        if (_inputLockDuration > float.Epsilon) return;
+        if (inputLockDuration > float.Epsilon) return;
         TurnAndLook((Vector3)target);
     }
 
     private void OnAbility1Casted(object target)
     {
-        if (_inputLockDuration > float.Epsilon) return;
+        if (inputLockDuration > float.Epsilon) return;
         AbilityCasted(target, 0);
     }
 
     private void OnAbility2Casted(object target)
     {
-        if (_inputLockDuration > float.Epsilon) return;
+        if (inputLockDuration > float.Epsilon) return;
         AbilityCasted(target, 1);
     }
 
     private void OnAbility3Casted(object target)
     {
-        if (_inputLockDuration > float.Epsilon) return;
+        if (inputLockDuration > float.Epsilon) return;
         AbilityCasted(target, 2);
     }
 
     private void OnAbility4Casted(object target)
     {
-        if (_inputLockDuration > float.Epsilon) return;
+        if (inputLockDuration > float.Epsilon) return;
         AbilityCasted(target, 3);
     }
 
@@ -382,7 +382,7 @@ public class Unit : MonoBehaviour
         float eulerAnglesZ = PseudoObject.transform.rotation.eulerAngles.z;
         unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
 
-        _inputLockDuration = ability.castPoint + ability.castBackSwing;
+        inputLockDuration = ability.castPoint + ability.castBackSwing;
 
         unitEventHandler.RaiseEvent("OnCastPointAnimating", ability.castPoint);
         yield return new WaitForSeconds(ability.castPoint);

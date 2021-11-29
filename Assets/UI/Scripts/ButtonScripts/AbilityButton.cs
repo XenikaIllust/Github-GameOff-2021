@@ -24,9 +24,11 @@ public class AbilityButton : MonoBehaviour
     public float cooldownTimeLive;
     public Image cooldownBG;
     public TMP_Text cooldownTimer;
+    private Unit _playerUnit;
 
     private void OnEnable()
     {
+        _playerUnit = FindObjectOfType<PlayerAgent>().GetComponent<Unit>();
         uiButton = GetComponent<Button>();
 
         availableState = new AbilityAvailable(this);
@@ -63,20 +65,16 @@ public class AbilityButton : MonoBehaviour
         _currentState.UpdateLoop();
 
         // Check if user presses the ability key..
-        switch (abilityKey)
+        if (_playerUnit.inputLockDuration <= float.Epsilon)
         {
-            case 'q':
-                isPressed = Keyboard.current.qKey.isPressed;
-                break;
-            case 'w':
-                isPressed = Keyboard.current.wKey.isPressed;
-                break;
-            case 'e':
-                isPressed = Keyboard.current.eKey.isPressed;
-                break;
-            case 'r':
-                isPressed = Keyboard.current.rKey.isPressed;
-                break;
+            isPressed = abilityKey switch
+            {
+                'q' => Keyboard.current.qKey.isPressed,
+                'w' => Keyboard.current.wKey.isPressed,
+                'e' => Keyboard.current.eKey.isPressed,
+                'r' => Keyboard.current.rKey.isPressed,
+                _ => isPressed
+            };
         }
     }
 
