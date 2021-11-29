@@ -21,12 +21,11 @@ public class ArcIndicatorVFXActionBlock : VFXActionBlock
         float selfRotation = self.PseudoObject.transform.rotation.eulerAngles.z;
         GameObject arcIndicatorParent = new GameObject("ArcIndicatorParent");
         arcIndicatorParent.transform.position = self.transform.position;
-        SpriteRenderer spriteRenderer = arcIndicatorParent.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = Resources.Load<Sprite>((libraryPrefix + "ArcVFX/ArcIndicator/" + idParams[0]));
-        ConvertCircleToIsometricCircle( (float) otherTargets["Cone Range"] , arcIndicatorParent);
-        var rot = arcIndicatorParent.transform.rotation.eulerAngles;
-        rot.z = selfRotation;
-        arcIndicatorParent.transform.rotation = Quaternion.Euler(rot);
+        GameObject arcIndicator = Instantiate(Resources.Load<GameObject>(libraryPrefix + "ArcVFX/ArcIndicator/" + idParams[0]), selfPosition, Quaternion.identity, arcIndicatorParent.transform);
+        ConvertCircleToIsometricCircle( (float) abilityStats["Cone Range"] , arcIndicatorParent);
+        var rot = arcIndicator.transform.rotation.eulerAngles;
+        rot.z = selfRotation - 90;
+        arcIndicator.transform.rotation = Quaternion.Euler(rot);
 
         Destroy(arcIndicatorParent, 2);
     }

@@ -16,11 +16,11 @@ MonoBehaviour:
   abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 3
-  duration: 1
+  duration: 2
   cooldown: 5
   castRange: 0
   castPoint: 0.3
-  castBackSwing: 0.7
+  castBackSwing: 1.7
   totalDamage: 30
   idealTargetPosition: 1
   targetPositionOffset: 1.5
@@ -68,7 +68,7 @@ MonoBehaviour:
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
-        TimeToLive: 1
+        TimeToLive: 1.7
         SFXName: 
         ProjectileName: 
         ProjectileStatId: 
@@ -112,7 +112,7 @@ MonoBehaviour:
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: AOE Radius
-        TargetCenterId: Target Center
+        TargetCenterId: Executing Unit Position
         PreviousEffectId: 
         ConeRangeId: 
         ConeAngleId: 

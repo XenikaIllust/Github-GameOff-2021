@@ -16,30 +16,30 @@ MonoBehaviour:
   abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 0
-  duration: 1
+  duration: 2
   cooldown: 4
   castRange: 2
   castPoint: 0.3
-  castBackSwing: 0.7
+  castBackSwing: 1.7
   totalDamage: 50
   idealTargetPosition: 0
   targetPositionOffset: 0.5
   abilityStats:
-    _Buckets: 01000000ffffffffffffffff03000000ffffffffffffffffffffffff
-    _HashCodes: fffffffff4dc220cbcd45b150640e609000000000000000000000000
-    _Next: ffffffff02000000ffffffffffffffff000000000000000000000000
+    _Buckets: 00000000ffffffffffffffff0100000002000000ffffffffffffffff
+    _HashCodes: bcd45b150640e6093233f4580640e609000000000000000000000000
+    _Next: ffffffffffffffffffffffffffffffff000000000000000000000000
     _Count: 3
-    _Version: 114
-    _FreeList: 0
-    _FreeCount: 1
+    _Version: 254
+    _FreeList: -1
+    _FreeCount: 0
     _Keys:
-    - Damage Stat 1
     - Cone Range
     - Cone Angle
+    - Cone Damage
     _Values:
-    - 50
     - 2
     - 60
+    - 70
   outcomes:
   - Id: Telegraph Attack
     Duration: 0
@@ -64,6 +64,39 @@ MonoBehaviour:
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: b4be687f7c429904a9ad191d2d3d03a8, type: 2}
         StatId: 
+        VFXName: Arc60
+        VFXPointId: Executing Unit
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 2
+        SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+  - Id: Attack
+    Duration: 0
+    Trigger:
+      ExecutionTime: 2
+      IsNormalizedTime: 0
+    Effects:
+    - Id: Damage
+      TargetFilter:
+        Type: 6
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: Cone Range
+        ConeAngleId: Cone Angle
+        ConeTargetId: Target Point
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
+        StatId: Cone Damage
         VFXName: Arc60
         VFXPointId: Executing Unit
         VFXStartPointId: 

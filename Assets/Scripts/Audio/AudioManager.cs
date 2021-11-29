@@ -58,7 +58,7 @@ public class AudioManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    public void Play(object name) {
+    private void Play(object name) {
         Sound sound = Array.Find(sounds, Sound => Sound.name == (string)name);
         if (sound != null)
             sound.Source.Play();
@@ -66,7 +66,7 @@ public class AudioManager : MonoBehaviour
             Debug.Log("Sound named " + (string)name + " doesn't exist. Can't play sound.");
     }
 
-    public void Stop(object name) {
+    private void Stop(object name) {
         Sound sound = Array.Find(sounds, Sound => Sound.name == (string)name);
         if (sound != null)
             sound.Source.Stop();
@@ -74,7 +74,7 @@ public class AudioManager : MonoBehaviour
             Debug.Log("Sound named " + (string)name + " doesn't exist. Can't stop sound.");
     }
 
-    public void Mute(object name) {
+    private void Mute(object name) {
         Sound sound = Array.Find(sounds, Sound => Sound.name == (string)name);
         if (sound != null)
             sound.Source.mute = !sound.Source.mute;

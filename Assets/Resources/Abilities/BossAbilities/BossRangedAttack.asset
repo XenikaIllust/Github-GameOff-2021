@@ -16,7 +16,7 @@ MonoBehaviour:
   abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 0
-  duration: 0
+  duration: 4
   cooldown: 10
   castRange: 10
   castPoint: 0.3
