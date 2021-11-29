@@ -117,7 +117,7 @@ public class AIAgent : Agent
     private void OnPlayerPositionChanged(object newPosition)
     {
         targetPosition = (Vector3)newPosition;
-        distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+        distanceToTarget = Vector2.Distance(transform.position, targetPosition);
         for (var i = 0; i < _abilityTargetPosition.Count; i++) _abilityTargetPosition[i] = targetPosition;
         AISequence();
     }

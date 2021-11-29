@@ -22,6 +22,6 @@ public class PointToPointMode : MonoBehaviour
 
     private void OnPositionChanged(object position)
     {
-        popUp.SetActive(Vector3.Distance(transform.position, (Vector3)position) < triggerDistance);
+        popUp.SetActive(Vector2.Distance(transform.position, (Vector2)position) < triggerDistance);
     }
 }
