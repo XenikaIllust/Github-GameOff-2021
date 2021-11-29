@@ -7,7 +7,6 @@ public class AbilityPrefab : MonoBehaviour
     private AbilityManager _abilityManager;
     public Ability ability;
     private float _dropRadius;
-    [SerializeField] private float defaultDropRadius = 150;
     private int _index = -1;
     public TMP_Text abilityNameUI;
 
@@ -19,7 +18,7 @@ public class AbilityPrefab : MonoBehaviour
 
     private void OnEnable()
     {
-        _dropRadius = defaultDropRadius;
+        _dropRadius = _abilityManager.dropRadius;
     }
 
     private void OnDisable()

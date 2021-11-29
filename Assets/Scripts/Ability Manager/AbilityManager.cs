@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -8,6 +7,7 @@ using Random = UnityEngine.Random;
 public class AbilityManager : MonoBehaviour
 {
     [HideInInspector] public Unit playerUnit;
+    public float dropRadius = 150;
     public List<Ability> currentAbilities;
     private List<Ability> _playerAbilityPool;
     public List<AbilityPrefab> currentAbilityPrefabs;
