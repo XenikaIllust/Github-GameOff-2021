@@ -15,8 +15,6 @@ public class AOEVFXActionBlock : VFXActionBlock
             has entered the key correctly in the ability editor.
         ---------------------------------------------------------------------------------*/
 
-        // note: not working yet
-
         Vector2 spawnPoint = (Vector3) otherTargets[idParams[1]]; 
         ParticleSystem vfx = Instantiate<ParticleSystem>( Resources.Load<ParticleSystem>(libraryPrefix + "AOEVFX/" + idParams[0]), spawnPoint, Quaternion.identity );
         MathUtils.ConvertCircleToIsometricCircle(abilityStats["AOE Radius"], vfx.gameObject);

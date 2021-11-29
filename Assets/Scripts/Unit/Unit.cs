@@ -285,6 +285,8 @@ public class Unit : MonoBehaviour
         PseudoObject.transform
             .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(target)), _turnRate * 360).SetSpeedBased()
             .SetEase(Ease.Linear);
+
+        unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", PseudoObject.transform.rotation.eulerAngles.z);
     }
 
     private float AngleToTarget(Vector3 target)

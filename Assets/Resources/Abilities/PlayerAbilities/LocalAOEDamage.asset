@@ -20,7 +20,7 @@ MonoBehaviour:
   cooldown: 4
   castRange: 0
   castPoint: 0
-  castBackSwing: 0.2
+  castBackSwing: 0
   totalDamage: 70
   idealTargetPosition: 1
   targetPositionOffset: 2

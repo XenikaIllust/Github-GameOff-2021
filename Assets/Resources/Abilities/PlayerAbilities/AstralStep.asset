@@ -20,7 +20,7 @@ MonoBehaviour:
   cooldown: 3
   castRange: 5
   castPoint: 0
-  castBackSwing: 0.25
+  castBackSwing: 0.1
   totalDamage: 50
   idealTargetPosition: 0
   targetPositionOffset: 0.5
@@ -75,7 +75,7 @@ MonoBehaviour:
   - Id: Damage, Teleport and Reappear
     Duration: 0
     Trigger:
-      ExecutionTime: 0.25
+      ExecutionTime: 0.1
       IsNormalizedTime: 0
     Effects:
     - Id: Damage
