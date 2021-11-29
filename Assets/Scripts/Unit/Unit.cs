@@ -15,8 +15,9 @@ public enum Alliance
 public class Unit : MonoBehaviour
 {
     public EventProcessor unitEventHandler; // Internal event handler
-    [Header("Stats")] public float movementSpeed = 3.5f;
-    public float turnRate = 5f;
+    [Header("Stats")] 
+    public float baseMovementSpeed = 3.5f;
+    public float baseTurnRate = 5f;
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
     [Header("Misc.")] public Alliance alliance;
@@ -29,6 +30,12 @@ public class Unit : MonoBehaviour
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
     private object _aiTarget;
+
+    private float _abilityMovementSpeedMultiplier = 0f;
+    private float _abilityTurnRateMultiplier = 0f;
+
+    private float _movementSpeed;
+    private float _turnRate;
 
     public GameObject PseudoObject { get; private set; }
 
@@ -46,9 +53,12 @@ public class Unit : MonoBehaviour
         isPlayer = GetComponent<PlayerAgent>() != null;
         agent = GetComponent<NavMeshAgent>();
 
+        _movementSpeed = baseMovementSpeed;
+        _turnRate = baseTurnRate;
+
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-        agent.speed = movementSpeed;
+        agent.speed = _movementSpeed;
         agent.acceleration = float.MaxValue;
         agent.angularSpeed = float.MaxValue;
         agent.autoBraking = true;
@@ -73,6 +83,9 @@ public class Unit : MonoBehaviour
 
     private void OnEnable()
     {
+        unitEventHandler.StartListening("OnMovementSpeedMultiplierChanged", OnMovementSpeedMultiplierChanged);
+        unitEventHandler.StartListening("OnTurnRateMultiplierChanged", OnTurnRateMultiplierChanged);
+        
         unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
         unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
         unitEventHandler.StartListening("OnLookOrderIssued", OnLookOrderIssued);
@@ -103,6 +116,18 @@ public class Unit : MonoBehaviour
 
         EventManager.StopListening("OnGamePaused", OnGamePaused);
         EventManager.StopListening("OnGameResumed", OnGameResumed);
+    }
+
+    private void OnMovementSpeedMultiplierChanged(object movementSpeedMultiplier) {
+        _abilityMovementSpeedMultiplier = (float) movementSpeedMultiplier;
+        _movementSpeed = baseMovementSpeed * _abilityMovementSpeedMultiplier;
+
+        agent.speed = _movementSpeed; // set the new movement speed
+    }
+
+    private void OnTurnRateMultiplierChanged(object turnRateMultiplier) {
+        _abilityTurnRateMultiplier = (float) turnRateMultiplier;
+        _turnRate = baseTurnRate * _abilityTurnRateMultiplier;
     }
 
     private void OnInputLocked(object duration)
@@ -244,7 +269,7 @@ public class Unit : MonoBehaviour
 
         PseudoObject.transform
             .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(destination)),
-                turnRate * 360)
+                _turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
     }
 
@@ -260,7 +285,7 @@ public class Unit : MonoBehaviour
 
         PseudoObject.transform
             .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(target)),
-                turnRate * 360)
+                _turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear);
     }
 
@@ -369,7 +394,7 @@ public class Unit : MonoBehaviour
 
         PseudoObject.transform
             .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(_castTargetPosition)),
-                turnRate * 360)
+                _turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => StartCoroutine(ExecuteAbility(ability)));
     }
 
@@ -445,7 +470,7 @@ public class Unit : MonoBehaviour
                 if (_currentAnimation == AnimationType.Move) return;
 
                 _currentAnimation = AnimationType.Move;
-                _stopAnimationTimer = 1 / turnRate;
+                _stopAnimationTimer = 1 / _turnRate;
                 unitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
             }
         }

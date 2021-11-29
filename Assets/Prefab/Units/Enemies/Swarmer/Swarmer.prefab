@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 351212789}
   - component: {fileID: 351212788}
   - component: {fileID: 351212787}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Marker
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -506,8 +506,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81e4df4340dad741af7001e4dcdb145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5.5
-  turnRate: 6.75
+  baseMovementSpeed: 5.5
+  baseTurnRate: 6.75
   isPlayer: 0
   agent: {fileID: 0}
   alliance: 1

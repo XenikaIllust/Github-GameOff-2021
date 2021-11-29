@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d5756d8f38647d4d898d7e51b67f06b, type: 3}
-  m_Name: Modify Turnspeed
+  m_Script: {fileID: 11500000, guid: a7e20ff420c6bb442bcf42b390618647, type: 3}
+  m_Name: AOE VFX Action Block
   m_EditorClassIdentifier: 
-  modifierType: 0

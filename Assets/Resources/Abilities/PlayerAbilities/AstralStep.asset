@@ -16,11 +16,11 @@ MonoBehaviour:
   abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 0
-  duration: 1.5
+  duration: 1
   cooldown: 3
   castRange: 5
-  castPoint: 0.3
-  castBackSwing: 0.24
+  castPoint: 0
+  castBackSwing: 0.25
   totalDamage: 50
   idealTargetPosition: 0
   targetPositionOffset: 0.5
@@ -75,7 +75,7 @@ MonoBehaviour:
   - Id: Damage, Teleport and Reappear
     Duration: 0
     Trigger:
-      ExecutionTime: 0.5
+      ExecutionTime: 0.25
       IsNormalizedTime: 0
     Effects:
     - Id: Damage
@@ -189,7 +189,7 @@ MonoBehaviour:
   - Id: Delayed Damage
     Duration: 0
     Trigger:
-      ExecutionTime: 1.5
+      ExecutionTime: 1
       IsNormalizedTime: 0
     Effects:
     - Id: Damage2
@@ -208,7 +208,7 @@ MonoBehaviour:
         hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
-        StatId: 
+        StatId: Damage Stat 2
         VFXName: 
         VFXPointId: 
         VFXStartPointId: 

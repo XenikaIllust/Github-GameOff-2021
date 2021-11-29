@@ -9,6 +9,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private Sound[] sounds;
 
+    private string currentBGM;
+
     private void Awake() {
         // Only one AudioManager should be present at all times
         if (instance == null) instance = this;
@@ -82,27 +84,32 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Stop("BGM");
+        Stop(currentBGM);
         switch (scene.name)
         {
             case "MainMenu":
-                Play("BGM");
+                currentBGM = "Main Menu BGM";
+                Play(currentBGM);
                 break;
             
             case "Level 1 - Point A to B":
-                Play("BGM");
+                currentBGM = "Battle BGM " + UnityEngine.Random.Range(0, 4).ToString();
+                Play(currentBGM);
                 break;
             
             case "Level 2 - Survive [X] Time":
-                Play("BGM");
+                currentBGM = "Battle BGM " + UnityEngine.Random.Range(0, 4).ToString();
+                Play(currentBGM);
                 break;
             
             case "Level 3 - Kill All Enemies":
-                Play("BGM");
+                currentBGM = "Battle BGM " + UnityEngine.Random.Range(0, 4).ToString();
+                Play(currentBGM);
                 break;
             
             case "Level 4 - Kill Boss":
-                Play("BGM");
+                currentBGM = "Battle BGM " + UnityEngine.Random.Range(0, 4).ToString();
+                Play(currentBGM);
                 break;
         }
     }

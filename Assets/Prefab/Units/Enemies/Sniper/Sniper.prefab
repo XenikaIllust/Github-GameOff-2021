@@ -400,9 +400,9 @@ GameObject:
   - component: {fileID: 1077917907083567540}
   - component: {fileID: 1380099304540570691}
   - component: {fileID: 4897014058125237148}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Marker
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -628,8 +628,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81e4df4340dad741af7001e4dcdb145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 1
-  turnRate: 1
+  baseMovementSpeed: 1
+  baseTurnRate: 1
   isPlayer: 0
   agent: {fileID: 0}
   alliance: 1
@@ -641,6 +641,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  inputLockDuration: 0
 --- !u!114 &6709142033712369222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -714,7 +715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1713545704154035804}
   - component: {fileID: 7980029663043287392}
-  - component: {fileID: 8668890323235258642}
+  - component: {fileID: 672287567}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -794,7 +795,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8668890323235258642
+--- !u!114 &672287567
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -803,7 +804,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8711542809847651047}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d097e7ddbbdd9245a85acdbf6fc792d, type: 3}
+  m_Script: {fileID: 11500000, guid: d744835737f3ae4419ea4b7b93d9d91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 7980029663043287392}

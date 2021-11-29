@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: ConsecutiveAOEDamageTest
   m_EditorClassIdentifier: 
-  abilityName: Consecutive Aoe Damage
+  abilityName: FORKBOMB
   abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 2
   duration: 4
   cooldown: 5
   castRange: 4
-  castPoint: 0.3
-  castBackSwing: 0.7
+  castPoint: 0
+  castBackSwing: 0.2
   totalDamage: 90
   idealTargetPosition: 0
   targetPositionOffset: 0
@@ -93,6 +93,33 @@ MonoBehaviour:
         StatId: Damage SFX
         VFXName: 
         VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: Damage SFX
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: Damage VFX
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: b3463af90f8e9ec4cafda23ac2a798a2, type: 2}
+        StatId: 
+        VFXName: Ping
+        VFXPointId: Target Center
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 

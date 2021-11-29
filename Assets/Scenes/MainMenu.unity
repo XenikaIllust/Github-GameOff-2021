@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731261, g: 0.3807449, b: 0.35872787, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1934,6 +1934,150 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.size
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[7].name
+      value: Main Menu BGM
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[8].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[8].name
+      value: Battle BGM 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[9].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[9].name
+      value: Battle BGM 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[10].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[10].name
+      value: Battle BGM 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[11].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[11].name
+      value: Battle BGM 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[8].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[9].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[10].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[11].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[7].volume
+      value: 0.336
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[8].volume
+      value: 0.313
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[9].volume
+      value: 0.303
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[10].volume
+      value: 0.344
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[11].volume
+      value: 0.344
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[7].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6f903e48c459bdb4ca14a3eb6b4c073c, type: 3}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[8].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2fc7597bd3c75af47a6d5858144b6ddd, type: 3}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[9].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2e10af7228b977648b2259c0bb797c97, type: 3}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[10].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2e10af7228b977648b2259c0bb797c97, type: 3}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[11].audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ea132fb79be04354091ae86199ff921e, type: 3}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[8].playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[9].playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[10].playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[11].playOnAwake
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[8].reverbZoneMix
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[9].reverbZoneMix
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[10].reverbZoneMix
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[11].reverbZoneMix
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[8].audioMixerGroup
+      value: 
+      objectReference: {fileID: 1805428926815748455, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[9].audioMixerGroup
+      value: 
+      objectReference: {fileID: 1805428926815748455, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[10].audioMixerGroup
+      value: 
+      objectReference: {fileID: 1805428926815748455, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    - target: {fileID: 8341377217860885600, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
+      propertyPath: sounds.Array.data[11].audioMixerGroup
+      value: 
+      objectReference: {fileID: 1805428926815748455, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
     - target: {fileID: 8647627708446575992, guid: 11719d08b5ac7c1d9a51634faf71e605, type: 3}
       propertyPath: m_RootOrder
       value: 2
