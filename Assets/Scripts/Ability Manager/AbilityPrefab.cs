@@ -18,7 +18,7 @@ public class AbilityPrefab : MonoBehaviour
 
     private void OnEnable()
     {
-        _dropRadius = _abilityManager.dropRadius;
+        _dropRadius = _abilityManager.dragDropRadius;
     }
 
     private void OnDisable()
@@ -39,7 +39,8 @@ public class AbilityPrefab : MonoBehaviour
     public void OnEndDrag()
     {
         var prefabs = _abilityManager.currentAbilityPrefabs;
-        if (Vector3.Distance(transform.position, _abilityManager.newAbilityPrefab.transform.position) <= _dropRadius)
+        if (Vector3.Distance(transform.position, _abilityManager.newAbilityPrefab.transform.position) <= _dropRadius
+            && _abilityManager.newAbilityPrefab.ability != null)
         {
             if (_index != -1)
             {

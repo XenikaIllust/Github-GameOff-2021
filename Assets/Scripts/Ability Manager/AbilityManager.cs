@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class AbilityManager : MonoBehaviour
 {
     [HideInInspector] public Unit playerUnit;
-    public float dropRadius = 150;
+    public float dragDropRadius = 150;
     public List<Ability> currentAbilities;
     private List<Ability> _playerAbilityPool;
     public List<AbilityPrefab> currentAbilityPrefabs;
@@ -104,7 +104,7 @@ public class AbilityManager : MonoBehaviour
 
     private void CleanUpNewAbility()
     {
-        ability5Cooldown = float.Epsilon;
+        ability5Cooldown = 0;
         newAbilityPrefab.ability = null;
         newAbilityPrefab.gameObject.SetActive(false);
     }
