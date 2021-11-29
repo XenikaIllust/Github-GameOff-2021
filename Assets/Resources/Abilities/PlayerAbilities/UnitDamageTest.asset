@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: UnitDamageTest
   m_EditorClassIdentifier: 
-  abilityName: Unit Damage Test
+  abilityName: BANDWIDTH THEFT
   abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 1
   duration: 0
   cooldown: 0
   castRange: 10
-  castPoint: 0.3
-  castBackSwing: 0.7
+  castPoint: 0
+  castBackSwing: 0
   totalDamage: 60
   idealTargetPosition: 0
   targetPositionOffset: 0

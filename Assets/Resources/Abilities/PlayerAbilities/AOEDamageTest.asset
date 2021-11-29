@@ -74,3 +74,30 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
+    - Id: Damage VFX
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: AOE Radius
+        TargetCenterId: Target Center
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
+        StatId: Damage Stat 1
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 

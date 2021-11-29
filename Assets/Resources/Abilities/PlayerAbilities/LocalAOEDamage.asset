@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: LocalAOEDamage
   m_EditorClassIdentifier: 
-  abilityName: Local AOE Damage
+  abilityName: BUFFER OVERFLOW
   abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 3
-  duration: 0.3
+  duration: 0.2
   cooldown: 4
   castRange: 0
-  castPoint: 0.3
-  castBackSwing: 0.7
+  castPoint: 0
+  castBackSwing: 0.2
   totalDamage: 70
   idealTargetPosition: 1
   targetPositionOffset: 2

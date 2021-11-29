@@ -23,8 +23,8 @@ public class LineIndicatorVFXActionBlock : VFXActionBlock
 
         LineRenderer lineIndicator = Instantiate(
             Resources.Load<LineRenderer>("VFX/AbilityVFX/LineVFX/LineIndicator/" + idParams[0]), selfPosition,
-            Quaternion.Euler(0, 0, selfRotation - 45), self.PseudoObject.transform);
+            Quaternion.Euler(0, 0, selfRotation), self.PseudoObject.transform);
 
-        Destroy(lineIndicator, timeToLive); // hardcoded, change later
+        Destroy(lineIndicator, timeToLive);
     }
 }

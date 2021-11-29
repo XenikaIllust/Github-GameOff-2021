@@ -78,6 +78,8 @@ public class TargetFilter
             RaycastHit2D[] hits =
                 Physics2D.RaycastAll(originPoint, direction, distance: distance, layerMask: layerMask);
 
+            Debug.DrawRay(originPoint, direction, Color.red, 5);
+
             foreach (RaycastHit2D hit in hits)
             {
                 Unit unit = hit.collider.GetComponentInParent<Unit>();

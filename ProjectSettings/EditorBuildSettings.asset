@@ -6,21 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 553cf1728720f6a458d0793c7749e3fe
+  - enabled: 1
     path: Assets/Scenes/Level 1 - Point A to B.unity
     guid: 0214105d49ac6f64f9044ead6bd46de9
-  - enabled: 0
-    path: Assets/Scenes/Start Game - Temporary.unity
-    guid: 62b876c83cc04634ba4030bb625a53fa
-  - enabled: 0
-    path: Assets/Scenes/End Game - Temporary.unity
-    guid: e261482aab347554eac9b289e4ee123f
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Level 2 - Survive [X] Time.unity
     guid: 3f04e839e78e7f14aa1e53a8900255db
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Level 3 - Kill All Enemies.unity
     guid: 8dec96e34d9188443936360fce140a51
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Level 4 - Kill Boss.unity
     guid: 685bacb060c27c349a9a3c7e9e08cd5b
   m_configObjects:

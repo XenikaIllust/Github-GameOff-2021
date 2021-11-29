@@ -32,6 +32,20 @@ public class GameActionCustomPropertyDrawer : PropertyDrawer {
 
             totalHeight += EditorGUI.GetPropertyHeight( statIdProperty, GUIContent.none );
         }
+        else if(gameActionBlockType == typeof(InflictHealAction)) {
+            SerializedProperty statIdProperty = property.FindPropertyRelative("StatId");
+            var statIdRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( statIdRect, statIdProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( statIdProperty, GUIContent.none );
+        }
+        else if(gameActionBlockType == typeof(ModifyTurnRateAction)) {
+            SerializedProperty statIdProperty = property.FindPropertyRelative("StatId");
+            var statIdRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
+            EditorGUI.PropertyField( statIdRect, statIdProperty );
+
+            totalHeight += EditorGUI.GetPropertyHeight( statIdProperty, GUIContent.none );
+        }
         else if(gameActionBlockType == typeof(AimActionBlock)) {
             SerializedProperty statIdProperty = property.FindPropertyRelative("StatId");
             var statIdRect = new Rect( position.x, position.y + totalHeight, position.width, 16 );
