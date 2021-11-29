@@ -28,7 +28,7 @@ public class AbilityPrefab : MonoBehaviour
     public void OnEndDrag()
     {
         var prefabs = _abilityManager.currentAbilityPrefabs;
-        if (Vector3.Distance(transform.position, _abilityManager.newAbilityPrefab.transform.position)
+        if (Vector2.Distance(transform.position, _abilityManager.newAbilityPrefab.transform.position)
             <= _abilityManager.dragDropRadius && _abilityManager.newAbilityPrefab.ability != null)
         {
             if (_index != -1)
@@ -43,7 +43,7 @@ public class AbilityPrefab : MonoBehaviour
             {
                 for (var i = 0; i < prefabs.Count; i++)
                 {
-                    if (Vector3.Distance(transform.position, prefabs[i].transform.position)
+                    if (Vector2.Distance(transform.position, prefabs[i].transform.position)
                         <= _abilityManager.dragDropRadius)
                     {
                         (ability, prefabs[i].ability) = (prefabs[i].ability, ability);
@@ -57,7 +57,7 @@ public class AbilityPrefab : MonoBehaviour
         {
             for (var i = 0; i < prefabs.Count; i++)
             {
-                if (Vector3.Distance(transform.position, prefabs[i].transform.position)
+                if (Vector2.Distance(transform.position, prefabs[i].transform.position)
                     <= _abilityManager.dragDropRadius)
                 {
                     (ability, prefabs[i].ability) = (prefabs[i].ability, ability);

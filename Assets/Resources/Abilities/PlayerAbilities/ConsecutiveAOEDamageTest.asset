@@ -29,7 +29,7 @@ MonoBehaviour:
     _HashCodes: 8580155520f5bc7777c3df5220f5bc77000000000000000000000000
     _Next: ffffffff00000000ffffffff02000000000000000000000000000000
     _Count: 3
-    _Version: 244
+    _Version: 260
     _FreeList: -1
     _FreeCount: 0
     _Keys:
@@ -134,14 +134,41 @@ MonoBehaviour:
       ExecutionTime: 0.5
       IsNormalizedTime: 1
     Effects:
-    - Id: AOE Damage 2
+    - Id: AOE Damage 2nd Round
+      TargetFilter:
+        Type: 3
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: AOE Radius
+        TargetCenterId: Target Center
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
+        StatId: AOE Damage 2
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: Damaged Unit VFX
       TargetFilter:
         Type: 4
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: AOE Radius
         TargetCenterId: 
-        PreviousEffectId: AOE Damage 1st Round
+        PreviousEffectId: AOE Damage 2nd Round
         ConeRangeId: 
         ConeAngleId: 
         ConeTargetId: 
@@ -149,9 +176,9 @@ MonoBehaviour:
         hitAllies: 1
         hitSelf: 1
       GameAction:
-        GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
-        StatId: AOE Damage 2
-        VFXName: 
+        GameActionBlock: {fileID: 11400000, guid: a6f36898e372c884d980920e5a52eefe, type: 2}
+        StatId: 
+        VFXName: BombDamaged
         VFXPointId: 
         VFXStartPointId: 
         VFXEndPointId: 
