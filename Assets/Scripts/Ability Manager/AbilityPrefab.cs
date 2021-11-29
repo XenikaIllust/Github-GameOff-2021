@@ -6,7 +6,8 @@ public class AbilityPrefab : MonoBehaviour
 {
     private AbilityManager _abilityManager;
     public Ability ability;
-    [SerializeField] private float dropRadius = 150;
+    private float _dropRadius;
+    [SerializeField] private float defaultDropRadius = 150;
     private int _index = -1;
     public TMP_Text abilityNameUI;
 
@@ -14,6 +15,16 @@ public class AbilityPrefab : MonoBehaviour
     {
         _abilityManager = FindObjectOfType<AbilityManager>();
         _index = _abilityManager.currentAbilityPrefabs.IndexOf(this);
+    }
+
+    private void OnEnable()
+    {
+        _dropRadius = defaultDropRadius;
+    }
+
+    private void OnDisable()
+    {
+        _dropRadius = -1;
     }
 
     public void OnBeginDrag()
@@ -29,7 +40,7 @@ public class AbilityPrefab : MonoBehaviour
     public void OnEndDrag()
     {
         var prefabs = _abilityManager.currentAbilityPrefabs;
-        if (Vector3.Distance(transform.position, _abilityManager.newAbilityPrefab.transform.position) <= dropRadius)
+        if (Vector3.Distance(transform.position, _abilityManager.newAbilityPrefab.transform.position) <= _dropRadius)
         {
             if (_index != -1)
             {
@@ -43,12 +54,11 @@ public class AbilityPrefab : MonoBehaviour
             {
                 for (var i = 0; i < prefabs.Count; i++)
                 {
-                    if (Vector3.Distance(transform.position, prefabs[i].transform.position) <= dropRadius)
+                    if (Vector3.Distance(transform.position, prefabs[i].transform.position) <= _dropRadius)
                     {
                         (ability, prefabs[i].ability) = (prefabs[i].ability, ability);
                         (_abilityManager.ability5Cooldown, _abilityManager.playerUnit.abilityCooldownList[i])
                             = (_abilityManager.playerUnit.abilityCooldownList[i], _abilityManager.ability5Cooldown);
-                        Debug.Log(prefabs.Count + " " + i);
                     }
                 }
             }
@@ -57,7 +67,7 @@ public class AbilityPrefab : MonoBehaviour
         {
             for (var i = 0; i < prefabs.Count; i++)
             {
-                if (Vector3.Distance(transform.position, prefabs[i].transform.position) <= dropRadius)
+                if (Vector3.Distance(transform.position, prefabs[i].transform.position) <= _dropRadius)
                 {
                     (ability, prefabs[i].ability) = (prefabs[i].ability, ability);
                     _abilityManager.AdjustUnitCooldownTimer(i, _index);
