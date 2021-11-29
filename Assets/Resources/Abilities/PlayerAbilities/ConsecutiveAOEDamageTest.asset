@@ -101,6 +101,33 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
+    - Id: Damage VFX
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: b3463af90f8e9ec4cafda23ac2a798a2, type: 2}
+        StatId: 
+        VFXName: Ping
+        VFXPointId: Target Center
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: Damage SFX
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
   - Id: AOE Damage 2nd Round
     Duration: 0
     Trigger:

@@ -57,6 +57,10 @@ public class GameAction
             string[] idParams = new string[] { VFXName };
             GameActionBlock.Invoke(TimeToLive, AbilityStats, idParams, CurrentFilteredTargets, AllTargets);
         }
+        else if(GameActionBlock.GetType() == typeof(AOEVFXActionBlock)) {
+            string[] idParams = new string[] { VFXName, VFXPointId };
+            GameActionBlock.Invoke(0, AbilityStats, idParams, CurrentFilteredTargets, AllTargets);
+        }
         else if(GameActionBlock.GetType() == typeof(UnitVFXActionBlock)) {
             string[] idParams = new string[] { VFXName };
             GameActionBlock.Invoke(idParams, CurrentFilteredTargets, AllTargets);

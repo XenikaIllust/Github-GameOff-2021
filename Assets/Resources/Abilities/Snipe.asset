@@ -40,7 +40,7 @@ MonoBehaviour:
     _Values:
     - 4
     - 150
-    - 0.1
+    - 0.2
     - 1
   outcomes:
   - Id: Aim
