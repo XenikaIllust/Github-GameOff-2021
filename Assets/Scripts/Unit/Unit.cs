@@ -30,8 +30,8 @@ public class Unit : MonoBehaviour
     private IEnumerator _pendingCast;
     private object _aiTarget;
 
-    private float _abilityMovementSpeedMultiplier = 0f;
-    private float _abilityTurnRateMultiplier = 0f;
+    private float _abilityMovementSpeedMultiplier;
+    private float _abilityTurnRateMultiplier;
 
     private float _movementSpeed;
     private float _turnRate;
@@ -68,11 +68,10 @@ public class Unit : MonoBehaviour
         {
             transform =
             {
-                parent = transform
+                parent = transform,
+                localPosition = Vector3.zero
             }
         };
-        // remove this line if it causes any problems
-        PseudoObject.transform.localPosition = Vector3.zero;
     }
 
     private void Start()
