@@ -135,8 +135,8 @@ public class AbilityManager : MonoBehaviour
     public void AdjustUnitCooldownTimer(int index1, int index2)
     {
         if (playerUnit == null) return;
-        (playerUnit.abilityCooldownList[index1], playerUnit.abilityCooldownList[index2])
-            = (playerUnit.abilityCooldownList[index2], playerUnit.abilityCooldownList[index1]);
+        (playerUnit.abilityCooldownList[index1], playerUnit.abilityCooldownList[index2]) = (
+            playerUnit.abilityCooldownList[index2], playerUnit.abilityCooldownList[index1]);
     }
 
     public void UpdateAbilityPrefabsUI()
