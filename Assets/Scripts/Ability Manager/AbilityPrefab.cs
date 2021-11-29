@@ -9,17 +9,11 @@ public class AbilityPrefab : MonoBehaviour
     [SerializeField] private float dropRadius = 150;
     private int _index = -1;
     public TMP_Text abilityNameUI;
-    private float _ability5Cooldown;
 
     private void Awake()
     {
         _abilityManager = FindObjectOfType<AbilityManager>();
         _index = _abilityManager.currentAbilityPrefabs.IndexOf(this);
-    }
-
-    private void OnDisable()
-    {
-        _ability5Cooldown = float.Epsilon;
     }
 
     public void OnBeginDrag()
@@ -34,6 +28,7 @@ public class AbilityPrefab : MonoBehaviour
 
     public void OnEndDrag()
     {
+        var prefabs = _abilityManager.currentAbilityPrefabs;
         if (Vector3.Distance(transform.position, _abilityManager.newAbilityPrefab.transform.position) <= dropRadius)
         {
             if (_index != -1)
@@ -41,18 +36,30 @@ public class AbilityPrefab : MonoBehaviour
                 (ability, _abilityManager.newAbilityPrefab.ability)
                     = (_abilityManager.newAbilityPrefab.ability, ability);
 
-                (_abilityManager.playerUnit.abilityCooldownList[_index], _ability5Cooldown)
-                    = (_ability5Cooldown, _abilityManager.playerUnit.abilityCooldownList[_index]);
+                (_abilityManager.playerUnit.abilityCooldownList[_index], _abilityManager.ability5Cooldown)
+                    = (_abilityManager.ability5Cooldown, _abilityManager.playerUnit.abilityCooldownList[_index]);
+            }
+            else
+            {
+                for (var i = 0; i < prefabs.Count; i++)
+                {
+                    if (Vector3.Distance(transform.position, prefabs[i].transform.position) <= dropRadius)
+                    {
+                        (ability, prefabs[i].ability) = (prefabs[i].ability, ability);
+                        (_abilityManager.ability5Cooldown, _abilityManager.playerUnit.abilityCooldownList[i])
+                            = (_abilityManager.playerUnit.abilityCooldownList[i], _abilityManager.ability5Cooldown);
+                        Debug.Log(prefabs.Count + " " + i);
+                    }
+                }
             }
         }
         else
         {
-            var abilities = _abilityManager.currentAbilityPrefabs;
-            for (var i = 0; i < abilities.Count; i++)
+            for (var i = 0; i < prefabs.Count; i++)
             {
-                if (Vector3.Distance(transform.position, abilities[i].transform.position) <= dropRadius)
+                if (Vector3.Distance(transform.position, prefabs[i].transform.position) <= dropRadius)
                 {
-                    (ability, abilities[i].ability) = (abilities[i].ability, ability);
+                    (ability, prefabs[i].ability) = (prefabs[i].ability, ability);
                     _abilityManager.AdjustUnitCooldownTimer(i, _index);
                 }
             }

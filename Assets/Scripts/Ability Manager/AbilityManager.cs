@@ -1,24 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class AbilityManager : MonoBehaviour
 {
     [HideInInspector] public Unit playerUnit;
     public List<Ability> currentAbilities;
-    private List<Ability> _playerAbilities;
+    private List<Ability> _playerAbilityPool;
     public List<AbilityPrefab> currentAbilityPrefabs;
     public AbilityPrefab newAbilityPrefab;
     [Space] public Canvas canvas;
     public HorizontalLayoutGroup horizontalLayoutGroup;
+    public float ability5Cooldown;
 
     private void Awake()
     {
-        _playerAbilities = new List<Ability>(Resources.LoadAll<Ability>("Abilities/PlayerAbilities"));
+        _playerAbilityPool = new List<Ability>(Resources.LoadAll<Ability>("Abilities/PlayerAbilities"));
         while (currentAbilities.Count < 4)
         {
-            var newAbility = _playerAbilities[Random.Range(0, _playerAbilities.Count)];
+            var newAbility = _playerAbilityPool[Random.Range(0, _playerAbilityPool.Count)];
             if (currentAbilities.Contains(newAbility) == false) currentAbilities.Add(newAbility);
         }
 
@@ -37,26 +40,29 @@ public class AbilityManager : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnSceneUnloaded(Scene arg0)
-    {
-        EventManager.StopListening("OnGamePaused", OnGamePaused);
-        EventManager.StopListening("OnGameResumed", OnGameResumed);
-        EventManager.StopListening("OnPlayerSpawned", OnPlayerSpawned);
-        ImportFromUnit();
-        ExportToPrefabs();
-        playerUnit = null;
-    }
-
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
         EventManager.StartListening("OnGamePaused", OnGamePaused);
         EventManager.StartListening("OnGameResumed", OnGameResumed);
         EventManager.StartListening("OnPlayerSpawned", OnPlayerSpawned);
+        EventManager.StartListening("OnUnitDied", OnUnitDied);
+    }
+
+    private void OnSceneUnloaded(Scene arg0)
+    {
+        EventManager.StopListening("OnGamePaused", OnGamePaused);
+        EventManager.StopListening("OnGameResumed", OnGameResumed);
+        EventManager.StopListening("OnPlayerSpawned", OnPlayerSpawned);
+        EventManager.StopListening("OnUnitDied", OnUnitDied);
+        ImportFromUnit();
+        ExportToPrefabs();
+        playerUnit = null;
     }
 
     private void OnGameResumed(object @null)
     {
         canvas.enabled = false;
+        CleanUpNewAbility();
     }
 
     private void OnGamePaused(object @null)
@@ -69,6 +75,38 @@ public class AbilityManager : MonoBehaviour
         playerUnit = (Unit)unit;
         ExportToUnit();
         ExportToPrefabs();
+    }
+
+    private void OnUnitDied(object unitGameObject)
+    {
+        var dropRate = ((GameObject)unitGameObject).GetComponent<Unit>().bountyDropRate;
+        var roll = Random.Range(0f, 100f);
+
+        if (roll < dropRate)
+        {
+            LearnNewAbility();
+        }
+    }
+
+    private void LearnNewAbility()
+    {
+        FindObjectOfType<PlayerUI>().PauseGame();
+
+        while (newAbilityPrefab.ability == null)
+        {
+            var newAbility = _playerAbilityPool[Random.Range(0, _playerAbilityPool.Count)];
+            newAbilityPrefab.ability = currentAbilities.Contains(newAbility) == false ? newAbility : null;
+        }
+
+        newAbilityPrefab.gameObject.SetActive(true);
+        UpdateAbilityPrefabsUI();
+    }
+
+    private void CleanUpNewAbility()
+    {
+        ability5Cooldown = float.Epsilon;
+        newAbilityPrefab.ability = null;
+        newAbilityPrefab.gameObject.SetActive(false);
     }
 
     private void ImportFromUnit()
@@ -103,7 +141,10 @@ public class AbilityManager : MonoBehaviour
 
     public void UpdateAbilityPrefabsUI()
     {
-        foreach (var abilityPrefab in currentAbilityPrefabs)
+        var uiPrefabs = new List<AbilityPrefab>(currentAbilityPrefabs);
+        if (newAbilityPrefab.ability != null) uiPrefabs.Add(newAbilityPrefab);
+
+        foreach (var abilityPrefab in uiPrefabs)
         {
             abilityPrefab.abilityNameUI.text = abilityPrefab.ability.abilityName;
         }
