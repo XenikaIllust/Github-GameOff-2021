@@ -10,7 +10,7 @@ public class Projectile : MonoBehaviour
     private float timeToLive;
 
     // Start is called before the first frame update
-    void Start()
+    public void Launch()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         rigidbody2D.velocity = transform.right * speed;

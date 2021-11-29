@@ -21,8 +21,8 @@ public class LineIndicatorVFXActionBlock : VFXActionBlock
         Vector2 selfPosition = self.transform.position;
         float selfRotation = self.PseudoObject.transform.rotation.eulerAngles.z;
 
-        LineRenderer lineIndicator = Instantiate(
-            Resources.Load<LineRenderer>("VFX/AbilityVFX/LineVFX/LineIndicator/" + idParams[0]), selfPosition,
+        GameObject lineIndicator = Instantiate(
+            Resources.Load<GameObject>("VFX/AbilityVFX/LineVFX/LineIndicator/" + idParams[0]), selfPosition,
             Quaternion.Euler(0, 0, selfRotation), self.PseudoObject.transform);
 
         Destroy(lineIndicator, timeToLive);

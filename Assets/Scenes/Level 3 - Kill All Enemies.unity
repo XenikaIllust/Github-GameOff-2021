@@ -896,7 +896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2740a790391bfc047b2d1166afe6eed8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraSpeed: 2
+  cameraSpeed: 10
   player: {fileID: 224481040}
 --- !u!1001 &527819025
 PrefabInstance:
@@ -91834,7 +91834,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d6cab7902fa24844b6ad20356a2288c, type: 3}
---- !u!43 &729412068
+--- !u!43 &736210774
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92267,8 +92267,8 @@ MonoBehaviour:
   - {x: 0.15745187, y: 0.005561676, z: 0}
   - {x: 0.0047359467, y: 0.06776863, z: 0}
   m_ShapePathHash: -1192369071
-  m_Mesh: {fileID: 729412068}
-  m_InstanceId: 73494
+  m_Mesh: {fileID: 736210774}
+  m_InstanceId: 169822
 --- !u!212 &844370975
 SpriteRenderer:
   m_ObjectHideFlags: 0

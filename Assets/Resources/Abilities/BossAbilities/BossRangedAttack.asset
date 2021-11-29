@@ -29,7 +29,7 @@ MonoBehaviour:
     _HashCodes: 3fb75b68ae0ed92ebd66852cf435c277000000000000000000000000
     _Next: ffffffff00000000ffffffff02000000000000000000000000000000
     _Count: 4
-    _Version: 377
+    _Version: 382
     _FreeList: -1
     _FreeCount: 0
     _Keys:
@@ -40,7 +40,7 @@ MonoBehaviour:
     _Values:
     - 4
     - 150
-    - 0.2
+    - 0.1
     - 1
   outcomes:
   - Id: Aim
@@ -120,7 +120,7 @@ MonoBehaviour:
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f0dd9d6e8efb58648a870d61c23fd269, type: 2}
         StatId: 
-        VFXName: Line
+        VFXName: BossLineIndicator
         VFXPointId: 
         VFXStartPointId: 
         VFXEndPointId: 
