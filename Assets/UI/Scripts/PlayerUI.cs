@@ -50,23 +50,28 @@ public class PlayerUI : MonoBehaviour
     {
         if (context.started) // Button Pressed
         {
-            // Toggle the pause screen
-            pauseScreen.SetActive(!pauseScreen.activeSelf);
-
-            // If and only if the pause screen is active,
-            // then raise the OnGamePaused event.
-            if (pauseScreen.activeSelf)
-            {
-                EventManager.RaiseEvent("OnGamePaused", null);
-            }
-            else
-            {
-                EventManager.RaiseEvent("OnGameResumed", null);
-            }
-
-            // Freeze time if game is paused.
-            Time.timeScale = 1f * (pauseScreen.activeSelf ? 0 : 1);
+            PauseGame();
         }
+    }
+
+    public void PauseGame()
+    {
+        // Toggle the pause screen
+        pauseScreen.SetActive(!pauseScreen.activeSelf);
+
+        // If and only if the pause screen is active,
+        // then raise the OnGamePaused event.
+        if (pauseScreen.activeSelf)
+        {
+            EventManager.RaiseEvent("OnGamePaused", null);
+        }
+        else
+        {
+            EventManager.RaiseEvent("OnGameResumed", null);
+        }
+
+        // Freeze time if game is paused.
+        Time.timeScale = 1f * (pauseScreen.activeSelf ? 0 : 1);
     }
 
     // Display enemy health if there are enemies in the scene...

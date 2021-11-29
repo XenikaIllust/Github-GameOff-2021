@@ -20,6 +20,7 @@ public class Unit : MonoBehaviour
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
     [Header("Misc.")] public Alliance alliance;
+    [Range(0, 100)] public float bountyDropRate = 1;
     private float _positionUpdateTimer;
     [Header("Abilities")] public List<Ability> abilities;
     [Header("Read Only")] public List<float> abilityCooldownList = new List<float>(new float[4]);
