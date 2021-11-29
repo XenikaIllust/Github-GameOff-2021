@@ -395,7 +395,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 152970153388981986}
-  unitEventManager: {fileID: 1030278495952677785}
 --- !u!1 &1356358264916591143
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,6 +511,7 @@ MonoBehaviour:
   isPlayer: 0
   agent: {fileID: 0}
   alliance: 1
+  bountyDropRate: 1
   abilities:
   - {fileID: 11400000, guid: e07134232319e7348a52f7b0d555f1c7, type: 2}
   abilityCooldownList:
