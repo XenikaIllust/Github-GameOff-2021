@@ -360,7 +360,7 @@ public class Unit : MonoBehaviour
             AbilityInput(_allTargets["Executing Unit Position"]);
         }
 
-        if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.castRange)
+        if (Vector2.Distance(transform.position, _castTargetPosition) <= ability.castRange)
         {
             TurnAndExecuteAbility(ability);
         }
@@ -374,9 +374,9 @@ public class Unit : MonoBehaviour
 
     private IEnumerator PendingCast(Ability ability)
     {
-        while (Vector3.Distance(transform.position, _castTargetPosition) >= ability.castRange)
+        while (Vector2.Distance(transform.position, _castTargetPosition) >= ability.castRange)
         {
-            yield return new WaitForFixedUpdate();
+            yield return null;
             agent.SetDestination(_castTargetPosition);
         }
 
