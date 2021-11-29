@@ -15,8 +15,7 @@ public enum Alliance
 public class Unit : MonoBehaviour
 {
     public EventProcessor unitEventHandler; // Internal event handler
-    [Header("Stats")] 
-    public float baseMovementSpeed = 3.5f;
+    [Header("Stats")] public float baseMovementSpeed = 3.5f;
     public float baseTurnRate = 5f;
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
@@ -85,7 +84,7 @@ public class Unit : MonoBehaviour
     {
         unitEventHandler.StartListening("OnMovementSpeedMultiplierChanged", OnMovementSpeedMultiplierChanged);
         unitEventHandler.StartListening("OnTurnRateMultiplierChanged", OnTurnRateMultiplierChanged);
-        
+
         unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
         unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
         unitEventHandler.StartListening("OnLookOrderIssued", OnLookOrderIssued);
@@ -118,15 +117,17 @@ public class Unit : MonoBehaviour
         EventManager.StopListening("OnGameResumed", OnGameResumed);
     }
 
-    private void OnMovementSpeedMultiplierChanged(object movementSpeedMultiplier) {
-        _abilityMovementSpeedMultiplier = (float) movementSpeedMultiplier;
+    private void OnMovementSpeedMultiplierChanged(object movementSpeedMultiplier)
+    {
+        _abilityMovementSpeedMultiplier = (float)movementSpeedMultiplier;
         _movementSpeed = baseMovementSpeed * _abilityMovementSpeedMultiplier;
 
         agent.speed = _movementSpeed; // set the new movement speed
     }
 
-    private void OnTurnRateMultiplierChanged(object turnRateMultiplier) {
-        _abilityTurnRateMultiplier = (float) turnRateMultiplier;
+    private void OnTurnRateMultiplierChanged(object turnRateMultiplier)
+    {
+        _abilityTurnRateMultiplier = (float)turnRateMultiplier;
         _turnRate = baseTurnRate * _abilityTurnRateMultiplier;
     }
 
@@ -268,8 +269,7 @@ public class Unit : MonoBehaviour
         Stop();
 
         PseudoObject.transform
-            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(destination)),
-                _turnRate * 360)
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(destination)), _turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
     }
 
@@ -284,9 +284,8 @@ public class Unit : MonoBehaviour
         Stop();
 
         PseudoObject.transform
-            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(target)),
-                _turnRate * 360)
-            .SetSpeedBased().SetEase(Ease.Linear);
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(target)), _turnRate * 360).SetSpeedBased()
+            .SetEase(Ease.Linear);
     }
 
     private float AngleToTarget(Vector3 target)
@@ -345,8 +344,6 @@ public class Unit : MonoBehaviour
 
     private IEnumerator CastAbility(Ability ability)
     {
-        Stop();
-
         _currentAbilityType = ability.inputType;
         _allTargets.Clear();
 
@@ -393,8 +390,7 @@ public class Unit : MonoBehaviour
         Stop();
 
         PseudoObject.transform
-            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(_castTargetPosition)),
-                _turnRate * 360)
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(_castTargetPosition)), _turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => StartCoroutine(ExecuteAbility(ability)));
     }
 
