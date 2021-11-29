@@ -15,6 +15,7 @@ public class AbilityManager : MonoBehaviour
     [Space] public Canvas canvas;
     public HorizontalLayoutGroup horizontalLayoutGroup;
     public float ability5Cooldown;
+    private bool _newAbilityAvailable = true;
 
     private void Awake()
     {
@@ -79,6 +80,9 @@ public class AbilityManager : MonoBehaviour
 
     private void OnUnitDied(object unitGameObject)
     {
+        if (!_newAbilityAvailable) return;
+        _newAbilityAvailable = false;
+
         var dropRate = ((GameObject)unitGameObject).GetComponent<Unit>().bountyDropRate;
         var roll = Random.Range(0f, 100f);
 
@@ -107,6 +111,7 @@ public class AbilityManager : MonoBehaviour
         ability5Cooldown = 0;
         newAbilityPrefab.ability = null;
         newAbilityPrefab.gameObject.SetActive(false);
+        _newAbilityAvailable = true;
     }
 
     private void ImportFromUnit()
