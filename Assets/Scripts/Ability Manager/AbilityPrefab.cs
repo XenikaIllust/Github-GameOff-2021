@@ -17,7 +17,7 @@ public class AbilityPrefab : MonoBehaviour
         _index = _abilityManager.currentAbilityPrefabs.IndexOf(this);
     }
 
-    public void OnClick()
+    public void OnPointerEnter()
     {
         _abilityManager.lastClickedAbility = ability;
         _abilityManager.UpdateAbilityPrefabsUI();
