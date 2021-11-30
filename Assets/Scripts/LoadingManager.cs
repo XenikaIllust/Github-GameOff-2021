@@ -13,7 +13,7 @@ public class LoadingManager : MonoBehaviour
     private SceneReference _currentScene;
     private readonly List<AsyncOperation> _scenesLoading = new List<AsyncOperation>();
 
-    private void Awake()
+    private void Start()
     {
         Instance = this;
 
