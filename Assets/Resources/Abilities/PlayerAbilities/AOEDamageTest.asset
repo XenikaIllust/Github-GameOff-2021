@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
   m_Name: AOEDamageTest
   m_EditorClassIdentifier: 
-  abilityName: AOE Damage Test
+  abilityName: Forkbomb
   abilityDescription: 
-  abilitySprite: {fileID: 0}
+  abilitySprite: {fileID: 21300000, guid: 1dbe8db5646b58c45a583b20095de4f3, type: 3}
   inputType: 2
   duration: 0
   cooldown: 5

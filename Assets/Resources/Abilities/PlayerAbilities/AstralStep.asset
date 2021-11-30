@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Slashdot
   abilityDescription: 
-  abilitySprite: {fileID: 0}
+  abilitySprite: {fileID: 21300000, guid: 22e0e307eed59604daa186fce6e02c15, type: 3}
   inputType: 0
   duration: 1
   cooldown: 3

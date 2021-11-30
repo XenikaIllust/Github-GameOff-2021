@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Goto
   abilityDescription: 
-  abilitySprite: {fileID: 0}
+  abilitySprite: {fileID: 21300000, guid: 85cbe884327c14f45a0848f77b44df13, type: 3}
   inputType: 0
   duration: 0.1
   cooldown: 2

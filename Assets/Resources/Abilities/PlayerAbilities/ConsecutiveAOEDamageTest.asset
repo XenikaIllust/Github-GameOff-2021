@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Consecutive DDoS
   abilityDescription: 
-  abilitySprite: {fileID: 0}
+  abilitySprite: {fileID: 21300000, guid: 3ce6cde8abc01534989c8f4647708929, type: 3}
   inputType: 2
   duration: 4
   cooldown: 5
