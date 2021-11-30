@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,10 +12,16 @@ public class AbilityManager : MonoBehaviour
     public List<Ability> currentAbilities;
     private List<Ability> _playerAbilityPool;
     public List<AbilityPrefab> currentAbilityPrefabs;
-    public AbilityPrefab newAbilityPrefab;
     [Space] public Canvas canvas;
-    public HorizontalLayoutGroup currentGroup;
+    public TMP_Text descriptionText;
+    [Header("Current Ability")] public HorizontalLayoutGroup currentGroup;
+    [Header("New Ability")] public AbilityPrefab newAbilityPrefab;
     public HorizontalLayoutGroup newGroup;
+    public TMP_Text topText;
+    private string _defaultTopText;
+    public TMP_Text bottomText;
+    private string _defaultBottomText;
+    [Header("Read Only")] public Ability lastClickedAbility;
     public float ability5Cooldown;
     private bool _newAbilityAvailable = true;
 
@@ -26,6 +33,10 @@ public class AbilityManager : MonoBehaviour
             var newAbility = _playerAbilityPool[Random.Range(0, _playerAbilityPool.Count)];
             if (currentAbilities.Contains(newAbility) == false) currentAbilities.Add(newAbility);
         }
+
+        descriptionText.text = "";
+        _defaultTopText = topText.text;
+        _defaultBottomText = bottomText.text;
 
         ExportToPrefabs();
     }
@@ -67,6 +78,7 @@ public class AbilityManager : MonoBehaviour
     {
         canvas.enabled = false;
         CleanUpNewAbility();
+        descriptionText.text = "";
     }
 
     private void OnGamePaused(object @null)
@@ -106,6 +118,8 @@ public class AbilityManager : MonoBehaviour
         }
 
         newAbilityPrefab.gameObject.SetActive(true);
+        topText.gameObject.SetActive(true);
+        bottomText.gameObject.SetActive(true);
         UpdateAbilityPrefabsUI();
     }
 
@@ -114,6 +128,10 @@ public class AbilityManager : MonoBehaviour
         ability5Cooldown = 0;
         newAbilityPrefab.ability = null;
         newAbilityPrefab.gameObject.SetActive(false);
+        topText.text = _defaultTopText;
+        topText.gameObject.SetActive(false);
+        bottomText.text = _defaultBottomText;
+        bottomText.gameObject.SetActive(false);
         _newAbilityAvailable = true;
     }
 
@@ -158,5 +176,7 @@ public class AbilityManager : MonoBehaviour
             abilityPrefab.abilityImageUI.sprite = abilityPrefab.ability.abilitySprite;
             abilityPrefab.abilityImageUI.gameObject.SetActive(abilityPrefab.ability.abilitySprite != null);
         }
+
+        descriptionText.text = lastClickedAbility == null ? "" : lastClickedAbility.abilityDescription;
     }
 }

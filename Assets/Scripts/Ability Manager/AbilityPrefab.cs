@@ -17,8 +17,16 @@ public class AbilityPrefab : MonoBehaviour
         _index = _abilityManager.currentAbilityPrefabs.IndexOf(this);
     }
 
+    public void OnClick()
+    {
+        _abilityManager.lastClickedAbility = ability;
+        _abilityManager.UpdateAbilityPrefabsUI();
+    }
+
     public void OnBeginDrag()
     {
+        _abilityManager.lastClickedAbility = ability;
+        _abilityManager.UpdateAbilityPrefabsUI();
         _abilityManager.currentGroup.enabled = false;
         _abilityManager.newGroup.enabled = false;
     }
@@ -34,6 +42,8 @@ public class AbilityPrefab : MonoBehaviour
         if (Vector2.Distance(transform.position, _abilityManager.newAbilityPrefab.transform.position)
             <= _abilityManager.dragDropRadius && _abilityManager.newAbilityPrefab.ability != null)
         {
+            NewAbilityDragged();
+
             if (_index != -1)
             {
                 (ability, _abilityManager.newAbilityPrefab.ability)
@@ -74,5 +84,11 @@ public class AbilityPrefab : MonoBehaviour
         _abilityManager.ImportFromPrefabs();
         _abilityManager.ExportToUnit();
         _abilityManager.UpdateAbilityPrefabsUI();
+    }
+
+    private void NewAbilityDragged()
+    {
+        _abilityManager.topText.text = "RESUME GAME (ESC)\nTO CONFIRM CHANGES";
+        _abilityManager.bottomText.text = "(UNLEARN THIS ABILITY)";
     }
 }
