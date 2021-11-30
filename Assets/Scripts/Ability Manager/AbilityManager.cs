@@ -33,28 +33,30 @@ public class AbilityManager : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.sceneUnloaded += OnSceneUnloaded;
-    }
 
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.sceneUnloaded += OnSceneUnloaded;
-    }
-
-    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
-    {
         EventManager.StartListening("OnGamePaused", OnGamePaused);
         EventManager.StartListening("OnGameResumed", OnGameResumed);
         EventManager.StartListening("OnPlayerSpawned", OnPlayerSpawned);
         EventManager.StartListening("OnUnitDied", OnUnitDied);
     }
 
-    private void OnSceneUnloaded(Scene arg0)
+    private void OnDisable()
     {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+
         EventManager.StopListening("OnGamePaused", OnGamePaused);
         EventManager.StopListening("OnGameResumed", OnGameResumed);
         EventManager.StopListening("OnPlayerSpawned", OnPlayerSpawned);
         EventManager.StopListening("OnUnitDied", OnUnitDied);
+    }
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+    }
+
+    private void OnSceneUnloaded(Scene arg0)
+    {
         ImportFromUnit();
         ExportToPrefabs();
         playerUnit = null;
