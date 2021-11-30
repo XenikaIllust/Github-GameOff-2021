@@ -120,6 +120,7 @@ public class AbilityManager : MonoBehaviour
         newAbilityPrefab.gameObject.SetActive(true);
         topText.gameObject.SetActive(true);
         bottomText.gameObject.SetActive(true);
+        lastClickedAbility = newAbilityPrefab.ability;
         UpdateAbilityPrefabsUI();
     }
 
