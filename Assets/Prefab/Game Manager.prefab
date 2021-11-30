@@ -465,6 +465,8 @@ MonoBehaviour:
   bossLevels:
   - sceneAsset: {fileID: 102900000, guid: 685bacb060c27c349a9a3c7e9e08cd5b, type: 3}
     scenePath: Assets/Scenes/Kill Elite variant 1.unity
+  - sceneAsset: {fileID: 102900000, guid: 88cc02c29c0b21c469d501238a90b48e, type: 3}
+    scenePath: Assets/Scenes/Claire Boss Level.unity
 --- !u!114 &1319637770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -935,6 +937,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6465058747625178673}
     m_Modifications:
+    - target: {fileID: 292096516564771982, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 649117705705311020, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_Name
       value: Ability (4)
@@ -947,6 +953,22 @@ PrefabInstance:
       propertyPath: abilityManager
       value: 
       objectReference: {fileID: 1319637770}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6527588427179085822, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_fontSize
       value: 64.9
@@ -1035,7 +1057,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2564337697861311890, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
 --- !u!114 &1982767183778259539 stripped
 MonoBehaviour:
@@ -1060,6 +1083,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6465058747625178673}
     m_Modifications:
+    - target: {fileID: 292096516564771982, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 649117705705311020, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_Name
       value: Ability (3)
@@ -1072,6 +1099,22 @@ PrefabInstance:
       propertyPath: abilityManager
       value: 
       objectReference: {fileID: 1319637770}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6527588427179085822, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_fontSize
       value: 64.9
@@ -1160,7 +1203,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2564337697861311890, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
 --- !u!114 &2048551787972592064 stripped
 MonoBehaviour:
@@ -1185,6 +1229,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6465058747625178673}
     m_Modifications:
+    - target: {fileID: 292096516564771982, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 649117705705311020, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_Name
       value: Ability (2)
@@ -1197,6 +1245,22 @@ PrefabInstance:
       propertyPath: abilityManager
       value: 
       objectReference: {fileID: 1319637770}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6527588427179085822, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_fontSize
       value: 64.9
@@ -1285,7 +1349,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2564337697861311890, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
 --- !u!114 &2607805890474319224 stripped
 MonoBehaviour:
@@ -1310,6 +1375,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1582832395917023413}
     m_Modifications:
+    - target: {fileID: 292096516564771982, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 649117705705311020, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_Name
       value: Ability (NEW)
@@ -1322,6 +1391,22 @@ PrefabInstance:
       propertyPath: abilityManager
       value: 
       objectReference: {fileID: 1319637770}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6527588427179085822, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_fontSize
       value: 64.9
@@ -1410,7 +1495,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2564337697861311890, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
 --- !u!114 &6257532865142333897 stripped
 MonoBehaviour:
@@ -1435,9 +1521,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6465058747625178673}
     m_Modifications:
+    - target: {fileID: 292096516564771982, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 649117705705311020, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_Name
       value: Ability (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280529746056777968, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_Pivot.x
@@ -1523,7 +1629,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2564337697861311890, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
 --- !u!224 &2045802828218324935 stripped
 RectTransform:
