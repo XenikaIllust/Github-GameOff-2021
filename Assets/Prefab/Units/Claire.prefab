@@ -5504,7 +5504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81e4df4340dad741af7001e4dcdb145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseMovementSpeed: 3.5
+  baseMovementSpeed: 2.5
   baseTurnRate: 5
   isPlayer: 0
   agent: {fileID: 0}
@@ -5549,22 +5549,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aggroRange: 5
   preferredCombatRange:
-    x: 2.4
-    y: 2.6
+    x: 1
+    y: 1.5
   basicMovementMultiplier: 50
   defaultBestAngle: 180
   defaultWorstAngle: 360
   abilityMultiplier:
-  - x: 25
-    y: 25
-    z: 25
-    w: 25
-  - x: 25
-    y: 25
-    z: 25
-    w: 25
+  - x: 20
+    y: 50
+    z: 20
+    w: 10
   - x: 40
     y: 30
+    z: 20
+    w: 10
+  - x: 60
+    y: 15
     z: 20
     w: 5
   - x: 60
@@ -10497,7 +10497,7 @@ Animator:
   m_GameObject: {fileID: 7888198300645894535}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b8d355fac10df50418f16c0e2a34e0b1, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2bf55196ca1481c4488cdda7e1d77e20, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -10537,5 +10537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   degreeVariation: 0
   animationStateNames:
-  - Idle
-  - Run
+  - BossStrafe
+  - BossRangedAttack
+  - BossAOEAttack
+  - BossConeAttack

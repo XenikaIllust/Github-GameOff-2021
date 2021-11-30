@@ -16,12 +16,12 @@ MonoBehaviour:
   abilityDescription: 
   abilitySprite: {fileID: 0}
   inputType: 0
-  duration: 1.5
+  duration: 1
   cooldown: 4
   castRange: 2
   castPoint: 0
   castBackSwing: 2
-  totalDamage: 50
+  totalDamage: 70
   idealTargetPosition: 0
   targetPositionOffset: 0.5
   abilityStats:
@@ -69,7 +69,7 @@ MonoBehaviour:
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
-        TimeToLive: 1.5
+        TimeToLive: 0.5
         SFXName: 
         ProjectileName: 
         ProjectileStatId: 
@@ -77,7 +77,7 @@ MonoBehaviour:
   - Id: Attack
     Duration: 0
     Trigger:
-      ExecutionTime: 1.6
+      ExecutionTime: 0.8
       IsNormalizedTime: 0
     Effects:
     - Id: Damage
@@ -107,3 +107,57 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
+    - Id: Damage Animation
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: Cone Range
+        ConeAngleId: Cone Angle
+        ConeTargetId: Target Point
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 3135f0cc3633aaab49beb253c1e03445, type: 2}
+        StatId: 
+        VFXName: Arc60
+        VFXPointId: Executing Unit
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: BossConeAttack
+    - Id: Damage VFX
+      TargetFilter:
+        Type: 4
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: Damage
+        ConeRangeId: Cone Range
+        ConeAngleId: Cone Angle
+        ConeTargetId: Target Point
+        hitEnemies: 1
+        hitAllies: 1
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: a6f36898e372c884d980920e5a52eefe, type: 2}
+        StatId: 
+        VFXName: BossSlash
+        VFXPointId: Executing Unit
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: BossConeAttack

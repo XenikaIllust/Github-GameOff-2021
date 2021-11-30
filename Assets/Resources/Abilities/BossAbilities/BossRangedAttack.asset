@@ -21,7 +21,7 @@ MonoBehaviour:
   castRange: 10
   castPoint: 0.3
   castBackSwing: 0.7
-  totalDamage: 0
+  totalDamage: 100
   idealTargetPosition: 0
   targetPositionOffset: 0.1
   abilityStats:
@@ -29,7 +29,7 @@ MonoBehaviour:
     _HashCodes: 3fb75b68ae0ed92ebd66852cf435c277000000000000000000000000
     _Next: ffffffff00000000ffffffff02000000000000000000000000000000
     _Count: 4
-    _Version: 382
+    _Version: 384
     _FreeList: -1
     _FreeCount: 0
     _Keys:
@@ -39,7 +39,7 @@ MonoBehaviour:
     - Aim End Turn Rate Multiplier
     _Values:
     - 4
-    - 150
+    - 100
     - 0.1
     - 1
   outcomes:
@@ -157,6 +157,39 @@ MonoBehaviour:
         ProjectileName: TestProjectile
         ProjectileStatId: 
         AnimationTriggerName: Aim
+  - Id: Fire Animation
+    Duration: 0
+    Trigger:
+      ExecutionTime: 3.5
+      IsNormalizedTime: 0
+    Effects:
+    - Id: Firing Animation
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 3135f0cc3633aaab49beb253c1e03445, type: 2}
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: SniperFired
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: BossRangedAttack
   - Id: Fire
     Duration: 0
     Trigger:
@@ -213,7 +246,7 @@ MonoBehaviour:
         VFXEndPointId: 
         VFXUnitId: 
         TimeToLive: 0
-        SFXName: SniperFired
+        SFXName: BossRanged
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
@@ -244,30 +277,3 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
-    - Id: Firing Animation
-      TargetFilter:
-        Type: 5
-        InitialPointId: 
-        FinalPointId: 
-        AOERadiusId: 
-        TargetCenterId: 
-        PreviousEffectId: 
-        ConeRangeId: 
-        ConeAngleId: 
-        ConeTargetId: 
-        hitEnemies: 0
-        hitAllies: 0
-        hitSelf: 1
-      GameAction:
-        GameActionBlock: {fileID: 11400000, guid: 3135f0cc3633aaab49beb253c1e03445, type: 2}
-        StatId: 
-        VFXName: 
-        VFXPointId: 
-        VFXStartPointId: 
-        VFXEndPointId: 
-        VFXUnitId: 
-        TimeToLive: 0
-        SFXName: SniperFired
-        ProjectileName: 
-        ProjectileStatId: 
-        AnimationTriggerName: Fire

@@ -20,7 +20,7 @@ MonoBehaviour:
   cooldown: 5
   castRange: 0
   castPoint: 0.3
-  castBackSwing: 1.7
+  castBackSwing: 2
   totalDamage: 30
   idealTargetPosition: 1
   targetPositionOffset: 1.5
@@ -76,9 +76,36 @@ MonoBehaviour:
   - Id: Attack
     Duration: 0
     Trigger:
-      ExecutionTime: 1
-      IsNormalizedTime: 1
+      ExecutionTime: 1.6
+      IsNormalizedTime: 0
     Effects:
+    - Id: Damage Animation
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: AOE Radius
+        TargetCenterId: Executing Unit Position
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 3135f0cc3633aaab49beb253c1e03445, type: 2}
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: BossAOEAttack
     - Id: Damage VFX
       TargetFilter:
         Type: 5
@@ -96,7 +123,7 @@ MonoBehaviour:
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: b3463af90f8e9ec4cafda23ac2a798a2, type: 2}
         StatId: 
-        VFXName: Shockwave
+        VFXName: BossAOE
         VFXPointId: Executing Unit Position
         VFXStartPointId: 
         VFXEndPointId: 
