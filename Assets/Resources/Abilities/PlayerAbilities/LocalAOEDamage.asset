@@ -116,7 +116,7 @@ MonoBehaviour:
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: b3463af90f8e9ec4cafda23ac2a798a2, type: 2}
         StatId: 
-        VFXName: Explosion
+        VFXName: MagicCircle
         VFXPointId: Executing Unit Position
         VFXStartPointId: 
         VFXEndPointId: 

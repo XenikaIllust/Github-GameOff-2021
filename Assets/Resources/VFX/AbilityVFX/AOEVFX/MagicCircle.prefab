@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4063268113996452194}
   - component: {fileID: 6515030418151927935}
   m_Layer: 0
-  m_Name: BossAOE
+  m_Name: MagicCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5027,7 +5027,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.9284803, g: 0.26100624, b: 1, a: 1}
+      maxColor: {r: 0.26274514, g: 0.8577966, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
