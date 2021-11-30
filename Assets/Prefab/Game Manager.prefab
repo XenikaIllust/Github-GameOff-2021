@@ -195,18 +195,18 @@ MonoBehaviour:
   youDiedScene:
     sceneAsset: {fileID: 102900000, guid: e261482aab347554eac9b289e4ee123f, type: 3}
     scenePath: Assets/Scenes/End Game - Temporary.unity
-  levelScenes:
+  destinationLevels:
   - sceneAsset: {fileID: 102900000, guid: 0214105d49ac6f64f9044ead6bd46de9, type: 3}
     scenePath: Assets/Scenes/Level 1 - Point A to B.unity
+  survivalLevels:
   - sceneAsset: {fileID: 102900000, guid: 3f04e839e78e7f14aa1e53a8900255db, type: 3}
     scenePath: Assets/Scenes/Level 2 - Survive [X] Time.unity
+  genocideLevels:
   - sceneAsset: {fileID: 102900000, guid: 8dec96e34d9188443936360fce140a51, type: 3}
     scenePath: Assets/Scenes/Level 3 - Kill All Enemies.unity
+  bossLevels:
   - sceneAsset: {fileID: 102900000, guid: 685bacb060c27c349a9a3c7e9e08cd5b, type: 3}
     scenePath: Assets/Scenes/Level 4 - Kill Boss.unity
-  levelScenes1: []
-  levelScenes2: []
-  levelScenes3: []
 --- !u!114 &1319637770
 MonoBehaviour:
   m_ObjectHideFlags: 0
