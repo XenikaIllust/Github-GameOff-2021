@@ -452,21 +452,28 @@ public class Unit : MonoBehaviour
                 0.3f /*adjust this number in order to make interpolation quicker or slower*/);
             _lastPosition = position;
 
-            if (_speed < 0.005f)
+            if (_speed < 0.0005f)
             {
                 if (_currentAnimation == AnimationType.Stop) return;
 
-                _currentAnimation = AnimationType.Stop;
                 _stopAnimationTimer -= Time.deltaTime;
-                if (_stopAnimationTimer <= float.Epsilon) unitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
+                if (_stopAnimationTimer <= float.Epsilon)
+                {
+                    _currentAnimation = AnimationType.Stop;
+                    unitEventHandler.RaiseEvent("OnStopMoveAnimation", null);
+                    unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged",
+                        PseudoObject.transform.rotation.eulerAngles.z);
+                }
             }
             else
             {
                 if (_currentAnimation == AnimationType.Move) return;
 
                 _currentAnimation = AnimationType.Move;
-                _stopAnimationTimer = 1 / _turnRate;
+                _stopAnimationTimer = 2 / _turnRate;
                 unitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
+                unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged",
+                    PseudoObject.transform.rotation.eulerAngles.z);
             }
         }
     }

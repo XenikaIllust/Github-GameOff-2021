@@ -11,6 +11,7 @@ public class UnitAnimationManager : MonoBehaviour
     private AnimatorOverrideController _aoc;
     private Camera _camera;
     private int _degreeClipLength;
+    private object _lastDestination;
 
     float azimuthRotation;
 
@@ -64,6 +65,12 @@ public class UnitAnimationManager : MonoBehaviour
         // anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[ (int) rotationAngle / 10 ]) );// every clip 10 degree 
         // aoc.ApplyOverrides(anims);
 
+        _lastDestination = destination;
+        UpdateAnimationRotation(_lastDestination);
+    }
+
+    private void UpdateAnimationRotation(object destination)
+    {
         var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
         float rotationAngle = (float)destination;
         // standard bearing to azimuth is required because the animations are saved in azimuth format
@@ -129,6 +136,7 @@ public class UnitAnimationManager : MonoBehaviour
     private void SetMoveAnimation(bool status)
     {
         _anim.SetBool(_isRunningHash, status);
+        UpdateAnimationRotation(_lastDestination);
     }
 
     public void Play(string animationStateName) {
