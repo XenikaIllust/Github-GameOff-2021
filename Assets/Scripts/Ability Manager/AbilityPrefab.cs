@@ -25,6 +25,8 @@ public class AbilityPrefab : MonoBehaviour
 
     public void OnBeginDrag()
     {
+        _abilityManager.lastClickedAbility = ability;
+        _abilityManager.UpdateAbilityPrefabsUI();
         _abilityManager.currentGroup.enabled = false;
         _abilityManager.newGroup.enabled = false;
     }
