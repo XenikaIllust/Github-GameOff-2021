@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 5228692351704179888}
   - component: {fileID: 6402389576948907627}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Ability Description Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: (ABILITY DESCRIPTION WILL APPEAR HERE)
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -486,11 +486,13 @@ MonoBehaviour:
   - {fileID: 2048551787972592064}
   - {fileID: 1982767183778259539}
   canvas: {fileID: 2194218688097986094}
+  descriptionText: {fileID: 6402389576948907627}
   currentGroup: {fileID: 3332830865719863180}
   newAbilityPrefab: {fileID: 6257532865142333897}
   newGroup: {fileID: 634803733885162678}
   topText: {fileID: 4777219159603620986}
   bottomText: {fileID: 3588695925556980846}
+  lastClickedAbility: {fileID: 0}
   ability5Cooldown: 0
 --- !u!1 &2897853141082792951
 GameObject:

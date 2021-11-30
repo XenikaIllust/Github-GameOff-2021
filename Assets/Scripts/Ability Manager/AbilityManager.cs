@@ -13,6 +13,7 @@ public class AbilityManager : MonoBehaviour
     private List<Ability> _playerAbilityPool;
     public List<AbilityPrefab> currentAbilityPrefabs;
     [Space] public Canvas canvas;
+    public TMP_Text descriptionText;
     [Header("Current Ability")] public HorizontalLayoutGroup currentGroup;
     [Header("New Ability")] public AbilityPrefab newAbilityPrefab;
     public HorizontalLayoutGroup newGroup;
@@ -20,7 +21,8 @@ public class AbilityManager : MonoBehaviour
     private string _defaultTopText;
     public TMP_Text bottomText;
     private string _defaultBottomText;
-    [Header("Read Only")] public float ability5Cooldown;
+    [Header("Read Only")] public Ability lastClickedAbility;
+    public float ability5Cooldown;
     private bool _newAbilityAvailable = true;
 
     private void Awake()
@@ -32,6 +34,7 @@ public class AbilityManager : MonoBehaviour
             if (currentAbilities.Contains(newAbility) == false) currentAbilities.Add(newAbility);
         }
 
+        descriptionText.text = "";
         _defaultTopText = topText.text;
         _defaultBottomText = bottomText.text;
 
@@ -75,6 +78,7 @@ public class AbilityManager : MonoBehaviour
     {
         canvas.enabled = false;
         CleanUpNewAbility();
+        descriptionText.text = "";
     }
 
     private void OnGamePaused(object @null)
@@ -172,5 +176,7 @@ public class AbilityManager : MonoBehaviour
             abilityPrefab.abilityImageUI.sprite = abilityPrefab.ability.abilitySprite;
             abilityPrefab.abilityImageUI.gameObject.SetActive(abilityPrefab.ability.abilitySprite != null);
         }
+
+        descriptionText.text = lastClickedAbility == null ? "" : lastClickedAbility.abilityDescription;
     }
 }

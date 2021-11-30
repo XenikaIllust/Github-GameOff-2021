@@ -17,6 +17,12 @@ public class AbilityPrefab : MonoBehaviour
         _index = _abilityManager.currentAbilityPrefabs.IndexOf(this);
     }
 
+    public void OnClick()
+    {
+        _abilityManager.lastClickedAbility = ability;
+        _abilityManager.UpdateAbilityPrefabsUI();
+    }
+
     public void OnBeginDrag()
     {
         _abilityManager.currentGroup.enabled = false;
