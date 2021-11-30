@@ -189,10 +189,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378dacac1b9f7714bb6ba3bb3cacd9ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startGameScene:
-    sceneAsset: {fileID: 102900000, guid: 62b876c83cc04634ba4030bb625a53fa, type: 3}
-    scenePath: Assets/Scenes/Start Game - Temporary.unity
-  gameOverScene:
+  mainMenuScene:
+    sceneAsset: {fileID: 102900000, guid: 553cf1728720f6a458d0793c7749e3fe, type: 3}
+    scenePath: Assets/Scenes/MainMenu.unity
+  youDiedScene:
     sceneAsset: {fileID: 102900000, guid: e261482aab347554eac9b289e4ee123f, type: 3}
     scenePath: Assets/Scenes/End Game - Temporary.unity
   levelScenes:
@@ -204,6 +204,9 @@ MonoBehaviour:
     scenePath: Assets/Scenes/Level 3 - Kill All Enemies.unity
   - sceneAsset: {fileID: 102900000, guid: 685bacb060c27c349a9a3c7e9e08cd5b, type: 3}
     scenePath: Assets/Scenes/Level 4 - Kill Boss.unity
+  levelScenes1: []
+  levelScenes2: []
+  levelScenes3: []
 --- !u!114 &1319637770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,6 +220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerUnit: {fileID: 0}
+  dragDropRadius: 150
   currentAbilities: []
   currentAbilityPrefabs:
   - {fileID: 7340530449092882611}
@@ -226,6 +230,7 @@ MonoBehaviour:
   newAbilityPrefab: {fileID: 6257532865142333897}
   canvas: {fileID: 2194218688097986094}
   horizontalLayoutGroup: {fileID: 8292418857629142321}
+  ability5Cooldown: 0
 --- !u!1001 &1224444396451012515
 PrefabInstance:
   m_ObjectHideFlags: 0
