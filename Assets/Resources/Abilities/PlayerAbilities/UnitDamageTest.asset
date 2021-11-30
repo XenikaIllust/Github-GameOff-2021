@@ -22,7 +22,7 @@ MonoBehaviour:
   abilitySprite: {fileID: 0}
   inputType: 1
   duration: 0
-  cooldown: 0
+  cooldown: 10
   castRange: 10
   castPoint: 0
   castBackSwing: 0
@@ -30,19 +30,19 @@ MonoBehaviour:
   idealTargetPosition: 0
   targetPositionOffset: 0
   abilityStats:
-    _Buckets: 01000000ffffffffffffffff
-    _HashCodes: fffffffff4dc220c00000000
-    _Next: ffffffffffffffff00000000
-    _Count: 2
-    _Version: 27
-    _FreeList: 0
+    _Buckets: 00000000ffffffffffffffff
+    _HashCodes: 132f9204f4dc220cffffffff
+    _Next: 01000000ffffffffffffffff
+    _Count: 3
+    _Version: 78
+    _FreeList: 2
     _FreeCount: 1
     _Keys:
-    - 
+    - Heal Stat 1
     - Damage Stat 1
     - 
     _Values:
-    - 0
+    - 100
     - 60
     - 0
   outcomes:
@@ -57,8 +57,8 @@ MonoBehaviour:
         Type: 1
         InitialPointId: 
         FinalPointId: 
-        AOERadiusId: 
-        TargetCenterId: 
+        AOERadiusId: AOE Radius
+        TargetCenterId: Executing Unit Position
         PreviousEffectId: 
         ConeRangeId: 
         ConeAngleId: 
@@ -69,6 +69,33 @@ MonoBehaviour:
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
         StatId: Damage Stat 1
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: Heal
+      TargetFilter:
+        Type: 0
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: Damage
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 90b50163ad2057e469ed237c6ba8d513, type: 2}
+        StatId: Heal Stat 1
         VFXName: 
         VFXPointId: 
         VFXStartPointId: 
