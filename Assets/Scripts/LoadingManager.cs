@@ -1,21 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro;
 
 public class LoadingManager : MonoBehaviour
 {
-    public static LoadingManager instance;
-    [SerializeField]private GameObject loadingScreen;
-    [SerializeField]private Slider loadingSlider;
+    public static LoadingManager Instance { get; set; }
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private Slider loadingSlider;
     private SceneReference _currentScene;
-    private List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
+    private readonly List<AsyncOperation> _scenesLoading = new List<AsyncOperation>();
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
 
         // Load the Main Menu
         SceneManager.LoadSceneAsync(LevelManager.Instance.mainMenuScene, LoadSceneMode.Additive);
@@ -35,10 +35,10 @@ public class LoadingManager : MonoBehaviour
     private void OnSceneLoading(object sceneReference)
     {
         loadingScreen.SetActive(true); // Show the Loading Screen
-        scenesLoading.Add(SceneManager.UnloadSceneAsync(_currentScene)); // Unload the previous scene
+        _scenesLoading.Add(SceneManager.UnloadSceneAsync(_currentScene)); // Unload the previous scene
 
         // Load the new scene
-        scenesLoading.Add(SceneManager.LoadSceneAsync((SceneReference)sceneReference, LoadSceneMode.Additive));
+        _scenesLoading.Add(SceneManager.LoadSceneAsync((SceneReference)sceneReference, LoadSceneMode.Additive));
         _currentScene = (SceneReference)sceneReference;
 
         StartCoroutine(GetSceneLoadProgress());
@@ -46,20 +46,15 @@ public class LoadingManager : MonoBehaviour
 
     private IEnumerator GetSceneLoadProgress()
     {
-        for(int i=0; i<scenesLoading.Count; i++)
+        foreach (var asyncOperation in _scenesLoading)
         {
-            while(!scenesLoading[i].isDone)
+            while (!asyncOperation.isDone)
             {
-                float totalSceneProgress = 0;
+                var totalSceneProgress = _scenesLoading.Sum(operation => operation.progress);
 
-                foreach(AsyncOperation operation in scenesLoading)
-                {
-                    totalSceneProgress += operation.progress;
-                }
+                totalSceneProgress = totalSceneProgress / _scenesLoading.Count * 100f;
 
-                totalSceneProgress = (totalSceneProgress/scenesLoading.Count) * 100f;
-
-                loadingSlider.value = Mathf.RoundToInt(totalSceneProgress);
+                loadingSlider.value = Mathf.FloorToInt(totalSceneProgress);
 
                 yield return null;
             }
