@@ -17,8 +17,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<SceneReference> genocideLevels;
     [SerializeField] private List<SceneReference> bossLevels;
 
+    [Header("Read Only")] public SceneReference lastLevel;
     private List<List<SceneReference>> _remainingLevels;
-    private SceneReference _lastLevel;
     private IEnumerator _pendingLoad;
 
     private void Awake()
@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour
             genocideLevels
         };
 
-        _lastLevel = null;
+        lastLevel = null;
     }
 
     private void OnEnable()
@@ -89,7 +89,7 @@ public class LevelManager : MonoBehaviour
 
     public void LoadLastLevel()
     {
-        EventManager.RaiseEvent("OnSceneLoading", _lastLevel);
+        EventManager.RaiseEvent("OnSceneLoading", lastLevel);
     }
 
     public void LoadNewGame()
@@ -116,7 +116,7 @@ public class LevelManager : MonoBehaviour
     {
         var newLevel = collection[Random.Range(0, collection.Count)];
         EventManager.RaiseEvent("OnSceneLoading", newLevel);
-        _lastLevel = newLevel;
+        lastLevel = newLevel;
     }
 
     private IEnumerator DelayedLoad(Action action, float delay)

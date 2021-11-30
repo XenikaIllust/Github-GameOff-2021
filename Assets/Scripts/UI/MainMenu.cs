@@ -51,7 +51,7 @@ public class MainMenu : MonoBehaviour
     // Main Menu
     public void Continue()
     {
-        LevelManager.Instance.LoadLastLevel();
+        if (LevelManager.Instance.lastLevel != null) LevelManager.Instance.LoadLastLevel();
     }
 
     public void StartGame()
