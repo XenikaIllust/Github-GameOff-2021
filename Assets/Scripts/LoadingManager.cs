@@ -10,19 +10,19 @@ public class LoadingManager : MonoBehaviour
     public static LoadingManager Instance { get; set; }
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Slider loadingSlider;
-    private SceneReference _currentScene;
+    public SceneReference currentScene;
     private readonly List<AsyncOperation> _scenesLoading = new List<AsyncOperation>();
 
     private void Awake()
     {
         Instance = this;
     }
-    
+
     private void Start()
     {
         // Load the Main Menu
         SceneManager.LoadSceneAsync(LevelManager.Instance.mainMenuScene, LoadSceneMode.Additive);
-        _currentScene = LevelManager.Instance.mainMenuScene;
+        currentScene = LevelManager.Instance.mainMenuScene;
     }
 
     private void OnEnable()
@@ -38,11 +38,11 @@ public class LoadingManager : MonoBehaviour
     private void OnSceneLoading(object sceneReference)
     {
         loadingScreen.SetActive(true); // Show the Loading Screen
-        _scenesLoading.Add(SceneManager.UnloadSceneAsync(_currentScene)); // Unload the previous scene
+        _scenesLoading.Add(SceneManager.UnloadSceneAsync(currentScene)); // Unload the previous scene
 
         // Load the new scene
         _scenesLoading.Add(SceneManager.LoadSceneAsync((SceneReference)sceneReference, LoadSceneMode.Additive));
-        _currentScene = (SceneReference)sceneReference;
+        currentScene = (SceneReference)sceneReference;
 
         StartCoroutine(GetSceneLoadProgress());
     }

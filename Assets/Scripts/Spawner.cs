@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
@@ -73,6 +74,8 @@ public class Spawner : MonoBehaviour
     private void Spawn()
     {
         var unitGO = Instantiate(gameObjectPrefab);
+        SceneManager.MoveGameObjectToScene(unitGO,
+            SceneManager.GetSceneByPath(LoadingManager.Instance.currentScene.ScenePath));
         aliveUnits.Add(unitGO);
         lifetimeQuota -= 1;
         Vector3 offset = new Vector2(Random.Range(0, spawnRadius), Random.Range(0, spawnRadius));
