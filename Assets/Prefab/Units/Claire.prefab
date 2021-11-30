@@ -5432,6 +5432,7 @@ GameObject:
   - component: {fileID: 2339088434888781599}
   - component: {fileID: 4802560575064041943}
   - component: {fileID: 1582843991}
+  - component: {fileID: 1256584048}
   m_Layer: 0
   m_Name: Claire
   m_TagString: Untagged
@@ -5504,7 +5505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81e4df4340dad741af7001e4dcdb145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseMovementSpeed: 3.5
+  baseMovementSpeed: 2.5
   baseTurnRate: 5
   isPlayer: 0
   agent: {fileID: 0}
@@ -5549,22 +5550,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aggroRange: 5
   preferredCombatRange:
-    x: 2.4
-    y: 2.6
+    x: 1
+    y: 1.5
   basicMovementMultiplier: 50
   defaultBestAngle: 180
   defaultWorstAngle: 360
   abilityMultiplier:
-  - x: 25
-    y: 25
-    z: 25
-    w: 25
-  - x: 25
-    y: 25
-    z: 25
-    w: 25
+  - x: 20
+    y: 50
+    z: 20
+    w: 10
   - x: 40
     y: 30
+    z: 20
+    w: 10
+  - x: 60
+    y: 15
     z: 20
     w: 5
   - x: 60
@@ -5596,8 +5597,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 326f49b62bd54634ab3e3e5a72631d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1000
+  health: 2000
   maxHealth: 0
+--- !u!61 &1256584048
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802560575064041940}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.65}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.56, y: 2.34}
+  m_EdgeRadius: 0
 --- !u!1 &5811359814666668957
 GameObject:
   m_ObjectHideFlags: 0
@@ -10430,7 +10457,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7888198300645894535}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.58, z: 0}
+  m_LocalPosition: {x: 0, y: 0.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4802560575064041942}
@@ -10476,7 +10503,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 9195d4eccc677af4aa80e7153a47b2ad, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 547580c223f617740b76c606d127e94c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -10497,7 +10524,7 @@ Animator:
   m_GameObject: {fileID: 7888198300645894535}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b8d355fac10df50418f16c0e2a34e0b1, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2bf55196ca1481c4488cdda7e1d77e20, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -10537,5 +10564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   degreeVariation: 0
   animationStateNames:
-  - Idle
-  - Run
+  - BossStrafe
+  - BossRangedAttack
+  - BossAOEAttack
+  - BossConeAttack
