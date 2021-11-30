@@ -6,12 +6,13 @@ using UnityEngine.InputSystem;
 public class PlayerAgent : Agent
 {
     [Header("Input")] public float autoClickInterval = 0.1f;
+    [SerializeField] private SpriteRenderer AOECircle;
     private float _autoClickTimer;
     private Camera _camera;
     private bool _defaultControlsEnabled = true;
     private bool _holdingRightClick;
-    [SerializeField] private SpriteRenderer AOECircle;
     private bool _turnOnHighlight;
+    private Unit currentHighlightedUnit;
     private IEnumerator _currentCoroutine;
 
     protected override void Awake()
@@ -121,14 +122,16 @@ public class PlayerAgent : Agent
                 _currentCoroutine = AbilityInputType.PointTargetInput(ability, unitEventHandler);
                 yield return StartCoroutine(_currentCoroutine);
                 break;
+
             case AbilityType.TargetUnit:
                 _turnOnHighlight = true;
                 _currentCoroutine = AbilityInputType.UnitTargetInput(ability, unitEventHandler);
                 yield return StartCoroutine(_currentCoroutine);
                 _turnOnHighlight = false;
+                if (currentHighlightedUnit != null) currentHighlightedUnit.GetComponentInChildren<UnitVFXManager>().ClearEffects(); // Clear the previous enemy that was hightlighted
                 break;
+
             case AbilityType.TargetArea:
-            {
                 float radius = ability.abilityStats["AOE Radius"];
                 AOECircle.transform.localScale = new Vector3(radius * 3.3f, radius * 0.5f * 3.3f, 1.0f);
                 AOECircle.enabled = true;
@@ -136,10 +139,11 @@ public class PlayerAgent : Agent
                 yield return StartCoroutine(_currentCoroutine);
                 AOECircle.enabled = false;
                 break;
-            }
+
             case AbilityType.NoTarget:
                 Debug.LogError("This case should never be true");
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -153,6 +157,7 @@ public class PlayerAgent : Agent
         {
             StopCoroutine(_currentCoroutine);
             _turnOnHighlight = false;
+            if (currentHighlightedUnit != null) currentHighlightedUnit.GetComponentInChildren<UnitVFXManager>().ClearEffects(); // Clear the previous enemy that was hightlighted
             AOECircle.enabled = false;
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Change cursor back to default
         }
@@ -161,9 +166,8 @@ public class PlayerAgent : Agent
     private void AOECircleFollowCursor()
     {
         AOECircle.transform.position = new Vector3(CursorWorldPosition().x,
-            CursorWorldPosition().y,
-            0.0f
-        );
+                                                   CursorWorldPosition().y,
+                                                   0.0f);
     }
 
     private void HighlightUnitUnderMouseCursor()
@@ -171,16 +175,28 @@ public class PlayerAgent : Agent
         LayerMask enemyMask = LayerMask.GetMask("Enemy");
 
         // Get target and check that it's valid
-        RaycastHit2D hit = Physics2D.Raycast(CursorWorldPosition(),
-            Vector2.zero, Mathf.Infinity, enemyMask);
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()),
+                                             Vector2.zero,
+                                             Mathf.Infinity,
+                                             enemyMask);
 
         if (hit.collider != null)
         {
-            Unit selectedUnit = hit.collider.GetComponent<Unit>();
+            Unit highlightedUnit = hit.collider.GetComponent<Unit>(); // Get the new enemy to be highlighted
 
-            if (selectedUnit.alliance != thisUnit.alliance)
+            // If the highlightedUnit isn't the exact same as it was before then...
+            if (highlightedUnit != currentHighlightedUnit || highlightedUnit == null || currentHighlightedUnit == null)
             {
-                selectedUnit.GetComponentInChildren<UnitVFXManager>().HighlightOutline();
+                if (currentHighlightedUnit != null) currentHighlightedUnit.GetComponentInChildren<UnitVFXManager>().ClearEffects(); // Clear the previous enemy that was hightlighted
+                currentHighlightedUnit = highlightedUnit; // Set the new enemy as the current one
+            }
+
+            if (currentHighlightedUnit == null) return;
+
+            // Highlight the currently selected enemy
+            if (currentHighlightedUnit.alliance != thisUnit.alliance)
+            {
+                currentHighlightedUnit.GetComponentInChildren<UnitVFXManager>().HighlightOutline();
             }
         }
     }

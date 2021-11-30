@@ -322,22 +322,24 @@ public class Unit : MonoBehaviour
                 _castTargetPosition = (Vector3)target;
                 _allTargets["Target Point"] = _castTargetPosition;
                 break;
+
             case AbilityType.TargetUnit:
-            {
                 var targetUnit = (Unit)target;
                 _castTargetPosition = targetUnit.transform.position;
                 _allTargets["Target Unit"] = target;
                 _allTargets["Target Unit Position"] = _castTargetPosition;
                 break;
-            }
+
             case AbilityType.TargetArea:
                 _castTargetPosition = (Vector3)target;
                 _allTargets["Target Center"] = _castTargetPosition;
                 break;
+
             case AbilityType.NoTarget:
                 _castTargetPosition = (Vector3)target;
                 _allTargets["Target Center"] = _castTargetPosition;
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }

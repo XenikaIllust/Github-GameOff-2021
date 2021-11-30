@@ -13,10 +13,13 @@ public class LoadingManager : MonoBehaviour
     private SceneReference _currentScene;
     private readonly List<AsyncOperation> _scenesLoading = new List<AsyncOperation>();
 
-    private void Start()
+    private void Awake()
     {
         Instance = this;
-
+    }
+    
+    private void Start()
+    {
         // Load the Main Menu
         SceneManager.LoadSceneAsync(LevelManager.Instance.mainMenuScene, LoadSceneMode.Additive);
         _currentScene = LevelManager.Instance.mainMenuScene;
