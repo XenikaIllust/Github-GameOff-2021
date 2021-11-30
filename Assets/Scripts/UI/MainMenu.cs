@@ -59,9 +59,9 @@ public class MainMenu : MonoBehaviour
         LevelManager.Instance.LoadNewGame();
     }
 
-    public void Tutorial()
-    {
-    }
+    public void Story(){}
+
+    public void HowToPlay(){}
 
     public void Quit()
     {

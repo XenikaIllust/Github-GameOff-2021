@@ -20,7 +20,7 @@ MonoBehaviour:
   cooldown: 5
   castRange: 5
   castPoint: 0.3
-  castBackSwing: 0.7
+  castBackSwing: 0.9
   totalDamage: 50
   idealTargetPosition: 0
   targetPositionOffset: 0.5
@@ -58,9 +58,9 @@ MonoBehaviour:
         ConeRangeId: 
         ConeAngleId: 
         ConeTargetId: 
-        hitEnemies: 1
+        hitEnemies: 0
         hitAllies: 0
-        hitSelf: 0
+        hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 2d72a3468b1000249b7e0a5ae82f98bc, type: 2}
         StatId: 
@@ -119,8 +119,8 @@ MonoBehaviour:
         ConeAngleId: 
         ConeTargetId: 
         hitEnemies: 1
-        hitAllies: 0
-        hitSelf: 0
+        hitAllies: 1
+        hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 1e92247e4d8679a4a93e1da975cb1f48, type: 2}
         StatId: 
@@ -146,8 +146,8 @@ MonoBehaviour:
         ConeAngleId: 
         ConeTargetId: 
         hitEnemies: 1
-        hitAllies: 0
-        hitSelf: 0
+        hitAllies: 1
+        hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 5fbaac34ccd01a54d8c39db1b3b267ce, type: 2}
         StatId: 

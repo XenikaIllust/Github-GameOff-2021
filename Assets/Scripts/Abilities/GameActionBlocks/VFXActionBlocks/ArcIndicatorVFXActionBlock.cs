@@ -22,15 +22,11 @@ public class ArcIndicatorVFXActionBlock : VFXActionBlock
         GameObject arcIndicatorParent = new GameObject("ArcIndicatorParent");
         arcIndicatorParent.transform.position = self.transform.position;
         GameObject arcIndicator = Instantiate(Resources.Load<GameObject>(libraryPrefix + "ArcVFX/ArcIndicator/" + idParams[0]), selfPosition, Quaternion.identity, arcIndicatorParent.transform);
-        ConvertCircleToIsometricCircle( (float) abilityStats["Cone Range"] , arcIndicatorParent);
+        MathUtils.ConvertCircleToIsometricCircle( (float) abilityStats["Cone Range"] , arcIndicatorParent);
         var rot = arcIndicator.transform.rotation.eulerAngles;
         rot.z = selfRotation - 90;
         arcIndicator.transform.rotation = Quaternion.Euler(rot);
 
         Destroy(arcIndicatorParent, 2);
-    }
-
-    void ConvertCircleToIsometricCircle(float radius, GameObject circularIndicatorObject) {
-        circularIndicatorObject.transform.localScale = new Vector3(radius * 1.65f, radius * 0.5f * 1.65f, 1.0f); // this assumes the graphic is 512x512, and pixels per unit is 256!
     }
 }

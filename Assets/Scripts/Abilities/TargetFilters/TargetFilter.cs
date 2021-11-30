@@ -169,7 +169,7 @@ public class TargetFilter
                 }
             }
 
-            GameObject.Destroy(AOECalculator);
+            // GameObject.Destroy(AOECalculator);
         }
 
         return targets;
