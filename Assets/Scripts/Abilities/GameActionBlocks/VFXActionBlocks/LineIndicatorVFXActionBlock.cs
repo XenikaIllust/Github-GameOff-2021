@@ -1,12 +1,14 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 [CreateAssetMenu(menuName = "Definitions/Game Action/VFX/LineIndicatorVFXActionBlock")]
-public class LineIndicatorVFXActionBlock :VFXActionBlock
+public class LineIndicatorVFXActionBlock : VFXActionBlock
 {
-    public override void Invoke(float timeToLive, AbilityStatsDict abilityStats, string[] idParams, List<object> currentFilteredTargets, Dictionary<string, object> otherTargets) {
+    public override void Invoke(float timeToLive, AbilityStatsDict abilityStats, string[] idParams,
+        List<object> currentFilteredTargets, Dictionary<string, object> otherTargets)
+    {
         /*---------------------------------------------------------------------------------
             The line indicator is cast from the executing unit's front to the target direction
             specified by the length.
@@ -15,12 +17,14 @@ public class LineIndicatorVFXActionBlock :VFXActionBlock
             VFX folder if the user has entered the key correctly in the ability editor. 
         ---------------------------------------------------------------------------------*/
 
-        Unit self = (Unit) otherTargets["Executing Unit"]; 
+        Unit self = (Unit)otherTargets["Executing Unit"];
         Vector2 selfPosition = self.transform.position;
         float selfRotation = self.PseudoObject.transform.rotation.eulerAngles.z;
 
-        LineRenderer lineIndicator = Instantiate<LineRenderer>( Resources.Load<LineRenderer>("VFX/AbilityVFX/LineVFX/LineIndicator/" + idParams[0]) , selfPosition, Quaternion.Euler(0, 0, selfRotation) , self.PseudoObject.transform);
+        GameObject lineIndicator = Instantiate(
+            Resources.Load<GameObject>("VFX/AbilityVFX/LineVFX/LineIndicator/" + idParams[0]), selfPosition,
+            Quaternion.Euler(0, 0, selfRotation), self.PseudoObject.transform);
 
-        Destroy(lineIndicator, timeToLive); // hardcoded, change later
+        Destroy(lineIndicator, timeToLive);
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     private EventProcessor _unitEventHandler;
+    private bool _isPlayer;
     private bool _isDead;
     public float health = 100f;
     public float maxHealth;
@@ -10,6 +11,7 @@ public class Health : MonoBehaviour
     private void Awake()
     {
         _unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
+        _isPlayer = GetComponent<PlayerAgent>();
         _isDead = false;
         maxHealth = health;
     }
@@ -58,7 +60,7 @@ public class Health : MonoBehaviour
         {
             _isDead = true;
             _unitEventHandler.RaiseEvent("OnDied", null);
-            EventManager.RaiseEvent("OnUnitDied", gameObject);
+            EventManager.RaiseEvent(_isPlayer ? "OnPlayerDied" : "OnUnitDied", gameObject);
         }
     }
 

@@ -1,8 +1,8 @@
-using UnityEngine;
-
 public class AbilityAvailable : AbilityButtonState
 {
-    public AbilityAvailable(AbilityButton button) : base(button){}
+    public AbilityAvailable(AbilityButton button) : base(button)
+    {
+    }
 
     public override void Enter()
     {
@@ -18,12 +18,20 @@ public class AbilityAvailable : AbilityButtonState
         }
     }
 
-    void OnActivated()
+    public override void Leave()
+    {
+        // You can exit entry actions here.
+    }
+
+    private void OnActivated()
     {
         char keyChar = AbilityButtonContext.abilityKey;
 
-        EventManager.RaiseEvent(char.ToUpper(keyChar)+"Pressed", null);
+        EventManager.RaiseEvent(char.ToUpper(keyChar) + "Pressed", null);
 
-        AbilityButtonContext.SwitchState(AbilityButtonContext.abilityTarget);
+        if (AbilityButtonContext.ability.inputType != AbilityType.NoTarget)
+        {
+            AbilityButtonContext.SwitchState(this, AbilityButtonContext.abilityTarget);
+        }
     }
 }

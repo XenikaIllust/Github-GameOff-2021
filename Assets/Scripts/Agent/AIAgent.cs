@@ -96,12 +96,12 @@ public class AIAgent : Agent
 
     private void OnChaseForced(object duration)
     {
-        forceChaseDuration = Mathf.Max((float)duration, forceLookDuration);
+        forceChaseDuration = Mathf.Max((float)duration, forceChaseDuration);
     }
 
     private void OnAvoidForced(object duration)
     {
-        forceAvoidDuration = Mathf.Max((float)duration, forceLookDuration);
+        forceAvoidDuration = Mathf.Max((float)duration, forceAvoidDuration);
     }
 
     private void OnLookForced(object duration)
@@ -111,13 +111,13 @@ public class AIAgent : Agent
 
     private void OnStopForced(object duration)
     {
-        forceStopDuration = Mathf.Max((float)duration, forceLookDuration);
+        forceStopDuration = Mathf.Max((float)duration, forceStopDuration);
     }
 
     private void OnPlayerPositionChanged(object newPosition)
     {
         targetPosition = (Vector3)newPosition;
-        distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+        distanceToTarget = Vector2.Distance(transform.position, targetPosition);
         for (var i = 0; i < _abilityTargetPosition.Count; i++) _abilityTargetPosition[i] = targetPosition;
         AISequence();
     }
@@ -131,7 +131,7 @@ public class AIAgent : Agent
         }
 
         CalculateAbilityUtility();
-        CheckRestrictionException();
+        CheckAbilityTargetPosition();
         CalculateRestriction();
         CalculateMovementUtility();
         ExecuteBestAction();
@@ -142,7 +142,7 @@ public class AIAgent : Agent
         Debug.LogError("Please override this method!");
     }
 
-    private void CheckRestrictionException()
+    private void CheckAbilityTargetPosition()
     {
         for (var i = 0; i < abilities.Count; i++)
         {
@@ -153,14 +153,12 @@ public class AIAgent : Agent
                 switch (ability.idealTargetPosition)
                 {
                     case AITargetPositionType.BehindTarget:
-                        var outDirection = (_abilityTargetPosition[i] - transform.position).normalized;
+                        var outDirection = (targetPosition - transform.position).normalized;
                         _abilityTargetPosition[i] += outDirection * ability.targetPositionOffset;
                         break;
                     case AITargetPositionType.InFrontOfTarget:
-                        var inDirection = (transform.position - _abilityTargetPosition[i]).normalized;
+                        var inDirection = (transform.position - targetPosition).normalized;
                         _abilityTargetPosition[i] += inDirection * ability.targetPositionOffset;
-                        if (distanceToTarget < ability.targetPositionOffset * 2)
-                            abilityUtilities[i] = 0;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -187,8 +185,8 @@ public class AIAgent : Agent
 
             var offset = abilities[i].idealTargetPosition switch
             {
-                AITargetPositionType.BehindTarget => -abilities[i].targetPositionOffset,
-                AITargetPositionType.InFrontOfTarget => abilities[i].targetPositionOffset,
+                AITargetPositionType.BehindTarget => abilities[i].targetPositionOffset,
+                AITargetPositionType.InFrontOfTarget => -abilities[i].targetPositionOffset,
                 _ => throw new ArgumentOutOfRangeException()
             };
 

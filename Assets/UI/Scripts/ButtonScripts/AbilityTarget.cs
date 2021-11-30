@@ -1,10 +1,11 @@
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class AbilityTarget : AbilityButtonState
 {
-    public AbilityTarget(AbilityButton button) : base(button){}
+    public AbilityTarget(AbilityButton button) : base(button)
+    {
+    }
 
     public override void Enter()
     {
@@ -17,7 +18,12 @@ public class AbilityTarget : AbilityButtonState
         {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
-            AbilityButtonContext.SwitchState(AbilityButtonContext.cooldownState);
+            AbilityButtonContext.SwitchState(this, AbilityButtonContext.cooldownState);
         }
+    }
+
+    public override void Leave()
+    {
+        // You can exit entry actions here.
     }
 }

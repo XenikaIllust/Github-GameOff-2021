@@ -15,9 +15,9 @@ public class FireProjectileAction : GameActionBlock
         ---------------------------------------------------------------------------------*/
 
         Unit firingUnit = (Unit)currentFilteredTargets[0];
-        Projectile projectilePrefab = Resources.Load<Projectile>("Projectiles/" + idParams[0]);
+        ProjectileParent projectilePrefab = Resources.Load<ProjectileParent>("Projectiles/" + idParams[0]);
 
-        Projectile projectile = Instantiate<Projectile>(projectilePrefab, firingUnit.transform.position, firingUnit.PseudoObject.transform.rotation);
-        projectile.Init(firingUnit.alliance, abilityStatsDict[idParams[1]], timeToLive);
+        ProjectileParent projectileParent = Instantiate<ProjectileParent>(projectilePrefab, firingUnit.transform.position, firingUnit.PseudoObject.transform.rotation);
+        projectileParent.Init(firingUnit.alliance, abilityStatsDict[idParams[1]], timeToLive);
     }
 }

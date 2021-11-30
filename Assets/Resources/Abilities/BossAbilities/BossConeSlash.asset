@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
+  m_Name: BossConeSlash
+  m_EditorClassIdentifier: 
+  abilityName: Boss Cone Slash
+  abilityDescription: 
+  abilitySprite: {fileID: 0}
+  inputType: 0
+  duration: 1.5
+  cooldown: 4
+  castRange: 2
+  castPoint: 0
+  castBackSwing: 2
+  totalDamage: 50
+  idealTargetPosition: 0
+  targetPositionOffset: 0.5
+  abilityStats:
+    _Buckets: 00000000ffffffffffffffff0100000002000000ffffffffffffffff
+    _HashCodes: bcd45b150640e6093233f4580640e609000000000000000000000000
+    _Next: ffffffffffffffffffffffffffffffff000000000000000000000000
+    _Count: 3
+    _Version: 255
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Cone Range
+    - Cone Angle
+    - Cone Damage
+    _Values:
+    - 3
+    - 60
+    - 70
+  outcomes:
+  - Id: Telegraph Attack
+    Duration: 0
+    Trigger:
+      ExecutionTime: 0
+      IsNormalizedTime: 0
+    Effects:
+    - Id: Telegraph Attack
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: Cone Range
+        ConeAngleId: Cone Angle
+        ConeTargetId: Target Point
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: b4be687f7c429904a9ad191d2d3d03a8, type: 2}
+        StatId: 
+        VFXName: Arc60
+        VFXPointId: Executing Unit
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 1.5
+        SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+  - Id: Attack
+    Duration: 0
+    Trigger:
+      ExecutionTime: 1.6
+      IsNormalizedTime: 0
+    Effects:
+    - Id: Damage
+      TargetFilter:
+        Type: 6
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: Cone Range
+        ConeAngleId: Cone Angle
+        ConeTargetId: Target Point
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
+        StatId: Cone Damage
+        VFXName: Arc60
+        VFXPointId: Executing Unit
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 

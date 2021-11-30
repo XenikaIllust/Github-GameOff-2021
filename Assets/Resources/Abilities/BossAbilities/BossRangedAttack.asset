@@ -1,0 +1,273 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
+  m_Name: BossRangedAttack
+  m_EditorClassIdentifier: 
+  abilityName: Boss Ranged Attack
+  abilityDescription: 
+  abilitySprite: {fileID: 0}
+  inputType: 0
+  duration: 4
+  cooldown: 10
+  castRange: 10
+  castPoint: 0.3
+  castBackSwing: 0.7
+  totalDamage: 0
+  idealTargetPosition: 0
+  targetPositionOffset: 0.1
+  abilityStats:
+    _Buckets: ffffffffffffffffffffffff0100000003000000ffffffffffffffff
+    _HashCodes: 3fb75b68ae0ed92ebd66852cf435c277000000000000000000000000
+    _Next: ffffffff00000000ffffffff02000000000000000000000000000000
+    _Count: 4
+    _Version: 382
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - Aim Duration
+    - Projectile Damage
+    - Aim Start Turn Rate Multiplier
+    - Aim End Turn Rate Multiplier
+    _Values:
+    - 4
+    - 150
+    - 0.1
+    - 1
+  outcomes:
+  - Id: Aim
+    Duration: 0
+    Trigger:
+      ExecutionTime: 0
+      IsNormalizedTime: 0
+    Effects:
+    - Id: Modify Turn Rate
+      TargetFilter:
+        Type: 0
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 79c00389a3b9fee46a8cb16477a03251, type: 2}
+        StatId: Aim Start Turn Rate Multiplier
+        VFXName: Line
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 4
+        SFXName: 
+        ProjectileName: TestProjectile
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: AimDown
+      TargetFilter:
+        Type: 0
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 26d6e713ba42c4ba88bb4f7adaf8e00a, type: 2}
+        StatId: Aim Duration
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: TestProjectile
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: Telegraph Aim
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: f0dd9d6e8efb58648a870d61c23fd269, type: 2}
+        StatId: 
+        VFXName: BossLineIndicator
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 4
+        SFXName: 
+        ProjectileName: TestProjectile
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: Aim Animation
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 3135f0cc3633aaab49beb253c1e03445, type: 2}
+        StatId: 
+        VFXName: Line
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 4
+        SFXName: 
+        ProjectileName: TestProjectile
+        ProjectileStatId: 
+        AnimationTriggerName: Aim
+  - Id: Fire
+    Duration: 0
+    Trigger:
+      ExecutionTime: 4
+      IsNormalizedTime: 0
+    Effects:
+    - Id: Projectile
+      TargetFilter:
+        Type: 0
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 75961689d04916d6cb0dde78108b75d4, type: 2}
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 5
+        SFXName: 
+        ProjectileName: BossProjectile
+        ProjectileStatId: Projectile Damage
+        AnimationTriggerName: 
+    - Id: FireSFX
+      TargetFilter:
+        Type: 0
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: SniperFired
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: Restore Original Turn Rate
+      TargetFilter:
+        Type: 0
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 79c00389a3b9fee46a8cb16477a03251, type: 2}
+        StatId: Aim End Turn Rate Multiplier
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: SniperFired
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: Firing Animation
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 3135f0cc3633aaab49beb253c1e03445, type: 2}
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: SniperFired
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: Fire

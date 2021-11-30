@@ -15,7 +15,11 @@ public class SaveManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         saveData = new SaveData();
-        LoadGame("GameOff.sav");
+    }
+
+    private void Start()
+    {
+        LoadGame("GameOff.sav"); // Placeholder. Saving/Loading should be done from other game objects.
     }
 
     private void OnEnable()

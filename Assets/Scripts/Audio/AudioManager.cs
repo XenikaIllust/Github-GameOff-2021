@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField]
     private Sound[] sounds;
+
+    private string currentBGM;
 
     private void Awake() {
         // Only one AudioManager should be present at all times
@@ -42,6 +45,8 @@ public class AudioManager : MonoBehaviour
         EventManager.StartListening("OnPlaySound", Play);
         EventManager.StartListening("OnStopSound", Stop);
         EventManager.StartListening("OnMuteSound", Mute);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
@@ -49,9 +54,11 @@ public class AudioManager : MonoBehaviour
         EventManager.StopListening("OnPlaySound", Play);
         EventManager.StopListening("OnStopSound", Stop);
         EventManager.StopListening("OnMuteSound", Mute);
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    public void Play(object name) {
+    private void Play(object name) {
         Sound sound = Array.Find(sounds, Sound => Sound.name == (string)name);
         if (sound != null)
             sound.Source.Play();
@@ -59,7 +66,7 @@ public class AudioManager : MonoBehaviour
             Debug.Log("Sound named " + (string)name + " doesn't exist. Can't play sound.");
     }
 
-    public void Stop(object name) {
+    private void Stop(object name) {
         Sound sound = Array.Find(sounds, Sound => Sound.name == (string)name);
         if (sound != null)
             sound.Source.Stop();
@@ -67,11 +74,43 @@ public class AudioManager : MonoBehaviour
             Debug.Log("Sound named " + (string)name + " doesn't exist. Can't stop sound.");
     }
 
-    public void Mute(object name) {
+    private void Mute(object name) {
         Sound sound = Array.Find(sounds, Sound => Sound.name == (string)name);
         if (sound != null)
             sound.Source.mute = !sound.Source.mute;
         else
             Debug.Log("Sound named " + (string)name + " doesn't exist. Can't mute / unmute.");
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Stop(currentBGM);
+        switch (scene.name)
+        {
+            case "MainMenu":
+                currentBGM = "Main Menu BGM";
+                Play(currentBGM);
+                break;
+            
+            case "Level 1 - Point A to B":
+                currentBGM = "Battle BGM " + UnityEngine.Random.Range(0, 4).ToString();
+                Play(currentBGM);
+                break;
+            
+            case "Level 2 - Survive [X] Time":
+                currentBGM = "Battle BGM " + UnityEngine.Random.Range(0, 4).ToString();
+                Play(currentBGM);
+                break;
+            
+            case "Level 3 - Kill All Enemies":
+                currentBGM = "Battle BGM " + UnityEngine.Random.Range(0, 4).ToString();
+                Play(currentBGM);
+                break;
+            
+            case "Level 4 - Kill Boss":
+                currentBGM = "Battle BGM " + UnityEngine.Random.Range(0, 4).ToString();
+                Play(currentBGM);
+                break;
+        }
     }
 }

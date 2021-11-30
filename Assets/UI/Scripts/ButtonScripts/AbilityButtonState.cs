@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public abstract class AbilityButtonState
 {
     protected AbilityButton _abilityButton;
@@ -9,9 +7,15 @@ public abstract class AbilityButtonState
         _abilityButton = context;
     }
 
-    public AbilityButton AbilityButtonContext{ get{return _abilityButton;} set{_abilityButton = value;} }
+    public AbilityButton AbilityButtonContext
+    {
+        get { return _abilityButton; }
+        set { _abilityButton = value; }
+    }
 
     public abstract void Enter();
 
     public abstract void UpdateLoop();
+
+    public abstract void Leave();
 }

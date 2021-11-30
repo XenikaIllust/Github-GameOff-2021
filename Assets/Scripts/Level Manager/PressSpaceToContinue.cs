@@ -7,7 +7,7 @@ public class PressSpaceToContinue : MonoBehaviour
     {
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
-            LevelManager.Instance.LoadEndGameScene();
+            LevelManager.Instance.LoadNextLevel();
         }
     }
 }

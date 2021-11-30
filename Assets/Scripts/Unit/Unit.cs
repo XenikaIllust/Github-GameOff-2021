@@ -15,25 +15,32 @@ public enum Alliance
 public class Unit : MonoBehaviour
 {
     public EventProcessor unitEventHandler; // Internal event handler
-    [Header("Stats")] public float movementSpeed = 3.5f;
-    public float turnRate = 5f;
+    [Header("Stats")] public float baseMovementSpeed = 3.5f;
+    public float baseTurnRate = 5f;
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
     [Header("Misc.")] public Alliance alliance;
+    [Range(0, 100)] public float bountyDropRate = 1;
     private float _positionUpdateTimer;
     [Header("Abilities")] public List<Ability> abilities;
-    [HideInInspector] public List<float> abilityCooldownList = new List<float>(new float[4]);
-    private float _inputLockDuration;
+    [Header("Read Only")] public List<float> abilityCooldownList = new List<float>(new float[4]);
+    public float inputLockDuration;
     private bool _isGamePaused;
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
     private object _aiTarget;
 
+    private float _abilityMovementSpeedMultiplier;
+    private float _abilityTurnRateMultiplier;
+
+    private float _movementSpeed;
+    private float _turnRate;
+
     public GameObject PseudoObject { get; private set; }
 
     private void Update()
     {
-        _inputLockDuration -= Time.deltaTime;
+        inputLockDuration -= Time.deltaTime;
         for (var i = 0; i < abilityCooldownList.Count; i++) abilityCooldownList[i] -= Time.deltaTime;
         UpdatePlayerPosition();
         UpdateAnimationMovement();
@@ -45,9 +52,12 @@ public class Unit : MonoBehaviour
         isPlayer = GetComponent<PlayerAgent>() != null;
         agent = GetComponent<NavMeshAgent>();
 
+        _movementSpeed = baseMovementSpeed;
+        _turnRate = baseTurnRate;
+
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-        agent.speed = movementSpeed;
+        agent.speed = _movementSpeed;
         agent.acceleration = float.MaxValue;
         agent.angularSpeed = float.MaxValue;
         agent.autoBraking = true;
@@ -58,11 +68,10 @@ public class Unit : MonoBehaviour
         {
             transform =
             {
-                parent = transform
+                parent = transform,
+                localPosition = Vector3.zero
             }
         };
-        // remove this line if it causes any problems
-        PseudoObject.transform.localPosition = Vector3.zero;
     }
 
     private void Start()
@@ -72,6 +81,9 @@ public class Unit : MonoBehaviour
 
     private void OnEnable()
     {
+        unitEventHandler.StartListening("OnMovementSpeedMultiplierChanged", OnMovementSpeedMultiplierChanged);
+        unitEventHandler.StartListening("OnTurnRateMultiplierChanged", OnTurnRateMultiplierChanged);
+
         unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
         unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
         unitEventHandler.StartListening("OnLookOrderIssued", OnLookOrderIssued);
@@ -104,9 +116,23 @@ public class Unit : MonoBehaviour
         EventManager.StopListening("OnGameResumed", OnGameResumed);
     }
 
+    private void OnMovementSpeedMultiplierChanged(object movementSpeedMultiplier)
+    {
+        _abilityMovementSpeedMultiplier = (float)movementSpeedMultiplier;
+        _movementSpeed = baseMovementSpeed * _abilityMovementSpeedMultiplier;
+
+        agent.speed = _movementSpeed; // set the new movement speed
+    }
+
+    private void OnTurnRateMultiplierChanged(object turnRateMultiplier)
+    {
+        _abilityTurnRateMultiplier = (float)turnRateMultiplier;
+        _turnRate = baseTurnRate * _abilityTurnRateMultiplier;
+    }
+
     private void OnInputLocked(object duration)
     {
-        _inputLockDuration = Mathf.Max((float)duration, _inputLockDuration);
+        inputLockDuration = Mathf.Max((float)duration, inputLockDuration);
     }
 
     private void OnGamePaused(object @null)
@@ -121,43 +147,43 @@ public class Unit : MonoBehaviour
 
     private void OnStopOrderIssued(object @null)
     {
-        if (_inputLockDuration > float.Epsilon) return;
+        if (inputLockDuration > float.Epsilon) return;
         Stop();
     }
 
     private void OnMoveOrderIssued(object destination)
     {
-        if (_inputLockDuration > float.Epsilon) return;
+        if (inputLockDuration > float.Epsilon) return;
         TurnAndMove((Vector3)destination);
     }
 
     private void OnLookOrderIssued(object target)
     {
-        if (_inputLockDuration > float.Epsilon) return;
+        if (inputLockDuration > float.Epsilon) return;
         TurnAndLook((Vector3)target);
     }
 
     private void OnAbility1Casted(object target)
     {
-        if (_inputLockDuration > float.Epsilon) return;
+        if (inputLockDuration > float.Epsilon) return;
         AbilityCasted(target, 0);
     }
 
     private void OnAbility2Casted(object target)
     {
-        if (_inputLockDuration > float.Epsilon) return;
+        if (inputLockDuration > float.Epsilon) return;
         AbilityCasted(target, 1);
     }
 
     private void OnAbility3Casted(object target)
     {
-        if (_inputLockDuration > float.Epsilon) return;
+        if (inputLockDuration > float.Epsilon) return;
         AbilityCasted(target, 2);
     }
 
     private void OnAbility4Casted(object target)
     {
-        if (_inputLockDuration > float.Epsilon) return;
+        if (inputLockDuration > float.Epsilon) return;
         AbilityCasted(target, 3);
     }
 
@@ -242,8 +268,7 @@ public class Unit : MonoBehaviour
         Stop();
 
         PseudoObject.transform
-            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(destination)),
-                turnRate * 360)
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(destination)), _turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => Move(destination));
     }
 
@@ -258,9 +283,10 @@ public class Unit : MonoBehaviour
         Stop();
 
         PseudoObject.transform
-            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(target)),
-                turnRate * 360)
-            .SetSpeedBased().SetEase(Ease.Linear);
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(target)), _turnRate * 360).SetSpeedBased()
+            .SetEase(Ease.Linear);
+
+        unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", PseudoObject.transform.rotation.eulerAngles.z);
     }
 
     private float AngleToTarget(Vector3 target)
@@ -282,10 +308,6 @@ public class Unit : MonoBehaviour
             _currentAbilityIndex = index;
             StartCoroutine(CastAbility(abilities[index]));
         }
-        else
-        {
-            Debug.Log(abilities[index].name + " is still on cooldown for " + abilityCooldownList[index] + "s");
-        }
     }
 
     private void AbilityInput(object target)
@@ -296,22 +318,24 @@ public class Unit : MonoBehaviour
                 _castTargetPosition = (Vector3)target;
                 _allTargets["Target Point"] = _castTargetPosition;
                 break;
+
             case AbilityType.TargetUnit:
-            {
                 var targetUnit = (Unit)target;
                 _castTargetPosition = targetUnit.transform.position;
                 _allTargets["Target Unit"] = target;
                 _allTargets["Target Unit Position"] = _castTargetPosition;
                 break;
-            }
+
             case AbilityType.TargetArea:
                 _castTargetPosition = (Vector3)target;
                 _allTargets["Target Center"] = _castTargetPosition;
                 break;
+
             case AbilityType.NoTarget:
                 _castTargetPosition = (Vector3)target;
                 _allTargets["Target Center"] = _castTargetPosition;
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -319,8 +343,6 @@ public class Unit : MonoBehaviour
 
     private IEnumerator CastAbility(Ability ability)
     {
-        Stop();
-
         _currentAbilityType = ability.inputType;
         _allTargets.Clear();
 
@@ -338,7 +360,7 @@ public class Unit : MonoBehaviour
             AbilityInput(_allTargets["Executing Unit Position"]);
         }
 
-        if (Vector3.Distance(transform.position, _castTargetPosition) <= ability.castRange)
+        if (Vector2.Distance(transform.position, _castTargetPosition) <= ability.castRange)
         {
             TurnAndExecuteAbility(ability);
         }
@@ -352,9 +374,9 @@ public class Unit : MonoBehaviour
 
     private IEnumerator PendingCast(Ability ability)
     {
-        while (Vector3.Distance(transform.position, _castTargetPosition) >= ability.castRange)
+        while (Vector2.Distance(transform.position, _castTargetPosition) >= ability.castRange)
         {
-            yield return new WaitForFixedUpdate();
+            yield return null;
             agent.SetDestination(_castTargetPosition);
         }
 
@@ -367,8 +389,7 @@ public class Unit : MonoBehaviour
         Stop();
 
         PseudoObject.transform
-            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(_castTargetPosition)),
-                turnRate * 360)
+            .DORotate(new Vector3(float.Epsilon, float.Epsilon, AngleToTarget(_castTargetPosition)), _turnRate * 360)
             .SetSpeedBased().SetEase(Ease.Linear).OnComplete(() => StartCoroutine(ExecuteAbility(ability)));
     }
 
@@ -381,7 +402,7 @@ public class Unit : MonoBehaviour
         float eulerAnglesZ = PseudoObject.transform.rotation.eulerAngles.z;
         unitEventHandler.RaiseEvent("OnPseudoObjectRotationChanged", eulerAnglesZ);
 
-        _inputLockDuration = ability.castPoint + ability.castBackSwing;
+        inputLockDuration = ability.castPoint + ability.castBackSwing;
 
         unitEventHandler.RaiseEvent("OnCastPointAnimating", ability.castPoint);
         yield return new WaitForSeconds(ability.castPoint);
@@ -444,7 +465,7 @@ public class Unit : MonoBehaviour
                 if (_currentAnimation == AnimationType.Move) return;
 
                 _currentAnimation = AnimationType.Move;
-                _stopAnimationTimer = 1 / turnRate;
+                _stopAnimationTimer = 1 / _turnRate;
                 unitEventHandler.RaiseEvent("OnStartMoveAnimation", null);
             }
         }

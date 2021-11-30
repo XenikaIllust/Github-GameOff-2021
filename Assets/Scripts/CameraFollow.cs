@@ -1,30 +1,22 @@
-using DG.Tweening;
 using UnityEngine;
+using DG.Tweening;
 
 public class CameraFollow : MonoBehaviour
 {
     public float cameraSpeed = 2f;
+    [SerializeField] private Transform player;
 
-    private void OnEnable()
+    private void Awake()
     {
-        EventManager.StartListening("OnPlayerPositionChanged", OnPlayerPositionChanged);
+        player = FindObjectOfType<PlayerAgent>().GetComponent<Transform>();
     }
 
-    private void OnDisable()
-    {
-        EventManager.StopListening("OnPlayerPositionChanged", OnPlayerPositionChanged);
-    }
-
-    private void OnPlayerPositionChanged(object player)
-    {
-        Follow((Vector3)player);
-    }
-
-    private void Follow(Vector3 player)
+    private void Update()
     {
         transform.DOKill();
-        transform.DOMove(new Vector3
-                (player.x, player.y, transform.position.z), cameraSpeed)
+
+        var position = player.position;
+        transform.DOMove(new Vector3(position.x, position.y, transform.position.z), cameraSpeed)
             .SetSpeedBased().SetEase(Ease.Linear);
     }
 }

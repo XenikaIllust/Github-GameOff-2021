@@ -2,23 +2,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class AbilityManager : MonoBehaviour
 {
     [HideInInspector] public Unit playerUnit;
+    public float dragDropRadius = 150;
     public List<Ability> currentAbilities;
-    private List<Ability> _allAbilities;
+    private List<Ability> _playerAbilityPool;
     public List<AbilityPrefab> currentAbilityPrefabs;
     public AbilityPrefab newAbilityPrefab;
     [Space] public Canvas canvas;
-    public HorizontalLayoutGroup horizontalLayoutGroup;
+    public HorizontalLayoutGroup currentGroup;
+    public HorizontalLayoutGroup newGroup;
+    public float ability5Cooldown;
+    private bool _newAbilityAvailable = true;
 
     private void Awake()
     {
-        _allAbilities = new List<Ability>(Resources.LoadAll<Ability>("Abilities"));
+        _playerAbilityPool = new List<Ability>(Resources.LoadAll<Ability>("Abilities/PlayerAbilities"));
         while (currentAbilities.Count < 4)
         {
-            var newAbility = _allAbilities[Random.Range(0, _allAbilities.Count)];
+            var newAbility = _playerAbilityPool[Random.Range(0, _playerAbilityPool.Count)];
             if (currentAbilities.Contains(newAbility) == false) currentAbilities.Add(newAbility);
         }
 
@@ -27,36 +32,41 @@ public class AbilityManager : MonoBehaviour
 
     private void OnEnable()
     {
-        SceneManager.sceneUnloaded += OnSceneUnloaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+
+        EventManager.StartListening("OnGamePaused", OnGamePaused);
+        EventManager.StartListening("OnGameResumed", OnGameResumed);
+        EventManager.StartListening("OnPlayerSpawned", OnPlayerSpawned);
+        EventManager.StartListening("OnUnitDied", OnUnitDied);
     }
 
     private void OnDisable()
     {
-        SceneManager.sceneUnloaded += OnSceneUnloaded;
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+
+        EventManager.StopListening("OnGamePaused", OnGamePaused);
+        EventManager.StopListening("OnGameResumed", OnGameResumed);
+        EventManager.StopListening("OnPlayerSpawned", OnPlayerSpawned);
+        EventManager.StopListening("OnUnitDied", OnUnitDied);
+    }
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
     }
 
     private void OnSceneUnloaded(Scene arg0)
     {
-        EventManager.StopListening("OnGamePaused", OnGamePaused);
-        EventManager.StopListening("OnGameResumed", OnGameResumed);
-        EventManager.StopListening("OnPlayerSpawned", OnPlayerSpawned);
         ImportFromUnit();
         ExportToPrefabs();
         playerUnit = null;
     }
 
-    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
-    {
-        EventManager.StartListening("OnGamePaused", OnGamePaused);
-        EventManager.StartListening("OnGameResumed", OnGameResumed);
-        EventManager.StartListening("OnPlayerSpawned", OnPlayerSpawned);
-    }
-
     private void OnGameResumed(object @null)
     {
         canvas.enabled = false;
+        CleanUpNewAbility();
     }
 
     private void OnGamePaused(object @null)
@@ -69,6 +79,42 @@ public class AbilityManager : MonoBehaviour
         playerUnit = (Unit)unit;
         ExportToUnit();
         ExportToPrefabs();
+    }
+
+    private void OnUnitDied(object unitGameObject)
+    {
+        if (!_newAbilityAvailable) return;
+
+        var dropRate = ((GameObject)unitGameObject).GetComponent<Unit>().bountyDropRate;
+        var roll = Random.Range(0f, 100f);
+
+        if (roll < dropRate)
+        {
+            LearnNewAbility();
+            _newAbilityAvailable = false;
+        }
+    }
+
+    private void LearnNewAbility()
+    {
+        FindObjectOfType<PlayerUI>().PauseGame();
+
+        while (newAbilityPrefab.ability == null)
+        {
+            var newAbility = _playerAbilityPool[Random.Range(0, _playerAbilityPool.Count)];
+            newAbilityPrefab.ability = currentAbilities.Contains(newAbility) == false ? newAbility : null;
+        }
+
+        newAbilityPrefab.gameObject.SetActive(true);
+        UpdateAbilityPrefabsUI();
+    }
+
+    private void CleanUpNewAbility()
+    {
+        ability5Cooldown = 0;
+        newAbilityPrefab.ability = null;
+        newAbilityPrefab.gameObject.SetActive(false);
+        _newAbilityAvailable = true;
     }
 
     private void ImportFromUnit()
@@ -97,15 +143,20 @@ public class AbilityManager : MonoBehaviour
     public void AdjustUnitCooldownTimer(int index1, int index2)
     {
         if (playerUnit == null) return;
-        (playerUnit.abilityCooldownList[index1], playerUnit.abilityCooldownList[index2])
-            = (playerUnit.abilityCooldownList[index2], playerUnit.abilityCooldownList[index1]);
+        (playerUnit.abilityCooldownList[index1], playerUnit.abilityCooldownList[index2]) = (
+            playerUnit.abilityCooldownList[index2], playerUnit.abilityCooldownList[index1]);
     }
 
     public void UpdateAbilityPrefabsUI()
     {
-        foreach (var abilityPrefab in currentAbilityPrefabs)
+        var uiPrefabs = new List<AbilityPrefab>(currentAbilityPrefabs);
+        if (newAbilityPrefab.ability != null) uiPrefabs.Add(newAbilityPrefab);
+
+        foreach (var abilityPrefab in uiPrefabs)
         {
             abilityPrefab.abilityNameUI.text = abilityPrefab.ability.abilityName;
+            abilityPrefab.abilityImageUI.sprite = abilityPrefab.ability.abilitySprite;
+            abilityPrefab.abilityImageUI.gameObject.SetActive(abilityPrefab.ability.abilitySprite != null);
         }
     }
 }

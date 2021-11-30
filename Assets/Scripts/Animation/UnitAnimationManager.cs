@@ -12,6 +12,8 @@ public class UnitAnimationManager : MonoBehaviour
     private Camera _camera;
     private int _degreeClipLength;
 
+    float azimuthRotation;
+
     public Animator Animator {
         get {return _anim;}
     }
@@ -43,6 +45,8 @@ public class UnitAnimationManager : MonoBehaviour
         _anim.runtimeAnimatorController = _aoc;
 
         _isRunningHash = Animator.StringToHash("isRunning");
+
+        
     }
 
     private void Start()
@@ -63,7 +67,7 @@ public class UnitAnimationManager : MonoBehaviour
         var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
         float rotationAngle = (float)destination;
         // standard bearing to azimuth is required because the animations are saved in azimuth format
-        float azimuthRotation = MathUtils.ConvertStandardToAzimuth(rotationAngle);
+        azimuthRotation = MathUtils.ConvertStandardToAzimuth(rotationAngle);
         string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
         anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(_animationLibrary[currentAnimationStatename][0],
             _animationLibrary[currentAnimationStatename][(int)azimuthRotation / 10]));
@@ -125,5 +129,15 @@ public class UnitAnimationManager : MonoBehaviour
     private void SetMoveAnimation(bool status)
     {
         _anim.SetBool(_isRunningHash, status);
+    }
+
+    public void Play(string animationStateName) {
+        Animator.Play(animationStateName,  -1, 0f);
+
+        var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+        string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
+        anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(_animationLibrary[currentAnimationStatename][0],
+            _animationLibrary[currentAnimationStatename][(int)azimuthRotation / 10]));
+        _aoc.ApplyOverrides(anims);
     }
 }

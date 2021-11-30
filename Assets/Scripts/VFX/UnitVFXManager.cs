@@ -15,13 +15,13 @@ public class UnitVFXManager : MonoBehaviour
     private void Awake()
     {
         _unitEventHandler = GetComponentInParent<UnitEventManager>().UnitEventHandler;
+        _unitSprite = GetComponent<SpriteRenderer>();
+        _defaultMaterial = _unitSprite.material;
+        if (damageMaterial) _unitSprite.material = damageMaterial;
     }
 
     private void Start()
     {
-        _unitSprite = GetComponent<SpriteRenderer>();
-        _defaultMaterial = _unitSprite.material;
-        if (damageMaterial) _unitSprite.material = damageMaterial;
         dissolveAmount = 1;
         someoneDead = false;
     }

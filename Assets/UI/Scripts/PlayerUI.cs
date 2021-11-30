@@ -1,20 +1,41 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PlayerUI : MonoBehaviour
 {
-    public GameObject PauseScreen;
+    [FormerlySerializedAs("PauseScreen")] public GameObject pauseScreen;
 
-    public Slider EnemyHealthBarPrefab;
+    [FormerlySerializedAs("EnemyHealthBarPrefab")]
+    public Slider enemyHealthBarPrefab;
+
     //private int numEnemies = 0;
-    public float healthbarDisplacement = 1f;
+    [FormerlySerializedAs("healthbarDisplacement")]
+    public float healthBarDisplacement = 1f;
 
-    public UnitEventManager unitEventManager;
+    private UnitEventManager _unitEventManager;
+    private Unit _playerUnit;
+    [SerializeField] private List<AbilityButton> abilityButtons;
+
+    private void Update()
+    {
+        for (var i = 0; i < abilityButtons.Count; i++)
+        {
+            abilityButtons[i].ability = _playerUnit.abilities[i];
+            abilityButtons[i].cooldownTimeLive = _playerUnit.abilityCooldownList[i];
+        }
+    }
+
+    private void Awake()
+    {
+        _playerUnit = FindObjectOfType<PlayerAgent>().GetComponent<Unit>();
+        _unitEventManager = _playerUnit.GetComponent<UnitEventManager>();
+    }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         //unitEventManager.UnitEventHandler.StartListening("OnSpawned", ShowEnemyHealth);
 
@@ -29,38 +50,44 @@ public class PlayerUI : MonoBehaviour
     {
         if (context.started) // Button Pressed
         {
-            // Toggle the pause screen
-            PauseScreen.SetActive(!PauseScreen.activeSelf);
-            
-            // If and only if the pause screen is active,
-            // then raise the OnGamePaused event.
-            if (PauseScreen.activeSelf)
-            {
-                EventManager.RaiseEvent("OnGamePaused", null);
-            }
-            else
-            {
-                EventManager.RaiseEvent("OnGameResumed", null);
-            }
-
-            // Freeze time if game is paused.
-            Time.timeScale = 1f * (PauseScreen.activeSelf == true ? 0 : 1);
+            PauseGame();
         }
     }
 
+    public void PauseGame()
+    {
+        // Toggle the pause screen
+        pauseScreen.SetActive(!pauseScreen.activeSelf);
+
+        // If and only if the pause screen is active,
+        // then raise the OnGamePaused event.
+        if (pauseScreen.activeSelf)
+        {
+            EventManager.RaiseEvent("OnGamePaused", null);
+        }
+        else
+        {
+            EventManager.RaiseEvent("OnGameResumed", null);
+        }
+
+        // Freeze time if game is paused.
+        Time.timeScale = 1f * (pauseScreen.activeSelf ? 0 : 1);
+    }
+
     // Display enemy health if there are enemies in the scene...
-    void ShowEnemyHealth(object param)
+    private void ShowEnemyHealth(object param)
     {
         GameObject enemy = (GameObject)param;
 
-        // TODO: if (enemy has no healthbar then do this)
+        // TODO: if (enemy has no health bar then do this)
         Vector2 enemyScreenPosition = Camera.main.WorldToScreenPoint(enemy.GetComponent<Transform>().position);
 
-        Vector2 healthBarPosition = Camera.main.WorldToScreenPoint((Vector2)enemy.GetComponent<Transform>().position + (Vector2.up * healthbarDisplacement));
+        Vector2 healthBarPosition = Camera.main.WorldToScreenPoint((Vector2)enemy.GetComponent<Transform>().position +
+                                                                   (Vector2.up * healthBarDisplacement));
 
         // Instantiate a new health bar just above their head.
-        Slider newHealthBar = (Slider)Instantiate(
-            EnemyHealthBarPrefab,
+        Slider newHealthBar = Instantiate(
+            enemyHealthBarPrefab,
             healthBarPosition,
             Quaternion.identity
         );
@@ -71,6 +98,6 @@ public class PlayerUI : MonoBehaviour
         // Set the enemy instance to the health bar's reference variable.
         newHealthBar.GetComponent<EnemyHealthBar>().EnemyInstance = enemy;
 
-        newHealthBar.GetComponent<EnemyHealthBar>().DisplacementPosition = Vector2.up * healthbarDisplacement;
+        newHealthBar.GetComponent<EnemyHealthBar>().DisplacementPosition = Vector2.up * healthBarDisplacement;
     }
 }

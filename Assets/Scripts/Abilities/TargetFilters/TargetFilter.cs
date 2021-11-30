@@ -169,7 +169,7 @@ public class TargetFilter
                 }
             }
 
-            GameObject.Destroy(AOECalculator);
+            // GameObject.Destroy(AOECalculator);
         }
 
         return targets;
@@ -178,6 +178,9 @@ public class TargetFilter
     private void AddToList(List<object> targets, Unit thisUnit, Unit targetUnit,
         bool hitEnemiesCheck, bool hitAlliesCheck, bool hitSelfCheck)
     {
+        if(targetUnit == null) {
+            return;
+        }
         if (hitEnemiesCheck && targetUnit.alliance != thisUnit.alliance)
         {
             targets.Add(targetUnit);

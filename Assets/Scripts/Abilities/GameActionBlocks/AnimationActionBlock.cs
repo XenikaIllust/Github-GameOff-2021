@@ -10,9 +10,11 @@ public class AnimationActionBlock : GameActionBlock
         /*---------------------------------------------------------------------------------------
         AnimationAction is meant to only play an animation on the unit executing the ability.
         idParams[0] contains the name of the animation trigger to trigger.
+        idParams[1] contains the value of the bool
         ---------------------------------------------------------------------------------------*/
         Unit self = (Unit) otherTargets["Executing Unit"];
         UnitAnimationManager animationManager = self.GetComponentInChildren<UnitAnimationManager>();
-        animationManager.Animator.SetBool(idParams[0], true);
+        // animationManager.Animator.SetBool(idParams[0], true);
+        animationManager.Play(idParams[0]);
     }
 }

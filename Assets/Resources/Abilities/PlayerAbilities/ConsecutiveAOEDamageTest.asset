@@ -1,0 +1,190 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
+  m_Name: ConsecutiveAOEDamageTest
+  m_EditorClassIdentifier: 
+  abilityName: Consecutive DDoS
+  abilityDescription: 
+  abilitySprite: {fileID: 21300000, guid: 3ce6cde8abc01534989c8f4647708929, type: 3}
+  inputType: 2
+  duration: 4
+  cooldown: 5
+  castRange: 4
+  castPoint: 0
+  castBackSwing: 0
+  totalDamage: 90
+  idealTargetPosition: 0
+  targetPositionOffset: 0
+  abilityStats:
+    _Buckets: ffffffffffffffff01000000ffffffffffffffffffffffff02000000
+    _HashCodes: 8580155520f5bc7777c3df5220f5bc77000000000000000000000000
+    _Next: ffffffff00000000ffffffff02000000000000000000000000000000
+    _Count: 3
+    _Version: 260
+    _FreeList: -1
+    _FreeCount: 0
+    _Keys:
+    - AOE Damage 1
+    - AOE Damage 2
+    - AOE Radius
+    _Values:
+    - 50
+    - 40
+    - 4
+  outcomes:
+  - Id: AOE Damage 1st Round
+    Duration: 3
+    Trigger:
+      ExecutionTime: 0
+      IsNormalizedTime: 0
+    Effects:
+    - Id: AOE Damage 1st Round
+      TargetFilter:
+        Type: 3
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: AOE Radius
+        TargetCenterId: Target Center
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
+        StatId: AOE Damage 1
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: Damage SFX
+      TargetFilter:
+        Type: 3
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: AOE Radius
+        TargetCenterId: Target Center
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
+        StatId: Damage SFX
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: Damage SFX
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: Damage VFX
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: b3463af90f8e9ec4cafda23ac2a798a2, type: 2}
+        StatId: 
+        VFXName: Ping
+        VFXPointId: Target Center
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: Damage SFX
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+  - Id: AOE Damage 2nd Round
+    Duration: 0
+    Trigger:
+      ExecutionTime: 0.5
+      IsNormalizedTime: 1
+    Effects:
+    - Id: AOE Damage 2nd Round
+      TargetFilter:
+        Type: 3
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: AOE Radius
+        TargetCenterId: Target Center
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
+        StatId: AOE Damage 2
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: Damaged Unit VFX
+      TargetFilter:
+        Type: 4
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: AOE Radius
+        TargetCenterId: 
+        PreviousEffectId: AOE Damage 2nd Round
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 1
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: a6f36898e372c884d980920e5a52eefe, type: 2}
+        StatId: 
+        VFXName: BombDamaged
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
