@@ -308,10 +308,6 @@ public class Unit : MonoBehaviour
             _currentAbilityIndex = index;
             StartCoroutine(CastAbility(abilities[index]));
         }
-        else
-        {
-            Debug.Log(abilities[index].name + " is still on cooldown for " + abilityCooldownList[index] + "s");
-        }
     }
 
     private void AbilityInput(object target)
