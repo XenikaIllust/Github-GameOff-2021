@@ -83,7 +83,6 @@ public class AbilityManager : MonoBehaviour
     private void OnUnitDied(object unitGameObject)
     {
         if (!_newAbilityAvailable) return;
-        _newAbilityAvailable = false;
 
         var dropRate = ((GameObject)unitGameObject).GetComponent<Unit>().bountyDropRate;
         var roll = Random.Range(0f, 100f);
@@ -91,6 +90,7 @@ public class AbilityManager : MonoBehaviour
         if (roll < dropRate)
         {
             LearnNewAbility();
+            _newAbilityAvailable = false;
         }
     }
 
