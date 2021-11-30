@@ -54,12 +54,6 @@ public class UnitAnimationManager : MonoBehaviour
 
     private void OnPseudoObjectRotationChanged(object destination)
     {
-        // var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-        // float rotationAngle = (float) destination;
-        // Debug.Log((int) rotationAngle / 10);
-        // anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[ (int) rotationAngle / 10 ]) );// every clip 10 degree 
-        // aoc.ApplyOverrides(anims);
-
         _lastDestination = destination;
         UpdateAnimationRotation(_lastDestination);
     }
@@ -93,12 +87,11 @@ public class UnitAnimationManager : MonoBehaviour
         Loads all animations based on properly named folder into animationLibrary dictionary
         This is a long function and should potentially be delegated elsewhere and the result cached
         ---------------------------------------------------------------------------------------------*/
-        // string[] animationDirectories = Directory.GetDirectories(Application.dataPath + "/Resources/Animations/" + transform.parent.gameObject.name);
 
         foreach (string animationStateName in animationStateNames)
         {
-            // it is expected that the folders are named the same name as the animation state specified in the list of UnitAnimationManager
-
+            // it is expected that the folders are named the same name as
+            // the animation state specified in the list of UnitAnimationManager
             string prefixPath
                 = "Animations/"
                   + transform.parent.gameObject.name
@@ -116,21 +109,7 @@ public class UnitAnimationManager : MonoBehaviour
 
             _animationLibrary[animationStateName] = animationClips;
         }
-
-        // for(int i = 0 ; i < degreeClipLength ; i++) {
-        //     _animIdleClip[i] = (AnimationClip)Resources.Load("Animations/Idle animation clip/"+ i * 10 +"_PlayerIdle");
-        // }
     }
-
-    // private void Update() {
-    //     var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-    //     // get animation state name
-    //     // Debug.Log(_anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
-    //     string currentAnimationStateName = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
-    //     anims.Add(new KeyValuePair<AnimationClip, AnimationClip>( animationLibrary[currentAnimationStateName][0], animationLibrary[currentAnimationStateName][ GetFacingAngle((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]) );
-    //     // anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[GetFacingAngle((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]));
-    //     aoc.ApplyOverrides(anims);
-    // }
 
     private void SetMoveAnimation(bool status)
     {
