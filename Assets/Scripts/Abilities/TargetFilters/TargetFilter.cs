@@ -56,15 +56,13 @@ public class TargetFilter
             hitAllies = false;
             hitSelf = true;
 
-            AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
-                hitEnemies, hitAllies, hitSelf);
+            AddToList(targets, (Unit)AllTargets["Executing Unit"], unit, hitEnemies, hitAllies, hitSelf);
         }
         else if (Type == TargetFilterType.UnitFilter)
         {
             Unit unit = (Unit)AllTargets["Target Unit"];
 
-            AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
-                hitEnemies, hitAllies, hitSelf);
+            AddToList(targets, (Unit)AllTargets["Executing Unit"], unit, hitEnemies, hitAllies, hitSelf);
         }
         else if (Type == TargetFilterType.LineFilter)
         {
@@ -75,15 +73,13 @@ public class TargetFilter
             Vector2 direction = finalPoint - originPoint;
             float distance = direction.magnitude;
 
-            RaycastHit2D[] hits =
-                Physics2D.RaycastAll(originPoint, direction, distance: distance, layerMask: layerMask);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(originPoint, direction, distance, layerMask);
 
             foreach (RaycastHit2D hit in hits)
             {
                 Unit unit = hit.collider.GetComponentInParent<Unit>();
 
-                AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
-                    hitEnemies, hitAllies, hitSelf);
+                AddToList(targets, (Unit)AllTargets["Executing Unit"], unit, hitEnemies, hitAllies, hitSelf);
             }
         }
         else if (Type == TargetFilterType.AOEFilter)
@@ -106,12 +102,10 @@ public class TargetFilter
             {
                 Unit unit = collider.GetComponentInParent<Unit>();
 
-                AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
-                    hitEnemies, hitAllies, hitSelf);
+                AddToList(targets, (Unit)AllTargets["Executing Unit"], unit, hitEnemies, hitAllies, hitSelf);
             }
 
             GameObject.Destroy(AOECalculator);
-
         }
         else if (Type == TargetFilterType.TargetsOfPreviousEffect)
         {
@@ -124,8 +118,7 @@ public class TargetFilter
                 hitAllies = true;
                 hitSelf = true;
 
-                AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
-                    hitEnemies, hitAllies, hitSelf);
+                AddToList(targets, (Unit)AllTargets["Executing Unit"], unit, hitEnemies, hitAllies, hitSelf);
             }
         }
         else if (Type == TargetFilterType.ConeFilter)
@@ -151,7 +144,8 @@ public class TargetFilter
             {
                 Unit unit = collider.GetComponentInParent<Unit>();
 
-                if(unit == null) {
+                if (unit == null)
+                {
                     continue;
                 }
 
@@ -164,23 +158,24 @@ public class TargetFilter
 
                 if (deltaAngle <= AbilityStats[ConeAngleId] / 2)
                 {
-                    AddToList(targets, (Unit)AllTargets["Executing Unit"], unit,
-                        hitEnemies, hitAllies, hitSelf);
+                    AddToList(targets, (Unit)AllTargets["Executing Unit"], unit, hitEnemies, hitAllies, hitSelf);
                 }
             }
 
-            // GameObject.Destroy(AOECalculator);
+            Object.Destroy(AOECalculator);
         }
 
         return targets;
     }
 
-    private void AddToList(List<object> targets, Unit thisUnit, Unit targetUnit,
-        bool hitEnemiesCheck, bool hitAlliesCheck, bool hitSelfCheck)
+    private void AddToList(List<object> targets, Unit thisUnit, Unit targetUnit, bool hitEnemiesCheck,
+        bool hitAlliesCheck, bool hitSelfCheck)
     {
-        if(targetUnit == null) {
+        if (targetUnit == null)
+        {
             return;
         }
+
         if (hitEnemiesCheck && targetUnit.alliance != thisUnit.alliance)
         {
             targets.Add(targetUnit);
