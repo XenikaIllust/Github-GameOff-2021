@@ -2506,6 +2506,7 @@ GameObject:
   - component: {fileID: 5243279763783084627}
   - component: {fileID: 5243279763783084626}
   - component: {fileID: 5243279763783084637}
+  - component: {fileID: 734606447499312170}
   m_Layer: 5
   m_Name: ActionBar
   m_TagString: Untagged
@@ -2587,6 +2588,18 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &734606447499312170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5243279763783084624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7197bb42c66ea024eb366e0a36dadc92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5243279763857767037
 GameObject:
   m_ObjectHideFlags: 0

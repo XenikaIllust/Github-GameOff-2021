@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6077319523113779057}
   - component: {fileID: 8898942917944528164}
   m_Layer: 5
-  m_Name: Ability Description
+  m_Name: Ability Description Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 6812385196137893219}
   - component: {fileID: 748781581432831088}
   m_Layer: 5
-  m_Name: Available Area
+  m_Name: Available Area Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.2509804}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -454,7 +454,7 @@ MonoBehaviour:
     scenePath: Assets/Scenes/You Died.unity
   destinationLevels:
   - sceneAsset: {fileID: 102900000, guid: 0214105d49ac6f64f9044ead6bd46de9, type: 3}
-    scenePath: Assets/Scenes/Point A to B variant 1.unity
+    scenePath: Assets/Scenes/Point A to B variant 0.unity
   survivalLevels:
   - sceneAsset: {fileID: 102900000, guid: 3f04e839e78e7f14aa1e53a8900255db, type: 3}
     scenePath: Assets/Scenes/Survive [X] Time variant 1.unity
@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 6465058747625178673}
   - component: {fileID: 3332830865719863180}
   m_Layer: 5
-  m_Name: Current Abilities
+  m_Name: Current Ability Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -566,7 +566,7 @@ GameObject:
   - component: {fileID: 1582832395917023413}
   - component: {fileID: 634803733885162678}
   m_Layer: 5
-  m_Name: New Ability
+  m_Name: New Ability Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
