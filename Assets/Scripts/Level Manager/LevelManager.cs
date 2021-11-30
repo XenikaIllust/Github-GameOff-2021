@@ -100,7 +100,7 @@ public class LevelManager : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        if (_remainingLevels.Count == 0)
+        if (_remainingLevels.Count != 0)
         {
             var nextGameMode = _remainingLevels[Random.Range(0, _remainingLevels.Count)];
             LoadRandomFromCollection(nextGameMode);
