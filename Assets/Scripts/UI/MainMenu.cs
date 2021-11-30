@@ -51,12 +51,14 @@ public class MainMenu : MonoBehaviour
     }
 
     // Main Menu
-    public void Continue(){}
+    public void Continue()
+    {
+        LevelManager.Instance.LoadLastLevel();
+    }
 
     public void StartGame()
     {
-        // This will load the scene that is next to the MainMenu in the build order.
-        EventManager.RaiseEvent("OnLoadScene", SceneManager.GetSceneByName("MainMenu").buildIndex + 1);
+        LevelManager.Instance.LoadNewGame();
     }
 
     public void Tutorial(){}

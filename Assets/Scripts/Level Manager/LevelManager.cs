@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; set; }
 
-    [SerializeField] private SceneReference mainMenuScene;
+    public SceneReference mainMenuScene;
     [SerializeField] private SceneReference youDiedScene;
 
     [SerializeField] private List<SceneReference> destinationLevels;
@@ -79,17 +79,23 @@ public class LevelManager : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene(mainMenuScene);
+        EventManager.RaiseEvent("OnSceneLoading", mainMenuScene);
     }
 
     public void LoadYouDied()
     {
-        SceneManager.LoadScene(youDiedScene);
+        EventManager.RaiseEvent("OnSceneLoading", youDiedScene);
     }
 
     public void LoadLastLevel()
     {
-        SceneManager.LoadScene(_lastLevel);
+        EventManager.RaiseEvent("OnSceneLoading", _lastLevel);
+    }
+
+    public void LoadNewGame()
+    {
+        RestartRemainingLevels();
+        LoadNextLevel();
     }
 
     public void LoadNextLevel()
@@ -109,7 +115,7 @@ public class LevelManager : MonoBehaviour
     private void LoadRandomFromCollection(IReadOnlyList<SceneReference> collection)
     {
         var newLevel = collection[Random.Range(0, collection.Count)];
-        SceneManager.LoadScene(newLevel);
+        EventManager.RaiseEvent("OnSceneLoading", newLevel);
         _lastLevel = newLevel;
     }
 

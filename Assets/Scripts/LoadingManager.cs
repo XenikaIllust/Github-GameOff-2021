@@ -10,7 +10,7 @@ public class LoadingManager : MonoBehaviour
     public static LoadingManager instance;
     [SerializeField]private GameObject loadingScreen;
     [SerializeField]private Slider loadingSlider;
-    private int currentSceneIndex = 0;
+    private SceneReference _currentScene;
     private List<AsyncOperation> scenesLoading = new List<AsyncOperation>();
 
     private void Awake()
@@ -18,28 +18,28 @@ public class LoadingManager : MonoBehaviour
         instance = this;
 
         // Load the Main Menu
-        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-        currentSceneIndex = 1;
+        SceneManager.LoadSceneAsync(LevelManager.Instance.mainMenuScene, LoadSceneMode.Additive);
+        _currentScene = LevelManager.Instance.mainMenuScene;
     }
 
     private void OnEnable()
     {
-        EventManager.StartListening("OnLoadScene", LoadScene);
+        EventManager.StartListening("OnSceneLoading", OnSceneLoading);
     }
 
     private void OnDisable()
     {
-        EventManager.StopListening("OnLoadScene", LoadScene);
+        EventManager.StopListening("OnSceneLoading", OnSceneLoading);
     }
 
-    private void LoadScene(object sceneIndex)
+    private void OnSceneLoading(object sceneReference)
     {
         loadingScreen.SetActive(true); // Show the Loading Screen
-        scenesLoading.Add(SceneManager.UnloadSceneAsync(currentSceneIndex)); // Unload the previous scene
+        scenesLoading.Add(SceneManager.UnloadSceneAsync(_currentScene)); // Unload the previous scene
 
         // Load the new scene
-        scenesLoading.Add(SceneManager.LoadSceneAsync((int)sceneIndex, LoadSceneMode.Additive));
-        currentSceneIndex = (int)sceneIndex;
+        scenesLoading.Add(SceneManager.LoadSceneAsync((SceneReference)sceneReference, LoadSceneMode.Additive));
+        _currentScene = (SceneReference)sceneReference;
 
         StartCoroutine(GetSceneLoadProgress());
     }
