@@ -13,7 +13,8 @@ public class AbilityManager : MonoBehaviour
     public List<AbilityPrefab> currentAbilityPrefabs;
     public AbilityPrefab newAbilityPrefab;
     [Space] public Canvas canvas;
-    public HorizontalLayoutGroup horizontalLayoutGroup;
+    public HorizontalLayoutGroup currentGroup;
+    public HorizontalLayoutGroup newGroup;
     public float ability5Cooldown;
     private bool _newAbilityAvailable = true;
 
@@ -154,6 +155,8 @@ public class AbilityManager : MonoBehaviour
         foreach (var abilityPrefab in uiPrefabs)
         {
             abilityPrefab.abilityNameUI.text = abilityPrefab.ability.abilityName;
+            abilityPrefab.abilityImageUI.sprite = abilityPrefab.ability.abilitySprite;
+            abilityPrefab.abilityImageUI.gameObject.SetActive(abilityPrefab.ability.abilitySprite != null);
         }
     }
 }

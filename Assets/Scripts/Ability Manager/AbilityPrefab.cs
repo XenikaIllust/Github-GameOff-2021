@@ -1,13 +1,15 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class AbilityPrefab : MonoBehaviour
 {
     private AbilityManager _abilityManager;
     public Ability ability;
     private int _index = -1;
-    public TMP_Text abilityNameUI;
+    [Header("UI")] public TMP_Text abilityNameUI;
+    public Image abilityImageUI;
 
     private void Awake()
     {
@@ -17,7 +19,8 @@ public class AbilityPrefab : MonoBehaviour
 
     public void OnBeginDrag()
     {
-        _abilityManager.horizontalLayoutGroup.enabled = false;
+        _abilityManager.currentGroup.enabled = false;
+        _abilityManager.newGroup.enabled = false;
     }
 
     public void OnDrag()
@@ -66,7 +69,8 @@ public class AbilityPrefab : MonoBehaviour
             }
         }
 
-        _abilityManager.horizontalLayoutGroup.enabled = true;
+        _abilityManager.currentGroup.enabled = true;
+        _abilityManager.newGroup.enabled = true;
         _abilityManager.ImportFromPrefabs();
         _abilityManager.ExportToUnit();
         _abilityManager.UpdateAbilityPrefabsUI();
