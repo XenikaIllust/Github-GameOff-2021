@@ -5,7 +5,6 @@ using UnityEngine;
 public class UnitAnimationManager : MonoBehaviour
 {
     private EventProcessor _unitEventHandler;
-    private Animator _anim;
     private AnimationClip[] _animIdleClip;
     private AnimationClip _originalClip; // hardcode
     private AnimatorOverrideController _aoc;
@@ -13,11 +12,9 @@ public class UnitAnimationManager : MonoBehaviour
     private int _degreeClipLength;
     private object _lastDestination;
 
-    float azimuthRotation;
+    private float _azimuthRotation;
 
-    public Animator Animator {
-        get {return _anim;}
-    }
+    private Animator Animator { get; set; }
 
     private readonly Dictionary<string, AnimationClip[]> _animationLibrary = new Dictionary<string, AnimationClip[]>();
 
@@ -35,19 +32,17 @@ public class UnitAnimationManager : MonoBehaviour
         _unitEventHandler = GetComponentInParent<UnitEventManager>().UnitEventHandler;
         _degreeClipLength = 36;
         degreeVariation = 10;
-        _anim = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
         _camera = Camera.main;
         _animIdleClip = new AnimationClip[_degreeClipLength];
 
         LoadResources();
 
         _originalClip = _animIdleClip[0]; // hardcode
-        _aoc = new AnimatorOverrideController(_anim.runtimeAnimatorController);
-        _anim.runtimeAnimatorController = _aoc;
+        _aoc = new AnimatorOverrideController(Animator.runtimeAnimatorController);
+        Animator.runtimeAnimatorController = _aoc;
 
         _isRunningHash = Animator.StringToHash("isRunning");
-
-        
     }
 
     private void Start()
@@ -74,10 +69,10 @@ public class UnitAnimationManager : MonoBehaviour
         var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
         float rotationAngle = (float)destination;
         // standard bearing to azimuth is required because the animations are saved in azimuth format
-        azimuthRotation = MathUtils.ConvertStandardToAzimuth(rotationAngle);
-        string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
-        anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(_animationLibrary[currentAnimationStatename][0],
-            _animationLibrary[currentAnimationStatename][(int)azimuthRotation / 10]));
+        _azimuthRotation = MathUtils.ConvertStandardToAzimuth(rotationAngle);
+        string currentAnimationStateName = Animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
+        anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(_animationLibrary[currentAnimationStateName][0],
+            _animationLibrary[currentAnimationStateName][(int)_azimuthRotation / 10]));
         _aoc.ApplyOverrides(anims);
     }
 
@@ -85,8 +80,8 @@ public class UnitAnimationManager : MonoBehaviour
     {
         Vector3 direction = mousePosition - transform.position;
         float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
-        float angleFixed = angle < 0 ? (360.0f + angle) : angle;
-        angleFixed = Mathf.Round((angleFixed / degreeVariation)) * degreeVariation;
+        float angleFixed = angle < 0 ? 360.0f + angle : angle;
+        angleFixed = Mathf.Round(angleFixed / degreeVariation) * degreeVariation;
         angleFixed = angleFixed < 360 ? angleFixed : 0;
 
         return (int)angleFixed;
@@ -104,15 +99,19 @@ public class UnitAnimationManager : MonoBehaviour
         {
             // it is expected that the folders are named the same name as the animation state specified in the list of UnitAnimationManager
 
-            string prefixPath = "Animations/" + (transform.parent.gameObject.name.Split('(')[0]); // split the word "Clone" and take only the true name
+            string prefixPath
+                = "Animations/"
+                  + transform.parent.gameObject.name
+                      .Split('(')[0]; // split the word "Clone" and take only the true name
 
             AnimationClip[] animationClips = new AnimationClip[_degreeClipLength];
             for (int i = 0; i < _degreeClipLength; i++)
             {
                 // each folder with degree as name would have only one animation clip
-                animationClips[i] = Array.ConvertAll<UnityEngine.Object, AnimationClip>(
-                    Resources.LoadAll(prefixPath + "/" + animationStateName + "/" + (i * 10), typeof(AnimationClip)),
-                    item => (AnimationClip)item)[0];
+                animationClips[i]
+                    = Array.ConvertAll(
+                        Resources.LoadAll(prefixPath + "/" + animationStateName + "/" + i * 10, typeof(AnimationClip)),
+                        item => (AnimationClip)item)[0];
             }
 
             _animationLibrary[animationStateName] = animationClips;
@@ -127,25 +126,26 @@ public class UnitAnimationManager : MonoBehaviour
     //     var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
     //     // get animation state name
     //     // Debug.Log(_anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
-    //     string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
-    //     anims.Add(new KeyValuePair<AnimationClip, AnimationClip>( animationLibrary[currentAnimationStatename][0], animationLibrary[currentAnimationStatename][ GetFacingAngle((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]) );
+    //     string currentAnimationStateName = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
+    //     anims.Add(new KeyValuePair<AnimationClip, AnimationClip>( animationLibrary[currentAnimationStateName][0], animationLibrary[currentAnimationStateName][ GetFacingAngle((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]) );
     //     // anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(OriginalClip, _animIdleClip[GetFacingAngle((Vector3) _camera.ScreenToWorldPoint(Input.mousePosition)) / 10]));
     //     aoc.ApplyOverrides(anims);
     // }
 
     private void SetMoveAnimation(bool status)
     {
-        _anim.SetBool(_isRunningHash, status);
+        Animator.SetBool(_isRunningHash, status);
         UpdateAnimationRotation(_lastDestination);
     }
 
-    public void Play(string animationStateName) {
-        Animator.Play(animationStateName,  -1, 0f);
+    public void Play(string animationStateName)
+    {
+        Animator.Play(animationStateName, -1, 0f);
 
         var anims = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-        string currentAnimationStatename = _anim.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
-        anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(_animationLibrary[currentAnimationStatename][0],
-            _animationLibrary[currentAnimationStatename][(int)azimuthRotation / 10]));
+        string currentAnimationStateName = Animator.GetCurrentAnimatorClipInfo(0)[0].clip.name.Split('_')[1];
+        anims.Add(new KeyValuePair<AnimationClip, AnimationClip>(_animationLibrary[currentAnimationStateName][0],
+            _animationLibrary[currentAnimationStateName][(int)_azimuthRotation / 10]));
         _aoc.ApplyOverrides(anims);
     }
 }
