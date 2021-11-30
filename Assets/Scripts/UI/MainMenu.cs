@@ -23,8 +23,8 @@ public class MainMenu : MonoBehaviour
         masterSlider.value = PlayerPrefs.GetFloat("MasterVolume");
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume");
         sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume");
-        fullscreenToggle.isOn = PlayerPrefs.GetInt("Fullscreen") == 1 ? true : false;
-        vsyncToggle.isOn = PlayerPrefs.GetInt("VSync") == 1 ? true : false;
+        fullscreenToggle.isOn = PlayerPrefs.GetInt("Fullscreen") == 1;
+        vsyncToggle.isOn = PlayerPrefs.GetInt("VSync") == 1;
 
         _resolutions = Screen.resolutions;
         List<string> options = new List<string>();
@@ -59,9 +59,13 @@ public class MainMenu : MonoBehaviour
         LevelManager.Instance.LoadNewGame();
     }
 
-    public void Story(){}
+    public void Story()
+    {
+    }
 
-    public void HowToPlay(){}
+    public void HowToPlay()
+    {
+    }
 
     public void Quit()
     {
