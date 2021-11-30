@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class AbilityInputType
 {
     public static bool hasPressedLeftClick = false;
+
     public static IEnumerator PointTargetInput(Ability ability, EventProcessor unitEventHandler)
     {
         ChangeCursor();
@@ -44,7 +45,6 @@ public class AbilityInputType
             if (tags.Contains(selection.tag)) // Check if its the target we want.
             {
                 Unit selectedUnit = hit.collider.GetComponent<Unit>();
-                Debug.Log(selection.gameObject.name);
                 // Send Unit target as event param
                 object target = selectedUnit;
                 unitEventHandler.RaiseEvent("OnAbilityInputSet", target);
