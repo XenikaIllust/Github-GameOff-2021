@@ -7,8 +7,8 @@ public class DisableCanvasWhilePaused : MonoBehaviour
 
     private void Awake()
     {
-        _canvas = GetComponent<Canvas>();
-        _canvasGroup = GetComponent<CanvasGroup>();
+        if (GetComponent<Canvas>() != null) _canvas = GetComponent<Canvas>();
+        if (GetComponent<CanvasGroup>() != null) _canvasGroup = GetComponent<CanvasGroup>();
     }
 
     private void OnEnable()
@@ -25,13 +25,13 @@ public class DisableCanvasWhilePaused : MonoBehaviour
 
     private void OnGamePaused(object arg0)
     {
-        _canvas.enabled = false;
-        _canvasGroup.alpha = 0;
+        if (_canvas != null) _canvas.enabled = false;
+        if (_canvasGroup != null) _canvasGroup.alpha = 0;
     }
 
     private void OnGameResumed(object arg0)
     {
-        _canvas.enabled = true;
-        _canvasGroup.alpha = 1;
+        if (_canvas != null) _canvas.enabled = true;
+        if (_canvasGroup != null) _canvasGroup.alpha = 1;
     }
 }
