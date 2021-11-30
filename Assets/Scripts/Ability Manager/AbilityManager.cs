@@ -172,7 +172,7 @@ public class AbilityManager : MonoBehaviour
 
         foreach (var abilityPrefab in uiPrefabs)
         {
-            abilityPrefab.abilityNameUI.text = abilityPrefab.ability.abilityName;
+            // abilityPrefab.abilityNameUI.text = abilityPrefab.ability.abilityName;
             abilityPrefab.abilityImageUI.sprite = abilityPrefab.ability.abilitySprite;
             abilityPrefab.abilityImageUI.gameObject.SetActive(abilityPrefab.ability.abilitySprite != null);
         }
