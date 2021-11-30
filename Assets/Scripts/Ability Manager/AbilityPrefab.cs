@@ -34,6 +34,8 @@ public class AbilityPrefab : MonoBehaviour
         if (Vector2.Distance(transform.position, _abilityManager.newAbilityPrefab.transform.position)
             <= _abilityManager.dragDropRadius && _abilityManager.newAbilityPrefab.ability != null)
         {
+            NewAbilityDragged();
+
             if (_index != -1)
             {
                 (ability, _abilityManager.newAbilityPrefab.ability)
@@ -74,5 +76,11 @@ public class AbilityPrefab : MonoBehaviour
         _abilityManager.ImportFromPrefabs();
         _abilityManager.ExportToUnit();
         _abilityManager.UpdateAbilityPrefabsUI();
+    }
+
+    private void NewAbilityDragged()
+    {
+        _abilityManager.topText.text = "RESUME GAME (ESC)\nTO CONFIRM CHANGES";
+        _abilityManager.bottomText.text = "(UNLEARN THIS ABILITY)";
     }
 }

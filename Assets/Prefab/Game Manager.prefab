@@ -122,7 +122,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 403284970205555582}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -485,12 +485,12 @@ MonoBehaviour:
   - {fileID: 2607805890474319224}
   - {fileID: 2048551787972592064}
   - {fileID: 1982767183778259539}
+  canvas: {fileID: 2194218688097986094}
   currentGroup: {fileID: 3332830865719863180}
   newAbilityPrefab: {fileID: 6257532865142333897}
-  canvas: {fileID: 2194218688097986094}
   newGroup: {fileID: 634803733885162678}
-  topText: {fileID: 0}
-  bottomText: {fileID: 0}
+  topText: {fileID: 4777219159603620986}
+  bottomText: {fileID: 3588695925556980846}
   ability5Cooldown: 0
 --- !u!1 &2897853141082792951
 GameObject:
@@ -607,12 +607,12 @@ GameObject:
   - component: {fileID: 8674983534520751183}
   - component: {fileID: 3588695925556980846}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Bottom Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &605695126897496954
 RectTransform:
   m_ObjectHideFlags: 0
@@ -660,12 +660,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '(UNLEARN THIS ABILITY)
-
-'
+  m_text: "{UNLEARN THIS ABILITY)\n\nHINT: DRAG & DROP TO \nACTIVE ABILITY SLOT"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -743,12 +741,12 @@ GameObject:
   - component: {fileID: 6744377216727599767}
   - component: {fileID: 4777219159603620986}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Top Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &847940210110848542
 RectTransform:
   m_ObjectHideFlags: 0
@@ -799,7 +797,7 @@ MonoBehaviour:
   m_text: NEW ABILITY AVAILABLE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1316,7 +1314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649117705705311020, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 827023575604641264, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: abilityManager
@@ -1344,7 +1342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_AnchorMin.x
@@ -1352,7 +1350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1392,7 +1390,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_AnchoredPosition.y
