@@ -84,35 +84,40 @@ public class AudioManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Stop(currentBGM);
         switch (scene.name)
         {
             case "MainMenu":
+                Stop(currentBGM);
                 currentBGM = "Main Menu BGM";
                 Play(currentBGM);
                 break;
             
             case "Level 1 - Point A to B variant 0":
-                currentBGM = "Battle BGM" + UnityEngine.Random.Range(0, 4).ToString();
+                Stop(currentBGM);
+                currentBGM = "Battle BGM " + UnityEngine.Random.Range(0, 4).ToString();
                 Play(currentBGM);
                 break;
             
             case "Level 2 - Survive [X] Time":
-                currentBGM = "Battle BGM" + UnityEngine.Random.Range(0, 4).ToString();
+                Stop(currentBGM);
+                currentBGM = "Battle BGM " + UnityEngine.Random.Range(0, 4).ToString();
                 Play(currentBGM);
                 break;
             
             case "Level 3 - Kill All Enemies":
-                currentBGM = "Battle BGM" + UnityEngine.Random.Range(0, 4).ToString();
+                Stop(currentBGM);
+                currentBGM = "Battle BGM " + UnityEngine.Random.Range(0, 4).ToString();
                 Play(currentBGM);
                 break;
 
             case "Level 4 - Kill Elite variant 1":
-                currentBGM = "Battle BGM" + UnityEngine.Random.Range(0, 4).ToString();
+                Stop(currentBGM);
+                currentBGM = "Battle BGM " + UnityEngine.Random.Range(0, 4).ToString();
                 Play(currentBGM);
                 break;
 
             case "Level 5 - Kill Claire":
+                Stop(currentBGM);
                 currentBGM = "Boss Battle";
                 Play(currentBGM);
                 break;

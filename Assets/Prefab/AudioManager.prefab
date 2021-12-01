@@ -115,7 +115,7 @@ MonoBehaviour:
     bypassEffects: 0
     bypassListenerEffects: 0
     bypassReverbZones: 0
-    playOnAwake: 1
+    playOnAwake: 0
     loop: 0
     priority: 128
     volume: 1
@@ -131,7 +131,7 @@ MonoBehaviour:
     bypassEffects: 0
     bypassListenerEffects: 0
     bypassReverbZones: 0
-    playOnAwake: 1
+    playOnAwake: 0
     loop: 0
     priority: 128
     volume: 0.667
@@ -147,7 +147,7 @@ MonoBehaviour:
     bypassEffects: 0
     bypassListenerEffects: 0
     bypassReverbZones: 0
-    playOnAwake: 1
+    playOnAwake: 0
     loop: 0
     priority: 128
     volume: 0.514
@@ -243,7 +243,7 @@ MonoBehaviour:
     bypassEffects: 0
     bypassListenerEffects: 0
     bypassReverbZones: 0
-    playOnAwake: 1
+    playOnAwake: 0
     loop: 0
     priority: 0
     volume: 0.839
@@ -259,7 +259,7 @@ MonoBehaviour:
     bypassEffects: 0
     bypassListenerEffects: 0
     bypassReverbZones: 0
-    playOnAwake: 1
+    playOnAwake: 0
     loop: 0
     priority: 0
     volume: 0.839
@@ -275,10 +275,10 @@ MonoBehaviour:
     bypassEffects: 0
     bypassListenerEffects: 0
     bypassReverbZones: 0
-    playOnAwake: 1
+    playOnAwake: 0
     loop: 0
     priority: 0
-    volume: 0.839
+    volume: 0.919
     pitch: 1
     stereoPan: 0
     spatialBlend: 0
@@ -291,7 +291,7 @@ MonoBehaviour:
     bypassEffects: 0
     bypassListenerEffects: 0
     bypassReverbZones: 0
-    playOnAwake: 1
+    playOnAwake: 0
     loop: 0
     priority: 0
     volume: 0.839
@@ -300,17 +300,17 @@ MonoBehaviour:
     spatialBlend: 0
     reverbZoneMix: 1
     Source: {fileID: 0}
-  - name: Clerical Heal
+  - name: Clerical Corruption
     audioClip: {fileID: 8300000, guid: 52c845d08a17d14499b64f860ba97e26, type: 3}
     audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
     mute: 0
     bypassEffects: 0
     bypassListenerEffects: 0
     bypassReverbZones: 0
-    playOnAwake: 1
+    playOnAwake: 0
     loop: 0
     priority: 0
-    volume: 0.688
+    volume: 0.764
     pitch: 1
     stereoPan: 0
     spatialBlend: 0
@@ -326,7 +326,23 @@ MonoBehaviour:
     playOnAwake: 1
     loop: 1
     priority: 0
-    volume: 0.56
+    volume: 0.22
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}
+  - name: Acid Water
+    audioClip: {fileID: 8300000, guid: f442f2b892ffb1742b85953bf90b4cc4, type: 3}
+    audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 0
+    loop: 0
+    priority: 0
+    volume: 0.9
     pitch: 1
     stereoPan: 0
     spatialBlend: 0

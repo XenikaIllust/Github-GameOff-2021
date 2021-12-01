@@ -56,7 +56,7 @@ MonoBehaviour:
   - Id: Damage
     Duration: 0
     Trigger:
-      ExecutionTime: 0
+      ExecutionTime: 0.2
       IsNormalizedTime: 0
     Effects:
     - Id: Damage
@@ -113,30 +113,36 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
-    - Id: Clerical
+  - Id: Clerical
+    Duration: 1
+    Trigger:
+      ExecutionTime: 0.2
+      IsNormalizedTime: 0
+    Effects:
+    - Id: Damage Heal
       TargetFilter:
         Type: 4
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: 
         TargetCenterId: 
-        PreviousEffectId: Heal
+        PreviousEffectId: Damage
         ConeRangeId: 
         ConeAngleId: 
         ConeTargetId: 
         hitEnemies: 0
         hitAllies: 0
-        hitSelf: 1
+        hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
-        StatId: Heal Stat 1
+        StatId: 
         VFXName: 
         VFXPointId: 
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
         TimeToLive: 0
-        SFXName: Clerical Heal
+        SFXName: Clerical Corruption
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 

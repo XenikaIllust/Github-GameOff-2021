@@ -121,3 +121,36 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
+  - Id: Acid Drain
+    Duration: 1.5
+    Trigger:
+      ExecutionTime: 0
+      IsNormalizedTime: 0
+    Effects:
+    - Id: Acid Damage
+      TargetFilter:
+        Type: 4
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: Damage
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: Acid Water
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
