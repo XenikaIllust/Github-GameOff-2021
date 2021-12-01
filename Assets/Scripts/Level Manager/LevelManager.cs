@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<SceneReference> destinationLevels;
     [SerializeField] private List<SceneReference> survivalLevels;
     [SerializeField] private List<SceneReference> genocideLevels;
+    [SerializeField] private List<SceneReference> eliteLevels;
     [SerializeField] private List<SceneReference> bossLevels;
 
     [Header("Read Only")] public SceneReference lastLevel;
@@ -36,6 +37,8 @@ public class LevelManager : MonoBehaviour
         destinationLevels.RemoveAll(item => item.ScenePath == "");
         survivalLevels.RemoveAll(item => item.ScenePath == "");
         genocideLevels.RemoveAll(item => item.ScenePath == "");
+        eliteLevels.RemoveAll(item => item.ScenePath == "");
+        bossLevels.RemoveAll(item => item.ScenePath == "");
         InitializeRemainingLevels();
     }
 
@@ -110,14 +113,19 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            if (!bossLevels.Contains(lastLevel))
-            {
-                LoadRandomFromCollection(bossLevels);
-            }
-            else
+            if (bossLevels.Contains(lastLevel))
             {
                 EventManager.RaiseEvent("OnSceneLoading", endingScene);
+                return;
             }
+
+            if (eliteLevels.Contains(lastLevel))
+            {
+                LoadRandomFromCollection(bossLevels);
+                return;
+            }
+
+            LoadRandomFromCollection(eliteLevels);
         }
     }
 
