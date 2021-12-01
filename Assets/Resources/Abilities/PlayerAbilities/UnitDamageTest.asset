@@ -13,12 +13,19 @@ MonoBehaviour:
   m_Name: UnitDamageTest
   m_EditorClassIdentifier: 
   abilityName: Memory Theft
-  abilityDescription: 'Steal a hostile program''s health to enhance your own program''s
-    health.
+  abilityDescription: 'MemoryTheft()
 
 
-    By stealing the memory resources of other programs, Tacia is able
-    to enhance her own program''s memory.'
+    Steal a hostile program''s health to enhance
+    your own program''s health.
+
+
+    Input Type: Target Unit
+
+
+    By stealing the
+    memory resources of other programs, Tacia is able to enhance her own program''s
+    memory.'
   abilitySprite: {fileID: 21300000, guid: 4074298946e947e4b9d7f01c91d367be, type: 3}
   inputType: 1
   duration: 0

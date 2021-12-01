@@ -243,15 +243,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: (ABILITY DESCRIPTION WILL APPEAR HERE)
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 84c1a036e69e90f93b45c69b91a60a9c, type: 2}
+  m_sharedMaterial: {fileID: -2326198364825560763, guid: 84c1a036e69e90f93b45c69b91a60a9c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.21176471, g: 1, b: 0.4509804, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_fontSize: 28
   m_fontSizeBase: 28
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 36
   m_fontStyle: 0
@@ -320,7 +320,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4799851400211848024}
   - component: {fileID: 6812385196137893219}
-  - component: {fileID: 748781581432831088}
   m_Layer: 5
   m_Name: Available Area Panel
   m_TagString: Untagged
@@ -360,36 +359,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1607568115445767787}
   m_CullTransparentMesh: 1
---- !u!114 &748781581432831088
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607568115445767787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2754510598199739976
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,6 +410,9 @@ MonoBehaviour:
   youDiedScene:
     sceneAsset: {fileID: 102900000, guid: e261482aab347554eac9b289e4ee123f, type: 3}
     scenePath: Assets/Scenes/You Died.unity
+  endingScene:
+    sceneAsset: {fileID: 0}
+    scenePath: 
   destinationLevels:
   - sceneAsset: {fileID: 102900000, guid: 0214105d49ac6f64f9044ead6bd46de9, type: 3}
     scenePath: Assets/Scenes/Point A to B variant 0.unity
@@ -521,7 +493,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -620, y: -120}
+  m_AnchoredPosition: {x: -647, y: -120}
   m_SizeDelta: {x: 320, y: 640}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3001318406422105692
@@ -880,9 +852,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "(UNLEARN THIS ABILITY)\n\nHINT: DRAG & DROP TO \nACTIVE ABILITY SLOT"
+  m_text: "(THIS ABILITY WILL BE\nLOST FOREVER)\n\nHINT: DRAG & DROP TO \nACTIVE
+    ABILITY SLOT"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 84c1a036e69e90f93b45c69b91a60a9c, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -946,7 +919,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &4400258525148872860
@@ -1016,7 +989,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: NEW ABILITY AVAILABLE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 84c1a036e69e90f93b45c69b91a60a9c, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1080,7 +1053,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &6591692814978339717
@@ -1183,7 +1156,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 120, y: 0}
+  m_AnchoredPosition: {x: 93, y: 0}
   m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6596129626340126615
@@ -1466,6 +1439,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2564337697861311890, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+--- !u!224 &7079341301707588903 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
+  m_PrefabInstance: {fileID: 1224444396451012515}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1982767183778259539 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 827023575604641264, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
@@ -1477,11 +1455,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e2b1ed398236bd4c9ee7f5ffd6b0338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &7079341301707588903 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
-  m_PrefabInstance: {fileID: 1224444396451012515}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1664017872106601520
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1883,7 +1856,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 120
+      value: 93
       objectReference: {fileID: 0}
     - target: {fileID: 8268827543069940356, guid: c4e0663e8287ca74ebadd779a9347483, type: 3}
       propertyPath: m_AnchoredPosition.y
