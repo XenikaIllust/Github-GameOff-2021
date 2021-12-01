@@ -161,3 +161,30 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: BossConeAttack
+    - Id: Slash
+      TargetFilter:
+        Type: 4
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: Damage
+        ConeRangeId: Cone Range
+        ConeAngleId: Cone Angle
+        ConeTargetId: Target Point
+        hitEnemies: 1
+        hitAllies: 1
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
+        StatId: 
+        VFXName: BossSlash
+        VFXPointId: Executing Unit
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: Digital Slash
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: BossConeAttack
