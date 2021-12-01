@@ -1,3 +1,7 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
 public class AbilityCooldown : AbilityButtonState
 {
     public AbilityCooldown(AbilityButton button) : base(button)
@@ -7,6 +11,7 @@ public class AbilityCooldown : AbilityButtonState
     public override void Enter()
     {
         AbilityButtonContext.cooldownBG.enabled = true;
+        AbilityButtonContext.cooldownTimer.enabled = true;
     }
 
     public override void UpdateLoop()
@@ -21,14 +26,24 @@ public class AbilityCooldown : AbilityButtonState
 
     private void TimeIt()
     {
-        var context = AbilityButtonContext;
-        context.cooldownBG.fillAmount = context.cooldownTimeLive / context.ability.cooldown;
-        if (context.cooldownTimeLive <= float.Epsilon) context.SwitchState(this, context.AvailableState);
+        Image cooldownBG = AbilityButtonContext.cooldownBG;
+        TMP_Text cooldownTimer = AbilityButtonContext.cooldownTimer;
+
+        cooldownBG.fillAmount = AbilityButtonContext.cooldownTimeLive / AbilityButtonContext.ability.cooldown;
+        cooldownTimer.text = $"{Mathf.CeilToInt(AbilityButtonContext.cooldownTimeLive)}";
+
+        if (AbilityButtonContext.cooldownTimeLive <= float.Epsilon)
+        {
+            AbilityButtonContext.SwitchState(this, AbilityButtonContext.availableState);
+        }
     }
 
     private void StopTime()
     {
         AbilityButtonContext.cooldownBG.fillAmount = 0;
+        AbilityButtonContext.cooldownTimer.text = "";
+
         AbilityButtonContext.cooldownBG.enabled = false;
+        AbilityButtonContext.cooldownTimer.enabled = false;
     }
 }
