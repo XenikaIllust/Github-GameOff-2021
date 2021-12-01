@@ -105,7 +105,7 @@ public class TargetFilter
                 AddToList(targets, (Unit)AllTargets["Executing Unit"], unit, hitEnemies, hitAllies, hitSelf);
             }
 
-            GameObject.Destroy(AOECalculator);
+            // GameObject.Destroy(AOECalculator);
         }
         else if (Type == TargetFilterType.TargetsOfPreviousEffect)
         {
