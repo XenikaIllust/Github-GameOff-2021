@@ -11,11 +11,9 @@ public class PlayerUI : MonoBehaviour
     [FormerlySerializedAs("EnemyHealthBarPrefab")]
     public Slider enemyHealthBarPrefab;
 
-    //private int numEnemies = 0;
     [FormerlySerializedAs("healthbarDisplacement")]
     public float healthBarDisplacement = 1f;
 
-    private UnitEventManager _unitEventManager;
     private Unit _playerUnit;
     [SerializeField] private List<AbilityButton> abilityButtons;
 
@@ -30,19 +28,14 @@ public class PlayerUI : MonoBehaviour
     private void Awake()
     {
         _playerUnit = FindObjectOfType<PlayerAgent>().GetComponent<Unit>();
-        _unitEventManager = _playerUnit.GetComponent<UnitEventManager>();
+        _playerUnit.GetComponent<UnitEventManager>();
         UpdateAbilityInformation();
     }
 
     // Start is called before the first frame update
     private void Start()
     {
-        //unitEventManager.UnitEventHandler.StartListening("OnSpawned", ShowEnemyHealth);
-
-        // Set time scale to 1 so that the game starts unpaused.
-        // There is currently a weird bug where if you don't set
-        // this, the game starts frozen as if it is paused.
-        Time.timeScale = 1f;
+        Time.timeScale = 1f; // Don't change to 0
     }
 
     // 'Escape' Key, 'P' Key
