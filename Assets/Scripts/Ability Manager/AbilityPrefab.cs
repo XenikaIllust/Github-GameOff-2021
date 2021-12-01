@@ -29,8 +29,8 @@ public class AbilityPrefab : MonoBehaviour
     {
         _abilityManager.lastClickedAbility = ability;
         _abilityManager.UpdateAbilityPrefabsUI();
-        _abilityManager.currentGroup.enabled = false;
-        _abilityManager.newGroup.enabled = false;
+        _abilityManager.currentAbilityPanel.enabled = false;
+        _abilityManager.newAbilityPanel.enabled = false;
         transform.SetParent(_abilityManager.mostFrontCanvas.transform);
     }
 
@@ -86,8 +86,8 @@ public class AbilityPrefab : MonoBehaviour
 
         transform.SetParent(_realParent);
         transform.SetSiblingIndex(_realSiblingIndex);
-        _abilityManager.currentGroup.enabled = true;
-        _abilityManager.newGroup.enabled = true;
+        _abilityManager.currentAbilityPanel.enabled = true;
+        _abilityManager.newAbilityPanel.enabled = true;
         _abilityManager.ImportFromPrefabs();
         _abilityManager.ExportToUnit();
         _abilityManager.UpdateAbilityPrefabsUI();
