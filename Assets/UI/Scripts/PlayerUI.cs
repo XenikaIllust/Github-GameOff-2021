@@ -23,9 +23,7 @@ public class PlayerUI : MonoBehaviour
     {
         for (var i = 0; i < abilityButtons.Count; i++)
         {
-            abilityButtons[i].ability = _playerUnit.abilities[i];
             abilityButtons[i].cooldownTimeLive = _playerUnit.abilityCooldownList[i];
-            abilityButtons[i].abilityIcon.sprite = _playerUnit.abilities[i].abilitySprite;
         }
     }
 
@@ -33,6 +31,7 @@ public class PlayerUI : MonoBehaviour
     {
         _playerUnit = FindObjectOfType<PlayerAgent>().GetComponent<Unit>();
         _unitEventManager = _playerUnit.GetComponent<UnitEventManager>();
+        UpdateAbilityInformation();
     }
 
     // Start is called before the first frame update
@@ -68,11 +67,21 @@ public class PlayerUI : MonoBehaviour
         }
         else
         {
+            UpdateAbilityInformation();
             EventManager.RaiseEvent("OnGameResumed", null);
         }
 
         // Freeze time if game is paused.
         Time.timeScale = 1f * (pauseScreen.activeSelf ? 0 : 1);
+    }
+
+    private void UpdateAbilityInformation()
+    {
+        for (var i = 0; i < abilityButtons.Count; i++)
+        {
+            abilityButtons[i].ability = _playerUnit.abilities[i];
+            abilityButtons[i].abilityIcon.sprite = _playerUnit.abilities[i].abilitySprite;
+        }
     }
 
     // Display enemy health if there are enemies in the scene...
