@@ -1,5 +1,3 @@
-using UnityEngine.UI;
-
 public class AbilityCooldown : AbilityButtonState
 {
     public AbilityCooldown(AbilityButton button) : base(button)
@@ -23,14 +21,9 @@ public class AbilityCooldown : AbilityButtonState
 
     private void TimeIt()
     {
-        Image cooldownBG = AbilityButtonContext.cooldownBG;
-
-        cooldownBG.fillAmount = AbilityButtonContext.cooldownTimeLive / AbilityButtonContext.ability.cooldown;
-
-        if (AbilityButtonContext.cooldownTimeLive <= float.Epsilon)
-        {
-            AbilityButtonContext.SwitchState(this, AbilityButtonContext.availableState);
-        }
+        var context = AbilityButtonContext;
+        context.cooldownBG.fillAmount = context.cooldownTimeLive / context.ability.cooldown;
+        if (context.cooldownTimeLive <= float.Epsilon) context.SwitchState(this, context.availableState);
     }
 
     private void StopTime()
