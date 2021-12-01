@@ -13,7 +13,15 @@ MonoBehaviour:
   m_Name: LocalAOEDamage
   m_EditorClassIdentifier: 
   abilityName: Local Ping Flood
-  abilityDescription: 
+  abilityDescription: 'Damage all enemies in an area around you.
+
+
+    Input type:
+    No Target
+
+
+    Tacia floods the area around her with pings, harming the health
+    of hostile programs''.'
   abilitySprite: {fileID: 21300000, guid: 5112daa3eb66b2c48a066dab15266a8a, type: 3}
   inputType: 3
   duration: 0.2

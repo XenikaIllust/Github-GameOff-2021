@@ -16,14 +16,16 @@ MonoBehaviour:
   abilityDescription: 'A short range teleport.
 
 
-    Cast Range: 5
+    Input Type: Target Point
 
-    Cooldown:
-    2
+    Cast
+    Range: 5
+
+    Cooldown: 2
 
 
-    Tacia uses weaknesses in the Metaverse''s infrastructure to quickly transport
-    to different locations.'
+    Tacia uses weaknesses in the Metaverse''s infrastructure
+    to quickly transport to different locations.'
   abilitySprite: {fileID: 21300000, guid: 85cbe884327c14f45a0848f77b44df13, type: 3}
   inputType: 0
   duration: 0.1
