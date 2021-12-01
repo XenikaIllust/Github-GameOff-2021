@@ -16,6 +16,8 @@ public class PlayerUI : MonoBehaviour
 
     private Unit _playerUnit;
     [SerializeField] private List<AbilityButton> abilityButtons;
+    [SerializeField] private GameObject pauseOptions;
+    [SerializeField] private GameObject settingsScreen;
 
     private void Update()
     {
@@ -61,6 +63,8 @@ public class PlayerUI : MonoBehaviour
         else
         {
             UpdateAbilityInformation();
+            pauseOptions.SetActive(true);
+            settingsScreen.SetActive(false);
             EventManager.RaiseEvent("OnGameResumed", null);
         }
 
@@ -75,5 +79,10 @@ public class PlayerUI : MonoBehaviour
             abilityButtons[i].ability = _playerUnit.abilities[i];
             abilityButtons[i].abilityIcon.sprite = _playerUnit.abilities[i].abilitySprite;
         }
+    }
+
+    public void BackToMainMenu()
+    {
+        LevelManager.Instance.LoadMainMenu();
     }
 }
