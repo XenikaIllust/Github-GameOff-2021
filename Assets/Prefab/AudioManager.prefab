@@ -150,7 +150,7 @@ MonoBehaviour:
     playOnAwake: 1
     loop: 0
     priority: 128
-    volume: 0.65
+    volume: 0.514
     pitch: 1.18
     stereoPan: 0
     spatialBlend: 0
@@ -295,6 +295,22 @@ MonoBehaviour:
     loop: 0
     priority: 0
     volume: 0.839
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}
+  - name: Clerical Heal
+    audioClip: {fileID: 8300000, guid: 52c845d08a17d14499b64f860ba97e26, type: 3}
+    audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 1
+    loop: 0
+    priority: 0
+    volume: 0.688
     pitch: 1
     stereoPan: 0
     spatialBlend: 0

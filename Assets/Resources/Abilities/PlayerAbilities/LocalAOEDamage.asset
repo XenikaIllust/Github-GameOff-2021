@@ -83,33 +83,6 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
-    - Id: Water
-      TargetFilter:
-        Type: 5
-        InitialPointId: 
-        FinalPointId: 
-        AOERadiusId: AOE Radius
-        TargetCenterId: Executing Unit Position
-        PreviousEffectId: 
-        ConeRangeId: 
-        ConeAngleId: 
-        ConeTargetId: 
-        hitEnemies: 0
-        hitAllies: 0
-        hitSelf: 0
-      GameAction:
-        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
-        StatId: AOE Damage Stat
-        VFXName: 
-        VFXPointId: 
-        VFXStartPointId: 
-        VFXEndPointId: 
-        VFXUnitId: 
-        TimeToLive: 0
-        SFXName: Water
-        ProjectileName: 
-        ProjectileStatId: 
-        AnimationTriggerName: 
     - Id: AOE VFX
       TargetFilter:
         Type: 5
@@ -126,6 +99,33 @@ MonoBehaviour:
         hitSelf: 0
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: b3463af90f8e9ec4cafda23ac2a798a2, type: 2}
+        StatId: 
+        VFXName: MagicCircle
+        VFXPointId: Executing Unit Position
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: Water
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: Water
+      TargetFilter:
+        Type: 4
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: AOE Radius
+        TargetCenterId: Executing Unit Position
+        PreviousEffectId: AOE Damage
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
         StatId: 
         VFXName: MagicCircle
         VFXPointId: Executing Unit Position

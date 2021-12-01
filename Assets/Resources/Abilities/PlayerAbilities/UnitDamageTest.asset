@@ -113,3 +113,30 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
+    - Id: Clerical
+      TargetFilter:
+        Type: 4
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: Heal
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
+        StatId: Heal Stat 1
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: Clerical Heal
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 

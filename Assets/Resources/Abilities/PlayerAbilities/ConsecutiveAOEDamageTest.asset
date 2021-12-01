@@ -86,7 +86,7 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
-    - Id: Damage SFX
+    - Id: Area Eater
       TargetFilter:
         Type: 3
         InitialPointId: 
