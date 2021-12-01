@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using TMPro;
 
 public class AbilityButton : MonoBehaviour
 {
@@ -24,7 +23,6 @@ public class AbilityButton : MonoBehaviour
     public float cooldownTimeLive;
     public Image abilityIcon;
     public Image cooldownBG;
-    public TMP_Text cooldownTimer;
     private Unit _playerUnit;
 
     private void OnEnable()
@@ -38,7 +36,6 @@ public class AbilityButton : MonoBehaviour
         cooldownState = new AbilityCooldown(this);
 
         cooldownBG.enabled = false;
-        cooldownTimer.enabled = false;
 
         _currentState = availableState;
 
