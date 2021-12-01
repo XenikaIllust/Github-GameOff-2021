@@ -43,7 +43,7 @@ MonoBehaviour:
   - Id: Telegraph Attack
     Duration: 0
     Trigger:
-      ExecutionTime: 0
+      ExecutionTime: 1.1
       IsNormalizedTime: 0
     Effects:
     - Id: Play VFX
@@ -70,6 +70,33 @@ MonoBehaviour:
         VFXUnitId: 
         TimeToLive: 1.7
         SFXName: 
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+    - Id: Spell
+      TargetFilter:
+        Type: 5
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 0
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
+        StatId: 
+        VFXName: AOE
+        VFXPointId: Executing Unit
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 1.7
+        SFXName: Digital Spell
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 

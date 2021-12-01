@@ -223,7 +223,7 @@ MonoBehaviour:
         ProjectileName: BossProjectile
         ProjectileStatId: Projectile Damage
         AnimationTriggerName: 
-    - Id: FireSFX
+    - Id: Plasma
       TargetFilter:
         Type: 0
         InitialPointId: 
@@ -246,7 +246,7 @@ MonoBehaviour:
         VFXEndPointId: 
         VFXUnitId: 
         TimeToLive: 0
-        SFXName: BossRanged
+        SFXName: Plasma Bolts
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 

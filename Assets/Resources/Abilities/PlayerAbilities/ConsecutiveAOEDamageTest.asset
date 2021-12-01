@@ -13,12 +13,19 @@ MonoBehaviour:
   m_Name: ConsecutiveAOEDamageTest
   m_EditorClassIdentifier: 
   abilityName: Consecutive DDoS
-  abilityDescription: 'Detonate two consecutive pulses in a target area.
+  abilityDescription: 'ConsecutiveDDoS()
 
 
-    Tacia
-    is able to use bugs in the communications infrastructure to cause repeated area
-    of effect Distributed Denial of Services attacks on hostile programs.'
+    Detonate two consecutive pulses in
+    a target area.
+
+
+    Input Type: Target Area
+
+
+    Tacia is able to use bugs
+    in the communications infrastructure to cause repeated Distributed Denial of
+    Services area of effect attacks on hostile programs.'
   abilitySprite: {fileID: 21300000, guid: 3ce6cde8abc01534989c8f4647708929, type: 3}
   inputType: 2
   duration: 4
@@ -79,7 +86,7 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
-    - Id: Damage SFX
+    - Id: Area Eater
       TargetFilter:
         Type: 3
         InitialPointId: 

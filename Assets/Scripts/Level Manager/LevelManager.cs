@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -12,6 +11,7 @@ public class LevelManager : MonoBehaviour
 
     public SceneReference mainMenuScene;
     [SerializeField] private SceneReference youDiedScene;
+    [SerializeField] private SceneReference endingScene;
 
     [SerializeField] private List<SceneReference> destinationLevels;
     [SerializeField] private List<SceneReference> survivalLevels;
@@ -110,7 +110,14 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            LoadRandomFromCollection(bossLevels);
+            if (!bossLevels.Contains(lastLevel))
+            {
+                LoadRandomFromCollection(bossLevels);
+            }
+            else
+            {
+                EventManager.RaiseEvent("OnSceneLoading", endingScene);
+            }
         }
     }
 
