@@ -495,9 +495,10 @@ MonoBehaviour:
   genocideLevels:
   - sceneAsset: {fileID: 102900000, guid: 8dec96e34d9188443936360fce140a51, type: 3}
     scenePath: Assets/Scenes/Level 3 - Kill All Enemies.unity
-  bossLevels:
+  eliteLevels:
   - sceneAsset: {fileID: 102900000, guid: 685bacb060c27c349a9a3c7e9e08cd5b, type: 3}
     scenePath: Assets/Scenes/Level 4 - Kill Elite variant 1.unity
+  bossLevels:
   - sceneAsset: {fileID: 102900000, guid: 88cc02c29c0b21c469d501238a90b48e, type: 3}
     scenePath: Assets/Scenes/Level 5 - Kill Claire.unity
   lastLevel:
