@@ -523,7 +523,7 @@ MonoBehaviour:
   - {fileID: 2607805890474319224}
   - {fileID: 2048551787972592064}
   - {fileID: 1982767183778259539}
-  dragDropRadius: 50
+  dragDropRadius: 120
   canvas: {fileID: 2194218688097986094}
   mostFrontCanvas: {fileID: 1994989377757715575}
   descriptionText: {fileID: 6402389576948907627}
