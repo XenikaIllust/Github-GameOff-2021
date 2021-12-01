@@ -480,7 +480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerUnit: {fileID: 0}
-  dragDropRadius: 150
+  dragDropRadius: 50
   currentAbilities: []
   currentAbilityPrefabs:
   - {fileID: 7340530449092882611}

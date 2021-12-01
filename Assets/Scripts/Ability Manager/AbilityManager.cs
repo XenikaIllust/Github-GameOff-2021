@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class AbilityManager : MonoBehaviour
 {
     [HideInInspector] public Unit playerUnit;
-    public float dragDropRadius = 150;
+    public float dragDropRadius = 50;
     public List<Ability> currentAbilities;
     private List<Ability> _playerAbilityPool;
     public List<AbilityPrefab> currentAbilityPrefabs;
