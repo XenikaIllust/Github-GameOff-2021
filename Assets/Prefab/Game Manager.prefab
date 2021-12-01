@@ -516,19 +516,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerUnit: {fileID: 0}
-  dragDropRadius: 50
   currentAbilities: []
   currentAbilityPrefabs:
   - {fileID: 7340530449092882611}
   - {fileID: 2607805890474319224}
   - {fileID: 2048551787972592064}
   - {fileID: 1982767183778259539}
+  dragDropRadius: 50
   canvas: {fileID: 2194218688097986094}
   mostFrontCanvas: {fileID: 1994989377757715575}
   descriptionText: {fileID: 6402389576948907627}
-  currentGroup: {fileID: 3332830865719863180}
+  currentAbilityPanel: {fileID: 3332830865719863180}
   newAbilityPrefab: {fileID: 6257532865142333897}
-  newGroup: {fileID: 2684956332421836352}
+  newAbilityPanel: {fileID: 2684956332421836352}
   topText: {fileID: 4777219159603620986}
   bottomText: {fileID: 3588695925556980846}
   lastClickedAbility: {fileID: 0}

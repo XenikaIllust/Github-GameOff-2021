@@ -15,9 +15,9 @@ public class AbilityManager : MonoBehaviour
     public Canvas canvas;
     public Transform mostFrontCanvas;
     public TMP_Text descriptionText;
-    [Header("Current Ability")] public HorizontalLayoutGroup currentGroup;
+    [Header("Current Ability")] public HorizontalLayoutGroup currentAbilityPanel;
     [Header("New Ability")] public AbilityPrefab newAbilityPrefab;
-    public HorizontalLayoutGroup newGroup;
+    public HorizontalLayoutGroup newAbilityPanel;
     public TMP_Text topText;
     private string _defaultTopText;
     public TMP_Text bottomText;
