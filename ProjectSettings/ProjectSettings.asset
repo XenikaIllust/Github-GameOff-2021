@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 0
     16:9: 1
     Others: 0
-  bundleVersion: '"Github GameOff 2021" v0.1'
+  bundleVersion: '"Github GameOff 2021" v0.1.2'
   preloadedAssets:
   - {fileID: 11400000, guid: 0bbe5b857b21731f287fc6d449a682a1, type: 2}
   metroInputSource: 0
