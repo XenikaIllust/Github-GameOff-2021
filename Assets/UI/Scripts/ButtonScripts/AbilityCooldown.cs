@@ -23,7 +23,7 @@ public class AbilityCooldown : AbilityButtonState
     {
         var context = AbilityButtonContext;
         context.cooldownBG.fillAmount = context.cooldownTimeLive / context.ability.cooldown;
-        if (context.cooldownTimeLive <= float.Epsilon) context.SwitchState(this, context.availableState);
+        if (context.cooldownTimeLive <= float.Epsilon) context.SwitchState(this, context.AvailableState);
     }
 
     private void StopTime()

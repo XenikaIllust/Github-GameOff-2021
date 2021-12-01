@@ -7,12 +7,11 @@ public class AbilityButton : MonoBehaviour
     // States
     private AbilityButtonState _currentState;
 
-    public AbilityAvailable availableState;
-    public AbilityTarget abilityTarget;
-    public AbilityCooldown cooldownState;
+    public AbilityAvailable AvailableState;
+    public AbilityTarget AbilityTarget;
+    public AbilityCooldown CooldownState;
 
     // The UIButton component from Canvas.
-    private Button uiButton;
     public bool isPressed;
 
     //public KeyCode abilityKey;
@@ -28,16 +27,15 @@ public class AbilityButton : MonoBehaviour
     private void OnEnable()
     {
         _playerUnit = FindObjectOfType<PlayerAgent>().GetComponent<Unit>();
-        uiButton = GetComponent<Button>();
         abilityIcon = GetComponent<Image>();
 
-        availableState = new AbilityAvailable(this);
-        abilityTarget = new AbilityTarget(this);
-        cooldownState = new AbilityCooldown(this);
+        AvailableState = new AbilityAvailable(this);
+        AbilityTarget = new AbilityTarget(this);
+        CooldownState = new AbilityCooldown(this);
 
         cooldownBG.enabled = false;
 
-        _currentState = availableState;
+        _currentState = AvailableState;
 
         EventManager.StartListening("OnGamePaused", OnGamePaused);
     }
@@ -49,10 +47,7 @@ public class AbilityButton : MonoBehaviour
 
     private void OnGamePaused(object @null)
     {
-        if (_currentState == abilityTarget)
-        {
-            SwitchState(_currentState, availableState);
-        }
+        if (_currentState == AbilityTarget) SwitchState(_currentState, AvailableState);
     }
 
     // Update is called once per frame
@@ -92,9 +87,6 @@ public class AbilityButton : MonoBehaviour
 
     private void AutoSwitchState()
     {
-        if (cooldownTimeLive > float.Epsilon)
-        {
-            SwitchState(_currentState, cooldownState);
-        }
+        if (cooldownTimeLive > float.Epsilon) SwitchState(_currentState, CooldownState);
     }
 }
