@@ -121,6 +121,12 @@ public class AudioManager : MonoBehaviour
                 currentBGM = "Boss Battle";
                 Play(currentBGM);
                 break;
+            
+            case "Credits Scene":
+                Stop(currentBGM);
+                currentBGM = "Credits";
+                Play(currentBGM);
+                break;
         }
     }
 }

@@ -484,8 +484,8 @@ MonoBehaviour:
     sceneAsset: {fileID: 102900000, guid: e261482aab347554eac9b289e4ee123f, type: 3}
     scenePath: Assets/Scenes/You Died.unity
   endingScene:
-    sceneAsset: {fileID: 0}
-    scenePath: 
+    sceneAsset: {fileID: 102900000, guid: 359d3115b9300574981f9a0b5884dec3, type: 3}
+    scenePath: Assets/Scenes/Credits Scene.unity
   destinationLevels:
   - sceneAsset: {fileID: 102900000, guid: 0214105d49ac6f64f9044ead6bd46de9, type: 3}
     scenePath: Assets/Scenes/Level 1 - Point A to B variant 0.unity
