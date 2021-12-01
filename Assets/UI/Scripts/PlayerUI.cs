@@ -29,13 +29,13 @@ public class PlayerUI : MonoBehaviour
     {
         _playerUnit = FindObjectOfType<PlayerAgent>().GetComponent<Unit>();
         _playerUnit.GetComponent<UnitEventManager>();
-        UpdateAbilityInformation();
     }
 
     // Start is called before the first frame update
     private void Start()
     {
         Time.timeScale = 1f; // Don't change to 0
+        UpdateAbilityInformation();
     }
 
     // 'Escape' Key, 'P' Key
