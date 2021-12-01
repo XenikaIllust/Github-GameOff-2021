@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 9195d4eccc677af4aa80e7153a47b2ad, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4017cc1fc70ae3541a95e7a6ec1b7f31, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -421,11 +421,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b81e4df4340dad741af7001e4dcdb145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 3.5
-  turnRate: 5
+  baseMovementSpeed: 3.5
+  baseTurnRate: 5
   isPlayer: 0
   agent: {fileID: 0}
   alliance: 0
+  bountyDropRate: 1
   abilities:
   - {fileID: 11400000, guid: 4fd1dc6bfc980c04a992a4bac83f21e0, type: 2}
   - {fileID: 11400000, guid: fe0e51747d0b6c142a6056463e3314ae, type: 2}
@@ -436,6 +437,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  inputLockDuration: 0
 --- !u!114 &3449367993870842367
 MonoBehaviour:
   m_ObjectHideFlags: 0

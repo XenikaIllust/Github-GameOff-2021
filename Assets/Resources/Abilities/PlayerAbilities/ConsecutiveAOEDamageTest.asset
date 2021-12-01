@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: ConsecutiveAOEDamageTest
   m_EditorClassIdentifier: 
   abilityName: Consecutive DDoS
-  abilityDescription: 
+  abilityDescription: 'Detonate two consecutive pulses in a target area.
+
+
+    Tacia
+    is able to use bugs in the communications infrastructure to cause repeated area
+    of effect Distributed Denial of Services attacks on hostile programs.'
   abilitySprite: {fileID: 21300000, guid: 3ce6cde8abc01534989c8f4647708929, type: 3}
   inputType: 2
   duration: 4

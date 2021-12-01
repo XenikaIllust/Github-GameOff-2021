@@ -16,18 +16,21 @@ MonoBehaviour:
   abilityDescription: 'Detonates a charge in an area of effect, damaging all enemies.
 
 
-    AOE
-    Radius: 3
+    Input
+    Type: Target Point
+
+    AOE Radius: 3
 
     Damage: 60
 
     Cooldown: 5
 
-    Cast Range: 4
+    Cast
+    Range: 4
 
 
-    Tacia floods
-    a target area with junk processes, causing resource depletion in hostile programs.'
+    Tacia floods a target area with junk processes, causing resource
+    depletion in hostile programs.'
   abilitySprite: {fileID: 21300000, guid: 1dbe8db5646b58c45a583b20095de4f3, type: 3}
   inputType: 2
   duration: 0

@@ -17,20 +17,22 @@ MonoBehaviour:
     in the line of your dash.
 
 
+    Input Type: Target Point
+
     Slash Damage: 40
 
-    Dot Damage: 10
+    Dot
+    Damage: 10
 
-    Cast
-    Range: 5
+    Cast Range: 5
 
     Cooldown: 3
 
 
-    Tacia dashes to a target point, leaving behind
-    a trail of malicious code that is injected into all programs caught in the trail.
-    The programs are harmed twice, once for heavy damage (Slash) and once for light
-    damage (Dot)'
+    Tacia dashes to a target
+    point, leaving behind a trail of malicious code that is injected into all programs
+    caught in the trail. The programs are harmed twice, once for heavy damage (Slash)
+    and once for light damage (Dot)'
   abilitySprite: {fileID: 21300000, guid: 22e0e307eed59604daa186fce6e02c15, type: 3}
   inputType: 0
   duration: 1
