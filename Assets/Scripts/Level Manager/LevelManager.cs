@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -38,12 +39,10 @@ public class LevelManager : MonoBehaviour
     public void RestartRemainingLevels()
     {
         // Not including boss level
-        _remainingLevels = new List<List<SceneReference>>
-        {
-            destinationLevels,
-            survivalLevels,
-            genocideLevels
-        };
+        _remainingLevels = new List<List<SceneReference>>();
+        if (destinationLevels.Count > 0) _remainingLevels.Add(destinationLevels);
+        if (survivalLevels.Count > 0) _remainingLevels.Add(survivalLevels);
+        if (genocideLevels.Count > 0) _remainingLevels.Add(genocideLevels);
 
         lastLevel = null;
     }
