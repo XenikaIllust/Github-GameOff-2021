@@ -34,7 +34,7 @@ public class AbilityCooldown : AbilityButtonState
 
         if (AbilityButtonContext.cooldownTimeLive <= float.Epsilon)
         {
-            AbilityButtonContext.SwitchState(this, AbilityButtonContext.availableState);
+            AbilityButtonContext.SwitchState(this, AbilityButtonContext.AvailableState);
         }
     }
 

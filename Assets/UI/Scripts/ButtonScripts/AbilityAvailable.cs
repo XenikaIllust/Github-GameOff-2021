@@ -31,7 +31,7 @@ public class AbilityAvailable : AbilityButtonState
 
         if (AbilityButtonContext.ability.inputType != AbilityType.NoTarget)
         {
-            AbilityButtonContext.SwitchState(this, AbilityButtonContext.abilityTarget);
+            AbilityButtonContext.SwitchState(this, AbilityButtonContext.AbilityTarget);
         }
     }
 }

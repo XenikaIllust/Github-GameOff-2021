@@ -18,7 +18,7 @@ public class AbilityTarget : AbilityButtonState
         {
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
 
-            AbilityButtonContext.SwitchState(this, AbilityButtonContext.cooldownState);
+            AbilityButtonContext.SwitchState(this, AbilityButtonContext.CooldownState);
         }
     }
 
