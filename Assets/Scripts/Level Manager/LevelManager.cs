@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -32,18 +33,19 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        RestartRemainingLevels();
+        destinationLevels.RemoveAll(item => item.ScenePath == "");
+        survivalLevels.RemoveAll(item => item.ScenePath == "");
+        genocideLevels.RemoveAll(item => item.ScenePath == "");
+        InitializeRemainingLevels();
     }
 
-    public void RestartRemainingLevels()
+    public void InitializeRemainingLevels()
     {
         // Not including boss level
-        _remainingLevels = new List<List<SceneReference>>
-        {
-            destinationLevels,
-            survivalLevels,
-            genocideLevels
-        };
+        _remainingLevels = new List<List<SceneReference>>();
+        if (destinationLevels.Count > 0) _remainingLevels.Add(destinationLevels);
+        if (survivalLevels.Count > 0) _remainingLevels.Add(survivalLevels);
+        if (genocideLevels.Count > 0) _remainingLevels.Add(genocideLevels);
 
         lastLevel = null;
     }
@@ -94,7 +96,7 @@ public class LevelManager : MonoBehaviour
 
     public void LoadNewGame()
     {
-        RestartRemainingLevels();
+        InitializeRemainingLevels();
         LoadNextLevel();
     }
 
