@@ -33,10 +33,13 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        RestartRemainingLevels();
+        destinationLevels.RemoveAll(item => item.ScenePath == "");
+        survivalLevels.RemoveAll(item => item.ScenePath == "");
+        genocideLevels.RemoveAll(item => item.ScenePath == "");
+        InitializeRemainingLevels();
     }
 
-    public void RestartRemainingLevels()
+    public void InitializeRemainingLevels()
     {
         // Not including boss level
         _remainingLevels = new List<List<SceneReference>>();
@@ -93,7 +96,7 @@ public class LevelManager : MonoBehaviour
 
     public void LoadNewGame()
     {
-        RestartRemainingLevels();
+        InitializeRemainingLevels();
         LoadNextLevel();
     }
 
