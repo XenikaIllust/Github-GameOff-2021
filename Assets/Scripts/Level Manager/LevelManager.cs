@@ -34,11 +34,11 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        destinationLevels.RemoveAll(item => item.ScenePath == "");
-        survivalLevels.RemoveAll(item => item.ScenePath == "");
-        genocideLevels.RemoveAll(item => item.ScenePath == "");
-        eliteLevels.RemoveAll(item => item.ScenePath == "");
-        bossLevels.RemoveAll(item => item.ScenePath == "");
+        RemoveInvalidSceneReferences(destinationLevels);
+        RemoveInvalidSceneReferences(survivalLevels);
+        RemoveInvalidSceneReferences(genocideLevels);
+        RemoveInvalidSceneReferences(eliteLevels);
+        RemoveInvalidSceneReferences(bossLevels);
         InitializeRemainingLevels();
     }
 
@@ -141,5 +141,10 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         _pendingLoad = null;
         action.Invoke();
+    }
+
+    private void RemoveInvalidSceneReferences(List<SceneReference> list)
+    {
+        list.RemoveAll(item => item.ScenePath == "");
     }
 }
