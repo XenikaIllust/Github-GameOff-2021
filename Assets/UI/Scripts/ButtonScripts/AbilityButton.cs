@@ -22,6 +22,7 @@ public class AbilityButton : MonoBehaviour
 
     public Ability ability;
     public float cooldownTimeLive;
+    public Image abilityIcon;
     public Image cooldownBG;
     public TMP_Text cooldownTimer;
     private Unit _playerUnit;
@@ -30,6 +31,7 @@ public class AbilityButton : MonoBehaviour
     {
         _playerUnit = FindObjectOfType<PlayerAgent>().GetComponent<Unit>();
         uiButton = GetComponent<Button>();
+        abilityIcon = GetComponent<Image>();
 
         availableState = new AbilityAvailable(this);
         abilityTarget = new AbilityTarget(this);

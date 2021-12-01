@@ -25,6 +25,7 @@ public class PlayerUI : MonoBehaviour
         {
             abilityButtons[i].ability = _playerUnit.abilities[i];
             abilityButtons[i].cooldownTimeLive = _playerUnit.abilityCooldownList[i];
+            abilityButtons[i].abilityIcon.sprite = _playerUnit.abilities[i].abilitySprite;
         }
     }
 
@@ -82,15 +83,11 @@ public class PlayerUI : MonoBehaviour
         // TODO: if (enemy has no health bar then do this)
         Vector2 enemyScreenPosition = Camera.main.WorldToScreenPoint(enemy.GetComponent<Transform>().position);
 
-        Vector2 healthBarPosition = Camera.main.WorldToScreenPoint((Vector2)enemy.GetComponent<Transform>().position +
-                                                                   (Vector2.up * healthBarDisplacement));
+        Vector2 healthBarPosition = Camera.main.WorldToScreenPoint((Vector2)enemy.GetComponent<Transform>().position
+                                                                   + (Vector2.up * healthBarDisplacement));
 
         // Instantiate a new health bar just above their head.
-        Slider newHealthBar = Instantiate(
-            enemyHealthBarPrefab,
-            healthBarPosition,
-            Quaternion.identity
-        );
+        Slider newHealthBar = Instantiate(enemyHealthBarPrefab, healthBarPosition, Quaternion.identity);
 
         // Parent the health bar to this Canvas.
         newHealthBar.transform.SetParent(transform);
