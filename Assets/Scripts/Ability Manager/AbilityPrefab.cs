@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -8,7 +7,6 @@ public class AbilityPrefab : MonoBehaviour
     private AbilityManager _abilityManager;
     public Ability ability;
     private int _index = -1;
-    [Header("UI")] public TMP_Text abilityNameUI;
     public Image abilityImageUI;
 
     private void Awake()
@@ -42,8 +40,6 @@ public class AbilityPrefab : MonoBehaviour
         if (Vector2.Distance(transform.position, _abilityManager.newAbilityPrefab.transform.position)
             <= _abilityManager.dragDropRadius && _abilityManager.newAbilityPrefab.ability != null)
         {
-            NewAbilityDragged();
-
             if (_index != -1)
             {
                 (ability, _abilityManager.newAbilityPrefab.ability)
@@ -51,6 +47,8 @@ public class AbilityPrefab : MonoBehaviour
 
                 (_abilityManager.playerUnit.abilityCooldownList[_index], _abilityManager.ability5Cooldown) = (
                     _abilityManager.ability5Cooldown, _abilityManager.playerUnit.abilityCooldownList[_index]);
+
+                NewAbilitySwapped();
             }
             else
             {
@@ -62,6 +60,8 @@ public class AbilityPrefab : MonoBehaviour
                         (ability, prefabs[i].ability) = (prefabs[i].ability, ability);
                         (_abilityManager.ability5Cooldown, _abilityManager.playerUnit.abilityCooldownList[i]) = (
                             _abilityManager.playerUnit.abilityCooldownList[i], _abilityManager.ability5Cooldown);
+
+                        NewAbilitySwapped();
                     }
                 }
             }
@@ -86,7 +86,7 @@ public class AbilityPrefab : MonoBehaviour
         _abilityManager.UpdateAbilityPrefabsUI();
     }
 
-    private void NewAbilityDragged()
+    private void NewAbilitySwapped()
     {
         _abilityManager.topText.text = "RESUME GAME (ESC)\nTO CONFIRM CHANGES";
         _abilityManager.bottomText.text = "(UNLEARN THIS ABILITY)";
