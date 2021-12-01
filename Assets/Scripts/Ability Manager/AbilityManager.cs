@@ -8,11 +8,11 @@ using Random = UnityEngine.Random;
 public class AbilityManager : MonoBehaviour
 {
     [HideInInspector] public Unit playerUnit;
-    public float dragDropRadius = 50;
     public List<Ability> currentAbilities;
     private List<Ability> _playerAbilityPool;
     public List<AbilityPrefab> currentAbilityPrefabs;
-    [Space] public Canvas canvas;
+    [Space] public float dragDropRadius = 50;
+    public Canvas canvas;
     public Transform mostFrontCanvas;
     public TMP_Text descriptionText;
     [Header("Current Ability")] public HorizontalLayoutGroup currentGroup;
