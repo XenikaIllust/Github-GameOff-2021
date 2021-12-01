@@ -76,27 +76,4 @@ public class PlayerUI : MonoBehaviour
             abilityButtons[i].abilityIcon.sprite = _playerUnit.abilities[i].abilitySprite;
         }
     }
-
-    // Display enemy health if there are enemies in the scene...
-    private void ShowEnemyHealth(object param)
-    {
-        GameObject enemy = (GameObject)param;
-
-        // TODO: if (enemy has no health bar then do this)
-        Vector2 enemyScreenPosition = Camera.main.WorldToScreenPoint(enemy.GetComponent<Transform>().position);
-
-        Vector2 healthBarPosition = Camera.main.WorldToScreenPoint((Vector2)enemy.GetComponent<Transform>().position
-                                                                   + (Vector2.up * healthBarDisplacement));
-
-        // Instantiate a new health bar just above their head.
-        Slider newHealthBar = Instantiate(enemyHealthBarPrefab, healthBarPosition, Quaternion.identity);
-
-        // Parent the health bar to this Canvas.
-        newHealthBar.transform.SetParent(transform);
-
-        // Set the enemy instance to the health bar's reference variable.
-        newHealthBar.GetComponent<EnemyHealthBar>().EnemyInstance = enemy;
-
-        newHealthBar.GetComponent<EnemyHealthBar>().DisplacementPosition = Vector2.up * healthBarDisplacement;
-    }
 }
