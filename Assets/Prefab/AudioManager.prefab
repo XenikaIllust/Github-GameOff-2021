@@ -236,3 +236,67 @@ MonoBehaviour:
     spatialBlend: 0
     reverbZoneMix: 1
     Source: {fileID: 0}
+  - name: Digital Slash
+    audioClip: {fileID: 8300000, guid: 464bc9c9d2e2672499ac1df4a32bfb63, type: 3}
+    audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 1
+    loop: 0
+    priority: 0
+    volume: 0.839
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}
+  - name: Digital Spell
+    audioClip: {fileID: 8300000, guid: 811060f84a0b5c243b8ef95e35a65025, type: 3}
+    audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 1
+    loop: 0
+    priority: 0
+    volume: 0.839
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}
+  - name: Plasma Bolts
+    audioClip: {fileID: 8300000, guid: 5d6d9508b3d28a840bad1d31aca0d59d, type: 3}
+    audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 1
+    loop: 0
+    priority: 0
+    volume: 0.839
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}
+  - name: Claire Dash
+    audioClip: {fileID: 8300000, guid: efae3cb5f52552842adebc8451f07faa, type: 3}
+    audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 1
+    loop: 0
+    priority: 0
+    volume: 0.839
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}

@@ -74,6 +74,33 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
+    - Id: Dash
+      TargetFilter:
+        Type: 0
+        InitialPointId: 
+        FinalPointId: 
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: 
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 0
+        hitAllies: 0
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
+        StatId: 
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: Claire Dash
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
   - Id: Damage, Teleport and Reappear
     Duration: 0
     Trigger:
