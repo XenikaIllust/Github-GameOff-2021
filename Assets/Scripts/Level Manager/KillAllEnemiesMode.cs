@@ -7,15 +7,21 @@ public class KillAllEnemiesMode : MonoBehaviour
     [SerializeField] private GameObject popUp;
     [SerializeField] private GameObject aliveEnemyCounterObject;
 
-    private List<SwarmerAI> _listOfEnemies;
+    private List<Spawner> _listOfSpawners;
     private int _aliveEnemyCounter;
     private TMP_Text _aliveEnemyCounterText;
 
     private void Awake()
     {
         popUp.SetActive(false);
-        _listOfEnemies = new List<SwarmerAI>(FindObjectsOfType<SwarmerAI>());
-        _aliveEnemyCounter = _listOfEnemies.Count;
+        _listOfSpawners = new List<Spawner>(FindObjectsOfType<Spawner>());
+
+        _aliveEnemyCounter = 0;
+        foreach (var spawner in _listOfSpawners)
+        {
+            _aliveEnemyCounter += Mathf.Max(spawner.startingUnit, spawner.lifetimeQuota);
+        }
+
         _aliveEnemyCounterText = aliveEnemyCounterObject.GetComponentInChildren<TMP_Text>();
         UpdateText();
     }
@@ -32,18 +38,9 @@ public class KillAllEnemiesMode : MonoBehaviour
 
     private void OnUnitDied(object unit)
     {
-        var unitGameObject = (GameObject)unit;
-
-        if (unitGameObject.GetComponent<SwarmerAI>() != null)
-        {
-            _aliveEnemyCounter -= 1;
-            UpdateText();
-
-            if (_aliveEnemyCounter == 0)
-            {
-                popUp.SetActive(true);
-            }
-        }
+        _aliveEnemyCounter -= 1;
+        UpdateText();
+        if (_aliveEnemyCounter == 0) popUp.SetActive(true);
     }
 
     private void UpdateText()

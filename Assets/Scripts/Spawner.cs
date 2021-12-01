@@ -12,10 +12,10 @@ public class Spawner : MonoBehaviour
     [Space] [SerializeField] private float minSpawnInterval = 1;
     [SerializeField] private float maxSpawnInterval = 5;
     private float _timer = float.Epsilon;
-    [Space] [SerializeField] private int startingUnit = 5;
+    [Space] public int startingUnit = 5;
     [SerializeField] private int minAliveUnit = 2;
     [SerializeField] private int maxAliveUnit = 10;
-    [SerializeField] private int lifetimeQuota = 50;
+    public int lifetimeQuota = 50;
     [Header("Spawnable")] [SerializeField] private GameObject gameObjectPrefab;
 
     [Header("Read Only")] [SerializeField]
