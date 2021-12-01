@@ -141,7 +141,7 @@ MonoBehaviour:
     reverbZoneMix: 1
     Source: {fileID: 0}
   - name: Water
-    audioClip: {fileID: 8300000, guid: 1c112b9b4456bd04baa12bc1be5b25d1, type: 3}
+    audioClip: {fileID: 8300000, guid: 50c0fb91101341943bb04770e395c55a, type: 3}
     audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
     mute: 0
     bypassEffects: 0
@@ -172,7 +172,7 @@ MonoBehaviour:
     spatialBlend: 0
     reverbZoneMix: 1
     Source: {fileID: 0}
-  - name: Battle BGM 0
+  - name: Battle BGM 1
     audioClip: {fileID: 8300000, guid: 2fc7597bd3c75af47a6d5858144b6ddd, type: 3}
     audioMixerGroup: {fileID: 1805428926815748455, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
     mute: 0
@@ -188,7 +188,7 @@ MonoBehaviour:
     spatialBlend: 0
     reverbZoneMix: 1
     Source: {fileID: 0}
-  - name: Battle BGM 1
+  - name: Battle BGM 2
     audioClip: {fileID: 8300000, guid: 2e10af7228b977648b2259c0bb797c97, type: 3}
     audioMixerGroup: {fileID: 1805428926815748455, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
     mute: 0
@@ -204,8 +204,8 @@ MonoBehaviour:
     spatialBlend: 0
     reverbZoneMix: 1
     Source: {fileID: 0}
-  - name: Battle BGM 2
-    audioClip: {fileID: 8300000, guid: 2e10af7228b977648b2259c0bb797c97, type: 3}
+  - name: Battle BGM 3
+    audioClip: {fileID: 8300000, guid: f40e201dadbaf084b90fdab8302e383b, type: 3}
     audioMixerGroup: {fileID: 1805428926815748455, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
     mute: 0
     bypassEffects: 0
@@ -220,7 +220,7 @@ MonoBehaviour:
     spatialBlend: 0
     reverbZoneMix: 1
     Source: {fileID: 0}
-  - name: Battle BGM 3
+  - name: Battle BGM 4
     audioClip: {fileID: 8300000, guid: ea132fb79be04354091ae86199ff921e, type: 3}
     audioMixerGroup: {fileID: 1805428926815748455, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
     mute: 0
@@ -311,6 +311,22 @@ MonoBehaviour:
     loop: 0
     priority: 0
     volume: 0.688
+    pitch: 1
+    stereoPan: 0
+    spatialBlend: 0
+    reverbZoneMix: 1
+    Source: {fileID: 0}
+  - name: Boss Battle
+    audioClip: {fileID: 8300000, guid: c90e820e799b593498b80c92377996df, type: 3}
+    audioMixerGroup: {fileID: 1805428926815748455, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
+    mute: 0
+    bypassEffects: 0
+    bypassListenerEffects: 0
+    bypassReverbZones: 0
+    playOnAwake: 1
+    loop: 1
+    priority: 0
+    volume: 0.56
     pitch: 1
     stereoPan: 0
     spatialBlend: 0
