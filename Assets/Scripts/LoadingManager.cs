@@ -10,7 +10,7 @@ public class LoadingManager : MonoBehaviour
     public static LoadingManager Instance { get; set; }
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Slider loadingSlider;
-    public SceneReference currentScene;
+    [Header("Read Only")] public SceneReference currentScene;
     private readonly List<AsyncOperation> _scenesLoading = new List<AsyncOperation>();
 
     private void Awake()
