@@ -13,6 +13,7 @@ public class AbilityManager : MonoBehaviour
     private List<Ability> _playerAbilityPool;
     public List<AbilityPrefab> currentAbilityPrefabs;
     [Space] public Canvas canvas;
+    public Transform mostFrontCanvas;
     public TMP_Text descriptionText;
     [Header("Current Ability")] public HorizontalLayoutGroup currentGroup;
     [Header("New Ability")] public AbilityPrefab newAbilityPrefab;
@@ -37,6 +38,7 @@ public class AbilityManager : MonoBehaviour
         descriptionText.text = "";
         _defaultTopText = topText.text;
         _defaultBottomText = bottomText.text;
+        mostFrontCanvas.SetAsLastSibling();
 
         ExportToPrefabs();
     }

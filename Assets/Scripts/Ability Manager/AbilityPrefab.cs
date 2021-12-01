@@ -8,11 +8,15 @@ public class AbilityPrefab : MonoBehaviour
     public Ability ability;
     private int _index = -1;
     public Image abilityImageUI;
+    private Transform _realParent;
+    private int _realSiblingIndex;
 
     private void Awake()
     {
         _abilityManager = FindObjectOfType<AbilityManager>();
         _index = _abilityManager.currentAbilityPrefabs.IndexOf(this);
+        _realParent = transform.parent;
+        _realSiblingIndex = transform.GetSiblingIndex();
     }
 
     public void OnPointerEnter()
@@ -27,6 +31,7 @@ public class AbilityPrefab : MonoBehaviour
         _abilityManager.UpdateAbilityPrefabsUI();
         _abilityManager.currentGroup.enabled = false;
         _abilityManager.newGroup.enabled = false;
+        transform.SetParent(_abilityManager.mostFrontCanvas.transform);
     }
 
     public void OnDrag()
@@ -79,6 +84,8 @@ public class AbilityPrefab : MonoBehaviour
             }
         }
 
+        transform.SetParent(_realParent);
+        transform.SetSiblingIndex(_realSiblingIndex);
         _abilityManager.currentGroup.enabled = true;
         _abilityManager.newGroup.enabled = true;
         _abilityManager.ImportFromPrefabs();
