@@ -152,16 +152,16 @@ public class Unit : MonoBehaviour
         switch (abilityNumber)
         {
             case 1:
-                ability1LockDuration = duration;
+                ability1LockDuration = Mathf.Max(duration, ability1LockDuration);
                 break;
             case 2:
-                ability2LockDuration = duration;
+                ability2LockDuration = Mathf.Max(duration, ability2LockDuration);
                 break;
             case 3:
-                ability3LockDuration = duration;
+                ability3LockDuration = Mathf.Max(duration, ability3LockDuration);
                 break;
             case 4:
-                ability4LockDuration = duration;
+                ability4LockDuration = Mathf.Max(duration, ability4LockDuration);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
