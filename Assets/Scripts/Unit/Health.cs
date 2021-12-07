@@ -38,6 +38,7 @@ public class Health : MonoBehaviour
     private void OnHealTaken(object healValue)
     {
         IncreaseHealth((float)healValue);
+        UpdateHealthBar();
     }
 
     private void ReduceHealth(float value)
