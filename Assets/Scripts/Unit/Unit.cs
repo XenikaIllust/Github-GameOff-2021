@@ -25,6 +25,10 @@ public class Unit : MonoBehaviour
     [Header("Abilities")] public List<Ability> abilities;
     [Header("Read Only")] public List<float> abilityCooldownList = new List<float>(new float[4]);
     public float inputLockDuration;
+    public float ability1LockDuration;
+    public float ability2LockDuration;
+    public float ability3LockDuration;
+    public float ability4LockDuration;
     private bool _isGamePaused;
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
@@ -41,6 +45,10 @@ public class Unit : MonoBehaviour
     private void Update()
     {
         inputLockDuration -= Time.deltaTime;
+        ability1LockDuration -= Time.deltaTime;
+        ability2LockDuration -= Time.deltaTime;
+        ability3LockDuration -= Time.deltaTime;
+        ability4LockDuration -= Time.deltaTime;
         for (var i = 0; i < abilityCooldownList.Count; i++) abilityCooldownList[i] -= Time.deltaTime;
         UpdatePlayerPosition();
         UpdateAnimationMovement();
@@ -93,6 +101,7 @@ public class Unit : MonoBehaviour
         unitEventHandler.StartListening("OnAbility4Casted", OnAbility4Casted);
         unitEventHandler.StartListening("OnAbilityInputSet", OnAbilityInputSet);
         unitEventHandler.StartListening("OnInputLocked", OnInputLocked);
+        unitEventHandler.StartListening("OnAbilityLocked", OnAbilityLocked);
         unitEventHandler.StartListening("OnDied", OnDied);
 
         EventManager.StartListening("OnGamePaused", OnGamePaused);
@@ -110,6 +119,7 @@ public class Unit : MonoBehaviour
         unitEventHandler.StopListening("OnAbility4Casted", OnAbility4Casted);
         unitEventHandler.StopListening("OnAbilityInputSet", OnAbilityInputSet);
         unitEventHandler.StopListening("OnInputLocked", OnInputLocked);
+        unitEventHandler.StartListening("OnAbilityLocked", OnAbilityLocked);
         unitEventHandler.StopListening("OnDied", OnDied);
 
         EventManager.StopListening("OnGamePaused", OnGamePaused);
@@ -133,6 +143,29 @@ public class Unit : MonoBehaviour
     private void OnInputLocked(object duration)
     {
         inputLockDuration = Mathf.Max((float)duration, inputLockDuration);
+    }
+
+    private void OnAbilityLocked(object parameter)
+    {
+        var (abilityNumber, duration) = (Tuple<int, float>)parameter;
+
+        switch (abilityNumber)
+        {
+            case 1:
+                ability1LockDuration = duration;
+                break;
+            case 2:
+                ability2LockDuration = duration;
+                break;
+            case 3:
+                ability3LockDuration = duration;
+                break;
+            case 4:
+                ability4LockDuration = duration;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
 
     private void OnGamePaused(object @null)
@@ -166,24 +199,28 @@ public class Unit : MonoBehaviour
     private void OnAbility1Casted(object target)
     {
         if (inputLockDuration > float.Epsilon) return;
+        if (ability1LockDuration > float.Epsilon) return;
         AbilityCasted(target, 0);
     }
 
     private void OnAbility2Casted(object target)
     {
         if (inputLockDuration > float.Epsilon) return;
+        if (ability2LockDuration > float.Epsilon) return;
         AbilityCasted(target, 1);
     }
 
     private void OnAbility3Casted(object target)
     {
         if (inputLockDuration > float.Epsilon) return;
+        if (ability3LockDuration > float.Epsilon) return;
         AbilityCasted(target, 2);
     }
 
     private void OnAbility4Casted(object target)
     {
         if (inputLockDuration > float.Epsilon) return;
+        if (ability4LockDuration > float.Epsilon) return;
         AbilityCasted(target, 3);
     }
 
