@@ -295,7 +295,7 @@ public class Unit : MonoBehaviour
     {
         if (!isPlayer || _isGamePaused) return;
 
-        if (context.canceled)
+        if (context.started)
         {
             unitEventHandler.RaiseEvent("OnAbility1Casted", null);
         }
@@ -306,7 +306,7 @@ public class Unit : MonoBehaviour
     {
         if (!isPlayer || _isGamePaused) return;
 
-        if (context.canceled)
+        if (context.started)
         {
             unitEventHandler.RaiseEvent("OnAbility2Casted", null);
         }
@@ -317,7 +317,7 @@ public class Unit : MonoBehaviour
     {
         if (!isPlayer || _isGamePaused) return;
 
-        if (context.canceled)
+        if (context.started)
         {
             unitEventHandler.RaiseEvent("OnAbility3Casted", null);
         }
@@ -328,7 +328,7 @@ public class Unit : MonoBehaviour
     {
         if (!isPlayer || _isGamePaused) return;
 
-        if (context.canceled)
+        if (context.started)
         {
             unitEventHandler.RaiseEvent("OnAbility4Casted", null);
         }
