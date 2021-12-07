@@ -15,12 +15,12 @@ public enum Alliance
 public class Unit : MonoBehaviour
 {
     public EventProcessor unitEventHandler; // Internal event handler
-    [Header("Stats")] public float baseMovementSpeed = 3.5f;
-    public float baseTurnRate = 5f;
+    [Header("Stats")] public float baseMovementSpeed;
+    public float baseTurnRate;
     [HideInInspector] public bool isPlayer;
     [HideInInspector] public NavMeshAgent agent;
     [Header("Misc.")] public Alliance alliance;
-    [Range(0, 100)] public float bountyDropRate = 1;
+    [Range(0, 100)] public float bountyDropRate;
     private float _positionUpdateTimer;
     [Header("Abilities")] public List<Ability> abilities;
     [Header("Read Only")] public List<float> abilityCooldownList = new List<float>(new float[4]);
@@ -44,12 +44,7 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        inputLockDuration -= Time.deltaTime;
-        ability1LockDuration -= Time.deltaTime;
-        ability2LockDuration -= Time.deltaTime;
-        ability3LockDuration -= Time.deltaTime;
-        ability4LockDuration -= Time.deltaTime;
-        for (var i = 0; i < abilityCooldownList.Count; i++) abilityCooldownList[i] -= Time.deltaTime;
+        UpdateTimers();
         UpdatePlayerPosition();
         UpdateAnimationMovement();
     }
@@ -74,11 +69,7 @@ public class Unit : MonoBehaviour
 
         PseudoObject = new GameObject("PseudoObject")
         {
-            transform =
-            {
-                parent = transform,
-                localPosition = Vector3.zero
-            }
+            transform = { parent = transform, localPosition = Vector3.zero }
         };
     }
 
@@ -91,7 +82,6 @@ public class Unit : MonoBehaviour
     {
         unitEventHandler.StartListening("OnMovementSpeedMultiplierChanged", OnMovementSpeedMultiplierChanged);
         unitEventHandler.StartListening("OnTurnRateMultiplierChanged", OnTurnRateMultiplierChanged);
-
         unitEventHandler.StartListening("OnStopOrderIssued", OnStopOrderIssued);
         unitEventHandler.StartListening("OnMoveOrderIssued", OnMoveOrderIssued);
         unitEventHandler.StartListening("OnLookOrderIssued", OnLookOrderIssued);
@@ -110,6 +100,8 @@ public class Unit : MonoBehaviour
 
     private void OnDisable()
     {
+        unitEventHandler.StopListening("OnMovementSpeedMultiplierChanged", OnMovementSpeedMultiplierChanged);
+        unitEventHandler.StopListening("OnTurnRateMultiplierChanged", OnTurnRateMultiplierChanged);
         unitEventHandler.StopListening("OnStopOrderIssued", OnStopOrderIssued);
         unitEventHandler.StopListening("OnMoveOrderIssued", OnMoveOrderIssued);
         unitEventHandler.StopListening("OnLookOrderIssued", OnLookOrderIssued);
@@ -233,51 +225,17 @@ public class Unit : MonoBehaviour
     {
         OnDisable();
         Stop();
-        Destroy(gameObject, 1f); // edit by rin , wanna to have 1s for unit dead vfx animation
+        Destroy(gameObject, 1f);
     }
 
-    // 'Q' Key
-    public void OnFirstAbilityPressed(InputAction.CallbackContext context)
+    private void UpdateTimers()
     {
-        if (!isPlayer || _isGamePaused) return;
-
-        if (context.canceled) // Button Released
-        {
-            unitEventHandler.RaiseEvent("OnAbility1Casted", null);
-        }
-    }
-
-    // 'W' Key
-    public void OnSecondAbilityPressed(InputAction.CallbackContext context)
-    {
-        if (!isPlayer || _isGamePaused) return;
-
-        if (context.canceled) // Button Released
-        {
-            unitEventHandler.RaiseEvent("OnAbility2Casted", null);
-        }
-    }
-
-    // 'E' Key
-    public void OnThirdAbilityPressed(InputAction.CallbackContext context)
-    {
-        if (!isPlayer || _isGamePaused) return;
-
-        if (context.canceled) // Button Released
-        {
-            unitEventHandler.RaiseEvent("OnAbility3Casted", null);
-        }
-    }
-
-    // 'R' Key
-    public void OnFourthAbilityPressed(InputAction.CallbackContext context)
-    {
-        if (!isPlayer || _isGamePaused) return;
-
-        if (context.canceled) // Button Released
-        {
-            unitEventHandler.RaiseEvent("OnAbility4Casted", null);
-        }
+        inputLockDuration -= Time.deltaTime;
+        ability1LockDuration -= Time.deltaTime;
+        ability2LockDuration -= Time.deltaTime;
+        ability3LockDuration -= Time.deltaTime;
+        ability4LockDuration -= Time.deltaTime;
+        for (var i = 0; i < abilityCooldownList.Count; i++) abilityCooldownList[i] -= Time.deltaTime;
     }
 
     private void UpdatePlayerPosition()
@@ -332,6 +290,50 @@ public class Unit : MonoBehaviour
         return Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
     }
 
+    // 'Q' Key
+    public void OnFirstAbilityPressed(InputAction.CallbackContext context)
+    {
+        if (!isPlayer || _isGamePaused) return;
+
+        if (context.canceled)
+        {
+            unitEventHandler.RaiseEvent("OnAbility1Casted", null);
+        }
+    }
+
+    // 'W' Key
+    public void OnSecondAbilityPressed(InputAction.CallbackContext context)
+    {
+        if (!isPlayer || _isGamePaused) return;
+
+        if (context.canceled)
+        {
+            unitEventHandler.RaiseEvent("OnAbility2Casted", null);
+        }
+    }
+
+    // 'E' Key
+    public void OnThirdAbilityPressed(InputAction.CallbackContext context)
+    {
+        if (!isPlayer || _isGamePaused) return;
+
+        if (context.canceled)
+        {
+            unitEventHandler.RaiseEvent("OnAbility3Casted", null);
+        }
+    }
+
+    // 'R' Key
+    public void OnFourthAbilityPressed(InputAction.CallbackContext context)
+    {
+        if (!isPlayer || _isGamePaused) return;
+
+        if (context.canceled)
+        {
+            unitEventHandler.RaiseEvent("OnAbility4Casted", null);
+        }
+    }
+
     // members used for ability execution
     private AbilityType _currentAbilityType;
     private int _currentAbilityIndex;
@@ -355,24 +357,20 @@ public class Unit : MonoBehaviour
                 _castTargetPosition = (Vector3)target;
                 _allTargets["Target Point"] = _castTargetPosition;
                 break;
-
             case AbilityType.TargetUnit:
                 var targetUnit = (Unit)target;
                 _castTargetPosition = targetUnit.transform.position;
                 _allTargets["Target Unit"] = target;
                 _allTargets["Target Unit Position"] = _castTargetPosition;
                 break;
-
             case AbilityType.TargetArea:
                 _castTargetPosition = (Vector3)target;
                 _allTargets["Target Center"] = _castTargetPosition;
                 break;
-
             case AbilityType.NoTarget:
                 _castTargetPosition = (Vector3)target;
                 _allTargets["Target Center"] = _castTargetPosition;
                 break;
-
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -389,8 +387,14 @@ public class Unit : MonoBehaviour
 
         if (_currentAbilityType != AbilityType.NoTarget)
         {
-            if (isPlayer) yield return StartCoroutine(GetComponent<PlayerAgent>().ProcessTargetInput(ability));
-            else AbilityInput(_aiTarget);
+            if (isPlayer)
+            {
+                yield return StartCoroutine(GetComponent<PlayerAgent>().ProcessTargetInput(ability));
+            }
+            else
+            {
+                AbilityInput(_aiTarget);
+            }
         }
         else
         {
