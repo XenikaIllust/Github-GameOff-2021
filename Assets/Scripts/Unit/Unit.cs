@@ -24,11 +24,12 @@ public class Unit : MonoBehaviour
     private float _positionUpdateTimer;
     [Header("Abilities")] public List<Ability> abilities;
     [Header("Read Only")] public List<float> abilityCooldownList = new List<float>(new float[4]);
+    public List<float> abilitySilenceDurationList = new List<float>(new float[4]);
     public float inputLockDuration;
-    public float ability1LockDuration;
-    public float ability2LockDuration;
-    public float ability3LockDuration;
-    public float ability4LockDuration;
+    // public float ability1LockDuration;
+    // public float ability2LockDuration;
+    // public float ability3LockDuration;
+    // public float ability4LockDuration;
     private bool _isGamePaused;
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
@@ -144,16 +145,16 @@ public class Unit : MonoBehaviour
         switch (abilityNumber)
         {
             case 1:
-                ability1LockDuration = Mathf.Max(duration, ability1LockDuration);
+                abilitySilenceDurationList[0] = Mathf.Max(duration, abilitySilenceDurationList[0]);
                 break;
             case 2:
-                ability2LockDuration = Mathf.Max(duration, ability2LockDuration);
+                abilitySilenceDurationList[1] = Mathf.Max(duration, abilitySilenceDurationList[1]);
                 break;
             case 3:
-                ability3LockDuration = Mathf.Max(duration, ability3LockDuration);
+                abilitySilenceDurationList[2] = Mathf.Max(duration, abilitySilenceDurationList[2]);
                 break;
             case 4:
-                ability4LockDuration = Mathf.Max(duration, ability4LockDuration);
+                abilitySilenceDurationList[3] = Mathf.Max(duration, abilitySilenceDurationList[3]);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -191,28 +192,28 @@ public class Unit : MonoBehaviour
     private void OnAbility1Casted(object target)
     {
         if (inputLockDuration > float.Epsilon) return;
-        if (ability1LockDuration > float.Epsilon) return;
+        if (abilitySilenceDurationList[0] > float.Epsilon) return;
         AbilityCasted(target, 0);
     }
 
     private void OnAbility2Casted(object target)
     {
         if (inputLockDuration > float.Epsilon) return;
-        if (ability2LockDuration > float.Epsilon) return;
+        if (abilitySilenceDurationList[1] > float.Epsilon) return;
         AbilityCasted(target, 1);
     }
 
     private void OnAbility3Casted(object target)
     {
         if (inputLockDuration > float.Epsilon) return;
-        if (ability3LockDuration > float.Epsilon) return;
+        if (abilitySilenceDurationList[2] > float.Epsilon) return;
         AbilityCasted(target, 2);
     }
 
     private void OnAbility4Casted(object target)
     {
         if (inputLockDuration > float.Epsilon) return;
-        if (ability4LockDuration > float.Epsilon) return;
+        if (abilitySilenceDurationList[2] > float.Epsilon) return;
         AbilityCasted(target, 3);
     }
 
@@ -231,10 +232,7 @@ public class Unit : MonoBehaviour
     private void UpdateTimers()
     {
         inputLockDuration -= Time.deltaTime;
-        ability1LockDuration -= Time.deltaTime;
-        ability2LockDuration -= Time.deltaTime;
-        ability3LockDuration -= Time.deltaTime;
-        ability4LockDuration -= Time.deltaTime;
+        for (var i = 0; i < abilitySilenceDurationList.Count; i++) abilitySilenceDurationList[i] -= Time.deltaTime;
         for (var i = 0; i < abilityCooldownList.Count; i++) abilityCooldownList[i] -= Time.deltaTime;
     }
 

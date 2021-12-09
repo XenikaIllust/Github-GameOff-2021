@@ -661,8 +661,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aggroRange: 5
   preferredCombatRange:
-    x: 2.4
-    y: 2.6
+    x: 2
+    y: 2.5
   basicMovementMultiplier: 50
   defaultBestAngle: 180
   defaultWorstAngle: 360

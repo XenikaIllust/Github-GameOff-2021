@@ -51,14 +51,14 @@ MonoBehaviour:
     _HashCodes: f4dc220cf4dc220cf3dc220c
     _Next: 01000000ffffffffffffffff
     _Count: 2
-    _Version: 126
+    _Version: 128
     _FreeList: -1
     _FreeCount: 0
     _Keys:
     - Damage Stat 1
     - Damage Stat 2
     _Values:
-    - 40
+    - 60
     - 10
   outcomes:
   - Id: Disappear

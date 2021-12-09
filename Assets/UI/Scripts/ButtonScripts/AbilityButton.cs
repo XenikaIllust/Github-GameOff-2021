@@ -9,6 +9,7 @@ public class AbilityButton : MonoBehaviour
     private AbilityButtonState _currentState;
 
     public AbilityAvailable AvailableState;
+    public AbilitySilenced SilencedState;
     public AbilityTarget AbilityTarget;
     public AbilityCooldown CooldownState;
 
@@ -22,6 +23,8 @@ public class AbilityButton : MonoBehaviour
     public Ability ability;
     public float cooldownTimeLive;
     public Image abilityIcon;
+    public Image silenceBG;
+    public float silenceTimeLive;
     public Image cooldownBG;
     public TMP_Text cooldownTimer;
     private Unit _playerUnit;
@@ -34,7 +37,9 @@ public class AbilityButton : MonoBehaviour
         AvailableState = new AbilityAvailable(this);
         AbilityTarget = new AbilityTarget(this);
         CooldownState = new AbilityCooldown(this);
+        SilencedState = new AbilitySilenced(this);
 
+        silenceBG.enabled = false;
         cooldownBG.enabled = false;
         cooldownTimer.enabled = false;
 
@@ -90,6 +95,7 @@ public class AbilityButton : MonoBehaviour
 
     private void AutoSwitchState()
     {
+        if (silenceTimeLive > float.Epsilon) SwitchState(_currentState, SilencedState);
         if (cooldownTimeLive > float.Epsilon) SwitchState(_currentState, CooldownState);
     }
 }

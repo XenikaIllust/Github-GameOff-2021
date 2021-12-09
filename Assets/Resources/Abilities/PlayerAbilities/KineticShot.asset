@@ -18,7 +18,7 @@ MonoBehaviour:
   abilitySprite: {fileID: 0}
   inputType: 0
   duration: 0
-  cooldown: 5
+  cooldown: 3
   castRange: 5
   castPoint: 0
   castBackSwing: 0.1
@@ -30,7 +30,7 @@ MonoBehaviour:
     _HashCodes: f4dc220c0000000000000000
     _Next: ffffffff0000000000000000
     _Count: 1
-    _Version: 38
+    _Version: 40
     _FreeList: -1
     _FreeCount: 0
     _Keys:
@@ -38,7 +38,7 @@ MonoBehaviour:
     - 
     - 
     _Values:
-    - 100
+    - 50
     - 0
     - 0
   outcomes:

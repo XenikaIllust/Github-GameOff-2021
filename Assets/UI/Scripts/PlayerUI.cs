@@ -24,6 +24,7 @@ public class PlayerUI : MonoBehaviour
         for (var i = 0; i < abilityButtons.Count; i++)
         {
             abilityButtons[i].cooldownTimeLive = _playerUnit.abilityCooldownList[i];
+            abilityButtons[i].silenceTimeLive = _playerUnit.abilitySilenceDurationList[i];
         }
     }
 

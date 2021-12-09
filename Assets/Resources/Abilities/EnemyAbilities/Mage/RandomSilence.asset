@@ -15,31 +15,31 @@ MonoBehaviour:
   abilityName: Silence
   abilityDescription: Randomly silences one ability
   abilitySprite: {fileID: 0}
-  inputType: 1
+  inputType: 0
   duration: 0
-  cooldown: 10
+  cooldown: 8
   castRange: 3
   castPoint: 0.3
   castBackSwing: 0.7
   totalDamage: 50
-  idealTargetPosition: 1
+  idealTargetPosition: 0
   targetPositionOffset: 0
   abilityStats:
-    _Buckets: 00000000ffffffffffffffff
-    _HashCodes: f3aa756d0000000000000000
-    _Next: ffffffff0000000000000000
-    _Count: 1
-    _Version: 44
+    _Buckets: 02000000ffffffff01000000
+    _HashCodes: f3aa756dbcd45b150640e609
+    _Next: ffffffffffffffff00000000
+    _Count: 3
+    _Version: 104
     _FreeList: -1
     _FreeCount: 0
     _Keys:
     - Silence Duration Stat
-    - 
-    - 
+    - Cone Range
+    - Cone Angle
     _Values:
+    - 7
     - 4
-    - 0
-    - 0
+    - 90
   outcomes:
   - Id: Silence
     Duration: 0
@@ -49,16 +49,16 @@ MonoBehaviour:
     Effects:
     - Id: Silence
       TargetFilter:
-        Type: 1
+        Type: 6
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: 
         TargetCenterId: 
         PreviousEffectId: 
-        ConeRangeId: 
-        ConeAngleId: 
-        ConeTargetId: 
-        hitEnemies: 0
+        ConeRangeId: Cone Range
+        ConeAngleId: Cone Angle
+        ConeTargetId: Target Point
+        hitEnemies: 1
         hitAllies: 0
         hitSelf: 0
       GameAction:

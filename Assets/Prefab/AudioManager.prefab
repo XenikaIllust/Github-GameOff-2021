@@ -237,7 +237,7 @@ MonoBehaviour:
     reverbZoneMix: 1
     Source: {fileID: 0}
   - name: Credits
-    audioClip: {fileID: 8300000, guid: 1656a1f68c56ac3459569d51dfb62fe7, type: 3}
+    audioClip: {fileID: 8300000, guid: e40d7cf1bd901284eacf803211a03c42, type: 3}
     audioMixerGroup: {fileID: -3528185192588066943, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
     mute: 0
     bypassEffects: 0
@@ -333,7 +333,7 @@ MonoBehaviour:
     reverbZoneMix: 1
     Source: {fileID: 0}
   - name: Boss Battle
-    audioClip: {fileID: 8300000, guid: c90e820e799b593498b80c92377996df, type: 3}
+    audioClip: {fileID: 8300000, guid: b080257e22842234ba87dc09a3012ece, type: 3}
     audioMixerGroup: {fileID: 1805428926815748455, guid: f7f727c89ee5a933cbc4c2ed516e578b, type: 2}
     mute: 0
     bypassEffects: 0

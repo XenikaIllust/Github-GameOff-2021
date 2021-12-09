@@ -9,12 +9,15 @@ public class SilenceRandomAbilityActionBlock : GameActionBlock
     public override void Invoke(float abilityStat, List<object> currentFilteredTargets,
         Dictionary<string, object> otherTargets)
     {
+        Debug.Log("Silence executed!");
         foreach (object target in currentFilteredTargets)
         {
             Unit targetUnit = (Unit)target;
             float silenceDurationStat = abilityStat;
-            Tuple<int, float> parameter = new Tuple<int, float>(UnityEngine.Random.Range(1, 5), silenceDurationStat);
+            int targetAbilityIndex = UnityEngine.Random.Range(1, 5);
+            Tuple<int, float> parameter = new Tuple<int, float>(targetAbilityIndex, silenceDurationStat);
             targetUnit.unitEventHandler.RaiseEvent("OnAbilityLocked", parameter);
+            Debug.Log(targetAbilityIndex + " locked!");
         }
     }
 }
