@@ -19,7 +19,7 @@ public class AIAgent : Agent
     protected readonly List<float> idealRanges = new List<float>(new float[4]);
 
     [Header("Utility Stats")] [SerializeField]
-    private float2 preferredCombatRange = new float2 { x = 2.4f, y = 2.6f };
+    protected float2 preferredCombatRange = new float2 { x = 2.4f, y = 2.6f };
 
     [Range(0, 100)] [SerializeField] protected float basicMovementMultiplier = 50;
     [Range(0, 360)] [SerializeField] protected float defaultBestAngle = 180, defaultWorstAngle = 360;

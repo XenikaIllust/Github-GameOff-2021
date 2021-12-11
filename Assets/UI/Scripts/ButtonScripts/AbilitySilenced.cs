@@ -35,8 +35,6 @@ public class AbilitySilenced : AbilityButtonState
         }
     }
 
-    // test
-
     private void StopSilence()
     {
         AbilityButtonContext.silenceBG.enabled = false;
