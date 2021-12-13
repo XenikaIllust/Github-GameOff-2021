@@ -23,6 +23,7 @@ public class Ability : ScriptableObject
     [TextArea] public string abilityDescription;
     public Sprite abilitySprite;
     public AbilityType inputType;
+    public bool quickCast;
     public float duration;
     public float cooldown;
     public float castRange;

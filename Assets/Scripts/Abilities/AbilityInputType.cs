@@ -9,10 +9,17 @@ public class AbilityInputType
 
     public static IEnumerator PointTargetInput(Ability ability, EventProcessor unitEventHandler)
     {
-        ChangeCursor();
+        if (ability.quickCast)
+        {
+            hasPressedLeftClick = true;
+        }
+        else
+        {
+            ChangeCursor();
 
-        hasPressedLeftClick = false;
-        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+            hasPressedLeftClick = false;
+            yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+        }
 
         // (TODO) Check if the target is valid (is above terrain for example)
 
@@ -28,10 +35,17 @@ public class AbilityInputType
 
     public static IEnumerator UnitTargetInput(Ability ability, EventProcessor unitEventHandler)
     {
-        ChangeCursor();
+        if (ability.quickCast)
+        {
+            hasPressedLeftClick = true;
+        }
+        else
+        {
+            ChangeCursor();
 
-        hasPressedLeftClick = false;
-        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+            hasPressedLeftClick = false;
+            yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+        }
 
         string[] tags = { "Enemy" }; // PLACEHOLDER UNTIL A BETTER SOLUTION IS FOUND
         LayerMask enemyMask = LayerMask.GetMask("Enemy");
@@ -60,10 +74,17 @@ public class AbilityInputType
 
     public static IEnumerator AOETargetInput(Ability ability, EventProcessor unitEventHandler)
     {
-        ChangeCursor();
+        if (ability.quickCast)
+        {
+            hasPressedLeftClick = true;
+        }
+        else
+        {
+            ChangeCursor();
 
-        hasPressedLeftClick = false;
-        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+            hasPressedLeftClick = false;
+            yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+        }
 
         // (TODO) Check if the target is valid (is above terrain for example)
 
