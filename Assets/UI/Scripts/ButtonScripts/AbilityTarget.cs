@@ -9,7 +9,10 @@ public class AbilityTarget : AbilityButtonState
 
     public override void Enter()
     {
-        Cursor.SetCursor(AbilityButtonContext.targetCursor, Vector2.zero, CursorMode.Auto);
+        if (!AbilityButtonContext.ability.quickCast)
+        {
+            Cursor.SetCursor(AbilityButtonContext.targetCursor, Vector2.zero, CursorMode.Auto);
+        }
     }
 
     public override void UpdateLoop()

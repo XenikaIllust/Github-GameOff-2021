@@ -5,14 +5,21 @@ using UnityEngine.InputSystem;
 
 public class AbilityInputType
 {
-    public static bool hasPressedLeftClick = false;
+    public static bool hasPressedLeftClick;
 
     public static IEnumerator PointTargetInput(Ability ability, EventProcessor unitEventHandler)
     {
-        ChangeCursor();
+        if (ability.quickCast)
+        {
+            hasPressedLeftClick = true;
+        }
+        else
+        {
+            ChangeCursor();
 
-        hasPressedLeftClick = false;
-        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+            hasPressedLeftClick = false;
+            yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+        }
 
         // (TODO) Check if the target is valid (is above terrain for example)
 
@@ -28,42 +35,64 @@ public class AbilityInputType
 
     public static IEnumerator UnitTargetInput(Ability ability, EventProcessor unitEventHandler)
     {
-        ChangeCursor();
+        if (ability.quickCast)
+        {
+            hasPressedLeftClick = true;
+        }
+        else
+        {
+            ChangeCursor();
 
-        hasPressedLeftClick = false;
-        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+            hasPressedLeftClick = false;
+            yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+        }
 
         string[] tags = { "Enemy" }; // PLACEHOLDER UNTIL A BETTER SOLUTION IS FOUND
         LayerMask enemyMask = LayerMask.GetMask("Enemy");
 
         // Get target and check that it's valid
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()),
-            direction: Vector2.zero, distance: Mathf.Infinity, layerMask: enemyMask);
+            Vector2.zero, Mathf.Infinity, enemyMask);
         if (hit.collider != null)
         {
             Transform selection = hit.transform;
+
             if (tags.Contains(selection.tag)) // Check if its the target we want.
             {
                 Unit selectedUnit = hit.collider.GetComponent<Unit>();
+
                 // Send Unit target as event param
                 object target = selectedUnit;
                 unitEventHandler.RaiseEvent("OnAbilityInputSet", target);
 
                 Debug.Log($"{selectedUnit} was selected");
             }
-            else Debug.Log($"Raycast hit {selection.name}, but it's not a valid target");
+            else
+            {
+                Debug.Log($"Raycast hit {selection.name}, but it's not a valid target");
+            }
         }
-        else Debug.Log("Raycast hit nothing! No valid Unit selected");
+        else
+        {
+            Debug.Log("Raycast hit nothing! No valid Unit selected");
+        }
 
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Change cursor back to default
     }
 
     public static IEnumerator AOETargetInput(Ability ability, EventProcessor unitEventHandler)
     {
-        ChangeCursor();
+        if (ability.quickCast)
+        {
+            hasPressedLeftClick = true;
+        }
+        else
+        {
+            ChangeCursor();
 
-        hasPressedLeftClick = false;
-        yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+            hasPressedLeftClick = false;
+            yield return new WaitUntil(() => hasPressedLeftClick); // Wait until Left Click is pressed
+        }
 
         // (TODO) Check if the target is valid (is above terrain for example)
 
@@ -76,8 +105,6 @@ public class AbilityInputType
 
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto); // Change cursor back to default
     }
-
-    // public static IEnumerator NoTargetInput(Ability ability){yield return null;}
 
     private static void ChangeCursor()
     {
