@@ -10,53 +10,63 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a5a8993377eae44d8689cdd2c62cc7e, type: 3}
-  m_Name: Blink
+  m_Name: AstralStep
   m_EditorClassIdentifier: 
-  abilityName: Goto
-  abilityDescription: 'Goto()
+  abilityName: Slashdot
+  abilityDescription: 'SlashDot()
 
 
-    A short range teleport.
+    Dash to a target point, dealing damage to
+    all units caught in the line of your dash.
 
 
-    Input Type: Target
-    Point
+    Input Type: Target Point
+
+    Slash
+    Damage: 40
+
+    Dot Damage: 10
 
     Cast Range: 5
 
-    Cooldown: 2
+    Cooldown: 3
 
 
-    Tacia uses weaknesses in the
-    Metaverse''s infrastructure to quickly transport to different locations.'
-  abilitySprite: {fileID: 21300000, guid: 85cbe884327c14f45a0848f77b44df13, type: 3}
+    Tacia
+    dashes to a target point, leaving behind a trail of malicious code that is injected
+    into all programs caught in the trail. The programs are harmed twice, once for
+    heavy damage (Slash) and once for light damage (Dot)'
+  abilitySprite: {fileID: 21300000, guid: 22e0e307eed59604daa186fce6e02c15, type: 3}
   inputType: 0
-  duration: 0.1
-  cooldown: 2
+  quickCast: 0
+  duration: 1
+  cooldown: 0
   castRange: 5
   castPoint: 0
   castBackSwing: 0.1
-  totalDamage: 0
+  totalDamage: 50
   idealTargetPosition: 0
   targetPositionOffset: 0.5
   abilityStats:
-    _Buckets: ffffffff01000000ffffffff
-    _HashCodes: ffffffffa0bf2b7e00000000
-    _Next: ffffffffffffffff00000000
-    _Count: 1
-    _Version: 433
-    _FreeList: 0
-    _FreeCount: 1
+    _Buckets: 00000000ffffffff02000000
+    _HashCodes: f4dc220cf4dc220cf3dc220c
+    _Next: 01000000ffffffffffffffff
+    _Count: 2
+    _Version: 128
+    _FreeList: -1
+    _FreeCount: 0
     _Keys:
-    - Cast Range
+    - Damage Stat 1
+    - Damage Stat 2
     _Values:
-    - 5
+    - 60
+    - 10
   outcomes:
   - Id: Disappear
     Duration: 0
     Trigger:
       ExecutionTime: 0
-      IsNormalizedTime: 1
+      IsNormalizedTime: 0
     Effects:
     - Id: Disappear
       TargetFilter:
@@ -85,11 +95,17 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
-    - Id: Disappear VFX
+  - Id: Damage, Teleport and Reappear
+    Duration: 0
+    Trigger:
+      ExecutionTime: 0.1
+      IsNormalizedTime: 0
+    Effects:
+    - Id: Damage
       TargetFilter:
-        Type: 5
-        InitialPointId: 
-        FinalPointId: 
+        Type: 2
+        InitialPointId: Executing Unit Position
+        FinalPointId: Target Point
         AOERadiusId: 
         TargetCenterId: 
         PreviousEffectId: 
@@ -100,10 +116,10 @@ MonoBehaviour:
         hitAllies: 0
         hitSelf: 0
       GameAction:
-        GameActionBlock: {fileID: 11400000, guid: 37dc24ebe8dbc504cb628f2a5317fa4b, type: 2}
-        StatId: 
-        VFXName: Point_Disappear
-        VFXPointId: Executing Unit Position
+        GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
+        StatId: Damage Stat 1
+        VFXName: 
+        VFXPointId: 
         VFXStartPointId: 
         VFXEndPointId: 
         VFXUnitId: 
@@ -112,12 +128,6 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
-  - Id: Teleport and Reappear
-    Duration: 0
-    Trigger:
-      ExecutionTime: 1
-      IsNormalizedTime: 1
-    Effects:
     - Id: Teleport
       TargetFilter:
         Type: 4
@@ -152,7 +162,7 @@ MonoBehaviour:
         FinalPointId: 
         AOERadiusId: 
         TargetCenterId: 
-        PreviousEffectId: Disappear
+        PreviousEffectId: Teleport
         ConeRangeId: 
         ConeAngleId: 
         ConeTargetId: 
@@ -172,20 +182,20 @@ MonoBehaviour:
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 
-    - Id: Teleport SFX
+    - Id: AstralStep
       TargetFilter:
-        Type: 5
+        Type: 4
         InitialPointId: 
         FinalPointId: 
         AOERadiusId: 
         TargetCenterId: 
-        PreviousEffectId: Disappear
+        PreviousEffectId: Teleport
         ConeRangeId: 
         ConeAngleId: 
         ConeTargetId: 
         hitEnemies: 1
-        hitAllies: 0
-        hitSelf: 0
+        hitAllies: 1
+        hitSelf: 1
       GameAction:
         GameActionBlock: {fileID: 11400000, guid: 56f962f5ab5ecfd2cb2afbebb3e5a0a7, type: 2}
         StatId: 
@@ -195,7 +205,40 @@ MonoBehaviour:
         VFXEndPointId: 
         VFXUnitId: 
         TimeToLive: 0
-        SFXName: Teleport
+        SFXName: AstralStep
+        ProjectileName: 
+        ProjectileStatId: 
+        AnimationTriggerName: 
+  - Id: Delayed Damage
+    Duration: 0
+    Trigger:
+      ExecutionTime: 1
+      IsNormalizedTime: 0
+    Effects:
+    - Id: Damage2
+      TargetFilter:
+        Type: 4
+        InitialPointId: Unit Position
+        FinalPointId: Target Point
+        AOERadiusId: 
+        TargetCenterId: 
+        PreviousEffectId: Damage
+        ConeRangeId: 
+        ConeAngleId: 
+        ConeTargetId: 
+        hitEnemies: 1
+        hitAllies: 1
+        hitSelf: 1
+      GameAction:
+        GameActionBlock: {fileID: 11400000, guid: f5a0b34e158e3c64c98b8d17ec8d852a, type: 2}
+        StatId: Damage Stat 2
+        VFXName: 
+        VFXPointId: 
+        VFXStartPointId: 
+        VFXEndPointId: 
+        VFXUnitId: 
+        TimeToLive: 0
+        SFXName: 
         ProjectileName: 
         ProjectileStatId: 
         AnimationTriggerName: 

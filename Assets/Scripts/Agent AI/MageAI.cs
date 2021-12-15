@@ -9,6 +9,9 @@ public class MageAI : AIAgent
     bool abilityTaken = false;
 
     private void LateUpdate() {
+        /* if allTargets contains "SilencedUnit", which contains unit and ability, then set abilityTaken
+        to true*/
+
         if(abilityTaken) {
             preferredCombatRange = preferredEscapeRange;
         }

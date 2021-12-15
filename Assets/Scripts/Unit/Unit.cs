@@ -30,7 +30,7 @@ public class Unit : MonoBehaviour
     // public float ability2LockDuration;
     // public float ability3LockDuration;
     // public float ability4LockDuration;
-    private bool _isGamePaused;
+    protected bool _isGamePaused;
     private Vector3 _castTargetPosition;
     private IEnumerator _pendingCast;
     private object _aiTarget;
@@ -79,7 +79,7 @@ public class Unit : MonoBehaviour
         if (isPlayer) EventManager.RaiseEvent("OnPlayerSpawned", GetComponent<Unit>());
     }
 
-    private void OnEnable()
+    public virtual void OnEnable()
     {
         unitEventHandler.StartListening("OnMovementSpeedMultiplierChanged", OnMovementSpeedMultiplierChanged);
         unitEventHandler.StartListening("OnTurnRateMultiplierChanged", OnTurnRateMultiplierChanged);
@@ -99,7 +99,7 @@ public class Unit : MonoBehaviour
         EventManager.StartListening("OnGameResumed", OnGameResumed);
     }
 
-    private void OnDisable()
+    public virtual void OnDisable()
     {
         unitEventHandler.StopListening("OnMovementSpeedMultiplierChanged", OnMovementSpeedMultiplierChanged);
         unitEventHandler.StopListening("OnTurnRateMultiplierChanged", OnTurnRateMultiplierChanged);
@@ -213,7 +213,7 @@ public class Unit : MonoBehaviour
     private void OnAbility4Casted(object target)
     {
         if (inputLockDuration > float.Epsilon) return;
-        if (abilitySilenceDurationList[2] > float.Epsilon) return;
+        if (abilitySilenceDurationList[3] > float.Epsilon) return;
         AbilityCasted(target, 3);
     }
 
@@ -229,7 +229,7 @@ public class Unit : MonoBehaviour
         Destroy(gameObject, 1f);
     }
 
-    private void UpdateTimers()
+    protected virtual void UpdateTimers()
     {
         inputLockDuration -= Time.deltaTime;
         for (var i = 0; i < abilitySilenceDurationList.Count; i++) abilitySilenceDurationList[i] -= Time.deltaTime;
@@ -335,7 +335,7 @@ public class Unit : MonoBehaviour
     // members used for ability execution
     private AbilityType _currentAbilityType;
     private int _currentAbilityIndex;
-    private readonly Dictionary<string, object> _allTargets = new Dictionary<string, object>();
+    protected readonly Dictionary<string, object> _allTargets = new Dictionary<string, object>();
 
     private void AbilityCasted(object target, int index)
     {
@@ -347,7 +347,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void AbilityInput(object target)
+    protected void AbilityInput(object target)
     {
         switch (_currentAbilityType)
         {
@@ -462,7 +462,7 @@ public class Unit : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator ExecuteOutcome(Outcome outcome, Ability ability, float timeToExecute)
+    protected IEnumerator ExecuteOutcome(Outcome outcome, Ability ability, float timeToExecute)
     {
         yield return new WaitForSeconds(timeToExecute);
         foreach (var effect in outcome.Effects) effect.ExecuteEffect(ability.abilityStats, _allTargets);
