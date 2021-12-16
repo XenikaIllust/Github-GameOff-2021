@@ -60,15 +60,19 @@ public class MainCharacterUnit : Unit
         _allTargets["Executing Unit"] = this;
         _allTargets["Executing Unit Position"] = transform.position;
 
-        // hard enter the direction in front of the player * distance
-        float eulerAnglesZ = PseudoObject.transform.rotation.eulerAngles.z;
-        float targetX = transform.position.x + dashAbility.abilityStats["Dash Distance"] * Mathf.Cos(eulerAnglesZ * Mathf.Deg2Rad);
-        float targetY = transform.position.y + dashAbility.abilityStats["Dash Distance"] * Mathf.Sin(eulerAnglesZ * Mathf.Deg2Rad);
-        Vector3 targetPoint = new Vector3(targetX, targetY, transform.position.z);
-        AbilityInput(targetPoint);
+        // enable this section for fixed direction space to dash
+        // // hard enter the direction in front of the player * distance
+        // float eulerAnglesZ = PseudoObject.transform.rotation.eulerAngles.z;
+        // float targetX = transform.position.x + dashAbility.abilityStats["Dash Distance"] * Mathf.Cos(eulerAnglesZ * Mathf.Deg2Rad);
+        // float targetY = transform.position.y + dashAbility.abilityStats["Dash Distance"] * Mathf.Sin(eulerAnglesZ * Mathf.Deg2Rad);
+        // Vector3 targetPoint = new Vector3(targetX, targetY, transform.position.z);
+        // AbilityInput(targetPoint);
 
-        Debug.DrawLine(transform.position, targetPoint, Color.red, 5);
-        Debug.Log("origin: " + transform.position + ", direction: " + eulerAnglesZ + " , target point: " + targetPoint);
+        // Debug.DrawLine(transform.position, targetPoint, Color.red, 5);
+        // Debug.Log("origin: " + transform.position + ", direction: " + eulerAnglesZ + " , target point: " + targetPoint);
+
+        // enable this section for quickcast
+        AbilityInput(Camera.main.ScreenToWorldPoint( Mouse.current.position.ReadValue()) );
 
         StartCoroutine(ExecuteDashAbility());
     }
