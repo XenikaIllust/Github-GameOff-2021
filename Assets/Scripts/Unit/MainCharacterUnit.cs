@@ -66,12 +66,15 @@ public class MainCharacterUnit : Unit
         // float targetX = transform.position.x + dashAbility.abilityStats["Dash Distance"] * Mathf.Cos(eulerAnglesZ * Mathf.Deg2Rad);
         // float targetY = transform.position.y + dashAbility.abilityStats["Dash Distance"] * Mathf.Sin(eulerAnglesZ * Mathf.Deg2Rad);
         // Vector3 targetPoint = new Vector3(targetX, targetY, transform.position.z);
+
+        // _currentAbilityType = dashAbility.inputType;
         // AbilityInput(targetPoint);
 
         // Debug.DrawLine(transform.position, targetPoint, Color.red, 5);
         // Debug.Log("origin: " + transform.position + ", direction: " + eulerAnglesZ + " , target point: " + targetPoint);
 
         // enable this section for quickcast
+        _currentAbilityType = dashAbility.inputType;
         AbilityInput(Camera.main.ScreenToWorldPoint( Mouse.current.position.ReadValue()) );
 
         StartCoroutine(ExecuteDashAbility());

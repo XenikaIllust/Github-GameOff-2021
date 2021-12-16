@@ -333,7 +333,7 @@ public class Unit : MonoBehaviour
     }
 
     // members used for ability execution
-    private AbilityType _currentAbilityType;
+    protected AbilityType _currentAbilityType;
     private int _currentAbilityIndex;
     protected readonly Dictionary<string, object> _allTargets = new Dictionary<string, object>();
 
