@@ -43,14 +43,14 @@ public class Unit : MonoBehaviour
 
     public GameObject PseudoObject { get; private set; }
 
-    private void Update()
+    protected virtual void Update()
     {
         UpdateTimers();
         UpdatePlayerPosition();
         UpdateAnimationMovement();
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         unitEventHandler = GetComponent<UnitEventManager>().UnitEventHandler;
         isPlayer = GetComponent<PlayerAgent>() != null;
@@ -93,7 +93,7 @@ public class Unit : MonoBehaviour
         unitEventHandler.StartListening("OnAbilityInputSet", OnAbilityInputSet);
         unitEventHandler.StartListening("OnInputLocked", OnInputLocked);
         unitEventHandler.StartListening("OnAbilityLocked", OnAbilityLocked);
-        unitEventHandler.StartListening("OnDied", OnDied);
+        unitEventHandler.StartListening("OnDeath", OnDeath);
 
         EventManager.StartListening("OnGamePaused", OnGamePaused);
         EventManager.StartListening("OnGameResumed", OnGameResumed);
@@ -113,7 +113,7 @@ public class Unit : MonoBehaviour
         unitEventHandler.StopListening("OnAbilityInputSet", OnAbilityInputSet);
         unitEventHandler.StopListening("OnInputLocked", OnInputLocked);
         unitEventHandler.StartListening("OnAbilityLocked", OnAbilityLocked);
-        unitEventHandler.StopListening("OnDied", OnDied);
+        unitEventHandler.StopListening("OnDeath", OnDeath);
 
         EventManager.StopListening("OnGamePaused", OnGamePaused);
         EventManager.StopListening("OnGameResumed", OnGameResumed);
@@ -222,7 +222,7 @@ public class Unit : MonoBehaviour
         AbilityInput(target);
     }
 
-    private void OnDied(object @null)
+    protected virtual void OnDeath(object @null)
     {
         OnDisable();
         Stop();

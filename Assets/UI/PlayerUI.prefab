@@ -5005,6 +5005,8 @@ MonoBehaviour:
   ability: {fileID: 0}
   cooldownTimeLive: 0
   abilityIcon: {fileID: 0}
+  silenceBG: {fileID: 0}
+  silenceTimeLive: 0
   cooldownBG: {fileID: 38520685293666259}
   cooldownTimer: {fileID: 38520683827777682}
 --- !u!1 &5243279762786983660
@@ -5339,6 +5341,8 @@ MonoBehaviour:
   ability: {fileID: 0}
   cooldownTimeLive: 0
   abilityIcon: {fileID: 0}
+  silenceBG: {fileID: 0}
+  silenceTimeLive: 0
   cooldownBG: {fileID: 38520684234438211}
   cooldownTimer: {fileID: 38520684608048095}
 --- !u!1 &5243279763783084624
@@ -5370,7 +5374,7 @@ RectTransform:
   m_GameObject: {fileID: 5243279763783084624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 5243279762786983661}
   - {fileID: 5243279763716401819}
@@ -5382,9 +5386,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 125}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 800, y: 250}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &5243279763783084627
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5601,6 +5605,8 @@ MonoBehaviour:
   ability: {fileID: 0}
   cooldownTimeLive: 0
   abilityIcon: {fileID: 0}
+  silenceBG: {fileID: 0}
+  silenceTimeLive: 0
   cooldownBG: {fileID: 38520685484850374}
   cooldownTimer: {fileID: 38520683619359496}
 --- !u!1 &5243279764376828151
@@ -5832,6 +5838,8 @@ MonoBehaviour:
   ability: {fileID: 0}
   cooldownTimeLive: 0
   abilityIcon: {fileID: 0}
+  silenceBG: {fileID: 0}
+  silenceTimeLive: 0
   cooldownBG: {fileID: 38520684041992502}
   cooldownTimer: {fileID: 38520683914232554}
 --- !u!1 &5243279764762793587

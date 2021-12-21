@@ -60,7 +60,7 @@ public class Health : MonoBehaviour
         if (health <= float.Epsilon)
         {
             _isDead = true;
-            _unitEventHandler.RaiseEvent("OnDied", null);
+            _unitEventHandler.RaiseEvent("OnDeath", null);
             EventManager.RaiseEvent(_isPlayer ? "OnPlayerDied" : "OnUnitDied", gameObject);
         }
     }

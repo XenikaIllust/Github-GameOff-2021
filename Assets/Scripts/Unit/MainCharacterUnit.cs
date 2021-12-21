@@ -9,6 +9,8 @@ public class MainCharacterUnit : Unit
     public Ability dashAbility;
     float dashAbilityCooldown;
 
+    bool isAbilityStolen;
+
     public override void OnEnable() {
         base.OnEnable();
 

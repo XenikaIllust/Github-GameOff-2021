@@ -332,7 +332,7 @@ SpriteRenderer:
   m_Size: {x: 3, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &2052982167196764820
@@ -555,7 +555,7 @@ GameObject:
   - component: {fileID: 8270074324960196168}
   - component: {fileID: 8270074324960196165}
   - component: {fileID: 8270074324960196163}
-  - component: {fileID: 8270074324960196164}
+  - component: {fileID: -6203105230646548610}
   - component: {fileID: 6826488985093245865}
   - component: {fileID: 4279730979094195189}
   - component: {fileID: 8049810693110675900}
@@ -617,7 +617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f612d6ec25b591146a08d4e6c3ba768e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8270074324960196164
+--- !u!114 &-6203105230646548610
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -626,7 +626,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8270074324960196170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b81e4df4340dad741af7001e4dcdb145, type: 3}
+  m_Script: {fileID: 11500000, guid: 7739427c40daa2d46855fbdf97d350c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   baseMovementSpeed: 1
@@ -697,6 +697,10 @@ MonoBehaviour:
   forceAvoidDuration: 0
   forceLookDuration: 0
   forceStopDuration: 0
+  preferredEscapeRange:
+    x: 6
+    y: 6
+  abilityTaken: 0
 --- !u!114 &4279730979094195189
 MonoBehaviour:
   m_ObjectHideFlags: 0

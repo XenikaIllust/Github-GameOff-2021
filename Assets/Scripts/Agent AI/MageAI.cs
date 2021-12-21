@@ -6,14 +6,19 @@ public class MageAI : AIAgent
     [Header("Utility Stats")] [SerializeField] [Tooltip("The range this unit should go after kidnapping an ability")]
     protected float2 preferredEscapeRange = new float2 { x = 6f, y = 6f };
 
-    bool abilityTaken = false;
+    public bool abilityTaken = false;
 
-    private void LateUpdate() {
+    private void Update() {
         /* if allTargets contains "SilencedUnit", which contains unit and ability, then set abilityTaken
         to true*/
 
         if(abilityTaken) {
             preferredCombatRange = preferredEscapeRange;
+
+            for (var i = 0; i < abilityUtilities.Count; i++)
+            {
+                abilityUtilities[i] = Mathf.NegativeInfinity;
+            }
         }
     }
 
@@ -21,7 +26,7 @@ public class MageAI : AIAgent
     {
         for (var i = 0; i < abilityUtilities.Count; i++)
         {
-            if (abilities[i] == null) continue;
+            if (abilities[i] == null || abilityTaken) continue;
 
             var rangeUtility = abilityMultiplier[i][0] * RangeFactor(idealRanges[i], idealRanges[i] * 2);
             var directionUtility = abilityMultiplier[i][1] * DirectionFactor(defaultBestAngle, defaultWorstAngle);

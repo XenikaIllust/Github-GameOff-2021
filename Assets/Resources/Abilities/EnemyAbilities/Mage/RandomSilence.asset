@@ -16,6 +16,7 @@ MonoBehaviour:
   abilityDescription: Randomly silences one ability
   abilitySprite: {fileID: 0}
   inputType: 0
+  quickCast: 0
   duration: 0
   cooldown: 8
   castRange: 3
@@ -62,8 +63,8 @@ MonoBehaviour:
         hitAllies: 0
         hitSelf: 0
       GameAction:
-        GameActionBlock: {fileID: 11400000, guid: 4b7e3dd506b657d449acc50e1d486959, type: 2}
-        StatId: Silence Duration Stat
+        GameActionBlock: {fileID: 11400000, guid: 4800c901b388661428c9e2257fff6031, type: 2}
+        StatId: 
         VFXName: 
         VFXPointId: 
         VFXStartPointId: 

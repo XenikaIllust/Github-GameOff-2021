@@ -49,16 +49,16 @@ public class UnitVFXManager : MonoBehaviour
     private void OnEnable()
     {
         _unitEventHandler.StartListening("OnHealthChanged", UnitDamageRateVfx);
-        _unitEventHandler.StartListening("OnDied", OnDied);
+        _unitEventHandler.StartListening("OnDeath", OnDeath);
     }
 
     private void OnDisable()
     {
         _unitEventHandler.StopListening("OnHealthChanged", UnitDamageRateVfx);
-        _unitEventHandler.StopListening("OnDied", OnDied);
+        _unitEventHandler.StopListening("OnDeath", OnDeath);
     }
 
-    private void OnDied(object @null)
+    private void OnDeath(object @null)
     {
         _unitSprite.material = dissolveMaterial;
         someoneDead = true;
