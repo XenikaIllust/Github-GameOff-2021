@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class AIAgent : Agent
 {
-    [Header("General Stats")] [SerializeField]
-    private float aggroRange = 5;
-
-    private bool _isAggro;
     private readonly List<Vector3> _abilityTargetPosition = new List<Vector3>(new Vector3[4]);
     private readonly List<float> _damageSort = new List<float>(new float[4]);
     private readonly List<float> _cooldownSort = new List<float>(new float[4]);
@@ -124,12 +120,6 @@ public class AIAgent : Agent
 
     private void AISequence()
     {
-        if (_isAggro == false)
-        {
-            if (distanceToTarget > aggroRange) return;
-            _isAggro = true;
-        }
-
         CalculateAbilityUtility();
         CheckAbilityTargetPosition();
         CalculateRestriction();
