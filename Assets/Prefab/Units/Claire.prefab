@@ -5341,7 +5341,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.94, y: 1.49}
+    oldSize: {x: 2.94, y: 1.4929688}
     newSize: {x: 5, y: 5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -5430,6 +5430,7 @@ GameObject:
   - component: {fileID: 4802560575064041949}
   - component: {fileID: 4802560575064041946}
   - component: {fileID: 2339088434888781599}
+  - component: {fileID: -2133239868380642738}
   - component: {fileID: 4802560575064041943}
   - component: {fileID: 1582843991}
   - component: {fileID: 1256584048}
@@ -5521,6 +5522,11 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  abilitySilenceDurationList:
+  - 0
+  - 0
+  - 0
+  - 0
   inputLockDuration: 0
 --- !u!114 &2339088434888781599
 MonoBehaviour:
@@ -5536,6 +5542,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1000
   maxHealth: 0
+--- !u!114 &-2133239868380642738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4802560575064041940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bf22ca4369d38409c20fa8bbfb745d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visionRange: 5
+  visionAngle: 360
+  patrolPoints: []
 --- !u!114 &4802560575064041943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5548,7 +5569,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8572209eea6c15944b60c6dee12f44ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aggroRange: 5
   preferredCombatRange:
     x: 1
     y: 1.5

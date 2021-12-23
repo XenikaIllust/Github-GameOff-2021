@@ -407,6 +407,7 @@ GameObject:
   - component: {fileID: 5541512037254743938}
   - component: {fileID: 1030278495952677785}
   - component: {fileID: 1105826176436274721}
+  - component: {fileID: 706138100702259409}
   - component: {fileID: 1356358264916591144}
   - component: {fileID: -8624061012861718292}
   m_Layer: 6
@@ -518,7 +519,27 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  abilitySilenceDurationList:
+  - 0
+  - 0
+  - 0
+  - 0
   inputLockDuration: 0
+--- !u!114 &706138100702259409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356358264916591143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bf22ca4369d38409c20fa8bbfb745d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visionRange: 5
+  visionAngle: 360
+  patrolPoints: []
 --- !u!114 &1356358264916591144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,7 +552,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f64f0d4ebdaf24a9acc0323f17cc11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aggroRange: 5
   preferredCombatRange:
     x: 0
     y: 0.5

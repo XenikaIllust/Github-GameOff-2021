@@ -556,6 +556,7 @@ GameObject:
   - component: {fileID: 8270074324960196165}
   - component: {fileID: 8270074324960196163}
   - component: {fileID: -6203105230646548610}
+  - component: {fileID: 5259775577900905770}
   - component: {fileID: 6826488985093245865}
   - component: {fileID: 4279730979094195189}
   - component: {fileID: 8049810693110675900}
@@ -648,6 +649,21 @@ MonoBehaviour:
   - 0
   - 0
   inputLockDuration: 0
+--- !u!114 &5259775577900905770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8270074324960196170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70bf22ca4369d38409c20fa8bbfb745d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visionRange: 5
+  visionAngle: 360
+  patrolPoints: []
 --- !u!114 &6826488985093245865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -660,7 +676,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3644b76a50b2ec343b5e059068228a27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aggroRange: 5
   preferredCombatRange:
     x: 2
     y: 2.5
