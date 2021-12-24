@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FogOfWarSceneController : MonoBehaviour
 {
-    public GameObject player;
-    public GameObject[] enemy;
+    GameObject player;
+    GameObject[] enemy;
     [SerializeField] private float PlayerVisionRange;
     // Start is called before the first frame update
     void Awake()
@@ -30,10 +30,6 @@ public class FogOfWarSceneController : MonoBehaviour
                 enemy.transform.GetChild(0).gameObject.SetActive(true);//hard code
                 enemy.transform.GetChild(2).gameObject.SetActive(true);//hard code
             }
-            /*else{
-                enemy.transform.GetChild(0).gameObject.SetActive(false);//hard code
-                enemy.transform.GetChild(2).gameObject.SetActive(false);//hard code
-            }*/
         }
     }
     void playerVision(){
