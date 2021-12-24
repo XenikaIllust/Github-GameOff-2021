@@ -7,15 +7,12 @@ public class FogOfWarSceneController : MonoBehaviour
     GameObject player;
     GameObject[] enemy;
     [SerializeField] private float PlayerVisionRange;
-    // Start is called before the first frame update
     void Awake()
     {
         player = GameObject.FindWithTag("Player");
         enemy = GameObject.FindGameObjectsWithTag("Enemy");
         
     }
-
-    // Update is called once per frame
     void Update()
     {
         playerVision();
@@ -23,10 +20,9 @@ public class FogOfWarSceneController : MonoBehaviour
     }
     void checkEnemyAIAgent(){
         foreach(GameObject enemy in enemy){
-            //Debug.Log(enemy+"check"+enemy.transform.childCount+" "+enemy.GetComponent<AIAgent>().enabled);
             if(!enemy || enemy.transform.childCount == 0){continue;} 
             
-            if(enemy.GetComponent<AIAgent>().enabled){ //  enemy.transform.childCount > 0 not necessary , avoid some case
+            if(enemy.GetComponent<AIAgent>().enabled){
                 enemy.transform.GetChild(0).gameObject.SetActive(true);//hard code
                 enemy.transform.GetChild(2).gameObject.SetActive(true);//hard code
             }
