@@ -9,8 +9,10 @@ public class PatrolAI : MonoBehaviour
     private AIAgent _combatAIScript;
     [SerializeField] private float visionRange;
     [Range(0, 360)] [SerializeField] private float visionAngle;
-    [SerializeField] private List<Vector3> patrolPoints;
+    [SerializeField] private List<Transform> patrolPoints;
     private int _currentPatrolIndex;
+
+    ArcVFXController visionArcController;
 
     private void Awake()
     {
@@ -21,8 +23,15 @@ public class PatrolAI : MonoBehaviour
         _combatAIScript.enabled = false;
     }
 
+    private void Start() {
+        visionArcController = Instantiate<ArcVFXController>(Resources.Load<ArcVFXController>("VFX/AbilityVFX/ArcVFX/ArcIndicator/VisionArcParent"), transform.position, Quaternion.identity, transform);
+        visionArcController.arcWidth = visionAngle;
+        MathUtils.ConvertCircleToIsometricCircle(visionRange, visionArcController.gameObject);
+    }
+
     private void Update()
     {
+        // TODO FIX BUG HERE
         if (Vector2.Distance(transform.position, _playerAgent.transform.position) <= visionRange)
         {
             Vector2 vectorToPlayer = _playerAgent.transform.position - transform.position;
@@ -32,6 +41,9 @@ public class PatrolAI : MonoBehaviour
 
             if (deltaAngle <= visionAngle / 2)
             {
+                // destroy vision indicator
+                Destroy(visionArcController.gameObject);
+
                 enabled = false;
                 _combatAIScript.enabled = true;
             }
@@ -40,12 +52,15 @@ public class PatrolAI : MonoBehaviour
         {
             if (patrolPoints.Count == 0) return;
 
+            // the problem is here, this happens too many times
             if (_unit.agent.remainingDistance <= Single.Epsilon)
             {
                 _currentPatrolIndex += 1;
                 if (_currentPatrolIndex > patrolPoints.Count) _currentPatrolIndex = 0;
 
-                _unit.unitEventHandler.RaiseEvent("OnMoveOrderIssued", patrolPoints[_currentPatrolIndex]);
+                Debug.Log("patrolPoints.Count " + patrolPoints.Count);
+                Debug.Log("currentPatrolIndex " + _currentPatrolIndex);
+                _unit.unitEventHandler.RaiseEvent("OnMoveOrderIssued", patrolPoints[_currentPatrolIndex].position);
             }
         }
     }
