@@ -4,6 +4,11 @@ using UnityEngine;
 
 public static class MathUtils
 {
+    public static float Mod(float a,float b)
+    {
+        return a - b * Mathf.Floor(a / b);
+    }
+
     public static Vector2[] GenerateIsometricCirclePoints(float radius)
     {
         List<Vector2> points = new List<Vector2>();

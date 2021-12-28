@@ -7,6 +7,8 @@ public class ArcVFXController : MonoBehaviour
     SpriteRenderer spriteRenderer;
     GameObject pseudoObject;
 
+    Material arcMaterial;
+
     public float arcWidth;
 
     void Awake() {
@@ -15,7 +17,7 @@ public class ArcVFXController : MonoBehaviour
     }
 
     private void Start() {
-        Material arcMaterial = Instantiate<Material>(Resources.Load<Material>("VFX/AbilityVFX/ArcVFX/ArcIndicator/ArcMaterial"));
+        arcMaterial = Instantiate<Material>(Resources.Load<Material>("VFX/AbilityVFX/ArcVFX/ArcIndicator/ArcMaterial"));
         arcMaterial.SetFloat("_Angle", -90f);
         arcMaterial.SetFloat("_Arc1", 180 - arcWidth / 2);
         arcMaterial.SetFloat("_Arc2", 180 - arcWidth / 2);
@@ -24,7 +26,8 @@ public class ArcVFXController : MonoBehaviour
 
     private void Update() {
         var rot = pseudoObject.transform.rotation.eulerAngles;
-        rot.z -= 90;
-        spriteRenderer.transform.rotation = Quaternion.Euler(rot);
+        rot.z += 180;
+        // spriteRenderer.transform.rotation = Quaternion.Euler(rot);
+        arcMaterial.SetFloat("_Angle", rot.z);
     }
 }
